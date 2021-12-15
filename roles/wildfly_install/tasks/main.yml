@@ -1,0 +1,51 @@
+---
+- name: "Ensure user {{ wildfly_user }} exists."
+  group:
+    name: "{{ wildfly_group }}"
+
+- name: "Ensure group {{ wildfly_group }} exists."
+  user:
+    name: "{{ wildfly_user }}"
+    groups: "{{ wildfly_group }}"
+    state: present
+
+- package:
+    name: "{{ item }}"
+    state: present
+  loop:
+      - unzip
+      - tar
+      - java-1.8.0-openjdk
+
+- block:
+    - set_fact:
+        wfly_download_url: "{{ wildfly.download_base_url }}/{{ wildfly.version }}/wildfly-{{ wildfly.version }}.zip"
+
+    - name: "Download and unzip Wildfly zipfile from {{ wfly_download_url }}"
+      unarchive:
+        src: "{{ wfly_download_url }}"
+        dest: "{{ wildfly.workdir }}"
+        owner: "{{ wildfly_user }}"
+        group: "{{ wildfly_group }}"
+        remote_src: yes
+        creates: "{{ wildfly_home }}"
+  when:
+    - wildfly is defined
+    - wildfly.download_base_url is defined
+    - wildfly.version is defined
+
+- stat:
+    path: "{{ wildfly_home }}"
+  register: stat_wildfly_home
+  when:
+    - wildfly_home is defined
+
+- file:
+    path: "{{ wildfly_home }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    recurse: yes
+  when:
+    - stat_wildfly_home is defined
+    - stat_wildfly_home.stat is defined
+    - stat_wildfly_home.stat.exists

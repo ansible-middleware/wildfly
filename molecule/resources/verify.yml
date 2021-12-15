@@ -1,0 +1,29 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - vars/main.yml
+  tasks:
+    - name: Get service facts
+      service_facts:
+    - name: Check if wildfly service started
+      assert:
+        that:
+          - ansible_facts.services["wfly"]["state"] == "running"
+    - name: "Check if properties have been deployed"
+      command: "{{ wildfly.home }}/bin/jboss-cli.sh --connect --output-json --command='/system-property=jcliff.enabled:read-resource'"
+      register: cli_result
+      until: cli_result.rc == 0 and (cli_result.stdout | from_json).result.value == "enabled.plus"
+    - name: "Check if DS have been deployed"
+      command: "{{ wildfly.home }}/bin/jboss-cli.sh --connect --output-json --command='/subsystem=datasources/data-source=ExampleDS:read-resource'"
+      register: cli_result
+      until: cli_result.rc == 0 and (cli_result.stdout | from_json).result.enabled == true
+    - name: "Check if webapp has been deployed"
+      command: "{{ wildfly.home }}/bin/jboss-cli.sh --connect --output-json --command='/deployment=simple-webapp:read-attribute(name=status)'"
+      register: cli_result
+      until: cli_result.rc == 0 and (cli_result.stdout | from_json).result == "OK"
+    - name: "Check if webapp is accessible"
+      uri:
+        url: http://localhost:8080/info
+        return_content: yes

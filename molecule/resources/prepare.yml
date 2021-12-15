@@ -1,0 +1,62 @@
+---
+- name: Prepare
+  hosts: all
+  vars_files:
+    - vars/main.yml
+  tasks:
+    - name: "Ensures required packages are installed"
+      yum:
+        name:
+          - which
+          - zip
+          - unzip
+          - procps-ng
+          - initscripts
+          - "{{ jvm_package | default('java-1.8.0-openjdk-devel') }}"
+        state: present
+
+    - name: "Ensures workdir '{{ workdir }}' is created"
+      file:
+        path: "{{ workdir }}"
+        state: directory
+
+    - name: "Ensure Wildfly user {{ wildfly.user }} exists"
+      user:
+        name: "{{ wildfly.user }}"
+        comment: "User to run Wildfly"
+
+    - name: "Download and unzip Wildfly zipfile from {{ wfly_download_url }}"
+      unarchive:
+        src: "{{ wfly_download_url }}"
+        dest: "{{ workdir }}"
+        owner: "{{ wildfly.user }}"
+        group: "{{ wildfly.user }}"
+        remote_src: yes
+        creates: "{{ wildfly.home }}"
+
+    - name: "Ensures Wildfly's service script are properly deployed"
+      copy:
+        src: "{{ wildfly.home }}/docs/contrib/scripts/init.d/wildfly-init-redhat.sh"
+        dest: /etc/init.d/wfly
+        mode: 0755
+        remote_src: yes
+        owner: "{{ wildfly.user }}"
+        group: "{{ wildfly.user }}"
+
+    - name: "Ensures Wildfly service system configuration is properly deployed"
+      template:
+        src: templates/etc_jboss.conf.j2
+        dest: /etc/default/wfly
+        mode: 0644
+        owner: "{{ wildfly.user }}"
+        group: "{{ wildfly.user }}"
+
+    - name: "Perform daemon-reload to ensure the changes are picked up"
+      systemd:
+        daemon_reload: yes
+
+    - name: "Start Wildfly Server"
+      service:
+        name: wfly
+        state: started
+        enabled: yes

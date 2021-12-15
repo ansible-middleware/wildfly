@@ -1,0 +1,33 @@
+---
+- assert:
+    that:
+      - instance_name is defined
+    quiet: true
+
+- name: "Delete all runtimes data"
+  file:
+    state: absent
+    path: "{{ wildfly_runtime_data }}"
+  when:
+    - wildfly_runtime_data is defined
+
+- name: "Delete configurations files"
+  file:
+    state: absent
+    path: "{{ wildfly_service_config }}"
+  when:
+    - wildfly_service_config is defined
+
+- set_fact:
+    wfly_systemd_config: "/usr/lib/systemd/system/{{ instance_name }}.service"
+
+- stat:
+    path: "{{ wfly_systemd_config }}"
+  register: wfly_systemd_configfile
+
+- name: "Delete all systems services"
+  file:
+    state: absent
+    path: "{{ wfly_systemd_config }}"
+  when:
+    - wfly_systemd_configfile.stat.exists

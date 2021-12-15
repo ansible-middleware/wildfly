@@ -1,0 +1,4 @@
+---
+wildfly_port_range_offset: "{{ override_wildfly_port_range_offset | default(1) }}"
+wildfly_systemd:
+  enabled: "{{ override_wildfly_systemd | default('yes') }}"

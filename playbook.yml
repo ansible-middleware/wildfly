@@ -1,0 +1,58 @@
+---
+- name: "Wildfly installation and configuration"
+  hosts: "all"
+  become: yes
+  vars:
+    wildfly_user: wildfly
+    wildfly_group: wildfly
+    wildfly:
+      workdir: /opt
+      download_base_url: https://download.jboss.org/wildfly/
+      version: 24.0.0.Final
+    wildfly_home: "{{ wildfly.workdir }}/wildfly-{{ wildfly.version }}"
+    wildfly_config_base: standalone.xml
+    jdbc_driver_module_dir: "{{ wildfly.home }}//modules/org/postgresql/main"
+    jdbc_driver_version: 9.2-1002-jdbc4
+    jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
+    jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
+    jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
+  roles:
+    - wildfly_install
+    - wildfly_systemd
+  tasks:
+
+    - name: "Install Postresql driver"
+      include_role:
+        name: wildfly_driver
+        tasks_from: jdbc_driver.yml
+      vars:
+          jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
+          jdbc_driver_version: "{{ override_pgsql_jdbc_driver_version | default('9.2-1002-jdbc4') }}"
+          jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
+          jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
+          jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
+          jdbc_driver_module_name: 'org.postgresql'
+
+  post_tasks:
+    - wait_for:
+        port: 8080
+
+    - name: "Checks that Wildfly server is running and accessible"
+      get_url:
+        url: http://localhost:8080/
+        dest: '/dev/null'
+
+    - block:
+        - include_role:
+            name: wildfly_systemd
+            tasks_from: stop_service.yml
+          vars:
+            instance_name: "wildfly"
+
+        - include_role:
+            name: wildfly_uninstall
+          vars:
+            instance_name: "wildfly"
+            wildfly_service_config: '/etc/wildfly.conf'
+      when:
+        - delete_install is defined

@@ -1,0 +1,42 @@
+---
+name: CI
+"on":
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  molecule:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python_version: ["3.7"]
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: ansible_collections/middleware_automation/wildfly
+
+      - name: Set up Python ${{ matrix.python_version }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python_version }}
+
+      - name: Install yamllint, ansible and molecule
+        run: |
+          python -m pip install --upgrade pip
+          pip install yamllint 'molecule[docker]~=3.3.0' ansible~=2.9.0 ansible-lint
+
+      - name: Create default collection path symlink
+        run: |
+          mkdir -p /home/runner/.ansible
+          ln -s /home/runner/work/wildfly_collections/wildfly_collection /home/runner/.ansible/collections
+
+      - name: Run sanity tests
+        run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}
+        working-directory: ./ansible_collections/middleware_automation/wildfly
+
+      - name: Run molecule test
+        run: molecule test --all
+        working-directory: ./ansible_collections/middleware_automation/wildfly

@@ -1,0 +1,101 @@
+---
+- assert:
+    that:
+      - wildfly_home is defined
+      - wildfly_user is defined
+      - wildfly_group is defined
+      - wildfly_config_base is defined
+    quiet: true
+
+- name: "Ensure user {{ wildfly_user }} exists."
+  group:
+    name: "{{ wildfly_group }}"
+
+- name: "Ensure group {{ wildfly_group }} exists."
+  user:
+    name: "{{ wildfly_user }}"
+    groups: "{{ wildfly_group }}"
+    state: present
+
+- set_fact:
+    basedir: "{{ wildfly_basedir_prefix | default(wildfly_home + '/standalone') }}"
+  when:
+    - not instance_id is defined
+
+- block:
+    - assert:
+        that:
+          - wildfly_basedir_prefix is defined
+        quiet: true
+        fail_msg: "If instance_id is set, wildfly.basedir_prefix must also be defined."
+
+    - set_fact:
+        basedir: "{{ wildfly_basedir_prefix }}{{ instance_id }}"
+
+    - assert:
+        that:
+          - wildfly_config_name is defined
+        fail_msg: "If instance_id is set, wildfly_config_name must be defined too."
+        quiet:
+
+    - set_fact:
+        instance_name: "{{ wildfly_config_name }}-{{ instance_id }}"
+  when:
+    - instance_id is defined
+
+- set_fact:
+    instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
+  when:
+    - instance_name is not defined
+
+- set_fact:
+    wildfly_bind_addr: "{{ overrides_wildfly_bind_addr | default('0.0.0.0') }}"
+
+- name: "Creates basedir {{ basedir }} for instance: {{ instance_name }}"
+  file:
+    path: "{{ basedir }}"
+    state: directory
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: '0755'
+
+- name: "Creates deployment directories for instance: {{ instance_name }}"
+  file:
+    path: "{{ basedir }}/deployments"
+    state: directory
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: '0755'
+
+- name: "Deploy Wildfy configuration"
+  copy:
+    src: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_config_base }}"
+    dest: "{{ wildfly_home }}/standalone/configuration/{{ instance_name }}.xml"
+    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_user }}"
+    remote_src: true
+    force: no
+
+- name: "Deploy Systemd configuration for Wildfly service"
+  template:
+    src: templates/wfly.service.j2
+    dest: "/usr/lib/systemd/system/{{ instance_name }}.service"
+    group: root
+    owner: root
+  register: daemon_reload
+
+- name: "Deploy Wildfly service instance configuration"
+  template:
+    src: templates/wfly.conf.j2
+    dest: "/etc/{{ instance_name }}.conf"
+    group: root
+    owner: root
+
+- name: "Perform daemon-reload to ensure the changes are picked up"
+  systemd:
+    daemon_reload: yes
+  when:
+    - daemon_reload is defined
+    - daemon_reload.changed
+
+- include_tasks: start_service.yml

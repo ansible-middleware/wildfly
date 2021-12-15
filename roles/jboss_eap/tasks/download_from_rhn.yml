@@ -1,0 +1,67 @@
+---
+- assert:
+    that:
+      - rhn_id_file is defined
+      - zipfile_dest is defined
+      - rhn_username is defined
+      - rhn_password is defined
+    quiet: true
+
+- set_fact:
+    rhn_base_url: "{{ override_rhn_base_url | default('https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=') }}"
+
+- set_fact:
+    rhn_download_url: "{{ rhn_base_url }}{{ rhn_id_file }}"
+
+- name: "Install zipfile from RHN: {{ rhn_download_url }}"
+  redhat_csp_download:
+    url: "{{ rhn_download_url }}"
+    dest: "{{ zipfile_dest }}"
+    username: "{{ rhn_username }}"
+    password: "{{ rhn_password }}"
+
+- stat:
+    path: "{{ zipfile_dest }}"
+  register: path_to_downloaded_artefact
+
+- debug:
+    msg: "{{ workdir }}"
+
+- block:
+
+  - file:
+      path: "{{ workdir }}"
+      state: directory
+
+  - stat:
+      path: "{{ target_dir }}"
+    register: target_dir_state
+
+  - assert:
+      that:
+        - target_dir_state is defined
+        - target_dir_state.stat is defined
+      fail_msg: "Directory layout for {{ target_dir }} is invalid."
+      quiet: true
+
+  - name: "Decompress {{ zipfile_dest }} into {{ workdir }} (results in {{ target_dir }}."
+    unarchive:
+      src: "{{ zipfile_dest }}"
+      dest: "{{ workdir }}"
+      owner: "{{ wildfly.user | default(ansible_user_id) }}"
+      group: "{{ wildfly.group | default(ansible_user_id) }}"
+      remote_src: yes
+      creates: "{{ target_dir }}"
+    when:
+      - not target_dir_state.stat.exists
+
+  - debug:
+      msg: "{{ target_dir }} already exists, skipping decompressing {{ zipfile_dest }}"
+    when:
+      - not target_dir_state.stat.exists
+  when:
+    - path_to_downloaded_artefact is defined
+    - path_to_downloaded_artefact.stat is defined
+    - path_to_downloaded_artefact.stat.exists
+    - target_dir is defined
+    - workdir is defined

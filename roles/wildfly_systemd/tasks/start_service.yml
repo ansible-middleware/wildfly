@@ -1,0 +1,11 @@
+---
+- assert:
+    that:
+      - instance_name is defined
+    quiet: true
+
+- name: "Start Wildfly instance {{ instance_name }}"
+  service:
+    name: "{{ instance_name }}"
+    state: started
+    enabled: "{{ wildfly_systemd.enabled | default(omit) }}"

@@ -1,0 +1,20 @@
+---
+allow_duplicates: true
+requires_ansible: ">=2.9"
+galaxy_info:
+  author: Andrew Block, Romain Pelisse, Harsha Cherukuri 
+  description: Provides integration with JCliff to enable Ansible to provisioning JBoss EAP or Wildfly instances.
+  license: Apache License 2.0
+  min_ansible_version: "2.9"
+  platforms:
+    - name: EL
+      versions:
+        - 6
+        - 7
+  galaxy_tags:
+    - java
+    - jboss
+    - wildfly
+    - cli
+    - server
+dependencies: []

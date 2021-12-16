@@ -75,16 +75,16 @@
 
 - name: "Deploy Systemd configuration for Wildfly service"
   template:
-    src: templates/wfly.service.j2
-    dest: "/usr/lib/systemd/system/{{ instance_name }}.service"
+    src: "{{ wildfly_systemd_service_config_file_template }}"
+    dest: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
     group: root
     owner: root
   register: daemon_reload
 
 - name: "Deploy Wildfly service instance configuration"
   template:
-    src: templates/wfly.conf.j2
-    dest: "/etc/{{ instance_name }}.conf"
+    src: "{{ wildfly_service_config_file_template }}"
+    dest: "{{ wildfly_service_config_file_location }}"
     group: root
     owner: root
 

@@ -2,20 +2,6 @@
 - name: "Wildfly installation and configuration"
   hosts: "all"
   become: yes
-  vars:
-#    wildfly_user: wildfly
-#    wildfly_group: wildfly
-#    wildfly:
-#      workdir: /opt
-#      download_base_url: https://download.jboss.org/wildfly/
-#      version: 24.0.0.Final
-#    wildfly_home: "{{ wildfly.workdir }}/wildfly-{{ wildfly.version }}"
-#    wildfly_config_base: standalone.xml
-#    jdbc_driver_module_dir: "{{ wildfly.home }}//modules/org/postgresql/main"
-#    jdbc_driver_version: 9.2-1002-jdbc4
-#    jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
-#    jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
-#    jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
   roles:
     - wildfly_install
     - wildfly_systemd

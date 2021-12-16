@@ -1,5 +1,0 @@
----
-pgsql_module_dir: "{{ wildfly.home }}//modules/org/postgresql/main"
-jdbc_driver_filename: postgresql-9.2-1002-jdbc4.jar
-jdbc_driver_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/9.2-1002-jdbc4/{{ jdbc_driver_filename }}"
-jdbc_driver_path: "{{ pgsql_module_dir }}/{{ jdbc_driver_filename }}"

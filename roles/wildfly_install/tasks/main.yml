@@ -2,7 +2,9 @@
 - assert:
     that:
       - wildfly is defined
+      - wfly_download_url is defined
       - wildfly.home is defined
+      - workdir is defined
     quiet: true
 
 - include_tasks: user.yml
@@ -15,22 +17,21 @@
       - tar
       - java-1.8.0-openjdk
 
-- block:
-    - set_fact:
-        wfly_download_url: "{{ wildfly.download_base_url }}/{{ wildfly.version }}/wildfly-{{ wildfly.version }}.zip"
+- name: "Ensures workdir {{ workdir }} exists."
+  file:
+    path: "{{ workdir }}"
+    state: directory
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
 
-    - name: "Download and unzip Wildfly zipfile from {{ wfly_download_url }}"
-      unarchive:
-        src: "{{ wfly_download_url }}"
-        dest: "{{ wildfly.workdir }}"
-        owner: "{{ wildfly_user }}"
-        group: "{{ wildfly_group }}"
-        remote_src: yes
-        creates: "{{ wildfly_home }}"
-  when:
-    - wildfly is defined
-    - wildfly.download_base_url is defined
-    - wildfly.version is defined
+- name: "Download and unzip Wildfly zipfile from {{ wfly_download_url }}"
+  unarchive:
+    src: "{{ wfly_download_url }}"
+    dest: "{{ workdir }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    remote_src: yes
+    creates: "{{ wildfly.home }}"
 
 - stat:
     path: "{{ wildfly_home }}"

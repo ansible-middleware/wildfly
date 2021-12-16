@@ -9,7 +9,7 @@ wfly_download_baseurl: 'https://download.jboss.org/wildfly'
 wfly_download_url: "{{ wfly_download_baseurl }}/{{ wfly_version }}/{{ wfly_zipfile }}"
 wildfly_config_base: "{{ override_wildfly_config_base | default('standalone.xml') }}"
 wildfly:
-  home: "{{ workdir }}/wildfly-{{ wfly_version }}/"
+  home: "{{ workdir }}wildfly-{{ wfly_version }}/"
   config: "{{ wildfly_config_base }}"
   user: "{{ wildfly_user | default('wildfly') }}"
   min_mem: 64m

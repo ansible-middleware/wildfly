@@ -1,0 +1,20 @@
+---
+- assert:
+    that:
+      - wildfly_user is defined
+    quiet: true
+
+- set_fact:
+    wildfly_group: "{{ wildfly_user }}"
+  when:
+    - not wildfly_group is defined
+
+- name: "Ensure user {{ wildfly_user }} exists."
+  group:
+    name: "{{ wildfly_group }}"
+
+- name: "Ensure group {{ wildfly_group }} exists."
+  user:
+    name: "{{ wildfly_user }}"
+    groups: "{{ wildfly_group }}"
+    state: present

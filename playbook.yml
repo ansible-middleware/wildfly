@@ -20,25 +20,29 @@
           jdbc_driver_module_name: 'org.postgresql'
 
   post_tasks:
+    - set_fact:
+        wfly_http_port: 8080
+
     - wait_for:
-        port: 8080
+        port: "{{ wfly_http_port }}"
 
     - name: "Checks that Wildfly server is running and accessible"
       get_url:
-        url: http://localhost:8080/
+        url: "http://localhost:{{ wfly_http_port }}/"
         dest: '/dev/null'
 
     - block:
         - include_role:
             name: wildfly_systemd
-            tasks_from: stop_service.yml
+            tasks_from: service.yml
           vars:
             instance_name: "wildfly"
+            instance_state: stopped
 
         - include_role:
             name: wildfly_uninstall
           vars:
             instance_name: "wildfly"
-            wildfly_service_config: '/etc/wildfly.conf'
+            wildfly_service_config: "{{ wildfly_service_config_file_location}}"
       when:
         - delete_install is defined

@@ -1,12 +1,11 @@
 ---
 - name: Converge
   hosts: all
-  vars_files:
-    - vars/main.yml
   collections:
-    - middleware_automation.jcliff
+    - middleware_automation.wildfly
   roles:
     - wildfly_install
+    - wildfly_systemd
   tasks:
 
     - name: "Install Postresql driver"

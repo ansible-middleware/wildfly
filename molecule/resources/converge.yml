@@ -3,17 +3,14 @@
   hosts: all
   vars_files:
     - vars/main.yml
-  vars:
-    app_url: http://people.redhat.com/~rpelisse/simple-webapp.war
-    app: /tmp/simple-webapp.war
   collections:
     - middleware_automation.jcliff
   roles:
     - wildfly_install
-    - wildfly_systemd
   tasks:
 
-    - include_role:
+    - name: "Install Postresql driver"
+      include_role:
         name: wildfly_driver
         tasks_from: jdbc_driver.yml
       vars:

@@ -1,0 +1,3 @@
+---
+- name: "Start Service"
+  include_tasks: start_service.yml

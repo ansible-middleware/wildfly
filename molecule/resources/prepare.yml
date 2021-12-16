@@ -1,4 +1,0 @@
----
-- name: Prepare
-  hosts: all
-  tasks:

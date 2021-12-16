@@ -2,8 +2,6 @@
 - assert:
     that:
       - wildfly_home is defined or wildfly.home is defined
-      - wildfly_user is defined
-      - wildfly_group is defined
       - wildfly_config_base is defined
     quiet: true
 
@@ -12,15 +10,9 @@
   when:
     - wildfly.home is defined
 
-- name: "Ensure user {{ wildfly_user }} exists."
-  group:
-    name: "{{ wildfly_group }}"
-
-- name: "Ensure group {{ wildfly_group }} exists."
-  user:
-    name: "{{ wildfly_user }}"
-    groups: "{{ wildfly_group }}"
-    state: present
+- include_role:
+    name: wildfly_install
+    tasks_from: user.yml
 
 - set_fact:
     basedir: "{{ wildfly_basedir_prefix | default(wildfly_home + '/standalone') }}"

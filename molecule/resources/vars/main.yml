@@ -1,5 +1,5 @@
 ---
-wfly_version: 18.0.1.Final
+wfly_version: 24.0.0.Final
 workdir: /opt/wildfly/
 wfly_zipfile: "wildfly-{{ wfly_version }}.zip"
 wfly_download_url: https://download.jboss.org/wildfly/{{ wfly_version }}/{{ wfly_zipfile }}

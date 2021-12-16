@@ -8,15 +8,10 @@
     app: /tmp/simple-webapp.war
   collections:
     - middleware_automation.jcliff
+  roles:
+    - wildfly_install
+    - wildfly_systemd
   tasks:
-    - name: Include jcliff role
-      include_role:
-        name: jcliff
-
-    - name: "Download a demo app to deploy"
-      get_url:
-        url: "{{ app_url }}"
-        dest: "{{ app }}"
 
     - include_role:
         name: wildfly_driver
@@ -29,38 +24,3 @@
         jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
         jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
         jdbc_driver_module_name: "org.postgresql"
-
-    - jcliff:
-        wfly_home: "{{ wildfly.home }}"
-        timeout: 60000
-        components:
-          - system_properties:
-              - name: jcliff.enabled
-                value: "enabled.plus"
-          - deployments:
-              - name: simple-webapp
-                runtime_name: simple-webapp-v1.war
-                path: /tmp/simple-webapp.war
-          - drivers:
-              - driver_name: postgresql
-                driver_module_name: org.postgresql
-                driver_class_name: org.postgresql.Driver
-                driver_xa_datasource_class_name: org.postgresql.xa.PGXADataSource
-          - datasources:
-              - name: ExampleDS2
-                use_java_context: "true"
-                jndi_name: java:jboss/datasources/ExampleDS2
-                connection_url: "jdbc:h2:mem:test2;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE"
-                driver_name: h2
-          - messaging_activemq:
-              jms_queue:
-                - name: myQueue
-                  entries:
-                    [
-                      "queue/myQueue",
-                      "jms/queue/myQueue",
-                      "java:jboss/exported/jms/queue/myQueue",
-                    ]
-              jms_topic:
-                - name: myTopic
-                  entries: ["MyTopic"]

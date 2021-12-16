@@ -1,5 +1,5 @@
 ---
-wfly_version: 18.0.1.Final
+wfly_version: 24.0.0.Final
 workdir: /opt/wildfly/
 wfly_zipfile: "wildfly-{{ wfly_version }}.zip"
 wfly_download_url: https://download.jboss.org/wildfly/{{ wfly_version }}/{{ wfly_zipfile }}
@@ -11,6 +11,7 @@ wildfly:
   max_mem: 512m
   metaspace_size: 96m
   metaspace_maxsize: 256m
+wildfly_config_base: standalone.xml
 pgsql_module_dir: "{{ wildfly.home }}//modules/org/postgresql/main"
 jdbc_driver_filename: postgresql-9.2-1002-jdbc4.jar
 jdbc_driver_url: https://repo.maven.apache.org/maven2/org/postgresql/postgresql/9.2-1002-jdbc4/{{ jdbc_driver_filename }}

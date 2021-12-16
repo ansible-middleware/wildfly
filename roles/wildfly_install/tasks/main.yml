@@ -1,4 +1,16 @@
 ---
+- assert:
+    that:
+      - wildfly is defined
+      - wildfly.home is defined
+      - wildfly_user is defined
+    quiet: true
+
+- set_fact:
+    wildfly_group: "{{ wildfly_user }}"
+  when:
+    - not wildfly_group is defined
+
 - name: "Ensure user {{ wildfly_user }} exists."
   group:
     name: "{{ wildfly_group }}"

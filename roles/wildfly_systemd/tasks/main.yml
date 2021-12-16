@@ -1,11 +1,16 @@
 ---
 - assert:
     that:
-      - wildfly_home is defined
+      - wildfly_home is defined or wildfly.home is defined
       - wildfly_user is defined
       - wildfly_group is defined
       - wildfly_config_base is defined
     quiet: true
+
+- set_fact:
+    wildfly_home: "{{ wildfly.home }}"
+  when:
+    - wildfly.home is defined
 
 - name: "Ensure user {{ wildfly_user }} exists."
   group:

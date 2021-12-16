@@ -2,16 +2,7 @@
 - name: Verify
   hosts: all
   gather_facts: false
-  vars_files:
-    - vars/main.yml
   tasks:
-    - name: Get service facts
-      service_facts:
-
-    - name: Check if wildfly service started
-      assert:
-        that:
-          - ansible_facts.services["wfly"]["state"] == "running"
 
     - name: "Check if web connector is accessible"
       uri:

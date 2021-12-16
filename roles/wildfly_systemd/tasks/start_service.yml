@@ -9,3 +9,5 @@
     name: "{{ instance_name }}"
     state: started
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
+  when:
+    - do_not_start_systemd_service_wildfly is defined

@@ -7,6 +7,7 @@
     - middleware_automation.jcliff
   roles:
     - wildfly_install
+    - wildfly_systemd
   tasks:
 
     - name: "Install Postresql driver"

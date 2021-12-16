@@ -12,6 +12,7 @@ wildfly:
   metaspace_size: 96m
   metaspace_maxsize: 256m
 wildfly_config_base: standalone.xml
+do_not_start_systemd_service_wildfly: True
 pgsql_module_dir: "{{ wildfly.home }}//modules/org/postgresql/main"
 jdbc_driver_filename: postgresql-9.2-1002-jdbc4.jar
 jdbc_driver_url: https://repo.maven.apache.org/maven2/org/postgresql/postgresql/9.2-1002-jdbc4/{{ jdbc_driver_filename }}

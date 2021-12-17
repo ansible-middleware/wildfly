@@ -1,7 +1,7 @@
 ---
 wildfly_user: "{{ override_wildfly_user | default('wildfly') }}"
 widfly_group: "{{ override_wildfly_group | default(wildfly_user) }}"
-wfly_version_default: 25.0.1.Final
+wfly_version_default: 26.0.0.Final
 wfly_version: "{{ wildfly_version | default(wfly_version_default) }}"
 workdir: /opt/wildfly/
 wfly_zipfile: "wildfly-preview-{{ wfly_version }}.zip"

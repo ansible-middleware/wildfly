@@ -1,0 +1,73 @@
+---
+- assert:
+    that:
+      - wildfly_install.download_url is defined
+      - wildfly_install.home is defined
+      - wildfly_install.archive_name is defined
+      - wildfly_install.user is defined
+      - wildfly_install.group is defined
+    quiet: true
+
+# if dest already exists, get_url skips downloading
+# and proceed to unarchive (allows to delegate download
+# to redhat_csp_download for EAP)
+- set_fact:
+    full_path_to_archive: "{{ wildfly_install.archive_dir }}/{{ wildfly_install.archive_name }}"
+
+#- assert:
+#    that:
+#      - not (wildfly_install.rhn_id is defined and wildfly_install.rpm is defined)
+#    quiet: true
+#    fail_msg: "Install can only be from RHN (ID: {{ wildfly_install.rhn_id }} or with RPM {{ wildfly_install.rpm }}, not both."
+
+- include_tasks: install/wildfly.yml
+  when:
+    - wildfly_install.rhn.id is defined and wildfly_install.rhn.id == "none"
+
+- include_tasks: install/rhn.yml
+  vars:
+    rhn_id_file: "{{ wildfly_install.rhn.id }}"
+  when:
+    - wildfly_install.rhn.id is defined and wildfly_install.rhn.id != "none"
+
+- include_tasks: install/rpm.yml
+  when:
+    - wildfly_install.rpm is defined
+
+- block:
+    - stat:
+        path: "{{ full_path_to_archive }}"
+      register: is_archive_file_created
+
+    - assert:
+        that:
+          - is_archive_file_created is defined and is_archive_file_created.stat is defined
+          - is_archive_file_created.stat.exists
+        quiet: true
+        fail_msg: "Archive file does NOT exists: {{ full_path_to_archive }}"
+
+    - name: "Extract Wildfly files from {{ wildfly_install.path_to_archive }} into {{ wildfly_install.workdir }}."
+      become: yes
+      become_user: "{{ wildfly_install.user }}"
+      unarchive:
+        src: "{{ full_path_to_archive }}"
+        dest: "{{ wildfly_install.workdir }}"
+        owner: "{{ wildfly_install.user }}"
+        group: "{{ wildfly_install.group }}"
+        remote_src: yes
+        creates: "{{ wildfly_install.home }}"
+  when:
+    - not wildfly_install.rpm is defined
+
+- stat:
+    path: "{{ wildfly_install.home }}"
+  register: is_wfly_home
+
+- assert:
+    that:
+      - is_wfly_home is defined
+      - is_wfly_home.stat is defined
+      - is_wfly_home.stat.exists is defined
+      - is_wfly_home.stat.exists
+    quiet: true
+    fail_msg: "Wildfly home has not been created: {{ wildfly_install.home }}."

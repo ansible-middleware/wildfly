@@ -1,0 +1,17 @@
+---
+wildfly_install:
+  download_url: "{{ wildfly_install_download_url }}"
+  workdir: "{{ wildfly_install_workdir }}"
+  archive_dir: "{{ wildfly_archive_dir }}"
+  archive_name: "{{ wildfly_archive_filename }}"
+  rhn:
+    id: "{{ jboss_eap_rhn_id }}"
+  home: "{{ wildfly_home | default(wildfly_install_default_home) }}"
+  config: "{{ wildfly_config_base }}"
+  user: "{{ wildfly_user }}"
+  group: "{{ wildfly_group }}"
+  min_mem: "{{ wildfly_jvm_memory_min }}"
+  max_mem: "{{ wildfly_jvm_memory_max }}"
+  metaspace_size: "{{ wildfly_jvm_metaspace_size }}"
+  java:
+    package_name: "{{ wildfly_java_package_name }}"

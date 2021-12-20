@@ -1,6 +1,6 @@
 ---
 - name: "Wildfly installation and configuration"
-  hosts: "all"
+  hosts: "{{ hosts_group_name | default('localhost') }}"
   become: yes
   roles:
     - wildfly_install

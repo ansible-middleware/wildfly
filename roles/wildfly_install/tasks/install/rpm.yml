@@ -1,0 +1,8 @@
+---
+- assert:
+    that:
+      - jboss_eap_package_name is defined
+    quiet: true
+
+- fail:
+    msg: "Not implemented yet."

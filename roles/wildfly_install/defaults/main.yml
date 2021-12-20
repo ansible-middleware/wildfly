@@ -1,17 +1,16 @@
 ---
-wildfly_user: "{{ override_wildfly_user | default('wildfly') }}"
-widfly_group: "{{ override_wildfly_group | default(wildfly_user) }}"
-wfly_version_default: 26.0.0.Final
-wfly_version: "{{ wildfly_version | default(wfly_version_default) }}"
-workdir: /opt/wildfly/
-wfly_zipfile: "wildfly-preview-{{ wfly_version }}.zip"
-wfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
-wfly_download_url: "{{ wfly_download_baseurl }}/{{ wfly_version }}/{{ wfly_zipfile }}"
-wildfly_config_base: "{{ override_wildfly_config_base | default('standalone.xml') }}"
-wildfly:
-  home: "{{ workdir }}wildfly-preview-{{ wfly_version }}/"
-  config: "{{ wildfly_config_base }}"
-  user: "{{ wildfly_user | default('wildfly') }}"
-  min_mem: 64m
-  max_mem: 512m
-  metaspace_size: 96m
+wildfly_version: '26.0.0.Final'
+wildfly_archive_filename: "wildfly-preview-{{ wildfly_version }}.zip"
+wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
+wildfly_install_workdir: '/opt/wildfly/'
+wildfly_home: "{{ wildfly_install_workdir }}wildfly-preview-{{ wildfly_version }}/"
+wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
+wildfly_archive_dir: "{{ wildfly_install_workdir }}"
+wildfly_config_base: 'standalone.xml'
+wildfly_user: 'wildfly'
+wildfly_group: "{{ wildfly_user }}"
+jboss_eap_rhn_id: 'none'
+wildfly_jvm_memory_min: '64m'
+wildfly_jvm_memory_max: '512m'
+wildfly_jvm_metaspace_size: '96m'
+wildfly_java_package_name: 'java-1.8.0-openjdk'

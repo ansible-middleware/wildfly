@@ -1,50 +1,23 @@
 ---
-- assert:
-    that:
-      - wildfly is defined
-      - wfly_download_url is defined
-      - wildfly.home is defined
-      - workdir is defined
-    quiet: true
+- include_tasks: prereqs.yml
 
 - include_tasks: user.yml
 
-- package:
-    name: "{{ item }}"
-    state: present
-  loop:
-      - unzip
-      - tar
-      - java-1.8.0-openjdk
-
-- name: "Ensures workdir {{ workdir }} exists."
+- name: "Ensures workdir {{ wildfly_install.workdir }} exists."
   file:
-    path: "{{ workdir }}"
+    path: "{{ wildfly_install.workdir }}"
     state: directory
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
 
-- name: "Download and unzip Wildfly zipfile from {{ wfly_download_url }}"
-  unarchive:
-    src: "{{ wfly_download_url }}"
-    dest: "{{ workdir }}"
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    remote_src: yes
-    creates: "{{ wildfly.home }}"
+- include_tasks: install.yml
 
 - stat:
-    path: "{{ wildfly_home }}"
-  register: stat_wildfly_home
-  when:
-    - wildfly_home is defined
+    path: "{{ wildfly_install.home }}"
+  register: is_wildfly_home
 
-- file:
-    path: "{{ wildfly_home }}"
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    recurse: yes
-  when:
-    - stat_wildfly_home is defined
-    - stat_wildfly_home.stat is defined
-    - stat_wildfly_home.stat.exists
+- assert:
+    that:
+      - is_wildfly_home is defined and is_wildfly_home.stat is defined and is_wildfly_home.stat.exists is defined
+      - is_wildfly_home.stat.exists
+    quiet: true

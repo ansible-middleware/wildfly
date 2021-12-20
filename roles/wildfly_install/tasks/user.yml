@@ -1,20 +1,18 @@
 ---
 - assert:
     that:
-      - wildfly_user is defined
+      - wildfly_install.user is defined
     quiet: true
 
 - set_fact:
-    wildfly_group: "{{ wildfly_user }}"
-  when:
-    - not wildfly_group is defined
+    group_name: "{{ wildfly_install.group | default(wildfly_install.user) }}"
 
-- name: "Ensure user {{ wildfly_user }} exists."
+- name: "Ensure group {{ group_name }} exists."
   group:
-    name: "{{ wildfly_group }}"
+    name: "{{ group_name }}"
 
-- name: "Ensure group {{ wildfly_group }} exists."
+- name: "Ensure user {{ wildfly_install.user }} exists."
   user:
-    name: "{{ wildfly_user }}"
-    groups: "{{ wildfly_group }}"
+    name: "{{ wildfly_install.user }}"
+    groups: "{{ group_name }}"
     state: present

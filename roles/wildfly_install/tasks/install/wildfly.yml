@@ -1,0 +1,20 @@
+---
+- assert:
+    that:
+      - wildfly_install.download_url is defined
+      - wildfly_install.home is defined
+      - wildfly_install.archive_name is defined
+      - wildfly_install.user is defined
+      - wildfly_install.group is defined
+      - full_path_to_archive is defined
+    quiet: true
+
+- name: "Download Wildfly zipfile from {{ wildfly_install.download_url }} into {{ wildfly_install.path_to_archive }}"
+  become: true
+  become_user: "{{ wildfly_install.user }}"
+  get_url:
+    url: "{{ wildfly_install.download_url }}"
+    dest: "{{ full_path_to_archive }}"
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
+#  creates: "{{ wildfly_install.path_to_archive }}"

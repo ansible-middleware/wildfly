@@ -1,9 +1,13 @@
 ---
-wildfly_port_range_offset: "{{ override_wildfly_port_range_offset | default(1) }}"
-wildfly_systemd:
-  enabled: "{{ override_wildfly_systemd | default('yes') }}"
-wildfly_systemd_service_config_location: "{{ override_wildfly_systemd_service_config_location | default('/usr/lib/systemd/system') }}"
-wildfly_systemd_service_config_file_suffix: "{{ override_wildfly_systemd_service_config_file_suffix | default('.service') }}"
-wildfly_systemd_service_config_file_template: "{{ override_wildfly_systemd_service_config_file_template | default('templates/wfly.service.j2') }}"
-wildfly_service_config_file_template: "{{ override_wildfly_service_config_file_template | default('templates/wfly.conf.j2') }}"
-wildfly_service_config_file_location: "{{ override_wildfly_service_config_file_location | default('/etc/wildfly.conf') }}"
+wildfly_user: 'wildfly'
+wildfly_group: 'wildfly'
+wildfly_home: '/opt/wildfly/wildfly-preview-26.0.0.Final/'
+wildfly_config_base: 'standalone.xml'
+wildfly_port_range_offset: '1'
+wildfly_systemd_enabled: yes
+
+wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
+wildfly_systemd_service_config_file_suffix: '.service'
+wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
+wildfly_service_config_file_template: 'templates/wfly.conf.j2'
+wildfly_service_config_file_location: '/etc/wildfly.conf'

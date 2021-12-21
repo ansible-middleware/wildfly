@@ -1,21 +1,19 @@
 ---
 - assert:
     that:
-      - wildfly_home is defined or wildfly.home is defined
-      - wildfly_config_base is defined
+      - wildfly_systemd is defined
+      - wildfly_systemd.home is defined
     quiet: true
-
-- set_fact:
-    wildfly_home: "{{ wildfly.home }}"
-  when:
-    - wildfly.home is defined
 
 - include_role:
     name: wildfly_install
     tasks_from: user.yml
 
 - set_fact:
-    basedir: "{{ wildfly_basedir_prefix | default(wildfly_home + '/standalone') }}"
+    basedir_default_value: "{{ wildfly_systemd.home }}/standalone"
+
+- set_fact:
+    basedir: "{{ wildfly_basedir_prefix | default(basedir_default_value) }}"
   when:
     - not instance_id is defined
 
@@ -52,24 +50,24 @@
   file:
     path: "{{ basedir }}"
     state: directory
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
     mode: '0755'
 
 - name: "Creates deployment directories for instance: {{ instance_name }}"
   file:
     path: "{{ basedir }}/deployments"
     state: directory
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
     mode: '0755'
 
 - name: "Deploy Wildfy configuration"
   copy:
-    src: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_config_base }}"
-    dest: "{{ wildfly_home }}/standalone/configuration/{{ instance_name }}.xml"
-    group: "{{ wildfly_group }}"
-    owner: "{{ wildfly_user }}"
+    src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
+    dest: "{{ wildfly_systemd.home }}/standalone/configuration/{{ instance_name }}.xml"
+    group: "{{ wildfly_systemd.group }}"
+    owner: "{{ wildfly_systemd.user }}"
     remote_src: true
     force: no
 

@@ -6,10 +6,10 @@ Before=httpd.service
 [Service]
 Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
 EnvironmentFile=-/etc/{{ instance_name }}.conf
-User={{ wildfly_user }}
-Group={{ wildfly_group }}
+User={{ wildfly_systemd.user }}
+Group={{ wildfly_systemd.group }}
 PIDFile={{ basedir }}/{{ instance_name }}.pid
-ExecStart={{ wildfly_home }}/bin/standalone.sh -c $WILDFLY_SERVER_CONFIG -b $WILDFLY_BIND $WILDFLY_OPTS
+ExecStart={{ wildfly_systemd.home }}/bin/standalone.sh -c $WILDFLY_SERVER_CONFIG -b $WILDFLY_BIND $WILDFLY_OPTS
 
 [Install]
 WantedBy=multi-user.target

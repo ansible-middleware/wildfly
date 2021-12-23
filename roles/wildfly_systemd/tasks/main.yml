@@ -82,7 +82,7 @@
 - name: "Deploy Wildfly service instance configuration"
   template:
     src: "{{ wildfly_service_config_file_template }}"
-    dest: "{{ wildfly_service_config_file_location }}"
+    dest: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
     group: root
     owner: root
 

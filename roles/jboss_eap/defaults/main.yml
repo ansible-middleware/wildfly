@@ -1,0 +1,3 @@
+---
+jboss_cli_controller_host: 'localhost'
+jboss_cli_controller_port: '9990'

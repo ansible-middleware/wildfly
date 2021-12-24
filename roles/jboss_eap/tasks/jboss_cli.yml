@@ -1,18 +1,19 @@
 ---
-
 - name: "Ensure required params for JBoss CLI have been provided"
   assert:
     that:
       - jboss_home is defined
       - query is defined
+      - jboss_cli_controller_host is defined
+      - jboss_cli_controller_port is defined
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
 - set_fact:
-    path_to_cli: "{{ override_path_to_cli | default(jboss_home + '/bin/jboss-cli.sh') }}"
+    path_to_cli: "{{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}"
     controller:
-      host: "{{ override_jboss_cli_controller_host | default('localhost') }}"
-      port: "{{ override_jboss_cli_controller_port | default('9990') }}"
+      host: "{{ jboss_cli_controller_host  }}"
+      port: "{{ jboss_cli_controller_port  }}"
 
 - name: "Ensure server's management interface is reachable"
   wait_for:

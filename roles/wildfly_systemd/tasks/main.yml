@@ -51,7 +51,7 @@
     path: "{{ basedir }}"
     state: directory
     owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
+    group: "{{ wildfly_systemd.user }}"
     mode: '0755'
 
 - name: "Creates deployment directories for instance: {{ instance_name }}"

@@ -71,18 +71,28 @@
     remote_src: true
     force: no
 
+- set_fact:
+    service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
+  when:
+    - not service_systemd_conf_file is defined
+
 - name: "Deploy Systemd configuration for Wildfly service"
   template:
     src: "{{ wildfly_systemd_service_config_file_template }}"
-    dest: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
+    dest: "{{ service_systemd_conf_file }}"
     group: root
     owner: root
   register: daemon_reload
 
+- set_fact:
+    service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
+  when:
+    - not service_systemd_env_file is defined
+
 - name: "Deploy Wildfly service instance configuration"
   template:
     src: "{{ wildfly_service_config_file_template }}"
-    dest: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
+    dest: "{{ service_systemd_env_file }}"
     group: root
     owner: root
 

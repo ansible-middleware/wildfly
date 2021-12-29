@@ -5,7 +5,7 @@ Before=httpd.service
 
 [Service]
 Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
-EnvironmentFile=-{{ wildfly_service_config_file_location }}
+EnvironmentFile=-{{ service_systemd_env_file }}
 User={{ wildfly_systemd.user }}
 Group={{ wildfly_systemd.group }}
 PIDFile={{ basedir }}/{{ instance_name }}.pid

@@ -46,7 +46,7 @@
         quiet: true
         fail_msg: "Archive file does NOT exists: {{ full_path_to_archive }}"
 
-    - name: "Extract Wildfly files from {{ wildfly_install.path_to_archive }} into {{ wildfly_install.workdir }}."
+    - name: "Extract Wildfly files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
       become: yes
       become_user: "{{ wildfly_install.user }}"
       unarchive:

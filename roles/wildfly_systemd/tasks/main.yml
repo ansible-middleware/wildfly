@@ -76,7 +76,7 @@
   when:
     - not service_systemd_env_file is defined
 
-- name: "Deploy Wildfly service instance configuration"
+- name: "Deploy Wildfly service instance configuration: {{ service_systemd_env_file }}"
   template:
     src: "{{ wildfly_service_config_file_template }}"
     dest: "{{ service_systemd_env_file }}"
@@ -88,7 +88,7 @@
   when:
     - not service_systemd_conf_file is defined
 
-- name: "Deploy Systemd configuration for Wildfly service"
+- name: "Deploy Systemd configuration for Wildfly service: {{ service_systemd_conf_file }}"
   template:
     src: "{{ wildfly_systemd_service_config_file_template }}"
     dest: "{{ service_systemd_conf_file }}"

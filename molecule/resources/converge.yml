@@ -14,7 +14,6 @@
     - name: "Install Postresql driver"
       include_role:
         name: wildfly_driver
-        tasks_from: jdbc_driver.yml
       vars:
         jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
         jdbc_driver_version: 9.2-1002-jdbc4

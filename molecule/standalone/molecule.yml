@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    requirements-file: molecule/requirements.yml
 driver:
   name: docker
 platforms:
@@ -19,14 +21,12 @@ provisioner:
     converge: ../resources/converge.yml
     verify: ../resources/verify.yml
   inventory:
-    group_vars:
-      all:
-        jcliff_standalone: true
     host_vars:
       localhost:
         ansible_python_interpreter: "{{ ansible_playbook_python }}"
   env:
     ANSIBLE_FORCE_COLOR: "true"
+    ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
 verifier:
   name: ansible
 scenario:
@@ -39,7 +39,7 @@ scenario:
     - create
     - prepare
     - converge
-    # -   idempotence
+    - idempotence
     - side_effect
     - verify
     - cleanup

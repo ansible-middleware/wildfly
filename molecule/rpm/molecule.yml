@@ -1,6 +1,8 @@
 ---
 dependency:
   name: galaxy
+  options:
+    requirements-file: molecule/requirements.yml
 driver:
   name: docker
 platforms:
@@ -27,3 +29,18 @@ provisioner:
     ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
 verifier:
   name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

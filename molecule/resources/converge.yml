@@ -6,10 +6,17 @@
   vars:
     wildfly_home: '/opt/wildfly/wildfly-preview-26.0.0.Final'
     wildfly_user: 'wildfly'
-  roles:
-    - wildfly_install
-    - wildfly_systemd
+  # roles:
+  #   - wildfly_install
+  #   - wildfly_systemd
   tasks:
+    - name: Include wildfly_install role
+      include_role:
+        name: ../../roles/wildfly_install
+
+    - name: Include wildfly_systemd role
+      include_role:
+        name: ../../roles/wildfly_systemd
 
     - name: "Install Postresql driver"
       include_role:

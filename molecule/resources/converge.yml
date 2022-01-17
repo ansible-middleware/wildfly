@@ -17,14 +17,22 @@
     - name: Include wildfly_systemd role
       include_role:
         name: ../../roles/wildfly_systemd
-
-    - name: "Install Postresql driver"
+    
+    - name: Include wildfly_driver role
       include_role:
-        name: wildfly_driver
-      vars:
-        jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
-        jdbc_driver_version: 9.2-1002-jdbc4
-        jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
-        jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
-        jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
-        jdbc_driver_module_name: "org.postgresql"
+        name: ../../roles/wildfly_driver
+    
+    - name: Include jboss_eap role
+      include_role:
+        name: ../../roles/jboss_eap
+
+    # - name: "Install Postresql driver"
+    #   include_role:
+    #     name: ../../roles/wildfly_driver
+    #   vars:
+    #     jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
+    #     jdbc_driver_version: 9.2-1002-jdbc4
+    #     jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
+    #     jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
+    #     jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
+    #     jdbc_driver_module_name: "org.postgresql"

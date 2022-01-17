@@ -1,8 +1,7 @@
 ---
 dependency:
-  name: galaxy
-  options:
-    requirements-file: molecule/requirements.yml
+  name: shell
+  command: ansible-galaxy collection install -r molecule/requirements.yml -p $HOME/.ansible/collections --force-with-deps
 driver:
   name: docker
 platforms:

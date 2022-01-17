@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python_version: ["3.7"]
+        python_version: ["3.10"]
     steps:
       - name: Check out code
         uses: actions/checkout@v2
@@ -28,10 +28,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install yamllint molecule[lint,docker] ansible-core flake8 ansible-lint voluptuous
 
-      - name: Create default collection path symlink
+      - name: Create default collection path
         run: |
-          mkdir -p /home/runner/.ansible
-          ln -s /home/runner/work/wildfly_collections/wildfly_collection /home/runner/.ansible/collections
+          mkdir -p /home/runner/.ansible/collections/ansible_collections
 
       - name: Run sanity tests
         run: ansible-test sanity --docker -v --color --python ${{ matrix.python_version }}

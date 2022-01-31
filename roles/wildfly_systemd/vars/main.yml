@@ -7,3 +7,4 @@ wildfly_systemd:
   enabled: "{{ wildfly_systemd_enabled }}"
 
 wildfly_yml_config_path: /modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/
+wildfly_yml_config_file: org.jboss.as.controller.persistence.ConfigurationExtension

@@ -71,6 +71,34 @@
     remote_src: true
     force: no
 
+- block:
+  - name: Create YAML configuration directory
+    file:
+      path: "{{ wildfly_install.home }}{{ wildfly_yml_config_path }}"
+      state: directory
+      recurse: yes
+      owner: "{{ wildfly_install.user }}"
+      group: "{{ wildfly_install.group }}"
+      mode: 0755
+  - name: Enable YAML configuration extension
+    copy:
+      content: "org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension"
+      dest: "{{ wildfly_install.home }}{{ wildfly_yml_config_path }}org.jboss.as.controller.persistence.ConfigurationExtension"
+      owner: "{{ wildfly_install.user }}"
+      group: "{{ wildfly_install.group }}"
+      mode: 0644
+  - name: Deploy YAML configuration files
+    copy:
+      src: "{{ file }}"
+      dest: "{{ basedir }}/{{ file }}"
+      owner: "{{ wildfly_install.user }}"
+      group: "{{ wildfly_install.group }}"
+      mode: 0644
+    loop: "{{ wildfly_yml_configs|flatten }}"
+    loop_control:
+      loop_var: file
+  when: wildfly_enable_yml_config
+
 - set_fact:
     service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
   when:

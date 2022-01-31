@@ -10,5 +10,9 @@ wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
 wildfly_systemd_service_config_file_suffix: '.service'
 wildfly_systemd_conf_file_suffix: '.conf'
 wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
+
 wildfly_service_config_file_template: 'templates/wfly.conf.j2'
 wildfly_service_config_file_location: '/etc/'
+
+wildfly_enable_yml_config: yes
+wildfly_yml_configs: []

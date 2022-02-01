@@ -77,7 +77,7 @@
 
 - name: Check YAML configuration is disabled
   file:
-    path: "{{ wildfly_install.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+    path: "{{ wildfly_systemd.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     state: absent
   when: not wildfly_enable_yml_config
 

@@ -1,7 +1,7 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_home: '/opt/wildfly/wildfly-preview-26.0.0.Final/'
+wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
 wildfly_config_base: 'standalone.xml'
 wildfly_port_range_offset: '1'
 wildfly_systemd_enabled: yes
@@ -14,5 +14,5 @@ wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
 wildfly_service_config_file_template: 'templates/wfly.conf.j2'
 wildfly_service_config_file_location: '/etc/'
 
-wildfly_enable_yml_config: yes
+wildfly_enable_yml_config: no
 wildfly_yml_configs: []

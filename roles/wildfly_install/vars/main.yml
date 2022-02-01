@@ -1,12 +1,13 @@
 ---
+# internal variables
 wildfly_install:
   download_url: "{{ wildfly_install_download_url }}"
   workdir: "{{ wildfly_install_workdir }}"
   archive_dir: "{{ wildfly_archive_dir }}"
-  archive_name: "{{ wildfly_archive_filename }}"
+  archive_name: "{{ wildfly_jboss_eap_archive_filename if wildfly_jboss_eap_enable else wildfly_archive_filename }}"
   rhn:
-    id: "{{ jboss_eap_rhn_id }}"
-  home: "{{ wildfly_home | default(wildfly_install_default_home) }}"
+    id: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version] }}"
+  home: "{{ wildfly_jboss_eap_home if wildfly_jboss_eap_enable else wildfly_home }}"
   config: "{{ wildfly_config_base }}"
   user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
@@ -15,3 +16,6 @@ wildfly_install:
   metaspace_size: "{{ wildfly_jvm_metaspace_size }}"
   java:
     package_name: "{{ wildfly_java_package_name }}"
+
+jboss_eap_rhn_ids:
+  '7.4.0': '99481'

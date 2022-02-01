@@ -8,8 +8,8 @@
     group: "{{ wildfly_systemd.group }}"
     mode: 0755
 - name: Enable YAML configuration extension
-  copy:
-    content: "org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension"
+  template:
+    src: "wfly.yml.config.j2"
     dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"

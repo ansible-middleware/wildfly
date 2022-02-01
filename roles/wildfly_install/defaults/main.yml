@@ -1,16 +1,24 @@
 ---
 wildfly_version: '26.0.0.Final'
-wildfly_archive_filename: "wildfly-preview-{{ wildfly_version }}.zip"
+wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
 wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
 wildfly_install_workdir: '/opt/wildfly/'
-wildfly_home: "{{ wildfly_install_workdir }}wildfly-preview-{{ wildfly_version }}/"
+wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
 wildfly_archive_dir: "{{ wildfly_install_workdir }}"
 wildfly_config_base: 'standalone.xml'
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-jboss_eap_rhn_id: 'none'
 wildfly_jvm_memory_min: '64m'
 wildfly_jvm_memory_max: '512m'
 wildfly_jvm_metaspace_size: '96m'
 wildfly_java_package_name: 'java-1.8.0-openjdk'
+
+### wildfly/eap choice: by default install jboss eap if rhn credentials are defined
+wildfly_jboss_eap_version: '7.4.0'
+wildfly_jboss_eap_archive_filename: 'jboss-eap-7.4.0.zip'
+wildfly_jboss_eap_home: "{{ wildfly_install_workdir }}jboss-eap-{{ wildfly_jboss_eap_version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}/"
+wildfly_jboss_eap_enable: "{{ True if rhn_username is defined and rhn_password is defined else False }}"
+
+# whether to install from local archive
+wildfly_offline_install: False

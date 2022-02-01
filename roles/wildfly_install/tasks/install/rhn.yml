@@ -4,7 +4,7 @@
       - rhn_id_file is defined
       - rhn_username is defined
       - rhn_password is defined
-      - full_path_to_archive is defined
+      - local_path_to_archive is defined
     quiet: true
 
 - name: "Download JBoss EAP from RHN (id: {{ rhn_id_file }})"
@@ -12,4 +12,4 @@
     name: jboss_eap
     tasks_from: download_from_rhn.yml
   vars:
-    zipfile_dest: "{{ full_path_to_archive }}"
+    zipfile_dest: "{{ local_path_to_archive }}"

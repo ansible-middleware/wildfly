@@ -15,6 +15,3 @@
   get_url:
     url: "{{ wildfly_install.download_url }}"
     dest: "{{ local_path_to_archive }}"
-    owner: "{{ wildfly_install.user }}"
-    group: "{{ wildfly_install.group }}"
-#  creates: "{{ wildfly_install.path_to_archive }}"

@@ -4,7 +4,7 @@
   collections:
     - middleware_automation.wildfly
   vars:
-    wildfly_home: '/opt/wildfly/wildfly-preview-26.0.0.Final'
+    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
     wildfly_user: 'wildfly'
   roles:
     - wildfly_install

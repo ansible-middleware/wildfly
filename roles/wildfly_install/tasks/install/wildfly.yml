@@ -10,11 +10,11 @@
     quiet: true
 
 - name: "Download Wildfly zipfile from {{ wildfly_install.download_url }} into {{ wildfly_install.path_to_archive }}"
-  become: true
-  become_user: "{{ wildfly_install.user }}"
+  delegate_to: localhost
+  run_once: true
   get_url:
     url: "{{ wildfly_install.download_url }}"
-    dest: "{{ full_path_to_archive }}"
+    dest: "{{ local_path_to_archive }}"
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
 #  creates: "{{ wildfly_install.path_to_archive }}"

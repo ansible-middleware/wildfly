@@ -53,6 +53,12 @@
   when:
     - wildfly_install.rpm is defined
 
+- name: Check downloaded archive
+  stat:
+    path: "{{ local_path_to_archive }}"
+  register: local_archive_path
+  delegate_to: localhost
+
 ## copy and unpack
 - name: Copy archive to target nodes
   copy:
@@ -62,6 +68,10 @@
     group: "{{ wildfly_install.group }}"
     mode: 0640
   register: new_version_downloaded
+  when:
+    - not archive_path.stat.exists
+    - local_archive_path.stat is defined
+    - local_archive_path.stat.exists
   become: yes
 
 - block:

@@ -4,7 +4,7 @@
   become: yes
   vars:
     wildfly_user: 'wildfly'
-    wildfly_home: '/opt/wildfly/wildfly-preview-26.0.0.Final/'
+    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
   collections:
     - middleware_automation.redhat_csp_download
   roles:

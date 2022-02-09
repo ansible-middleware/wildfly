@@ -1,6 +1,6 @@
 namespace: middleware_automation
 name: wildfly
-version: "0.0.6"
+version: "0.0.7"
 readme: README.md
 authors:
   - Romain Pelisse <belaran@redhat.com>

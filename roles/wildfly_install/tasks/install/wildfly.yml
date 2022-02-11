@@ -9,7 +9,7 @@
       - full_path_to_archive is defined
     quiet: true
 
-- name: "Download Wildfly zipfile from {{ wildfly_install.download_url }} into {{ wildfly_install.path_to_archive }}"
+- name: "Download Wildfly zipfile from {{ wildfly_install.download_url }} into {{ local_path_to_archive }}"
   delegate_to: localhost
   run_once: true
   get_url:

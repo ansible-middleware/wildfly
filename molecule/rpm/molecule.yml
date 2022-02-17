@@ -1,14 +1,22 @@
 ---
 dependency:
-  name: galaxy
+  name: shell
+  command: ansible-galaxy collection install -r molecule/requirements.yml -p $HOME/.ansible/collections --force-with-deps
 driver:
   name: docker
 platforms:
   - name: instance
-    image: registry.access.redhat.com/ubi8/ubi-init:latest
+    image: registry.access.redhat.com/ubi8/ubi-init
+    tmpfs:
+      - /run
+      - /tmp
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    capabilities:
+      - SYS_ADMIN
+    command: "/usr/sbin/init"
     pre_build_image: true
     privileged: true
-    command: "/usr/sbin/init"
     port_bindings:
       - 8080:8080
     published_ports:
@@ -27,3 +35,18 @@ provisioner:
     ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
 verifier:
   name: ansible
+scenario:
+  test_sequence:
+    - dependency
+    - lint
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    - idempotence
+    - side_effect
+    - verify
+    - cleanup
+    - destroy

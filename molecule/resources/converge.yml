@@ -9,17 +9,17 @@
   tasks:
     - name: Include wildfly_install role
       include_role:
-        name: ../../roles/wildfly_install
+        name: wildfly_install
 
     - name: Include wildfly_systemd role
       include_role:
-        name: ../../roles/wildfly_systemd
-
+        name: wildfly_systemd
+    
     - name: Include wildfly_driver role
       include_role:
-        name: ../../roles/wildfly_driver
+        name: wildfly_driver
       vars:
-        jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
+        jdbc_driver_module_dir: "{{ wildfly_home }}/modules/org/postgresql/main"
         jdbc_driver_version: 9.2-1002-jdbc4
         jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
         jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
@@ -28,4 +28,4 @@
 
     - name: Include jboss_eap role
       include_role:
-        name: ../../roles/jboss_eap
+        name: jboss_eap

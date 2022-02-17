@@ -4,70 +4,70 @@ argument_specs:
             wildfly_user:
                 # line 2 of wildfly_systemd/defaults/main.yml
                 default: "wildfly"
-                description: "TODO document argument"
+                description: "posix user account for wildfly service"
                 type: "str"
             wildfly_group:
                 # line 3 of wildfly_systemd/defaults/main.yml
                 default: "{{ wildfly_user }}"
-                description: "TODO document argument"
+                description: "posix group for wildfly service"
                 type: "str"
             wildfly_home:
                 # line 4 of wildfly_systemd/defaults/main.yml
                 default: "/opt/wildfly/wildfly-26.0.0.Final/"
-                description: "TODO document argument"
+                description: "Wildfly installation directory"
                 type: "str"
             wildfly_config_base:
                 # line 5 of wildfly_systemd/defaults/main.yml
                 default: "standalone.xml"
-                description: "TODO document argument"
+                description: "Base standalone.xml config for instance"
                 type: "str"
             wildfly_port_range_offset:
                 # line 6 of wildfly_systemd/defaults/main.yml
                 default: 100
-                description: "TODO document argument"
+                description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
             wildfly_systemd_enabled:
                 # line 7 of wildfly_systemd/defaults/main.yml
                 default: true
-                description: "TODO document argument"
+                description: "Enable systemd unit"
                 type: "bool"
             wildfly_systemd_service_config_location:
                 # line 9 of wildfly_systemd/defaults/main.yml
                 default: "/usr/lib/systemd/system"
-                description: "TODO document argument"
+                description: "Path for systemd unit file"
                 type: "str"
             wildfly_systemd_service_config_file_suffix:
                 # line 10 of wildfly_systemd/defaults/main.yml
                 default: ".service"
-                description: "TODO document argument"
+                description: "Systemd unit file extension"
                 type: "str"
             wildfly_systemd_conf_file_suffix:
                 # line 11 of wildfly_systemd/defaults/main.yml
                 default: ".conf"
-                description: "TODO document argument"
+                description: "Suffix for systemd conf file"
                 type: "str"
             wildfly_systemd_service_config_file_template:
                 # line 12 of wildfly_systemd/defaults/main.yml
                 default: "templates/wfly.service.j2"
-                description: "TODO document argument"
+                description: "Template for systemd unit"
                 type: "str"
             wildfly_service_config_file_template:
                 # line 14 of wildfly_systemd/defaults/main.yml
                 default: "templates/wfly.conf.j2"
-                description: "TODO document argument"
+                description: "Template for systemd config"
                 type: "str"
             wildfly_service_config_file_location:
                 # line 15 of wildfly_systemd/defaults/main.yml
                 default: "/etc/"
-                description: "TODO document argument"
+                description: "Path for wildfly systemd unit file"
                 type: "str"
             wildfly_enable_yml_config:
                 # line 17 of wildfly_systemd/defaults/main.yml
                 default: false
-                description: "TODO document argument"
+                description: "Enable yaml file configuration feature (WFCORE5343)"
                 type: "bool"
             wildfly_yml_configs:
                 # line 18 of wildfly_systemd/defaults/main.yml
                 default: "[]"
-                description: "TODO document argument"
+                description: "List of filenames for wildfly configuration bootstrap"
                 type: "list"

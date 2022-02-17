@@ -3,39 +3,41 @@
 
 ## Requirements
 
-
-## Role Variables
-
 TODO
 
-### Base Variables
+<!--start argument_specs-->
+Role Defaults
+-------------
 
 | Variable | Description | Default |
-| :------- | :---------- | :------ |
-| wildfly_version | | '26.0.0.Final' |
-| wildfly_download_baseurl | | 'https://github.com/wildfly/wildfly/releases/download' |
-| wildfly_install_workdir | | '/opt/wildfly/' |
-| wildfly_config_base | Base config file | 'standalone.xml' |
-| wildfly_user | Service account user | 'wildfly' |
-| wildfly_jvm_memory_min | | '64m' |
-| wildfly_jvm_memory_max | | '512m' |
-| wildfly_jvm_metaspace_size | | '96m' |
-| wildfly_java_package_name | | 'java-1.8.0-openjdk' |
-| wildfly_jboss_eap_version | | '7.4.0' |
-| wildfly_jboss_eap_archive_filename | | 'jboss-eap-7.4.0.zip' |
+|:---------|:------------|:--------|
+|`wildfly_version`| Wildfly version to install | `26.0.0.Final` |
+|`wildfly_archive_filename`| Wildfly download archive name | `wildfly-{{ wildfly_version }}.zip` |
+|`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
+|`wildfly_install_workdir`| TODO document argument | `/opt/wildfly/` |
+|`wildfly_home`| Wildfly installation directory | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
+|`wildfly_install_download_url`| Wildfly download URL | `{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}` |
+|`wildfly_archive_dir`| Target download directory | `{{ wildfly_install_workdir }}` |
+|`wildfly_config_base`| wildfly standalone.xml filename override | `standalone.xml` |
+|`wildfly_user`| posix user account for wildfly | `wildfly` |
+|`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
+|`wildfly_jvm_memory_min`| wildfly jvm initial heap size | `64m` |
+|`wildfly_jvm_memory_max`| wildfly jvm max heap size | `512m` |
+|`wildfly_jvm_metaspace_size`| wildfly jvm metaspace setting | `96m` |
+|`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk` |
+|`wildfly_jboss_eap_version`| Red Hap EAP version to install | `7.4.0` |
+|`wildfly_jboss_eap_archive_filename`| Red Hat EAP archive name | `jboss-eap-7.4.0.zip` |
+|`wildfly_jboss_eap_home`| Red Hat EAP installation path | `{{ wildfly_install_workdir }}jboss-eap-{{ wildfly_jboss_eap_version | regex_replace('^([0-9])\.([0-9]*).*', '\1.\2') }}/` |
+|`wildfly_jboss_eap_enable`| Choice between wildfly (usptream) or Red Hat JBoss EAP (product) | `{{ True if rhn_username is defined and rhn_password is defined else False }}` |
+|`wildfly_offline_install`| Whether to install from local archive | `False` |
 
-### Derived Variables
 
-| Variable | Description | Default |
-| :------- | :---------- | :------ |
-| wildfly_archive_filename | | 'wildfly-{{ wildfly_version }}.zip' |
-| wildfly_home | | '{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/' |
-| wildfly_install_download_url | | '{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}' |
-| wildfly_archive_dir | | '{{ wildfly_install_workdir }}' |
-| wildfly_group | | '{{ wildfly_user }}' |
-| wildfly_offline_install | Whether to install from local archive | False |
-| wildfly_jboss_eap_home | | |
-| wildfly_jboss_eap_enable | Install jboss eap if rhn_username and rhn_password are defined | False |
+Role Variables
+--------------
+
+* No required variables
+
+<!--end argument_specs-->
 
 ## Dependencies
 

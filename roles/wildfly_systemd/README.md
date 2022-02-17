@@ -6,19 +6,41 @@ Requirements
 
 A valid Java runtime environment must be available for execution of the jcliff utility
 
+<!--start argument_specs-->
+Role Defaults
+-------------
+
+| Variable | Description | Default |
+|:---------|:------------|:--------|
+|`wildfly_user`| posix user account for wildfly service | `wildfly` |
+|`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
+|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-26.0.0.Final/` |
+|`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` |
+|`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `100` |
+|`wildfly_systemd_enabled`| Enable systemd unit | `True` |
+|`wildfly_systemd_service_config_location`| Path for systemd unit file | `/usr/lib/systemd/system` |
+|`wildfly_systemd_service_config_file_suffix`| Systemd unit file extension | `.service` |
+|`wildfly_systemd_conf_file_suffix`| Suffix for systemd conf file | `.conf` |
+|`wildfly_systemd_service_config_file_template`| Template for systemd unit | `templates/wfly.service.j2` |
+|`wildfly_service_config_file_template`| Template for systemd config | `templates/wfly.conf.j2` |
+|`wildfly_service_config_file_location`| Path for wildfly systemd unit file | `/etc/` |
+|`wildfly_enable_yml_config`| Enable yaml file configuration feature (WFCORE5343) | `False` |
+|`wildfly_yml_configs`| List of filenames for wildfly configuration bootstrap | `[]` |
+
+
+
+
+
 Role Variables
 --------------
 
-TODO
-
-| Variable | Description |
-| :------- | :---------- |
-| wildfly_port_range_offset | Increment for `jboss.socket.binding.port-offset`. Default: 100 | 
+<!--end argument_specs-->
 
 Dependencies
 ------------
 
 community.general.xml
+
 
 Example Playbook
 ----------------
@@ -41,10 +63,12 @@ Example Playbook
       loop: "{{ range(0,3) | list }}"
 ```
 
+
 License
 -------
 
 GPL2
+
 
 Author Information
 ------------------

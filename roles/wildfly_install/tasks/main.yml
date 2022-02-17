@@ -9,6 +9,7 @@
     state: directory
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
+    mode: 0750
 
 - include_tasks: install.yml
 

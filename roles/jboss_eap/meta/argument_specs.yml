@@ -1,0 +1,13 @@
+argument_specs:
+    main:
+        options:
+            jboss_cli_controller_host:
+                # line 2 of jboss_eap/defaults/main.yml
+                default: "localhost"
+                description: "TODO document argument"
+                type: "str"
+            jboss_cli_controller_port:
+                # line 3 of jboss_eap/defaults/main.yml
+                default: "9990"
+                description: "TODO document argument"
+                type: "str"

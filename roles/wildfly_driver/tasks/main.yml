@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - wildfly_user is defined
       - jdbc_driver_module_dir is defined
@@ -22,6 +23,7 @@
     recurse: yes
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
+    mode: 0750
 
 - name: "Retrieve Wildfly JDBC Driver from {{ jdbc_driver_jar_url }}"
   uri:
@@ -29,6 +31,7 @@
     dest: "{{ jdbc_driver_jar_installation_path }}"
     group: "{{ wildfly_user }}"
     owner: "{{ wildfly_group }}"
+    mode: 0640
     creates: "{{ jdbc_driver_jar_installation_path }}"
   when:
     - jdbc_driver_jar_url is defined
@@ -36,9 +39,10 @@
 - set_fact:
     module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
 
-- name: "Deploy module.xml for Postgres JDBC Driver"
+- name: "Deploy module.xml for JDBC Driver"
   template:
     src: "{{ module_xml_template }}"
     dest: "{{ jdbc_driver_module_dir }}/module.xml"
     group: "{{ wildfly_user }}"
     owner: "{{ wildfly_group }}"
+    mode: 0640

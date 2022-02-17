@@ -4,10 +4,10 @@ argument_specs:
             jboss_cli_controller_host:
                 # line 2 of jboss_eap/defaults/main.yml
                 default: "localhost"
-                description: "TODO document argument"
+                description: "Hostname for connecting to cli"
                 type: "str"
             jboss_cli_controller_port:
                 # line 3 of jboss_eap/defaults/main.yml
                 default: "9990"
-                description: "TODO document argument"
+                description: "Port for connecting to cli"
                 type: "str"

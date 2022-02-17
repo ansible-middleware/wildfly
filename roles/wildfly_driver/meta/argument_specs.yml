@@ -1,0 +1,27 @@
+argument_specs:
+    main:
+        options:
+            jdbc_driver_module_dir:
+                required: true
+                description: "Path for module installation"
+                type: "str"
+            jdbc_driver_version:
+                required: true
+                description: "Version of jdbc driver to download"
+                type: "str"
+            jdbc_driver_jar_filename:
+                required: true
+                description: "Filename of jdbc driver to download"
+                type: "str"
+            jdbc_driver_jar_url:
+                required: true
+                description: "URL for jdbc driver download"
+                type: "str"
+            jdbc_driver_jar_installation_path:
+                required: true
+                description: "Path for jdbc driver installation"
+                type: "str"
+            jdbc_driver_module_name:
+                required: true
+                description: "Name for the jdbc driver module"
+                type: "str"

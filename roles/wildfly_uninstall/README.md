@@ -6,6 +6,18 @@
 
 This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart  [JBoss Enterprise Application (EAP)](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) ) within the configuration management tool Ansible.
 
+<!--start argument_specs-->
+Role Defaults
+-------------
+
+* No defaults
+
+Role Variables
+--------------
+
+* No required variables
+<!--end argument_specs-->
+
 ## Install
 
 ### Installing the collection

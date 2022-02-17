@@ -28,7 +28,8 @@
     - set_fact:
         wfly_http_port: 8080
 
-    - wait_for:
+    - name: Wait for wildfly http port
+      wait_for:
         port: "{{ wfly_http_port }}"
 
     - name: "Checks that Wildfly server is running and accessible"
@@ -37,17 +38,19 @@
         dest: '/dev/null'
 
     - block:
-        - include_role:
+        - name: Include wildfly systemd role
+          include_role:
             name: wildfly_systemd
             tasks_from: service.yml
           vars:
             instance_name: "wildfly"
             instance_state: stopped
 
-        - include_role:
+        - name: Include wildfly uninstall role
+          include_role:
             name: wildfly_uninstall
           vars:
             instance_name: "wildfly"
-            wildfly_service_config: "{{ wildfly_service_config_file_location}}"
+            wildfly_service_config: "{{ wildfly_service_config_file_location }}"
       when:
         - delete_install is defined

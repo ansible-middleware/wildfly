@@ -1,9 +1,12 @@
 ---
+collections:
+  - middleware_automation.redhat_csp_download
+
 galaxy_info:
-  role_name: jboss_eap
+  role_name: wildfly_install
   namespace: middleware_automation
   author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
-  description: JBoss Enterprise Application (EAP) specific tasks
+  description: Install wildfly application server or JBoss Enterprise Application (EAP)
   company: Red Hat, Inc.
 
   license: Apache License 2.0
@@ -21,4 +24,3 @@ galaxy_info:
     - wildfly
     - cli
     - server
-    - jcliff

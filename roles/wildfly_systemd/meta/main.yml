@@ -1,9 +1,9 @@
 ---
 galaxy_info:
-  role_name: jboss_eap
+  role_name: wildfly_systemd
   namespace: middleware_automation
   author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
-  description: JBoss Enterprise Application (EAP) specific tasks
+  description: Configure systemd service unit for wildfly or EAP
   company: Red Hat, Inc.
 
   license: Apache License 2.0
@@ -21,4 +21,4 @@ galaxy_info:
     - wildfly
     - cli
     - server
-    - jcliff
+    - systemd

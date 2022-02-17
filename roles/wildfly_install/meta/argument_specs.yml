@@ -1,0 +1,98 @@
+argument_specs:
+    main:
+        options:
+            wildfly_version:
+                # line 2 of wildfly_install/defaults/main.yml
+                default: "26.0.0.Final"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_archive_filename:
+                # line 3 of wildfly_install/defaults/main.yml
+                default: "wildfly-{{ wildfly_version }}.zip"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_download_baseurl:
+                # line 4 of wildfly_install/defaults/main.yml
+                default: "https://github.com/wildfly/wildfly/releases/download"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_install_workdir:
+                # line 5 of wildfly_install/defaults/main.yml
+                default: "/opt/wildfly/"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_home:
+                # line 6 of wildfly_install/defaults/main.yml
+                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_install_download_url:
+                # line 7 of wildfly_install/defaults/main.yml
+                default: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_archive_dir:
+                # line 8 of wildfly_install/defaults/main.yml
+                default: "{{ wildfly_install_workdir }}"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_config_base:
+                # line 9 of wildfly_install/defaults/main.yml
+                default: "standalone.xml"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_user:
+                # line 10 of wildfly_install/defaults/main.yml
+                default: "wildfly"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_group:
+                # line 11 of wildfly_install/defaults/main.yml
+                default: "{{ wildfly_user }}"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jvm_memory_min:
+                # line 12 of wildfly_install/defaults/main.yml
+                default: "64m"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jvm_memory_max:
+                # line 13 of wildfly_install/defaults/main.yml
+                default: "512m"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jvm_metaspace_size:
+                # line 14 of wildfly_install/defaults/main.yml
+                default: "96m"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_java_package_name:
+                # line 15 of wildfly_install/defaults/main.yml
+                default: "java-1.8.0-openjdk"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jboss_eap_version:
+                # line 18 of wildfly_install/defaults/main.yml
+                default: "7.4.0"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jboss_eap_archive_filename:
+                # line 19 of wildfly_install/defaults/main.yml
+                default: "jboss-eap-7.4.0.zip"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jboss_eap_home:
+                # line 20 of wildfly_install/defaults/main.yml
+                default: "{{ wildfly_install_workdir }}jboss-eap-{{ wildfly_jboss_eap_version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}/"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_jboss_eap_enable:
+                # line 21 of wildfly_install/defaults/main.yml
+                default: "{{ True if rhn_username is defined and rhn_password is defined else False }}"
+                description: "TODO document argument"
+                type: "str"
+            wildfly_offline_install:
+                # line 24 of wildfly_install/defaults/main.yml
+                default: false
+                description: "TODO document argument"
+                type: "bool"

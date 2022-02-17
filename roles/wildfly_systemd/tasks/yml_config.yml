@@ -1,0 +1,26 @@
+---
+- name: Create YAML configuration directory
+  file:
+    path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}"
+    state: directory
+    recurse: yes
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
+    mode: 0755
+- name: Enable YAML configuration extension
+  template:
+    src: "wfly.yml.config.j2"
+    dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
+    mode: 0644
+- name: Deploy YAML configuration files
+  copy:
+    src: "{{ file }}"
+    dest: "{{ basedir }}/{{ file }}"
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
+    mode: 0644
+  loop: "{{ wildfly_yml_configs|flatten }}"
+  loop_control:
+    loop_var: file

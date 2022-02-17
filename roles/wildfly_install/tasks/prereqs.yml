@@ -1,11 +1,10 @@
 ---
 - package:
-    name: "{{ item }}"
-    state: present
-  loop:
+    name:
       - unzip
       - tar
       - sudo
-      - "{{ wildfly_install.java.package_name | default(omit) }}"
+      - "{{ wildfly_install.java.package_name }}"
+    state: present
   when:
     - not wildfly_install_skip_prereqs is defined

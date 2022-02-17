@@ -1,3 +1,5 @@
+# {{ ansible_managed }}
+
 [Unit]
 Description=JBoss EAP (standalone mode)
 After=syslog.target network.target
@@ -9,7 +11,7 @@ EnvironmentFile=-{{ service_systemd_env_file }}
 User={{ wildfly_systemd.user }}
 Group={{ wildfly_systemd.group }}
 PIDFile={{ basedir }}/{{ instance_name }}.pid
-ExecStart={{ wildfly_systemd.home }}/bin/standalone.sh -c $WILDFLY_SERVER_CONFIG -b $WILDFLY_BIND $WILDFLY_OPTS
+ExecStart={{ wildfly_systemd.home }}/bin/standalone.sh -c $WILDFLY_SERVER_CONFIG -b $WILDFLY_BIND $WILDFLY_YAML $WILDFLY_OPTS
 
 [Install]
 WantedBy=multi-user.target

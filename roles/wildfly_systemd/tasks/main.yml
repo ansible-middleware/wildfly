@@ -71,6 +71,16 @@
     remote_src: true
     force: no
 
+- name: Include YAML configuration extension
+  include_tasks: yml_config.yml
+  when: wildfly_enable_yml_config
+
+- name: Check YAML configuration is disabled
+  file:
+    path: "{{ wildfly_systemd.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+    state: absent
+  when: not wildfly_enable_yml_config
+
 - set_fact:
     service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
   when:

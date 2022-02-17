@@ -6,6 +6,7 @@ __pycache__/
 
 # Galaxy artifacts.
 *.tar.gz
+*.zip
 
 # Temporary test files.
 tests/output

@@ -5,3 +5,6 @@ wildfly_systemd:
   home: "{{ wildfly_home }}"
   config: "{{ wildfly_config_base }}"
   enabled: "{{ wildfly_systemd_enabled }}"
+  yml_config:
+    path: /modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/
+    file: org.jboss.as.controller.persistence.ConfigurationExtension

@@ -8,11 +8,16 @@
       - wildfly_install.group is defined
     quiet: true
 
-# if dest already exists, get_url skips downloading
-# and proceed to unarchive (allows to delegate download
-# to redhat_csp_download for EAP)
+# full_path is download destination, local_path is local download location
+- name: Check local download archive path
+  stat:
+    path: "{{ lookup('env', 'PWD') }}"
+  register: local_path
+  delegate_to: localhost
+
 - set_fact:
     full_path_to_archive: "{{ wildfly_install.archive_dir }}/{{ wildfly_install.archive_name }}"
+    local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_install.archive_name }}"
 
 #- assert:
 #    that:
@@ -20,24 +25,65 @@
 #    quiet: true
 #    fail_msg: "Install can only be from RHN (ID: {{ wildfly_install.rhn_id }} or with RPM {{ wildfly_install.rpm }}, not both."
 
+## check remote archive already present
+- name: "Check target archive: {{ full_path_to_archive }}"
+  stat:
+    path: "{{ full_path_to_archive }}"
+  register: archive_path
+
+## download to controller locally
 - include_tasks: install/wildfly.yml
   when:
-    - wildfly_install.rhn.id is defined and wildfly_install.rhn.id == "none"
+    - not wildfly_jboss_eap_enable
+    - not wildfly_install.rpm is defined
+    - not wildfly_offline_install
+    - archive_path.stat is defined
+    - not archive_path.stat.exists
 
 - include_tasks: install/rhn.yml
   vars:
     rhn_id_file: "{{ wildfly_install.rhn.id }}"
   when:
-    - wildfly_install.rhn.id is defined and wildfly_install.rhn.id != "none"
+    - wildfly_jboss_eap_enable
+    - not wildfly_offline_install
+    - archive_path.stat is defined
+    - not archive_path.stat.exists
 
 - include_tasks: install/rpm.yml
   when:
     - wildfly_install.rpm is defined
 
+- name: Check downloaded archive
+  stat:
+    path: "{{ local_path_to_archive }}"
+  register: local_archive_path
+  delegate_to: localhost
+
+## copy and unpack
+- name: Copy archive to target nodes
+  copy:
+    src: "{{ local_path_to_archive }}"
+    dest: "{{ full_path_to_archive }}"
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
+    mode: 0640
+  register: new_version_downloaded
+  when:
+    - not archive_path.stat.exists
+    - local_archive_path.stat is defined
+    - local_archive_path.stat.exists
+  become: yes
+
 - block:
-    - stat:
+    - name: "Check target archive: {{ full_path_to_archive }}"
+      stat:
         path: "{{ full_path_to_archive }}"
       register: is_archive_file_created
+
+    - name: "Check target directory: {{ wildfly_install.home }}"
+      stat:
+        path: "{{ wildfly_install.home }}"
+      register: path_to_workdir
 
     - assert:
         that:
@@ -56,6 +102,14 @@
         group: "{{ wildfly_install.group }}"
         remote_src: yes
         creates: "{{ wildfly_install.home }}"
+      when:
+        - new_version_downloaded.changed or not path_to_workdir.stat.exists
+
+    - name: Inform decompression was not executed
+      debug:
+        msg: "{{ wildfly_install.home }} already exists and version unchanged, skipping decompression"
+      when:
+        - not new_version_downloaded.changed and path_to_workdir.stat.exists
   when:
     - not wildfly_install.rpm is defined
 

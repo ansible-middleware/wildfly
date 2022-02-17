@@ -1,8 +1,9 @@
 # Ansible Collection - middleware_automation.wildfly
 # Wildfly Collection for Ansible
 
-[![Build Status](https://github.com/ansible-middleware/wildfly_collection/workflows/CI/badge.svg?branch=master)](https://github.com/ansible-middleware/wildfly_collection/actions/workflows/ci.yml)
+[![Build Status](https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-middleware/wildfly_collection/actions/workflows/ci.yml)
 This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart [JBoss Enterprise Application (EAP)](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) ) within the configuration management tool Ansible.
+
 
 ## About
 ## Ansible version compatibility

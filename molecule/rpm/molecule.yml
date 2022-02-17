@@ -6,12 +6,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: registry.access.redhat.com/ubi8/ubi-init
-    tmpfs:
-      - /run
-      - /tmp
-    volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    image: registry.access.redhat.com/ubi8/ubi-init:latest
     capabilities:
       - SYS_ADMIN
     command: "/usr/sbin/init"

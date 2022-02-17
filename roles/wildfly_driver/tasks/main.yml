@@ -17,6 +17,11 @@
   when:
     - not wildfly_group is defined
 
+- name: "Check module directory: {{ jdbc_driver_module_dir }}"
+  stat:
+    path: "{{ jdbc_driver_module_dir }}"
+  register: dest_path
+
 - name: "Set up module dir for JDBC Driver: jdbc_driver_module_dir"
   file:
     path: "{{ jdbc_driver_module_dir }}"
@@ -25,6 +30,8 @@
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0750
+  when:
+    - not dest_path.stat.exists
 
 - name: "Retrieve Wildfly JDBC Driver from {{ jdbc_driver_jar_url }}"
   uri:

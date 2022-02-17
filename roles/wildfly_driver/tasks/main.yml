@@ -11,7 +11,8 @@
     quiet: true
     fail_msg: 'Required variables not provided.'
 
-- set_fact:
+- name: Set widfly user/group
+  set_fact:
     wildfly_group: "{{ wildfly_user }}"
   when:
     - not wildfly_group is defined
@@ -36,7 +37,8 @@
   when:
     - jdbc_driver_jar_url is defined
 
-- set_fact:
+- name: Set source template path
+  set_fact:
     module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
 
 - name: "Deploy module.xml for JDBC Driver"

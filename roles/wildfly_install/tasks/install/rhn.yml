@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - rhn_id_file is defined
       - rhn_username is defined

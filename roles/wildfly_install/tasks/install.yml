@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - wildfly_install.download_url is defined
       - wildfly_install.home is defined
@@ -15,7 +16,8 @@
   register: local_path
   delegate_to: localhost
 
-- set_fact:
+- name: Set download paths
+  set_fact:
     full_path_to_archive: "{{ wildfly_install.archive_dir }}/{{ wildfly_install.archive_name }}"
     local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_install.archive_name }}"
 
@@ -85,7 +87,8 @@
         path: "{{ wildfly_install.home }}"
       register: path_to_workdir
 
-    - assert:
+    - name: Check arguments
+      assert:
         that:
           - is_archive_file_created is defined and is_archive_file_created.stat is defined
           - is_archive_file_created.stat.exists
@@ -113,11 +116,13 @@
   when:
     - not wildfly_install.rpm is defined
 
-- stat:
+- name: Check wildfly home
+  stat:
     path: "{{ wildfly_install.home }}"
   register: is_wfly_home
 
-- assert:
+- name: Check arguments
+  assert:
     that:
       - is_wfly_home is defined
       - is_wfly_home.stat is defined

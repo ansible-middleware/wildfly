@@ -1,5 +1,6 @@
 ---
-- package:
+- name: Install required packages
+  package:
     name:
       - unzip
       - tar

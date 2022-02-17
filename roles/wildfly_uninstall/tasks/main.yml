@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - instance_name is defined
     quiet: true
@@ -18,10 +19,12 @@
   when:
     - wildfly_service_config is defined
 
-- set_fact:
+- name: "Set destination path for systemd unit"
+  set_fact:
     wfly_systemd_config: "/usr/lib/systemd/system/{{ instance_name }}.service"
 
-- stat:
+- name: Check systemd config file state
+  stat:
     path: "{{ wfly_systemd_config }}"
   register: wfly_systemd_configfile
 

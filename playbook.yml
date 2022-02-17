@@ -25,14 +25,15 @@
           jdbc_driver_module_name: 'org.postgresql'
 
   post_tasks:
-    - set_fact:
+    - name: Set wildfly port
+      set_fact:
         wfly_http_port: 8080
 
     - name: Wait for wildfly http port
       wait_for:
         port: "{{ wfly_http_port }}"
 
-    - name: "Checks that Wildfly server is running and accessible"
+    - name: "Check that Wildfly server is running and accessible"
       get_url:
         url: "http://localhost:{{ wfly_http_port }}/"
         dest: '/dev/null'

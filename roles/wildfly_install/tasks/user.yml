@@ -1,10 +1,12 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - wildfly_install.user is defined
     quiet: true
 
-- set_fact:
+- name: Set wildfly group
+  set_fact:
     group_name: "{{ wildfly_install.group | default(wildfly_install.user) }}"
 
 - name: "Ensure group {{ group_name }} exists."

@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - wildfly_install.download_url is defined
       - wildfly_install.home is defined

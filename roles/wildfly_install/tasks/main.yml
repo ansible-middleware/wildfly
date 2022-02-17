@@ -3,7 +3,7 @@
 
 - include_tasks: user.yml
 
-- name: "Ensures workdir {{ wildfly_install.workdir }} exists."
+- name: "Ensure workdir {{ wildfly_install.workdir }} exists."
   file:
     path: "{{ wildfly_install.workdir }}"
     state: directory
@@ -13,11 +13,13 @@
 
 - include_tasks: install.yml
 
-- stat:
+- name: Check wildfly install directory state
+  stat:
     path: "{{ wildfly_install.home }}"
   register: is_wildfly_home
 
-- assert:
+- name: Validate conditions
+  assert:
     that:
       - is_wildfly_home is defined and is_wildfly_home.stat is defined and is_wildfly_home.stat.exists is defined
       - is_wildfly_home.stat.exists

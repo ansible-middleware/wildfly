@@ -9,7 +9,8 @@
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
-- set_fact:
+- name: Set facts for cli
+  set_fact:
     path_to_cli: "{{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}"
     controller:
       host: "{{ jboss_cli_controller_host  }}"

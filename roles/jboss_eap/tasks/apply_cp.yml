@@ -1,5 +1,6 @@
 ---
-- assert:
+- name: Check arguments
+  assert:
     that:
       - rhn_cp_id is defined
       - rhn_username is defined
@@ -7,18 +8,22 @@
       - wildfly_home is defined
     quiet: true
 
-- set_fact:
+- name: Set patch directory
+  set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
-- set_fact:
+- name: Set patch filename
+  set_fact:
     patch_filename: "{{ override_patch_filename | default(rhn_cp_id + '.zip') }}"
 
-- set_fact:
+- name: Set patch destination directory
+  set_fact:
     path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
   when:
     - not override_path_to_patch is defined
 
-- set_fact:
+- name: Set patch destination directory
+  set_fact:
     path_to_patch: "{{ override_path_to_patch }}"
   when:
    - override_path_to_patch is defined
@@ -35,7 +40,8 @@
         jboss_home: "{{ wildfly_home }}"
         query: "'patch apply {{ path_to_patch }}'"
 
-    - debug:
+    - name: Display patching result
+      debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
         - print_cli_patch_result is defined
@@ -51,19 +57,23 @@
         - not wildfly_no_restart_after_patch is defined
         - cli_result.rc == 0
 
-    - debug:
+    - name: Display resulting output
+      debug:
         msg: "{{ cli_result.stdout }}"
       when:
         - cli_result.stdout | length > 0
 
   rescue:
-    - debug:
+    - name: Show resulting output
+      debug:
         msg: "{{ cli_result.stdout }}"
 
-    - set_fact:
+    - name: Set error messages
+      set_fact:
         error_msg: "{{ cli_result.stdout | string }}"
 
-    - assert:
+    - name: Show error messages when patch failed
+      assert:
         that:
           - error_msg is search('WFLYPAT0012')
         quiet: true

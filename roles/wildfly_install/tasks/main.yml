@@ -19,6 +19,13 @@
     group: "{{ wildfly_install.group }}"
     mode: 0750
 
+- name: "Ensures archive_dir {{ wildfly_install.archive_dir }} exists."
+  file:
+    path: "{{ wildfly_install.archive_dir }}"
+    state: directory
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group }}"
+
 - include_tasks: install.yml
 
 - name: Check wildfly install directory state

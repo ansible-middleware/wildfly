@@ -1,15 +1,5 @@
 ---
-- name: "Start Service {{ instance_name }}"
-  include_tasks: service.yml
-  vars:
-    instance_state: started
-
-- name: "Stop Service {{ instance_name }}"
-  include_tasks: service.yml
-  vars:
-    instance_state: stopped
-
-- name: "Restart Service {{ instance_name }}"
+- name: 'Restart Wildfly'
   include_tasks: service.yml
   vars:
     instance_state: restarted

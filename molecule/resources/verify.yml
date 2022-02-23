@@ -4,7 +4,13 @@
   gather_facts: false
   tasks:
 
+    - set_fact:
+        wfly_http_port: 8080
+
+    - wait_for:
+        port: "{{ wfly_http_port }}"
+
     - name: "Check if web connector is accessible"
       uri:
-        url: http://localhost:8080/
+        url: "http://localhost:{{ wfly_http_port }}/"
         return_content: yes

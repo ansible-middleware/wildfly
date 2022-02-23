@@ -6,9 +6,6 @@
   vars:
     wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
     wildfly_user: 'wildfly'
-  # roles:
-  #   - wildfly_install
-  #   - wildfly_systemd
   tasks:
     - name: Include wildfly_install role
       include_role:
@@ -17,7 +14,7 @@
     - name: Include wildfly_systemd role
       include_role:
         name: ../../roles/wildfly_systemd
-    
+
     - name: Include wildfly_driver role
       include_role:
         name: ../../roles/wildfly_driver

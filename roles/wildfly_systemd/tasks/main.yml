@@ -3,11 +3,9 @@
     that:
       - wildfly_systemd is defined
       - wildfly_systemd.home is defined
+      - wildfly_systemd.user is defined
+      - wildfly_systemd.group is defined
     quiet: true
-
-- include_role:
-    name: wildfly_install
-    tasks_from: user.yml
 
 - set_fact:
     basedir_default_value: "{{ wildfly_systemd.home }}/standalone"

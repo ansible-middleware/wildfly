@@ -4,6 +4,7 @@
 ## About
 This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart [JBoss Enterprise Application (EAP)](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) ) within the configuration management tool Ansible.
 
+<!--start requires_ansible-->
 ## Ansible version compatibility
 This collection has been tested against following Ansible versions: **>=2.9.10**.
 
@@ -34,7 +35,7 @@ You can the playbook directly from this folder for demonstration purpose, howeve
 
 ## Support
 
-jws collection [v1.0.0](https://github.com/ansible-middleware/jws-ansible-playbook/releases/tag/1.0.0) is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to contact us on <Ansible-middleware-core@redhat.com> or open an issue on https://github.com/ansible-middleware/jws-ansible-playbook/issues
+The wildfly collection is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to contact us on <Ansible-middleware-core@redhat.com> or open an issue on https://github.com/ansible-middleware/wildfly/issues
 
 ## License
 

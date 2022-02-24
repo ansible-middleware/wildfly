@@ -16,7 +16,7 @@ tags:
   - server
 dependencies:
   middleware_automation.redhat_csp_download: '>=1.1.2'
-repository: https://github.com/ansible-middleware/wildfly_collection
-documentation: https://github.com/ansible-middleware/wildfly_collection
-homepage: https://github.com/ansible-middleware/wildfly_collection
-issues: https://github.com/ansible-middleware/wildfly_collection/issues
+repository: https://github.com/ansible-middleware/wildfly
+documentation: https://github.com/ansible-middleware/wildfly
+homepage: https://github.com/ansible-middleware/wildfly
+issues: https://github.com/ansible-middleware/wildfly/issues

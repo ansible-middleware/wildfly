@@ -3,7 +3,7 @@ galaxy_info:
   role_name: wildfly_uninstall
   namespace: middleware_automation
   author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
-  description: Configure systemd service unit for wildfly or EAP
+  description: Uninstalls wildfly or EAP from ansible nodes that were provisioned by role wildfly_install
   company: Red Hat, Inc.
 
   license: Apache License 2.0

@@ -9,6 +9,6 @@
 - Separators - Use valid name, ie. underscores (e.g. `my_role` `my_playbook`) not dashes (`my-role`)
 - Paths - When defining paths, do not include trailing slashes (e.g. `my_path: /foo` not `my_path: /foo/`). When concatenating paths, follow the same convention (e.g. `{{ my_path }}/bar` not `{{ my_path }}bar`)
 - Indentation - Use 2 spaces for each indent
-- `vars/` vs `defaults/` - internal or interpolated variables that don't need to change or be overridden by user go in `vars/`, those that a user would likely override, go under `defaults/` directory
+- `vars/` vs `defaults/` - internal or interpolated variables that don't need to change or be overridden by users go in `vars/`, those that a user would likely override, go under `defaults/` directory
 - All arguments have a specification in `meta/argument_specs.yml`
-- All playbooks/roles should be focused on compatibility with Ansible Tower
+- All playbooks/roles should be focused on compatibility with Ansible Automation Platform controller

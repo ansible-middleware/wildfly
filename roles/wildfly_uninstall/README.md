@@ -1,10 +1,7 @@
-# Ansible Collection - middleware_automation.wildfly
+Wildfly uninstall role
+======================
 
-[![Build Status](https://github.com/ansible-middleware/wildfly_collection/workflows/CI/badge.svg?branch=master)](https://github.com/ansible-middleware/wildfly_collection/actions/workflows/ci.yml)
-
-## About
-
-This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart  [JBoss Enterprise Application (EAP)](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) ) within the configuration management tool Ansible.
+Role to uninstall and clean wildfly from ansible nodes.
 
 <!--start argument_specs-->
 Role Defaults

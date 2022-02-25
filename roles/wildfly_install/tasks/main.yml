@@ -11,7 +11,7 @@
     group: "{{ wildfly_install.group }}"
     mode: 0750
 
-- name: "Ensures archive_dir {{ wildfly_install.archive_dir }} exists."
+- name: "Ensure archive_dir {{ wildfly_install.archive_dir }} exists."
   file:
     path: "{{ wildfly_install.archive_dir }}"
     state: directory

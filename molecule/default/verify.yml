@@ -65,7 +65,7 @@
           - ansible_facts.services["wildfly.service"]['state'] == 'running'
 
     - name: "Verify server's internal configuration"
-    - ansible.builtin.include_tasks: verify_with_cli_queries.yml
+      ansible.builtin.include_tasks: verify_with_cli_queries.yml
       vars:
         validation_query: "{{ item }}"
         expected_result: "todo"

@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
   options:
-    requirements-file: molecule/requirements.yml
+    requirements-file: molecule/default/requirements.yml
 driver:
   name: docker
 lint: |
@@ -21,8 +21,8 @@ platforms:
 provisioner:
   name: ansible
   playbooks:
-    converge: ../resources/converge.yml
-    verify: ../resources/verify.yml
+    converge: converge.yml
+    verify: resources/verify.yml
   inventory:
     host_vars:
       localhost:
@@ -47,4 +47,4 @@ scenario:
     - verify
     - cleanup
     - destroy
-    
+

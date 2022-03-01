@@ -1,6 +1,6 @@
 ---
 - name: "Ensure required params for JBoss CLI have been provided"
-  assert:
+  ansible.builtin.assert:
     that:
       - jboss_home is defined
       - query is defined
@@ -10,19 +10,19 @@
     quiet: true
 
 - name: Set facts for cli
-  set_fact:
+  ansible.builtin.set_fact:
     path_to_cli: "{{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}"
     controller:
       host: "{{ jboss_cli_controller_host  }}"
       port: "{{ jboss_cli_controller_port  }}"
 
 - name: "Ensure server's management interface is reachable"
-  wait_for:
+  ansible.builtin.wait_for:
     host: "{{ controller.host }}"
     port: "{{ controller.port }}"
 
 - name: "Execute CLI query: {{ query }}"
-  command: >
+  ansible.builtin.command: >
     {{ path_to_cli }} -c --output-json --command={{ query }} --controller={{ controller.host }}:{{ controller.port }}
   register: cli_result
   changed_when: false

@@ -1,13 +1,13 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - instance_name is defined
       - instance_state is defined
     quiet: true
 
 - name: "Start Wildfly instance {{ instance_name }}"
-  service:
+  ansible.builtin.service:
     name: "{{ instance_name }}"
     state: "{{ instance_state }}"
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"

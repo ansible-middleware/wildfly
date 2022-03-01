@@ -1,6 +1,6 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - wildfly_systemd is defined
       - wildfly_systemd.home is defined
@@ -8,57 +8,57 @@
       - wildfly_systemd.group is defined
     quiet: true
 
-- include_role:
-    name: wildfly_install
+- ansible.builtin.include_role:
+    name: middleware_automation.wildfly.wildfly_install
     tasks_from: user.yml
 
 - name: Set destination directory for configuration
-  set_fact:
+  ansible.builtin.set_fact:
     basedir_default_value: "{{ wildfly_systemd.home }}/standalone"
 
 - name: Set instance destination directory for configuration
-  set_fact:
+  ansible.builtin.set_fact:
     basedir: "{{ wildfly_basedir_prefix | default(basedir_default_value) }}"
   when:
     - not instance_id is defined
 
 - block:
     - name: Check arguments
-      assert:
+      ansible.builtin.assert:
         that:
           - wildfly_basedir_prefix is defined
         quiet: true
         fail_msg: "If instance_id is set, wildfly.basedir_prefix must also be defined."
 
     - name: Set base directory for instance
-      set_fact:
+      ansible.builtin.set_fact:
         basedir: "{{ wildfly_basedir_prefix }}{{ instance_id }}"
 
     - name: Check arguments
-      assert:
+      ansible.builtin.assert:
         that:
           - wildfly_config_name is defined
         fail_msg: "If instance_id is set, wildfly_config_name must be defined too."
         quiet:
 
     - name: Set instance name
-      set_fact:
+      ansible.builtin.set_fact:
         instance_name: "{{ wildfly_config_name }}-{{ instance_id }}"
   when:
     - instance_id is defined
 
 - name: Set instance name
-  set_fact:
+  ansible.builtin.set_fact:
     instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
   when:
     - instance_name is not defined
 
 - name: Set bind address
-  set_fact:
+  ansible.builtin.set_fact:
     wildfly_bind_addr: "{{ overrides_wildfly_bind_addr | default('0.0.0.0') }}"
 
 - name: "Create basedir {{ basedir }} for instance: {{ instance_name }}"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}"
     state: directory
     owner: "{{ wildfly_systemd.user }}"
@@ -66,7 +66,7 @@
     mode: '0755'
 
 - name: "Create deployment directories for instance: {{ instance_name }}"
-  file:
+  ansible.builtin.file:
     path: "{{ basedir }}/deployments"
     state: directory
     owner: "{{ wildfly_systemd.user }}"
@@ -74,7 +74,7 @@
     mode: '0755'
 
 - name: "Deploy Wildfy configuration"
-  copy:
+  ansible.builtin.copy:
     src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
     dest: "{{ wildfly_systemd.home }}/standalone/configuration/{{ instance_name }}.xml"
     group: "{{ wildfly_systemd.group }}"
@@ -84,23 +84,23 @@
     force: no
 
 - name: Include YAML configuration extension
-  include_tasks: yml_config.yml
+  ansible.builtin.include_tasks: yml_config.yml
   when: wildfly_enable_yml_config
 
 - name: Check YAML configuration is disabled
-  file:
+  ansible.builtin.file:
     path: "{{ wildfly_systemd.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     state: absent
   when: not wildfly_enable_yml_config
 
 - name: Set systemd envfile destination
-  set_fact:
+  ansible.builtin.set_fact:
     service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
   when:
     - not service_systemd_env_file is defined
 
 - name: "Deploy Wildfly service instance configuration: {{ service_systemd_env_file }}"
-  template:
+  ansible.builtin.template:
     src: "{{ wildfly_service_config_file_template }}"
     dest: "{{ service_systemd_env_file }}"
     group: root
@@ -108,13 +108,13 @@
     mode: 0640
 
 - name: Set systemd unit file destination
-  set_fact:
+  ansible.builtin.set_fact:
     service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
   when:
     - not service_systemd_conf_file is defined
 
 - name: "Deploy Systemd configuration for Wildfly service: {{ service_systemd_conf_file }}"
-  template:
+  ansible.builtin.template:
     src: "{{ wildfly_systemd_service_config_file_template }}"
     dest: "{{ service_systemd_conf_file }}"
     group: root
@@ -123,12 +123,12 @@
   register: daemon_reload
 
 - name: "Perform daemon-reload to ensure the changes are picked up"
-  systemd:
+  ansible.builtin.systemd:
     daemon_reload: yes
   when:
     - daemon_reload is defined
     - daemon_reload.changed
 
-- include_tasks: service.yml
+- ansible.builtin.include_tasks: service.yml
   vars:
     instance_state: "started"

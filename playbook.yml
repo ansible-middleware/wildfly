@@ -8,14 +8,14 @@
   collections:
     - middleware_automation.redhat_csp_download
   roles:
-    - redhat_csp_download
-    - wildfly_install
-    - wildfly_systemd
+    - middleware_automation.redhat_csp_download.redhat_csp_download
+    - middleware_automation.wildfly.wildfly_install
+    - middleware_automation.wildfly.wildfly_systemd
   tasks:
 
     - name: "Install Postresql driver"
-      include_role:
-        name: wildfly_driver
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_driver
       vars:
           jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
           jdbc_driver_version: "{{ override_pgsql_jdbc_driver_version | default('9.2-1002-jdbc4') }}"
@@ -26,30 +26,30 @@
 
   post_tasks:
     - name: Set wildfly port
-      set_fact:
+      ansible.builtin.set_fact:
         wfly_http_port: 8080
 
     - name: Wait for wildfly http port
-      wait_for:
+      ansible.builtin.wait_for:
         port: "{{ wfly_http_port }}"
 
     - name: "Check that Wildfly server is running and accessible"
-      get_url:
+      ansible.builtin.get_url:
         url: "http://localhost:{{ wfly_http_port }}/"
         dest: '/dev/null'
 
     - block:
         - name: Include wildfly systemd role
-          include_role:
-            name: wildfly_systemd
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_systemd
             tasks_from: service.yml
           vars:
             instance_name: "wildfly"
             instance_state: stopped
 
         - name: Include wildfly uninstall role
-          include_role:
-            name: wildfly_uninstall
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_uninstall
           vars:
             instance_name: "wildfly"
             wildfly_service_config: "{{ wildfly_service_config_file_location }}"

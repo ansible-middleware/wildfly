@@ -1,6 +1,6 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - rhn_cp_id is defined
       - rhn_username is defined
@@ -9,39 +9,39 @@
     quiet: true
 
 - name: Set patch directory
-  set_fact:
+  ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
 - name: Set patch filename
-  set_fact:
+  ansible.builtin.set_fact:
     patch_filename: "{{ override_patch_filename | default(rhn_cp_id + '.zip') }}"
 
 - name: Set patch destination directory
-  set_fact:
+  ansible.builtin.set_fact:
     path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
   when:
     - not override_path_to_patch is defined
 
 - name: Set patch destination directory
-  set_fact:
+  ansible.builtin.set_fact:
     path_to_patch: "{{ override_path_to_patch }}"
   when:
    - override_path_to_patch is defined
 
-- include_tasks: tasks/download_from_rhn.yml
+- ansible.builtin.include_tasks: tasks/download_from_rhn.yml
   vars:
     rhn_id_file: "{{ rhn_cp_id }}"
     zipfile_dest: "{{ path_to_patch }}"
 
 - block:
     - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
-      include_tasks: jboss_cli.yml
+      ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         jboss_home: "{{ wildfly_home }}"
         query: "'patch apply {{ path_to_patch }}'"
 
     - name: Display patching result
-      debug:
+      ansible.builtin.debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
         - print_cli_patch_result is defined
@@ -49,7 +49,7 @@
         - cli_result.stdout is defined
 
     - name: "Restart server to ensure patch application"
-      include_tasks: jboss_cli.yml
+      ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         jboss_home: "{{ wildfly_home }}"
         query: "'shutdown --restart'"
@@ -58,22 +58,22 @@
         - cli_result.rc == 0
 
     - name: Display resulting output
-      debug:
+      ansible.builtin.debug:
         msg: "{{ cli_result.stdout }}"
       when:
         - cli_result.stdout | length > 0
 
   rescue:
     - name: Show resulting output
-      debug:
+      ansible.builtin.debug:
         msg: "{{ cli_result.stdout }}"
 
     - name: Set error messages
-      set_fact:
+      ansible.builtin.set_fact:
         error_msg: "{{ cli_result.stdout | string }}"
 
     - name: Show error messages when patch failed
-      assert:
+      ansible.builtin.assert:
         that:
           - error_msg is search('WFLYPAT0012')
         quiet: true

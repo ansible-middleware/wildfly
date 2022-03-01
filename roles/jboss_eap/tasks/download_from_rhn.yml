@@ -1,6 +1,6 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - rhn_id_file is defined
       - zipfile_dest is defined
@@ -9,16 +9,16 @@
     quiet: true
 
 - name: Set base download directory
-  set_fact:
+  ansible.builtin.set_fact:
     rhn_base_url: "{{ override_rhn_base_url | default('https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=') }}"
 
 - name: Set full download URI
-  set_fact:
+  ansible.builtin.set_fact:
     rhn_download_url: "{{ rhn_base_url }}{{ rhn_id_file }}"
 
 - name: "Install zipfile from RHN: {{ rhn_download_url }}"
   delegate_to: localhost
-  redhat_csp_download:
+  middleware_automation.redhat_csp_download.redhat_csp_download:
     url: "{{ rhn_download_url }}"
     dest: "{{ zipfile_dest }}"
     username: "{{ rhn_username }}"

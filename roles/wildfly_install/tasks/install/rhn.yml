@@ -1,6 +1,6 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - rhn_id_file is defined
       - rhn_username is defined
@@ -9,8 +9,8 @@
     quiet: true
 
 - name: "Download JBoss EAP from RHN (id: {{ rhn_id_file }})"
-  include_role:
-    name: jboss_eap
+  ansible.builtin.include_role:
+    name: middleware_automation.wildfly.jboss_eap
     tasks_from: download_from_rhn.yml
   vars:
     zipfile_dest: "{{ local_path_to_archive }}"

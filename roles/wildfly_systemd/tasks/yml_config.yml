@@ -1,6 +1,6 @@
 ---
 - name: Create YAML configuration directory
-  file:
+  ansible.builtin.file:
     path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}"
     state: directory
     recurse: yes
@@ -8,14 +8,14 @@
     group: "{{ wildfly_systemd.group }}"
     mode: 0755
 - name: Enable YAML configuration extension
-  template:
+  ansible.builtin.template:
     src: "wfly.yml.config.j2"
     dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
     mode: 0644
 - name: Deploy YAML configuration files
-  copy:
+  ansible.builtin.copy:
     src: "{{ file }}"
     dest: "{{ basedir }}/{{ file }}"
     owner: "{{ wildfly_systemd.user }}"

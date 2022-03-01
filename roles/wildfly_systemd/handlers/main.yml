@@ -1,5 +1,5 @@
 ---
 - name: 'Restart Wildfly'
-  include_tasks: service.yml
+  ansible.builtin.include_tasks: service.yml
   vars:
     instance_state: restarted

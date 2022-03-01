@@ -1,6 +1,6 @@
 ---
 - name: Check arguments
-  assert:
+  ansible.builtin.assert:
     that:
       - wildfly_user is defined
       - jdbc_driver_module_dir is defined
@@ -12,18 +12,18 @@
     fail_msg: 'Required variables not provided.'
 
 - name: Set widfly user/group
-  set_fact:
+  ansible.builtin.set_fact:
     wildfly_group: "{{ wildfly_user }}"
   when:
     - not wildfly_group is defined
 
 - name: "Check module directory: {{ jdbc_driver_module_dir }}"
-  stat:
+  ansible.builtin.stat:
     path: "{{ jdbc_driver_module_dir }}"
   register: dest_path
 
 - name: "Set up module dir for JDBC Driver: jdbc_driver_module_dir"
-  file:
+  ansible.builtin.file:
     path: "{{ jdbc_driver_module_dir }}"
     state: directory
     recurse: yes
@@ -34,7 +34,7 @@
     - not dest_path.stat.exists
 
 - name: "Retrieve Wildfly JDBC Driver from {{ jdbc_driver_jar_url }}"
-  uri:
+  ansible.builtin.uri:
     url: "{{ jdbc_driver_jar_url }}"
     dest: "{{ jdbc_driver_jar_installation_path }}"
     group: "{{ wildfly_user }}"
@@ -45,11 +45,11 @@
     - jdbc_driver_jar_url is defined
 
 - name: Set source template path
-  set_fact:
+  ansible.builtin.set_fact:
     module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
 
 - name: "Deploy module.xml for JDBC Driver"
-  template:
+  ansible.builtin.template:
     src: "{{ module_xml_template }}"
     dest: "{{ jdbc_driver_module_dir }}/module.xml"
     group: "{{ wildfly_user }}"

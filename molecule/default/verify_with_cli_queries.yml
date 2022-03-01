@@ -1,5 +1,5 @@
 ---
-- assert:
+- ansible.builtin.assert:
     that:
       - validation_query is defined
       - expected_result is defined
@@ -8,7 +8,7 @@
     fail_msg: "Missing required parameters"
 
 - name: "Use CLI query to validate service state: {{ validation_query }}"
-  include_role:
+  ansible.builtin.include_role:
     name: jboss_eap
     tasks_from: jboss_cli.yml
   vars:
@@ -18,10 +18,7 @@
     - '/core-service=server-environment:read-attribute(name=start-gracefully)'
     - '/subsystem=undertow/server=default-server/http-listener=default:read-attribute(name=enabled)'
 
-- debug:
-    var: cli_result
-
-- assert:
+- ansible.builtin.assert:
     that:
       - cli_result is defined
       - cli_result.rc is defined

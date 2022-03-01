@@ -14,3 +14,15 @@
       uri:
         url: "http://localhost:{{ wfly_http_port }}/"
         return_content: yes
+
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
+    - name: Check if service is started
+      assert:
+        that:
+          - ansible_facts is defined
+          - ansible_facts.services is defined
+          - ansible_facts.services['tomcat.service'] is defined
+          - ansible_facts.services['tomcat.service']['state'] is defined
+          - ansible_facts.services["tomcat.service"]['state'] == 'running'

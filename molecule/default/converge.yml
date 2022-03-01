@@ -3,9 +3,8 @@
   hosts: all
   collections:
     - middleware_automation.wildfly
-  vars:
-    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
-    wildfly_user: 'wildfly'
+  vars_files:
+    - vars.yml
   tasks:
     - name: Include wildfly_install role
       include_role:
@@ -14,7 +13,7 @@
     - name: Include wildfly_systemd role
       include_role:
         name: wildfly_systemd
-    
+
     - name: Include wildfly_driver role
       include_role:
         name: wildfly_driver

@@ -9,13 +9,12 @@
   tasks:
 
     - name: "Ensures user {{ wildfly_user }} were created."
-      user:
+      ansible.builtin.user:
         name: "{{ wildfly_user }}"
         state: present
       register: wildfly_user_status
-    - debug:
-        var: wildfly_user_status
-    - assert:
+
+    - ansible.builtin.assert:
         that:
           - wildfly_user_status is defined
           - wildfly_user_status.changed is defined
@@ -28,12 +27,12 @@
         fail_msg: "User {{ wildfly_user }} was NOT created."
 
     - name: "Ensures user {{ wildfly_group }} were created."
-      group:
+      ansible.builtin.group:
         name: "{{ wildfly_user }}"
         state: present
       register: wildfly_group_status
 
-    - assert:
+    - ansible.builtin.assert:
         that:
           - wildfly_group_status is defined
           - wildfly_group_status.changed is defined
@@ -45,40 +44,28 @@
         quiet: true
         fail_msg: "User {{ wildfly_group }} was NOT created."
 
-    - set_fact:
-        wfly_http_port: 8080
-
-    - wait_for:
+    - name: "Wait for HTTP port {{ wfly_http_port }} to become available."
+      ansible.builtin.wait_for:
         port: "{{ wfly_http_port }}"
 
     - name: "Check if web connector is accessible"
-      uri:
+      ansible.builtin.uri:
         url: "http://localhost:{{ wfly_http_port }}/"
-
-
-    - set_fact:
-        wfly_http_port: 8080
-
-    - wait_for:
-        port: "{{ wfly_http_port }}"
-
-    - name: "Check if web connector is accessible"
-      uri:
-        url: "http://localhost:{{ wfly_http_port }}/"
-        return_content: yes
 
     - name: "Populate service facts"
       ansible.builtin.service_facts:
 
     - name: "Check if service is running"
-      assert:
+      ansible.builtin.assert:
         that:
           - ansible_facts is defined
           - ansible_facts.services is defined
           - ansible_facts.services['wildfly.service'] is defined
           - ansible_facts.services['wildfly.service']['state'] is defined
           - ansible_facts.services["wildfly.service"]['state'] == 'running'
-    - include_tasks: verify_with_cli_queries.yml
+
+    - name: "Verify server's internal configuration"
+    - ansible.builtin.include_tasks: verify_with_cli_queries.yml
       vars:
         validation_query: "{{ item }}"
         expected_result: "todo"

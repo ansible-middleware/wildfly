@@ -47,4 +47,3 @@ scenario:
     - verify
     - cleanup
     - destroy
-

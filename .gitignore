@@ -10,3 +10,12 @@ __pycache__/
 
 # Temporary test files.
 tests/output
+
+.tmp
+.cache
+docs/plugins/
+docs/roles/
+docs/_build/
+.pytest_cache/
+.mypy_cache/
+*.retry

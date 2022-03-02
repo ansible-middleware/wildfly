@@ -3,6 +3,7 @@ exclude_paths:
   - .cache/
   - .github/
   - molecule/
+  - docs/
   - .ansible-lint
   - .yamllint
 

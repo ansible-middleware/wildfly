@@ -1,57 +1,30 @@
 ---
-- name: "Wildfly installation and configuration"
-  hosts: "{{ hosts_group_name | default('localhost') }}"
-  become: yes
-  vars:
-    wildfly_user: 'wildfly'
-    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
+- name: Converge
+  hosts: all
   collections:
-    - middleware_automation.redhat_csp_download
-  roles:
-    - middleware_automation.redhat_csp_download.redhat_csp_download
-    - middleware_automation.wildfly.wildfly_install
-    - middleware_automation.wildfly.wildfly_systemd
+    - middleware_automation.wildfly
+  vars_files:
+    - molecule/default/vars.yml
   tasks:
-
-    - name: "Install Postresql driver"
+    - name: Include wildfly_install role
       ansible.builtin.include_role:
-        name: middleware_automation.wildfly.wildfly_driver
+        name: wildfly_install
+
+    - name: Include wildfly_systemd role
+      ansible.builtin.include_role:
+        name: wildfly_systemd
+
+    - name: Include wildfly_driver role
+      ansible.builtin.include_role:
+        name: wildfly_driver
       vars:
-          jdbc_driver_module_dir: "{{ wildfly_home }}//modules/org/postgresql/main"
-          jdbc_driver_version: "{{ override_pgsql_jdbc_driver_version | default('9.2-1002-jdbc4') }}"
-          jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
-          jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
-          jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
-          jdbc_driver_module_name: 'org.postgresql'
+        jdbc_driver_module_dir: "{{ wildfly_home }}/modules/org/postgresql/main"
+        jdbc_driver_version: 9.2-1002-jdbc4
+        jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
+        jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
+        jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
+        jdbc_driver_module_name: "org.postgresql"
 
-  post_tasks:
-    - name: Set wildfly port
-      ansible.builtin.set_fact:
-        wfly_http_port: 8080
-
-    - name: Wait for wildfly http port
-      ansible.builtin.wait_for:
-        port: "{{ wfly_http_port }}"
-
-    - name: "Check that Wildfly server is running and accessible"
-      ansible.builtin.get_url:
-        url: "http://localhost:{{ wfly_http_port }}/"
-        dest: '/dev/null'
-
-    - block:
-        - name: Include wildfly systemd role
-          ansible.builtin.include_role:
-            name: middleware_automation.wildfly.wildfly_systemd
-            tasks_from: service.yml
-          vars:
-            instance_name: "wildfly"
-            instance_state: stopped
-
-        - name: Include wildfly uninstall role
-          ansible.builtin.include_role:
-            name: middleware_automation.wildfly.wildfly_uninstall
-          vars:
-            instance_name: "wildfly"
-            wildfly_service_config: "{{ wildfly_service_config_file_location }}"
-      when:
-        - delete_install is defined
+    - name: Include jboss_eap role
+      ansible.builtin.include_role:
+        name: jboss_eap

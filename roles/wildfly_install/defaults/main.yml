@@ -22,3 +22,7 @@ wildfly_jboss_eap_enable: "{{ True if rhn_username is defined and rhn_password i
 
 # whether to install from local archive
 wildfly_offline_install: False
+wildfly_prereqs_packages:
+  - unzip
+  - tar
+  - sudo

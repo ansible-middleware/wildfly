@@ -96,3 +96,11 @@ argument_specs:
                 default: false
                 description: "Whether to install from local archive"
                 type: "bool"
+            wildfly_prereqs_packages:
+                # line 25 of wildfly_install/defaults/main.yml
+                default:
+                  - unzip
+                  - tar
+                  - sudo
+                description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
+                type: "list"

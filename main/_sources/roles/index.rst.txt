@@ -6,3 +6,4 @@ Role Index
  * :doc:`wildfly_install`
  * :doc:`wildfly_systemd`
  * :doc:`wildfly_uninstall`
+ * :doc:`wildfly_validation`

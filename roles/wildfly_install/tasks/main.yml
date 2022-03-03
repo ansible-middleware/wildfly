@@ -1,7 +1,9 @@
 ---
-- ansible.builtin.include_tasks: prereqs.yml
+- name: "Ensures prerequirements are fullfilled."
+  ansible.builtin.include_tasks: prereqs.yml
 
-- ansible.builtin.include_tasks: user.yml
+- name: "Ensures required local user exists."
+  ansible.builtin.include_tasks: user.yml
 
 - name: "Ensure workdir {{ wildfly_install.workdir }} exists."
   ansible.builtin.file:
@@ -19,7 +21,8 @@
     group: "{{ wildfly_install.group }}"
     mode: 0750
 
-- ansible.builtin.include_tasks: install.yml
+- name: "Ensure server is installed"
+  ansible.builtin.include_tasks: install.yml
 
 - name: Check wildfly install directory state
   ansible.builtin.stat:

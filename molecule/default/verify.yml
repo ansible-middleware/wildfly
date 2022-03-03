@@ -62,7 +62,7 @@
           - ansible_facts.services is defined
           - ansible_facts.services['wildfly.service'] is defined
           - ansible_facts.services['wildfly.service']['state'] is defined
-          - ansible_facts.services["wildfly.service"]['state'] == 'running'
+          - ansible_facts.services['wildfly.service']['state'] == 'running'
 
     - name: "Verify server's internal configuration"
       ansible.builtin.include_tasks: verify_with_cli_queries.yml

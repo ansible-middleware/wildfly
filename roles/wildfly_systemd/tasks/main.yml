@@ -8,7 +8,8 @@
       - wildfly_systemd.group is defined
     quiet: true
 
-- ansible.builtin.include_role:
+- name: "Ensure required local user and group exists."
+  ansible.builtin.include_role:
     name: middleware_automation.wildfly.wildfly_install
     tasks_from: user.yml
 
@@ -129,6 +130,7 @@
     - daemon_reload is defined
     - daemon_reload.changed
 
-- ansible.builtin.include_tasks: service.yml
+- name: "Ensure service is started"
+  ansible.builtin.include_tasks: service.yml
   vars:
     instance_state: "started"

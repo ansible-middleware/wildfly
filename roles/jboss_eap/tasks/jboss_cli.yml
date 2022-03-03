@@ -9,7 +9,7 @@
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
-- name: Set facts for cli
+- name: "Set facts for cli"
   ansible.builtin.set_fact:
     path_to_cli: "{{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}"
     controller:

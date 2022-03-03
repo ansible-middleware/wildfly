@@ -28,7 +28,8 @@
   when:
    - override_path_to_patch is defined
 
-- ansible.builtin.include_tasks: tasks/download_from_rhn.yml
+- name: "Download archive from RHN"
+  ansible.builtin.include_tasks: tasks/download_from_rhn.yml
   vars:
     rhn_id_file: "{{ rhn_cp_id }}"
     zipfile_dest: "{{ path_to_patch }}"
@@ -40,7 +41,7 @@
         jboss_home: "{{ wildfly_home }}"
         query: "'patch apply {{ path_to_patch }}'"
 
-    - name: Display patching result
+    - name: "Display patching result"
       ansible.builtin.debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
@@ -48,7 +49,7 @@
         - cli_result is defined
         - cli_result.stdout is defined
 
-    - name: "Restart server to ensure patch application"
+    - name: "Restart server to ensure patch content is running"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         jboss_home: "{{ wildfly_home }}"
@@ -57,22 +58,22 @@
         - not wildfly_no_restart_after_patch is defined
         - cli_result.rc == 0
 
-    - name: Display resulting output
+    - name: "Display resulting output"
       ansible.builtin.debug:
         msg: "{{ cli_result.stdout }}"
       when:
         - cli_result.stdout | length > 0
 
   rescue:
-    - name: Show resulting output
+    - name: "Show resulting output"
       ansible.builtin.debug:
         msg: "{{ cli_result.stdout }}"
 
-    - name: Set error messages
+    - name: "Set error messages"
       ansible.builtin.set_fact:
         error_msg: "{{ cli_result.stdout | string }}"
 
-    - name: Show error messages when patch failed
+    - name: "Display error messages if patch failed"
       ansible.builtin.assert:
         that:
           - error_msg is search('WFLYPAT0012')

@@ -9,7 +9,6 @@
       - wildfly_install.group is defined
     quiet: true
 
-# full_path is download destination, local_path is local download location
 - name: Check local download archive path
   ansible.builtin.stat:
     path: "{{ lookup('env', 'PWD') }}"
@@ -21,20 +20,13 @@
     full_path_to_archive: "{{ wildfly_install.archive_dir }}/{{ wildfly_install.archive_name }}"
     local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_install.archive_name }}"
 
-#- assert:
-#    that:
-#      - not (wildfly_install.rhn_id is defined and wildfly_install.rpm is defined)
-#    quiet: true
-#    fail_msg: "Install can only be from RHN (ID: {{ wildfly_install.rhn_id }} or with RPM {{ wildfly_install.rpm }}, not both."
-
-## check remote archive already present
 - name: "Check target archive: {{ full_path_to_archive }}"
   ansible.builtin.stat:
     path: "{{ full_path_to_archive }}"
   register: archive_path
 
-## download to controller locally
-- ansible.builtin.include_tasks: install/wildfly.yml
+- name: "Retrieve archive from Wildfly website: {{ wildfly_download_baseurl }}"
+  ansible.builtin.include_tasks: install/wildfly.yml
   when:
     - not wildfly_jboss_eap_enable
     - not wildfly_install.rpm is defined
@@ -42,7 +34,8 @@
     - archive_path.stat is defined
     - not archive_path.stat.exists
 
-- ansible.builtin.include_tasks: install/rhn.yml
+- name: "Retrieve archive from RHN"
+  ansible.builtin.include_tasks: install/rhn.yml
   vars:
     rhn_id_file: "{{ wildfly_install.rhn.id }}"
   when:
@@ -51,7 +44,8 @@
     - archive_path.stat is defined
     - not archive_path.stat.exists
 
-- ansible.builtin.include_tasks: install/rpm.yml
+- name: "Install server using RPM"
+  ansible.builtin.include_tasks: install/rpm.yml
   when:
     - wildfly_install.rpm is defined
 
@@ -61,7 +55,6 @@
   register: local_archive_path
   delegate_to: localhost
 
-## copy and unpack
 - name: Copy archive to target nodes
   ansible.builtin.copy:
     src: "{{ local_path_to_archive }}"
@@ -82,12 +75,12 @@
         path: "{{ full_path_to_archive }}"
       register: is_archive_file_created
 
-    - name: "Check target directory: {{ wildfly_install.home }}"
+    - name: "Read target directory information: {{ wildfly_install.home }}"
       ansible.builtin.stat:
         path: "{{ wildfly_install.home }}"
       register: path_to_workdir
 
-    - name: Check arguments
+    - name: "Check target directory state: {{ wildfly_install.home }}"
       ansible.builtin.assert:
         that:
           - is_archive_file_created is defined and is_archive_file_created.stat is defined
@@ -108,7 +101,7 @@
       when:
         - new_version_downloaded.changed or not path_to_workdir.stat.exists
 
-    - name: Inform decompression was not executed
+    - name: "Note: decompression was not executed"
       ansible.builtin.debug:
         msg: "{{ wildfly_install.home }} already exists and version unchanged, skipping decompression"
       when:
@@ -116,12 +109,12 @@
   when:
     - not wildfly_install.rpm is defined
 
-- name: Check wildfly home
+- name: "Read information on server home directory: {{ wildfly_install.home }}"
   ansible.builtin.stat:
     path: "{{ wildfly_install.home }}"
   register: is_wfly_home
 
-- name: Check arguments
+- name: "Check state of server home directory: {{ wildfly_install.home }}"
   ansible.builtin.assert:
     that:
       - is_wfly_home is defined
@@ -129,4 +122,4 @@
       - is_wfly_home.stat.exists is defined
       - is_wfly_home.stat.exists
     quiet: true
-    fail_msg: "Wildfly home has not been created: {{ wildfly_install.home }}."
+    fail_msg: "Server home directory has not been created: {{ wildfly_install.home }}."

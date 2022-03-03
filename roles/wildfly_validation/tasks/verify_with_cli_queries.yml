@@ -3,7 +3,6 @@
   ansible.builtin.assert:
     that:
       - validation_query is defined
-      - expected_result is defined
       - wildfly_home is defined
     quiet: true
     fail_msg: "Missing required parameters"
@@ -15,9 +14,6 @@
   vars:
     query: "'{{ validation_query }}'"
     jboss_home: "{{ wildfly_home }}"
-  loop:
-    - '/core-service=server-environment:read-attribute(name=start-gracefully)'
-    - '/subsystem=undertow/server=default-server/http-listener=default:read-attribute(name=enabled)'
 
 - name: "Validate CLI query was sucessful"
   ansible.builtin.assert:
@@ -25,5 +21,27 @@
       - cli_result is defined
       - cli_result.rc is defined
       - cli_result.rc == 0
+      - cli_result.stdout_lines is defined
     quiet: true
-    fail_msg: "FAIL"
+    fail_msg: "Fail to validate state of server using CLI query: {{ validation_query }}. Server may not be functionnal!"
+
+- name: "Transform output to JSON"
+  ansible.builtin.set_fact:
+    query_result: "{{ cli_result.stdout_lines | join('\n') | from_json }}"
+
+- name: "Display transformed result"
+  ansible.builtin.debug:
+    var: query_result
+  when:
+    - wildfly_validation_debug is defined
+
+- name: "Check that query was successfully performed."
+  ansible.builtin.assert:
+    that:
+      - query_result is defined
+      - query_result.result is defined
+      - query_result.outcome is defined
+      - query_result.outcome == "success"
+      - query_result.result
+    quiet: true
+    fail_msg: "CLI query was not successfull: {{ validation_query }}, server may not be functionnal!"

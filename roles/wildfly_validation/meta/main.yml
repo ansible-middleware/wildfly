@@ -1,0 +1,24 @@
+---
+galaxy_info:
+  role_name: wildfly_validation
+  namespace: middleware_automation
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  description: Provides handy, reusable playbooks to validate that server was properly installed
+  company: Red Hat, Inc.
+
+  license: Apache License 2.0
+
+  min_ansible_version: "2.9"
+
+  platforms:
+   - name: EL
+     versions:
+     - 8
+
+  galaxy_tags:
+    - java
+    - jboss
+    - wildfly
+    - cli
+    - server
+    - systemd

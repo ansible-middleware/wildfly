@@ -1,14 +1,2 @@
 ---
-- name: Verify
-  hosts: all
-  gather_facts: false
-  vars_files:
-    - vars.yml
-  collections:
-    - middleware_automation.wildfly
-  tasks:
-    - name: "TODO"
-      include_role:
-        name: wildfly_validation
-      vars:
-        wildfly_service_name: wildfly
+- import_playbook: ../../playbook-verify.yml

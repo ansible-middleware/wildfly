@@ -1,2 +1,2 @@
 ---
-- import_playbook: ../../playbook-verify.yml
+- import_playbook: ../../playbook_verify.yml

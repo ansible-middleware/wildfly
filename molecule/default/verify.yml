@@ -9,6 +9,6 @@
   tasks:
     - name: "Run validation provided by collection"
       include_role:
-        name: middleware_automation.wildfly.wildfly_validation
+        name: ../../roles/wildfly_validation
       vars:
         wildfly_service_name: wildfly

@@ -7,8 +7,8 @@
   collections:
     - middleware_automation.wildfly
   tasks:
-    - name: "TODO"
+    - name: "Run validation provided by collection"
       include_role:
-        name: wildfly_validation
+        name: middleware_automation.wildfly.wildfly_validation
       vars:
         wildfly_service_name: wildfly

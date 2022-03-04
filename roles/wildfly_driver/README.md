@@ -1,6 +1,10 @@
 Wildfly Systemd role
 ====================
 
+This role provides a playbook to easily install a JDBC driver within
+the server modules directory tree. It comes a template for the main.xml
+(that can be overriden).
+
 Requirements
 ------------
 

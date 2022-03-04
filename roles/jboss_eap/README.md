@@ -1,8 +1,8 @@
-# Ansible Collection - middleware_automation.jboss_eap
+JBoss EAP role
+==============
 
-TODO
-
-
+This roles regroups reusable content to manage the server, but also dealing with JBoss EAP specific
+feature (such as apply cumulative patches).
 
 <!--start argument_specs-->
 Role Defaults

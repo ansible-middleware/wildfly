@@ -1,7 +1,8 @@
 Wildfly uninstall role
 ======================
 
-Role to uninstall and clean wildfly from ansible nodes.
+Role to validate that the app server installed was successful
+and the associated systemd service is currently running.
 
 <!--start argument_specs-->
 Role Defaults

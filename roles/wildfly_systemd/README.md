@@ -1,10 +1,16 @@
-Wildfly Systemd role
+Wildfly systemd role
 =========
+
+Using basic information on the JEE app server installation, this
+role setup a systemd service to manager.
+
+Note: default values are based on the one of the wildfly install
+role.
 
 Requirements
 ------------
 
-A valid Java runtime environment must be available for execution of the jcliff utility
+A working systemd environnment is required on target's system.
 
 <!--start argument_specs-->
 Role Defaults

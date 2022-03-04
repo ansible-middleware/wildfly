@@ -10,7 +10,7 @@
 
 - name: "Download JBoss EAP from RHN (id: {{ rhn_id_file }})"
   ansible.builtin.include_role:
-    name: middleware_automation.wildfly.jboss_eap
+    name: jboss_eap
     tasks_from: download_from_rhn.yml
   vars:
     zipfile_dest: "{{ local_path_to_archive }}"

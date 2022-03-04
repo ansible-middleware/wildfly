@@ -8,7 +8,7 @@
     - middleware_automation.wildfly
   tasks:
     - name: "TODO"
-      include_role:
+      ansible.builtin.include_role:
         name: wildfly_validation
       vars:
         wildfly_service_name: wildfly

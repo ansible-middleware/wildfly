@@ -10,7 +10,7 @@
 
 - name: "Ensure required local user and group exists."
   ansible.builtin.include_role:
-    name: middleware_automation.wildfly.wildfly_install
+    name: wildfly_install
     tasks_from: user.yml
 
 - name: Set destination directory for configuration

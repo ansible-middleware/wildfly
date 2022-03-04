@@ -49,4 +49,4 @@ jobs:
           token: ${{ secrets.TRIGGERING_PAT }}
           repository: ${{ matrix.repo }}
           event-type: "Dependency released - Wildfly"
-          client-payload: '{ "github": ${{toJson(github)}} }'          
+          client-payload: '{ "github": ${{toJson(github)}} }'

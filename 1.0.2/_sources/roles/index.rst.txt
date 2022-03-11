@@ -1,0 +1,9 @@
+Role Index
+==========
+
+ * :doc:`jboss_eap`
+ * :doc:`wildfly_driver`
+ * :doc:`wildfly_install`
+ * :doc:`wildfly_systemd`
+ * :doc:`wildfly_uninstall`
+ * :doc:`wildfly_validation`

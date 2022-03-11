@@ -1,4 +1,4 @@
-Wildfly uninstall role
+Wildfly validation role
 ======================
 
 Role to validate that the app server installed was successful

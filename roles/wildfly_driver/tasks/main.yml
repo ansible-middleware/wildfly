@@ -22,7 +22,7 @@
     path: "{{ jdbc_driver_module_dir }}"
   register: dest_path
 
-- name: "Set up module dir for JDBC Driver: jdbc_driver_module_dir"
+- name: "Set up module dir for JDBC Driver: {{ jdbc_driver_module_dir }}"
   ansible.builtin.file:
     path: "{{ jdbc_driver_module_dir }}"
     state: directory
@@ -37,10 +37,11 @@
   ansible.builtin.uri:
     url: "{{ jdbc_driver_jar_url }}"
     dest: "{{ jdbc_driver_jar_installation_path }}"
-    group: "{{ wildfly_user }}"
-    owner: "{{ wildfly_group }}"
+    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_user }}"
     mode: 0640
     creates: "{{ jdbc_driver_jar_installation_path }}"
+  become: yes
   when:
     - jdbc_driver_jar_url is defined
 
@@ -52,6 +53,7 @@
   ansible.builtin.template:
     src: "{{ module_xml_template }}"
     dest: "{{ jdbc_driver_module_dir }}/module.xml"
-    group: "{{ wildfly_user }}"
-    owner: "{{ wildfly_group }}"
+    group: "{{ wildfly_group }}"
+    owner: "{{ wildfly_user }}"
     mode: 0640
+  become: yes

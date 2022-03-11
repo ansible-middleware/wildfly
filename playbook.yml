@@ -3,8 +3,10 @@
   hosts: all
   collections:
     - middleware_automation.wildfly
-  vars_files:
-    - molecule/default/vars.yml
+  vars:
+    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
   tasks:
     - name: Include wildfly_install role
       ansible.builtin.include_role:

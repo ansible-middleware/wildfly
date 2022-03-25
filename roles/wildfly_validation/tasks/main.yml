@@ -63,6 +63,7 @@
       - ansible_facts.services["{{ wildfly_service_name }}.service"] is defined
       - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] is defined
       - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] == 'running'
+      - ansible_facts.services["{{ wildfly_service_name }}.service"]['status'] == 'enabled'
   when:
     - wildfly_service_name is defined
 

@@ -1,4 +1,4 @@
-Wildfly Systemd role
+Wildfly Driver role
 ====================
 
 This role provides a playbook to easily install a JDBC driver within

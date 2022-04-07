@@ -1,6 +1,6 @@
 namespace: middleware_automation
 name: wildfly
-version: "1.0.2"
+version: "1.0.3"
 readme: README.md
 authors:
   - Romain Pelisse <belaran@redhat.com>
@@ -23,5 +23,6 @@ homepage: https://github.com/ansible-middleware/wildfly
 issues: https://github.com/ansible-middleware/wildfly/issues
 build_ignore:
   - molecule
-  - docs
   - .github
+  - '*.tar.gz'
+  - '*.zip'

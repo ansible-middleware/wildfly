@@ -1,0 +1,21 @@
+ancestor: 0.0.7
+releases:
+  1.0.0:
+    changes:
+      release_summary: 'This is the first stable release of the ``middleware_automation.wildfly``
+        collection.
+
+        '
+    release_date: '2022-03-04'
+  1.0.1:
+    changes:
+      release_summary: 'Minor enhancements, and documentation updates.
+
+        '
+    release_date: '2022-03-04'
+  1.0.2:
+    changes:
+      release_summary: 'Minor enhancements, and documentation updates.
+
+        '
+    release_date: '2022-03-11'

@@ -1,7 +1,7 @@
 .. Red Hat middleware_automation Wildfly Ansible Collection documentation main file
 
 Welcome to Wildfly Collection documentation
-============================================
+===========================================
 
 .. toctree::
    :maxdepth: 2
@@ -15,8 +15,8 @@ Welcome to Wildfly Collection documentation
    :maxdepth: 2
    :caption: Developer documentation
 
-   developing
    testing
+   developing
    releasing
 
 .. toctree::

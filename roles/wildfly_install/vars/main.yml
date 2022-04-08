@@ -18,4 +18,4 @@ wildfly_install:
     package_name: "{{ wildfly_java_package_name }}"
 
 jboss_eap_rhn_ids:
-  '7.4.0': '99481'
+  '7.4.0': '99481' # noqa vars_in_vars_files_have_valid_names

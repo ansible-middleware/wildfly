@@ -1,9 +1,10 @@
 Role Index
 ==========
 
- * :doc:`jboss_eap`
- * :doc:`wildfly_driver`
- * :doc:`wildfly_install`
- * :doc:`wildfly_systemd`
- * :doc:`wildfly_uninstall`
- * :doc:`wildfly_validation`
+.. toctree::
+    jboss_eap
+    wildfly_driver
+    wildfly_install
+    wildfly_systemd
+    wildfly_uninstall
+    wildfly_validation

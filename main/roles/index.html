@@ -19,7 +19,7 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Contributor’s Guidelines" href="../developing.html" />
+    <link rel="next" title="JBoss EAP role" href="jboss_eap.html" />
     <link rel="prev" title="Wildfly Collection for Ansible - middleware_automation.wildfly" href="../README.html" /> 
 </head>
 
@@ -41,11 +41,24 @@
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Role Index</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Role Index</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jboss_eap.html">JBoss EAP role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">Wildfly Driver role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html">Wildfly Install role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html">Wildfly systemd role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html">Wildfly uninstall role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_validation.html">Wildfly validation role</a></li>
+</ul>
+</li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Developer documentation</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../developing.html">Contributor’s Guidelines</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../releasing.html">Collection Versioning Strategy</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">General</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
 </ul>
 
         </div>
@@ -74,16 +87,59 @@
              
   <section id="role-index">
 <h1>Role Index<a class="headerlink" href="#role-index" title="Permalink to this headline"></a></h1>
-<blockquote>
-<div><ul class="simple">
-<li><p><a class="reference internal" href="jboss_eap.html"><span class="doc">JBoss EAP role</span></a></p></li>
-<li><p><a class="reference internal" href="wildfly_driver.html"><span class="doc">Wildfly Driver role</span></a></p></li>
-<li><p><a class="reference internal" href="wildfly_install.html"><span class="doc">Wildfly Install role</span></a></p></li>
-<li><p><a class="reference internal" href="wildfly_systemd.html"><span class="doc">Wildfly systemd role</span></a></p></li>
-<li><p><a class="reference internal" href="wildfly_uninstall.html"><span class="doc">Wildfly uninstall role</span></a></p></li>
-<li><p><a class="reference internal" href="wildfly_validation.html"><span class="doc">Wildfly validation role</span></a></p></li>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="jboss_eap.html">JBoss EAP role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="jboss_eap.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jboss_eap.html#role-variables">Role Variables</a></li>
 </ul>
-</div></blockquote>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wildfly_driver.html">Wildfly Driver role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#role-variables">Role Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#example-playbook">Example Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html#author-information">Author Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wildfly_install.html">Wildfly Install role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#role-variables">Role Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#example-playbooks">Example Playbooks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wildfly_install.html#default-install">Default Install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wildfly_install.html#explicit-location-and-version">Explicit Location and Version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html#author-information">Author Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wildfly_systemd.html">Wildfly systemd role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#role-variables">Role Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#dependencies">Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#example-playbook">Example Playbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#license">License</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html#author-information">Author Information</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wildfly_uninstall.html">Wildfly uninstall role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html#role-variables">Role Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="wildfly_validation.html">Wildfly validation role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_validation.html#role-defaults">Role Defaults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_validation.html#role-variables">Role Variables</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </section>
 
 
@@ -91,7 +147,7 @@
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="../README.html" class="btn btn-neutral float-left" title="Wildfly Collection for Ansible - middleware_automation.wildfly" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../developing.html" class="btn btn-neutral float-right" title="Contributor’s Guidelines" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="jboss_eap.html" class="btn btn-neutral float-right" title="JBoss EAP role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

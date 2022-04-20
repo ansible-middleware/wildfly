@@ -24,8 +24,17 @@
         jdbc_driver_version: 9.2-1002-jdbc4
         jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
         jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
-        jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
         jdbc_driver_module_name: "org.postgresql"
+
+    - name: Include wildfly_driver role
+      ansible.builtin.include_role:
+        name: wildfly_driver
+      vars:
+        jdbc_driver_module_dir: "{{ wildfly_home }}/modules/org/mariadb/main"
+        jdbc_driver_version: 2.7.4
+        jdbc_driver_jar_filename: "mariadb-java-client-{{ jdbc_driver_version }}.jar"
+        jdbc_driver_jar_url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ jdbc_driver_version }}/mariadb-java-client-{{ jdbc_driver_version }}.jar"
+        jdbc_driver_module_name: "org.mariadb"
 
     - name: Include jboss_eap role
       ansible.builtin.include_role:

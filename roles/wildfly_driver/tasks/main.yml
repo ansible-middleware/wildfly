@@ -2,8 +2,9 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
+      - jdbc_driver_jboss_home is defined
       - wildfly_user is defined
-      - jdbc_driver_module_dir is defined
+      - wildfly_driver.module_dir is defined
       - jdbc_driver_module_name is defined
       - jdbc_driver_jar_installation_path is defined
       - jdbc_driver_jar_filename is defined
@@ -17,14 +18,14 @@
   when:
     - not wildfly_group is defined
 
-- name: "Check module directory: {{ jdbc_driver_module_dir }}"
+- name: "Check module directory: {{ wildfly_driver.module_dir }}"
   ansible.builtin.stat:
-    path: "{{ jdbc_driver_module_dir }}"
+    path: "{{ wildfly_driver.module_dir }}"
   register: dest_path
 
-- name: "Set up module dir for JDBC Driver: {{ jdbc_driver_module_dir }}"
+- name: "Set up module dir for JDBC Driver: {{ wildfly_driver.module_dir }}"
   ansible.builtin.file:
-    path: "{{ jdbc_driver_module_dir }}"
+    path: "{{ wildfly_driver.module_dir }}"
     state: directory
     recurse: yes
     owner: "{{ wildfly_user }}"
@@ -33,17 +34,17 @@
   when:
     - not dest_path.stat.exists
 
-- name: "Retrieve Wildfly JDBC Driver from {{ jdbc_driver_jar_url }}"
+- name: "Retrieve Wildfly JDBC Driver from {{ wildfly_driver.jar_url }}"
   ansible.builtin.uri:
-    url: "{{ jdbc_driver_jar_url }}"
-    dest: "{{ jdbc_driver_jar_installation_path }}"
+    url: "{{ wildfly_driver.jar_url }}"
+    dest: "{{ wildfly_driver.jar_installation_path }}"
     group: "{{ wildfly_group }}"
     owner: "{{ wildfly_user }}"
     mode: 0640
-    creates: "{{ jdbc_driver_jar_installation_path }}"
+    creates: "{{ wildfly_driver.jar_installation_path }}"
   become: yes
   when:
-    - jdbc_driver_jar_url is defined
+    - wildfly_driver.jar_url is defined
 
 - name: Set source template path
   ansible.builtin.set_fact:
@@ -52,7 +53,7 @@
 - name: "Deploy module.xml for JDBC Driver"
   ansible.builtin.template:
     src: "{{ module_xml_template }}"
-    dest: "{{ jdbc_driver_module_dir }}/module.xml"
+    dest: "{{ wildfly_driver.module_dir }}/module.xml"
     group: "{{ wildfly_group }}"
     owner: "{{ wildfly_user }}"
     mode: 0640

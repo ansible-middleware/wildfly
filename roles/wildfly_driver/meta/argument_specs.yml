@@ -1,27 +1,43 @@
 argument_specs:
     main:
         options:
+            wildfly_home:
+                description: "Path of jboss installation"
+                type: "str"
             jdbc_driver_module_dir:
-                required: true
+                required: True
+                default: "{{ wildfly_home }}/modules/org/postgresql/main"
                 description: "Path for module installation"
                 type: "str"
             jdbc_driver_version:
-                required: true
+                default: "9.4.1212"
                 description: "Version of jdbc driver to download"
                 type: "str"
             jdbc_driver_jar_filename:
-                required: true
+                default: "postgresql-{{ jdbc_driver_version }}.jar"
                 description: "Filename of jdbc driver to download"
                 type: "str"
             jdbc_driver_jar_url:
-                required: true
+                default: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/postgresql-{{ jdbc_driver_version }}.jar"
                 description: "URL for jdbc driver download"
                 type: "str"
             jdbc_driver_jar_installation_path:
-                required: true
+                default: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
                 description: "Path for jdbc driver installation"
                 type: "str"
             jdbc_driver_module_name:
-                required: true
+                default: "org.postgresql"
                 description: "Name for the jdbc driver module"
                 type: "str"
+            wildfly_user:
+                default: "wildfly"
+                description: "posix user account for wildfly"
+                type: "str"
+            wildfly_group:
+                default: "{{ wildfly_user }}"
+                description: "posix group for wildfly"
+                type: "str"
+            override_module_xml_template:
+                description: "Override path of template used for module configuration"
+                type: "str"
+                required: False

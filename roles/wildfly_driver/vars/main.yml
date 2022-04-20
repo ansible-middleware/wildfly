@@ -1,0 +1,8 @@
+---
+wildfly_driver:
+  module_name: "{{ jdbc_driver_module_name }}"
+  module_dir: "{{ jdbc_driver_module_dir }}"
+  version: "{{ jdbc_driver_version }}"
+  jar_filename: "{{ jdbc_driver_jar_filename }}"
+  jar_url: "{{ jdbc_driver_jar_url }}"
+  jar_installation_path: "{{ jdbc_driver_jar_installation_path }}"

@@ -2,13 +2,8 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - jdbc_driver_jboss_home is defined
       - wildfly_user is defined
       - wildfly_driver.module_dir is defined
-      - jdbc_driver_module_name is defined
-      - jdbc_driver_jar_installation_path is defined
-      - jdbc_driver_jar_filename is defined
-      - jdbc_driver_module_name is defined
     quiet: true
     fail_msg: 'Required variables not provided.'
 

@@ -18,7 +18,6 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `wildfly` |
-|`jdbc_driver_module_dir`| Path for module installation | `{{ jdbc_driver_jboss_home }}/modules/org/postgresql/main"` |
 |`jdbc_driver_version`| Version of jdbc driver to download | `9.4.1212` |
 |`jdbc_driver_jar_filename`| Filename of jdbc driver to download | `postgresql-{{ jdbc_driver_version }}.jar` |
 |`jdbc_driver_jar_url`| URL for jdbc driver download | `https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/postgresql-{{ jdbc_driver_version }}.jar` |
@@ -32,6 +31,7 @@ Role Variables
 | Variable | Description |
 |:---------|:------------|
 |`wildfly_home`| Home directory of jboss installation |
+|`jdbc_driver_module_dir`| Path for module installation |
 <!--end argument_specs-->
 
 Dependencies

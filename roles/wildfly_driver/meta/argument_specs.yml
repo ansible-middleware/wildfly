@@ -6,7 +6,6 @@ argument_specs:
                 type: "str"
             jdbc_driver_module_dir:
                 required: True
-                default: "{{ wildfly_home }}/modules/org/postgresql/main"
                 description: "Path for module installation"
                 type: "str"
             jdbc_driver_version:

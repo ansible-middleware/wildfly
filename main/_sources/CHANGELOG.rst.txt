@@ -12,7 +12,7 @@ v1.0.3-devel
 Minor Changes
 -------------
 
-- feat: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
+- wildfly_driver: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
 
 v1.0.2
 ======

@@ -9,7 +9,7 @@
 
 - name: "Use CLI query to validate service state: {{ validation_query }}"
   ansible.builtin.include_role:
-    name: jboss_eap
+    name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
     query: "'{{ validation_query }}'"

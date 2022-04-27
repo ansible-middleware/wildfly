@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: jboss_eap
+  role_name: wildfly_utils
   namespace: middleware_automation
   author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
   description: JBoss Enterprise Application (EAP) specific tasks

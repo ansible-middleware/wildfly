@@ -38,4 +38,4 @@
 
     - name: Include jboss_eap role
       ansible.builtin.include_role:
-        name: jboss_eap
+        name: wildfly_utils

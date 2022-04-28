@@ -100,6 +100,15 @@
   when:
     - not service_systemd_env_file is defined
 
+- name: Determine JAVA_HOME for selected JVM RPM  # noqa blocked_modules
+  ansible.builtin.shell: |
+    set -o pipefail
+    rpm -ql {{ wildfly_java_package_name }} | grep -Po '/usr/lib/jvm/.*(?=/bin/java$)'
+  args:
+    executable: /bin/bash
+  changed_when: False
+  register: rpm_java_home
+
 - name: "Deploy Wildfly service instance configuration: {{ service_systemd_env_file }}"
   ansible.builtin.template:
     src: "{{ wildfly_service_config_file_template }}"
@@ -107,6 +116,8 @@
     group: root
     owner: root
     mode: 0640
+  vars:
+    wildfly_rpm_java_home: "{{ rpm_java_home.stdout }}"
 
 - name: Set systemd unit file destination
   ansible.builtin.set_fact:

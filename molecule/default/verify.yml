@@ -1,2 +1,9 @@
 ---
 - import_playbook: ../../playbook_verify.yml
+
+- name: Validation
+  hosts: all
+  tasks:
+    - name: Verify we are running on requested jvm
+      shell: |
+        ps -ef | grep /usr/lib/jvm/java-11 | grep -v grep

@@ -4,8 +4,10 @@ wildfly_group: "{{ wildfly_user }}"
 wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
 wildfly_config_base: 'standalone.xml'
 wildfly_port_range_offset: 100
-wildfly_systemd_enabled: yes
 
+wildfly_java_package_name: java-1.8.0-openjdk-headless
+
+wildfly_systemd_enabled: yes
 wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
 wildfly_systemd_service_config_file_suffix: '.service'
 wildfly_systemd_conf_file_suffix: '.conf'

@@ -31,6 +31,14 @@ argument_specs:
                 default: true
                 description: "Enable systemd unit"
                 type: "bool"
+            wildfly_java_package_name:
+                # line 15 of wildfly_install/defaults/main.yml
+                default: "java-1.8.0-openjdk-headless"
+                description: "RHEL java rpm package"
+                type: "str"
+            wildfly_java_home:
+                description: "JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path"
+                type: "str"
             wildfly_systemd_service_config_location:
                 # line 9 of wildfly_systemd/defaults/main.yml
                 default: "/usr/lib/systemd/system"

@@ -172,11 +172,29 @@ role.</p>
 <td class="text-left"><p>List of filenames for wildfly configuration bootstrap</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
+<td class="text-left"><p>RHEL java rpm package</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-1.8.0-openjdk-headless</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </section>
 <section id="role-variables">
 <h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this headline"></a></h2>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-left head"><p>Variable</p></th>
+<th class="text-left head"><p>Description</p></th>
+<th class="text-left head"><p>Required</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_home</span></code></p></td>
+<td class="text-left"><p>JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
+</tr>
+</tbody>
+</table>
 <!--end argument_specs-->
 </section>
 <section id="dependencies">

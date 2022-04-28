@@ -19,6 +19,11 @@ Breaking Changes / Porting Guide
 
 - Rename jboss_eap role into wildfly_utils to be consistent with role naming convention `#45 <https://github.com/ansible-middleware/wildfly/pull/45>`_
 
+Bugfixes
+--------
+
+- JAVA_HOME should be set according to requested JVM package, or overridden via ``wildfly_java_home`` `#46 <https://github.com/ansible-middleware/wildfly/pull/46>`_
+
 v1.0.2
 ======
 

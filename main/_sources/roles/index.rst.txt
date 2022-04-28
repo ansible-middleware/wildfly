@@ -2,9 +2,9 @@ Role Index
 ==========
 
 .. toctree::
-    jboss_eap
     wildfly_driver
     wildfly_install
     wildfly_systemd
     wildfly_uninstall
+    wildfly_utils
     wildfly_validation

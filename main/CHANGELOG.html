@@ -52,6 +52,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-3-devel">v1.0.3-devel</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#minor-changes">Minor Changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#breaking-changes-porting-guide">Breaking Changes / Porting Guide</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-2">v1.0.2</a><ul>
@@ -59,11 +60,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-1">v1.0.1</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id2">Release Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Release Summary</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#v1-0-0">v1.0.0</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id3">Release Summary</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Release Summary</a></li>
 </ul>
 </li>
 </ul>
@@ -95,30 +96,31 @@
            <div itemprop="articleBody">
              
   <section id="middleware-automation-wildfly-release-notes">
-<h1><a class="toc-backref" href="#id4">middleware_automation.wildfly Release Notes</a><a class="headerlink" href="#middleware-automation-wildfly-release-notes" title="Permalink to this headline"></a></h1>
+<h1><a class="toc-backref" href="#id5">middleware_automation.wildfly Release Notes</a><a class="headerlink" href="#middleware-automation-wildfly-release-notes" title="Permalink to this headline"></a></h1>
 <div class="contents topic" id="topics">
 <p class="topic-title">Topics</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#middleware-automation-wildfly-release-notes" id="id4">middleware_automation.wildfly Release Notes</a></p>
+<li><p><a class="reference internal" href="#middleware-automation-wildfly-release-notes" id="id5">middleware_automation.wildfly Release Notes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#v1-0-3-devel" id="id5">v1.0.3-devel</a></p>
+<li><p><a class="reference internal" href="#v1-0-3-devel" id="id6">v1.0.3-devel</a></p>
 <ul>
-<li><p><a class="reference internal" href="#minor-changes" id="id6">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#minor-changes" id="id7">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-changes-porting-guide" id="id8">Breaking Changes / Porting Guide</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-2" id="id7">v1.0.2</a></p>
+<li><p><a class="reference internal" href="#v1-0-2" id="id9">v1.0.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#release-summary" id="id8">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#release-summary" id="id10">Release Summary</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-1" id="id9">v1.0.1</a></p>
-<ul>
-<li><p><a class="reference internal" href="#id2" id="id10">Release Summary</a></p></li>
-</ul>
-</li>
-<li><p><a class="reference internal" href="#v1-0-0" id="id11">v1.0.0</a></p>
+<li><p><a class="reference internal" href="#v1-0-1" id="id11">v1.0.1</a></p>
 <ul>
 <li><p><a class="reference internal" href="#id3" id="id12">Release Summary</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#v1-0-0" id="id13">v1.0.0</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id14">Release Summary</a></p></li>
 </ul>
 </li>
 </ul>
@@ -127,32 +129,38 @@
 </div>
 <p>This changelog describes changes after version 0.0.7.</p>
 <section id="v1-0-3-devel">
-<h2><a class="toc-backref" href="#id5">v1.0.3-devel</a><a class="headerlink" href="#v1-0-3-devel" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id6">v1.0.3-devel</a><a class="headerlink" href="#v1-0-3-devel" title="Permalink to this headline"></a></h2>
 <section id="minor-changes">
-<h3><a class="toc-backref" href="#id6">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id7">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Permalink to this headline"></a></h3>
 <ul class="simple">
 <li><p>wildfly_driver: make variables as default <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/39">#39</a></p></li>
 </ul>
 </section>
+<section id="breaking-changes-porting-guide">
+<h3><a class="toc-backref" href="#id8">Breaking Changes / Porting Guide</a><a class="headerlink" href="#breaking-changes-porting-guide" title="Permalink to this headline"></a></h3>
+<ul class="simple">
+<li><p>Rename jboss_eap role into wildfly_utils to be consistent with role naming convention <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/45">#45</a></p></li>
+</ul>
+</section>
 </section>
 <section id="v1-0-2">
-<h2><a class="toc-backref" href="#id7">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Permalink to this headline"></a></h2>
+<h2><a class="toc-backref" href="#id9">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Permalink to this headline"></a></h2>
 <section id="release-summary">
-<h3><a class="toc-backref" href="#id8">Release Summary</a><a class="headerlink" href="#release-summary" title="Permalink to this headline"></a></h3>
+<h3><a class="toc-backref" href="#id10">Release Summary</a><a class="headerlink" href="#release-summary" title="Permalink to this headline"></a></h3>
 <p>Minor enhancements, and documentation updates.</p>
 </section>
 </section>
 <section id="v1-0-1">
-<h2><a class="toc-backref" href="#id9">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Permalink to this headline"></a></h2>
-<section id="id2">
-<h3><a class="toc-backref" href="#id10">Release Summary</a><a class="headerlink" href="#id2" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id11">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Permalink to this headline"></a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id12">Release Summary</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
 <p>Minor enhancements, and documentation updates.</p>
 </section>
 </section>
 <section id="v1-0-0">
-<h2><a class="toc-backref" href="#id11">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Permalink to this headline"></a></h2>
-<section id="id3">
-<h3><a class="toc-backref" href="#id12">Release Summary</a><a class="headerlink" href="#id3" title="Permalink to this headline"></a></h3>
+<h2><a class="toc-backref" href="#id13">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Permalink to this headline"></a></h2>
+<section id="id4">
+<h3><a class="toc-backref" href="#id14">Release Summary</a><a class="headerlink" href="#id4" title="Permalink to this headline"></a></h3>
 <p>This is the first stable release of the <code class="docutils literal notranslate"><span class="pre">middleware_automation.wildfly</span></code> collection.</p>
 </section>
 </section>

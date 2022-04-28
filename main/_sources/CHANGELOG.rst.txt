@@ -14,6 +14,11 @@ Minor Changes
 
 - wildfly_driver: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
 
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename jboss_eap role into wildfly_utils to be consistent with role naming convention `#45 <https://github.com/ansible-middleware/wildfly/pull/45>`_
+
 v1.0.2
 ======
 

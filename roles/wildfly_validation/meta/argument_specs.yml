@@ -2,12 +2,14 @@ argument_specs:
     main:
         options:
             wildfly_user:
-                # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"
                 description: "posix user account for wildfly"
                 type: "str"
             wildfly_group:
-                # line 11 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly"
+                type: "str"
+            wildfly_service_name:
+                default: "wildfly"
+                description: "Systemd service name for wildfly"
                 type: "str"

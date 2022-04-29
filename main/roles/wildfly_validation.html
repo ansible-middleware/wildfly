@@ -97,9 +97,28 @@ and the associated systemd service is currently running.</p>
 <!--start argument_specs-->
 <section id="role-defaults">
 <h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Permalink to this headline"></a></h2>
-<ul class="simple">
-<li><p>No defaults</p></li>
-</ul>
+<table class="colwidths-auto docutils align-default">
+<thead>
+<tr class="row-odd"><th class="text-left head"><p>Variable</p></th>
+<th class="text-left head"><p>Description</p></th>
+<th class="text-left head"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
+<td class="text-left"><p>posix user account for wildfly</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
+<td class="text-left"><p>posix group for wildfly</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_service_name</span></code></p></td>
+<td class="text-left"><p>Systemd service name for wildfly</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="role-variables">
 <h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this headline"></a></h2>

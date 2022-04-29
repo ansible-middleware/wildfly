@@ -1,9 +1,14 @@
 ---
-- import_playbook: ../../playbook_verify.yml
+- import_playbook: ../../playbooks/playbook_verify.yml
+  vars:
+    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+    wfly_http_port: 8080
 
 - name: Validation
   hosts: all
   tasks:
     - name: Verify we are running on requested jvm
-      shell: |
+      ansible.builtin.shell: |
         ps -ef | grep /usr/lib/jvm/java-11 | grep -v grep

@@ -12,6 +12,7 @@ v1.0.3-devel
 Minor Changes
 -------------
 
+- Rename vars to follow proper convention `#48 <https://github.com/ansible-middleware/wildfly/pull/48>`_
 - wildfly_driver: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
 
 Breaking Changes / Porting Guide

@@ -24,6 +24,7 @@ Bugfixes
 --------
 
 - JAVA_HOME should be set according to requested JVM package, or overridden via ``wildfly_java_home`` `#46 <https://github.com/ansible-middleware/wildfly/pull/46>`_
+- update role name in rhn.yml `#51 <https://github.com/ansible-middleware/wildfly/pull/51>`_
 
 v1.0.2
 ======

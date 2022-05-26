@@ -26,7 +26,7 @@
   register: archive_path
 
 - name: "Retrieve archive from Wildfly website: {{ wildfly_download_baseurl }}"
-  ansible.builtin.include_tasks: install/wildfly.yml
+  ansible.builtin.include_tasks: install/web.yml
   when:
     - not wildfly_jboss_eap_enable
     - not wildfly_install.rpm is defined

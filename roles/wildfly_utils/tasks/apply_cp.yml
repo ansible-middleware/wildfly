@@ -34,7 +34,8 @@
     rhn_id_file: "{{ rhn_cp_id }}"
     zipfile_dest: "{{ path_to_patch }}"
 
-- block:
+- name: Perform patching
+  block:
     - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:

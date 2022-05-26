@@ -69,7 +69,8 @@
     - local_archive_path.stat.exists
   become: yes
 
-- block:
+- name: Perform installation
+  block:
     - name: "Check target archive: {{ full_path_to_archive }}"
       ansible.builtin.stat:
         path: "{{ full_path_to_archive }}"

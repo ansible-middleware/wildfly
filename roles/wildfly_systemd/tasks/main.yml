@@ -23,7 +23,8 @@
   when:
     - not instance_id is defined
 
-- block:
+- name: Setup instance name when instance_id is defined
+  block:
     - name: Check arguments
       ansible.builtin.assert:
         that:

@@ -75,10 +75,12 @@
       ansible.builtin.stat:
         path: "{{ full_path_to_archive }}"
       register: is_archive_file_created
+      become: yes
 
     - name: "Read target directory information: {{ wildfly_install.home }}"
       ansible.builtin.stat:
         path: "{{ wildfly_install.home }}"
+      become: yes
       register: path_to_workdir
 
     - name: "Check target directory state: {{ wildfly_install.home }}"
@@ -113,6 +115,7 @@
 - name: "Read information on server home directory: {{ wildfly_install.home }}"
   ansible.builtin.stat:
     path: "{{ wildfly_install.home }}"
+  become: yes
   register: is_wfly_home
 
 - name: "Check state of server home directory: {{ wildfly_install.home }}"

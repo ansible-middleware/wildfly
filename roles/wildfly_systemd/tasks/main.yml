@@ -66,6 +66,7 @@
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
     mode: '0755'
+  become: yes
 
 - name: "Create deployment directories for instance: {{ instance_name }}"
   ansible.builtin.file:
@@ -74,6 +75,7 @@
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
     mode: '0755'
+  become: yes
 
 - name: "Deploy Wildfy configuration"
   ansible.builtin.copy:
@@ -84,6 +86,7 @@
     mode: 0640
     remote_src: true
     force: no
+  become: yes
 
 - name: Include YAML configuration extension
   ansible.builtin.include_tasks: yml_config.yml
@@ -94,6 +97,7 @@
     path: "{{ wildfly_systemd.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     state: absent
   when: not wildfly_enable_yml_config
+  become: yes
 
 - name: Set systemd envfile destination
   ansible.builtin.set_fact:
@@ -109,6 +113,7 @@
     executable: /bin/bash
   changed_when: False
   register: rpm_java_home
+  become: yes
 
 - name: "Deploy Wildfly service instance configuration: {{ service_systemd_env_file }}"
   ansible.builtin.template:
@@ -118,6 +123,7 @@
     owner: root
     mode: 0640
   register: daemon_reload_env
+  become: yes
   vars:
     wildfly_rpm_java_home: "{{ rpm_java_home.stdout }}"
 
@@ -135,10 +141,12 @@
     owner: root
     mode: 0640
   register: daemon_reload
+  become: yes
 
 - name: "Perform daemon-reload to ensure the changes are picked up"
   ansible.builtin.systemd:
     daemon_reload: yes
+  become: yes
   when:
     - daemon_reload is defined or daemon_reload_env is defined
     - daemon_reload.changed or daemon_reload_env.changed

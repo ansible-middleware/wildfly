@@ -26,3 +26,4 @@
     {{ path_to_cli }} -c --output-json --command={{ query }} --controller={{ controller.host }}:{{ controller.port }}
   register: cli_result
   changed_when: false
+  become: yes

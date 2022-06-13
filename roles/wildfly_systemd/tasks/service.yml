@@ -11,3 +11,4 @@
     name: "{{ instance_name }}"
     state: "{{ instance_state }}"
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
+  become: yes

@@ -11,6 +11,7 @@
     path: "{{ wildfly_runtime_data }}"
   when:
     - wildfly_runtime_data is defined
+  become: yes
 
 - name: "Delete configurations files"
   ansible.builtin.file:
@@ -18,6 +19,7 @@
     path: "{{ wildfly_service_config }}"
   when:
     - wildfly_service_config is defined
+  become: yes
 
 - name: "Set destination path for systemd unit"
   ansible.builtin.set_fact:
@@ -27,6 +29,7 @@
   ansible.builtin.stat:
     path: "{{ wfly_systemd_config }}"
   register: wfly_systemd_configfile
+  become: yes
 
 - name: "Delete all systems services"
   ansible.builtin.file:
@@ -34,3 +37,4 @@
     path: "{{ wfly_systemd_config }}"
   when:
     - wfly_systemd_configfile.stat.exists
+  become: yes

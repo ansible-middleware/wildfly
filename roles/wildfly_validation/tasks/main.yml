@@ -11,6 +11,7 @@
     name: "{{ wildfly_user }}"
     state: present
   register: wildfly_user_status
+  become: yes
 
 - name: "Validate state of user: {{ wildfly_user }}"
   ansible.builtin.assert:
@@ -30,6 +31,7 @@
     name: "{{ wildfly_user }}"
     state: present
   register: wildfly_group_status
+  become: yes
 
 - name: "Validate state of group: {{ wildfly_group }}."
   ansible.builtin.assert:

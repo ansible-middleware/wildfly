@@ -195,6 +195,14 @@ role.</p>
 <td class="text-left"><p>JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_instance_id</span></code></p></td>
+<td class="text-left"><p>When colocating services on the same host, EAP instance ID (integer value)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_instance_name</span></code></p></td>
+<td class="text-left"><p>When colocating services on the same host, EAP instance name</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
+</tr>
 </tbody>
 </table>
 <!--end argument_specs-->
@@ -216,7 +224,7 @@ role.</p>
 <span class="w">        </span><span class="nt">wildfly_config_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">install_name</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
 <span class="w">        </span><span class="nt">wildfly_port_range_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span><span class="w"></span>
 <span class="w">        </span><span class="nt">wildfly_instance_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">install_name</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
-<span class="w">        </span><span class="nt">instance_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
+<span class="w">        </span><span class="nt">wildfly_instance_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>
 <span class="w">        </span><span class="nt">service_systemd_env_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/etc/eap-</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="s">.conf&quot;</span><span class="w"></span>
 <span class="w">        </span><span class="nt">service_systemd_conf_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/usr/lib/systemd/system/jboss-eap-</span><span class="cp">{{</span> <span class="nv">item</span> <span class="cp">}}</span><span class="s">.service&quot;</span><span class="w"></span>
 <span class="w">      </span><span class="nt">loop</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">range</span><span class="o">(</span><span class="m">0</span><span class="o">,</span><span class="m">3</span><span class="o">)</span> <span class="o">|</span> <span class="nf">list</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="w"></span>

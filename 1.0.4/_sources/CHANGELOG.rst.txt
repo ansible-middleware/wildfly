@@ -1,0 +1,69 @@
+===========================================
+middleware_automation.wildfly Release Notes
+===========================================
+
+.. contents:: Topics
+
+This changelog describes changes after version 0.0.7.
+
+v1.0.4
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
+- Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
+
+Bugfixes
+--------
+
+- Add become parameter to tasks that require it `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
+- Add become to necessary tasks `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
+
+v1.0.3
+======
+
+Minor Changes
+-------------
+
+- Rename validation role vars to follow proper convention `#48 <https://github.com/ansible-middleware/wildfly/pull/48>`_
+- wildfly_driver: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename jboss_eap role into wildfly_utils to be consistent with role naming convention `#45 <https://github.com/ansible-middleware/wildfly/pull/45>`_
+
+Bugfixes
+--------
+
+- JAVA_HOME should be set according to requested JVM package, or overridden via ``wildfly_java_home`` `#46 <https://github.com/ansible-middleware/wildfly/pull/46>`_
+- Update included role to new name in rhn installation `#51 <https://github.com/ansible-middleware/wildfly/pull/51>`_
+
+v1.0.2
+======
+
+Release Summary
+---------------
+
+Minor enhancements, and documentation updates.
+
+
+v1.0.1
+======
+
+Release Summary
+---------------
+
+Minor enhancements, and documentation updates.
+
+
+v1.0.0
+======
+
+Release Summary
+---------------
+
+This is the first stable release of the ``middleware_automation.wildfly`` collection.
+

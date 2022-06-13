@@ -79,3 +79,13 @@ argument_specs:
                 default: "[]"
                 description: "List of filenames for wildfly configuration bootstrap"
                 type: "list"
+            wildfly_instance_id:
+                # line 17 of wildfly_systemd/defaults/main.yml
+                required: false
+                description: "ID for instance when colocating EAP deployments"
+                type: "int"
+            wildfly_instance_name:
+                # line 17 of wildfly_systemd/defaults/main.yml
+                required: false
+                description: "Name for instance when colocating EAP deployments"
+                type: "str"

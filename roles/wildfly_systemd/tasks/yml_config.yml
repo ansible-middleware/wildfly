@@ -21,6 +21,6 @@
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
     mode: 0644
-  loop: "{{ wildfly_yml_configs|flatten }}"
+  loop: "{{ wildfly_yml_configs | flatten }}"
   loop_control:
     loop_var: file

@@ -13,13 +13,11 @@ Breaking Changes / Porting Guide
 --------------------------------
 
 - Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
-- Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
 
 Bugfixes
 --------
 
 - Add become parameter to tasks that require it `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
-- Add become to necessary tasks `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
 
 v1.0.3
 ======

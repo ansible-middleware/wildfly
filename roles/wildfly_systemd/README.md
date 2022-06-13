@@ -42,6 +42,8 @@ Role Variables
 | Variable | Description | Required |
 |:---------|:------------|:---------|
 |`wildfly_java_home`| JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path | `No` |
+|`wildfly_instance_id`| When colocating services on the same host, EAP instance ID (integer value) | `No` |
+|`wildfly_instance_name`| When colocating services on the same host, EAP instance name | `No` |
 <!--end argument_specs-->
 
 Dependencies
@@ -65,7 +67,7 @@ Example Playbook
         wildfly_config_name: "{{ install_name }}"
         wildfly_port_range_offset: 100
         wildfly_instance_name: "{{ install_name }}"
-        instance_id: "{{ item }}"
+        wildfly_instance_id: "{{ item }}"
         service_systemd_env_file: "/etc/eap-{{ item }}.conf"
         service_systemd_conf_file: "/usr/lib/systemd/system/jboss-eap-{{ item }}.service"
       loop: "{{ range(0,3) | list }}"

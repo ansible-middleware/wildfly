@@ -48,3 +48,18 @@ releases:
     - 48.yaml
     - 51.yaml
     release_date: '2022-05-27'
+  1.0.4:
+    changes:
+      breaking_changes:
+      - 'Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs
+        `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
+
+        '
+      bugfixes:
+      - 'Add become to necessary tasks `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
+
+        '
+    fragments:
+    - 52.yaml
+    - 53.yaml
+    release_date: '2022-06-13'

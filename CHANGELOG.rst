@@ -6,6 +6,19 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.0.4
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
+
+Bugfixes
+--------
+
+- Add become to necessary tasks `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
+
 v1.0.3
 ======
 

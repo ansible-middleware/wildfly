@@ -17,6 +17,7 @@
   ansible.builtin.stat:
     path: "{{ wildfly_driver.module_dir }}"
   register: dest_path
+  become: yes
 
 - name: "Set up module dir for JDBC Driver: {{ wildfly_driver.module_dir }}"
   ansible.builtin.file:
@@ -26,6 +27,7 @@
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0750
+  become: yes
   when:
     - not dest_path.stat.exists
 

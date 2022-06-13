@@ -12,6 +12,7 @@
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
     mode: 0750
+  become: yes
 
 - name: "Ensure archive_dir {{ wildfly_install.archive_dir }} exists."
   ansible.builtin.file:
@@ -20,6 +21,7 @@
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
     mode: 0750
+  become: yes
 
 - name: "Ensure server is installed"
   ansible.builtin.include_tasks: install.yml
@@ -28,6 +30,7 @@
   ansible.builtin.stat:
     path: "{{ wildfly_install.home }}"
   register: is_wildfly_home
+  become: yes
 
 - name: Validate conditions
   ansible.builtin.assert:

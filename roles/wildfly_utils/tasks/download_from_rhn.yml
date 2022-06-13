@@ -23,3 +23,4 @@
     dest: "{{ zipfile_dest }}"
     username: "{{ rhn_username }}"
     password: "{{ rhn_password }}"
+  become: yes

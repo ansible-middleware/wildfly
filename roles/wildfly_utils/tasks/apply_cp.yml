@@ -74,6 +74,7 @@
   ansible.builtin.stat:
     path: "{{ path_to_patch }}"
   register: patch_info
+  become: yes
 
 - name: "Set checksum file path for patch"
   ansible.builtin.set_fact:
@@ -85,6 +86,7 @@
   ansible.builtin.stat:
     path: "{{ patch_checksum_file }}"
   register: last_patch_status
+  become: yes
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
@@ -118,6 +120,7 @@
         mode: 0640
       when:
         - not last_patch_status.stat.exists
+      become: yes
 
     - name: "Restart server to ensure patch content is running"
       ansible.builtin.include_tasks: jboss_cli.yml

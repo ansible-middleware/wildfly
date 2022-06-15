@@ -18,5 +18,7 @@ Role Defaults
 Role Variables
 --------------
 
-* No required variables
+| Variable | Description | Required |
+|:---------|:------------|:---------|
+|`wildfly_home`| Wildfly home directory | `Yes` |
 <!--end argument_specs-->

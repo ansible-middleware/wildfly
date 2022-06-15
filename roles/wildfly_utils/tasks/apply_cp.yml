@@ -70,7 +70,29 @@
     - local_archive_path.stat.exists
   become: yes
 
+- name: "Check patch state"
+  ansible.builtin.stat:
+    path: "{{ path_to_patch }}"
+  register: patch_info
+
+- ansible.builtin.set_fact:
+    patch_checksum_file: "{{ wildfly_home }}/.applied_patch_checksum_{{ patch_info.stat.checksum }}.txt"
+  when:
+    - patch_info.stat is defined
+
+- name: "Check {{ patch_checksum_file }} state"
+  ansible.builtin.stat:
+    path: "{{ patch_checksum_file }}"
+  register: last_patch_status
+
+- name: Print when patch has been applied already
+  ansible.builtin.debug:
+    msg: "Patch v{{ rhn_cp_v }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
+  when:
+    - last_patch_status.stat.exists
+
 - name: Perform patching
+  when: not last_patch_status.stat.exists
   block:
     - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
       ansible.builtin.include_tasks: jboss_cli.yml
@@ -85,6 +107,16 @@
         - print_cli_patch_result is defined
         - cli_result is defined
         - cli_result.stdout is defined
+
+    - name: Set checksum file
+      ansible.builtin.copy:
+        dest: "{{ patch_checksum_file }}"
+        content: "Patch v{{ rhn_cp_v }}"
+        owner: "{{ wildfly_user }}"
+        group: "{{ wildfly_group }}"
+        mode: 0640
+      when:
+        - not last_patch_status.stat.exists
 
     - name: "Restart server to ensure patch content is running"
       ansible.builtin.include_tasks: jboss_cli.yml

@@ -75,7 +75,8 @@
     path: "{{ path_to_patch }}"
   register: patch_info
 
-- ansible.builtin.set_fact:
+- name: "Set checksum file path for patch"
+  ansible.builtin.set_fact:
     patch_checksum_file: "{{ wildfly_home }}/.applied_patch_checksum_{{ patch_info.stat.checksum }}.txt"
   when:
     - patch_info.stat is defined
@@ -124,7 +125,7 @@
         jboss_home: "{{ wildfly_home }}"
         query: "'shutdown --restart'"
       when:
-        - not wildfly_no_restart_after_patch is defined
+        - not wildfly_no_restart_after_patch
         - cli_result.rc == 0
 
     - name: "Display resulting output"

@@ -12,7 +12,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`jboss_cli_controller_host`| Hostname for connecting to cli | `localhost` |
 |`jboss_cli_controller_port`| Port for connecting to cli | `9990` |
-
+|`wildfly_no_restart_after_patch`| When true, skip restarting after applying a cumulative patch | `False` |
 
 
 Role Variables

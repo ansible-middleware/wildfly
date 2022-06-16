@@ -33,7 +33,8 @@ Role Defaults
 |`wildfly_enable_yml_config`| Enable yaml file configuration feature (WFCORE5343) | `False` |
 |`wildfly_yml_configs`| List of filenames for wildfly configuration bootstrap | `[]` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk-headless` |
-
+|`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
+|`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |
 
 
 Role Variables

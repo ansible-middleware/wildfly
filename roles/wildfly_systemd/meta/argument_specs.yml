@@ -89,3 +89,11 @@ argument_specs:
                 required: false
                 description: "Name for instance when colocating EAP deployments"
                 type: "str"
+            wildfly_bind_addr:
+                description: "Bind address for listening to public network"
+                default: "0.0.0.0"
+                type: "str"
+            wildfly_bind_addr_private:
+                description: "Bind address for listening to private network"
+                default: "127.0.0.1"
+                type: "str"

@@ -35,6 +35,7 @@ Role Defaults
 |`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk-headless` |
 |`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
 |`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |
+|`wildfly_multicast_addr`| Multicast address for jgroup cluster discovery |`230.0.0.4` |
 
 
 Role Variables

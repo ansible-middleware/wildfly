@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.0.5-devel
 ============
 
+Minor Changes
+-------------
+
+- Add variable ``````wildfly_bind_addr_private`````` to set private if bind address `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
+
 v1.0.4
 ======
 

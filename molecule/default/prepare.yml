@@ -2,9 +2,14 @@
 - name: Prepare
   hosts: all
   tasks:
-    - name: Install sudo
+
+    - name: "Ensure required packages are instaled."
       ansible.builtin.yum:
         name:
           - sudo
           - java-1.8.0-openjdk
-        state: present
+          - procps-ng
+
+    - name: Display Ansible version
+      ansible.bulitin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"

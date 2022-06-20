@@ -97,3 +97,7 @@ argument_specs:
                 description: "Bind address for listening to private network"
                 default: "127.0.0.1"
                 type: "str"
+            wildfly_multicast_addr:
+                description: "Multicast address for jgroup cluster discovery"
+                default: "230.0.0.4"
+                type: "str"

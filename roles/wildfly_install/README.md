@@ -1,5 +1,5 @@
 Wildfly Install role
-====
+====================
 
 A set of playbooks to automate the installation the JEE server, including retrieving the
 source archive (wildfly or JBoss EAP from the Red Hat Customer Portal, if proper credentials
@@ -36,6 +36,7 @@ Role Defaults
 |`wildfly_jboss_eap_enable`| Choice between wildfly (usptream) or Red Hat JBoss EAP (product) | `{{ True if rhn_username is defined and rhn_password is defined else False }}` |
 |`wildfly_jboss_eap_apply_cp`| Whether to apply the latest cumulative patch on top of baseline version | `False` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
+|`wildfly_systemd_enable`| Whether to configure the systemd unit for the service | `False` |
 
 
 Role Variables

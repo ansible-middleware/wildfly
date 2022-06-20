@@ -128,6 +128,12 @@
     quiet: true
     fail_msg: "Server home directory has not been created: {{ wildfly_install.home }}."
 
+- name: "Configure systemd"
+  ansible.builtin.include_role:
+    name: wildfly_systemd
+  when:
+    - wildfly_systemd_enable
+
 - name: "Apply latest cumulative patch"
   ansible.builtin.include_role:
     name: wildfly_utils
@@ -137,3 +143,4 @@
     rhn_cp_v: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.v }}"
   when:
     - wildfly_jboss_eap_apply_cp
+    - wildfly_jboss_eap_enable

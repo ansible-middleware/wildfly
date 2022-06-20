@@ -107,7 +107,7 @@
       ansible.builtin.debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
-        - print_cli_patch_result is defined
+        - wildfly_apply_cp_verbose is defined
         - cli_result is defined
         - cli_result.stdout is defined
 

@@ -30,3 +30,7 @@ argument_specs:
                 default: False
                 description: "When true, skip restarting after applying a cumulative patch"
                 type: "bool"
+            wildfly_apply_cp_verbose:
+                default: False
+                description: "When true, emits verbose output from jboss-cli"
+                type: "bool"

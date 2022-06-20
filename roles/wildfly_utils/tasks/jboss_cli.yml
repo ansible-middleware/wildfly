@@ -9,21 +9,16 @@
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
-- name: "Set facts for cli"
-  ansible.builtin.set_fact:
-    path_to_cli: "{{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}"
-    controller:
-      host: "{{ jboss_cli_controller_host  }}"
-      port: "{{ jboss_cli_controller_port  }}"
-
 - name: "Ensure server's management interface is reachable"
   ansible.builtin.wait_for:
-    host: "{{ controller.host }}"
-    port: "{{ controller.port }}"
+    host: "{{ jboss_cli_controller_host }}"
+    port: "{{ jboss_cli_controller_port }}"
 
 - name: "Execute CLI query: {{ query }}"
   ansible.builtin.command: >
-    {{ path_to_cli }} -c --output-json --command={{ query }} --controller={{ controller.host }}:{{ controller.port }}
+    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }} -c --output-json --command={{ query }} --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }}
   register: cli_result
   changed_when: false
   become: yes
+  retries: 3
+  delay: 5

@@ -1,6 +1,6 @@
 ---
 wildfly_systemd:
-  user: "{{ wildfly_user  }}"
+  user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
   home: "{{ wildfly_home }}"
   config: "{{ wildfly_config_base }}"

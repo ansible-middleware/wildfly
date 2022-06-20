@@ -91,6 +91,14 @@ argument_specs:
                 default: "{{ True if rhn_username is defined and rhn_password is defined else False }}"
                 description: "Choice between wildfly (usptream) or Red Hat JBoss EAP (product)"
                 type: "str"
+            wildfly_jboss_eap_apply_cp:
+                default: false
+                description: "Whether to apply the latest cumulative patch on top of baseline version"
+                type: "bool"
+            wildfly_systemd_enable:
+                default: false
+                description: "Whether to configure the systemd unit for the service"
+                type: "bool"
             wildfly_offline_install:
                 # line 24 of wildfly_install/defaults/main.yml
                 default: false

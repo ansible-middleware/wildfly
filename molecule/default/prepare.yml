@@ -9,7 +9,8 @@
           - sudo
           - java-1.8.0-openjdk
           - procps-ng
+        state: present
 
     - name: Display Ansible version
-      ansible.bulitin.debug:
+      ansible.builtin.debug:
         msg: "Ansible version is  {{ ansible_version.full }}"

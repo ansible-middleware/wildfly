@@ -193,8 +193,16 @@ are provided)</p>
 <td class="text-left"><p>Choice between wildfly (usptream) or Red Hat JBoss EAP (product)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">True</span> <span class="pre">if</span> <span class="pre">rhn_username</span> <span class="pre">is</span> <span class="pre">defined</span> <span class="pre">and</span> <span class="pre">rhn_password</span> <span class="pre">is</span> <span class="pre">defined</span> <span class="pre">else</span> <span class="pre">False</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_offline_install</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_jboss_eap_apply_cp</span></code></p></td>
+<td class="text-left"><p>Whether to apply the latest cumulative patch on top of baseline version</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_offline_install</span></code></p></td>
 <td class="text-left"><p>Whether to install from local archive</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_enable</span></code></p></td>
+<td class="text-left"><p>Whether to configure the systemd unit for the service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
 </tbody>

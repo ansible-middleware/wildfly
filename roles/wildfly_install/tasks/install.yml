@@ -139,6 +139,8 @@
       changed_when: True
       async: 120
       poll: 0
+      become: yes
+      become_user: "{{ wildfly_install.user }}"
 
     - name: "Apply latest cumulative patch"
       ansible.builtin.include_role:

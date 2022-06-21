@@ -1,21 +1,44 @@
 ---
-- name: Create YAML configuration directory
-  ansible.builtin.file:
-    path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}"
-    state: directory
-    recurse: yes
-    owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
-    mode: 0755
-  become: yes
-- name: Enable YAML configuration extension
-  ansible.builtin.template:
-    src: "wfly.yml.config.j2"
-    dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
-    owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
-    mode: 0644
-  become: yes
+- name: Enable extension in wildfly
+  when: not wildfly_jboss_eap_enable
+  block:
+  - name: Create YAML configuration directory
+    ansible.builtin.file:
+      path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}"
+      state: directory
+      recurse: yes
+      owner: "{{ wildfly_systemd.user }}"
+      group: "{{ wildfly_systemd.group }}"
+      mode: 0755
+    become: yes
+  - name: Enable YAML configuration extension
+    ansible.builtin.template:
+      src: "wfly.yml.config.j2"
+      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+      owner: "{{ wildfly_systemd.user }}"
+      group: "{{ wildfly_systemd.group }}"
+      mode: 0644
+    become: yes
+- name: Enable extension in EAP
+  when: wildfly_jboss_eap_enable
+  block:
+  - name: Create YAML configuration directory
+    ansible.builtin.file:
+      path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}"
+      state: directory
+      recurse: yes
+      owner: "{{ wildfly_systemd.user }}"
+      group: "{{ wildfly_systemd.group }}"
+      mode: 0755
+    become: yes
+  - name: Enable YAML configuration extension
+    ansible.builtin.template:
+      src: "wfly.yml.config.j2"
+      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+      owner: "{{ wildfly_systemd.user }}"
+      group: "{{ wildfly_systemd.group }}"
+      mode: 0644
+    become: yes
 - name: Deploy YAML configuration files
   ansible.builtin.copy:
     src: "{{ file }}"

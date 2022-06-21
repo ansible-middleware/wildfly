@@ -134,8 +134,10 @@
     - wildfly_jboss_eap_apply_cp
     - wildfly_jboss_eap_enable
   block:
-    - name: "Start wildfly in admin-mode"
-      ansible.builtin.command: "{{ wildfly_install.home }}/bin/standalone.sh --start-mode admin-only"
+    - name: "Start wildfly for patching"
+      ansible.builtin.command: "{{ wildfly_install.home }}/bin/standalone.sh"
+      async: 120
+      poll: 0
 
     - name: "Apply latest cumulative patch"
       ansible.builtin.include_role:
@@ -144,9 +146,6 @@
       vars:
         rhn_cp_id: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.id }}"
         rhn_cp_v: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.v }}"
-
-    - name: "Stop wildfly"
-      ansible.builtin.command: bin/jboss-cli.sh -c --command=shutdown
 
 - name: "Configure systemd"
   ansible.builtin.include_role:

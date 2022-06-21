@@ -6,5 +6,5 @@ WILDFLY_HOME={{ wildfly_systemd.home }}
 JBOSS_PIDFILE={{ basedir }}/{{ instance_name }}.pid
 WILDFLY_SERVER_CONFIG={{ instance_name }}.xml
 
-WILDFLY_OPTS=-Djboss.bind.address.private={{ wildfly_bind_addr_private }} -Djboss.default.multicast.address={{ wildfly_multicast_addr }} -Djboss.server.config.dir={{ wildfly_systemd.home }}/standalone/configuration/ -Djboss.server.base.dir={{ basedir }} -Djboss.tx.node.id={{ instance_name }} {% if wildfly_instance_id is defined %}-Djboss.socket.binding.port-offset={{ wildfly_instance_id * wildfly_port_range_offset }}{% endif %} -Djboss.node.name={{ instance_name }}
-WILDFLY_YAML={% if wildfly_enable_yml_config and wildfly_yml_configs|length > 0 %}-y={{ wildfly_yml_configs | flatten | map('regex_replace', '^', basedir+'/') | list | join(':') }}{% endif %}
+WILDFLY_OPTS=-Djboss.bind.address.private={{ wildfly_bind_addr_private }} -Djboss.default.multicast.address={{ wildfly_multicast_addr }} -Djboss.server.config.dir={{ wildfly_systemd.home }}/standalone/configuration/ -Djboss.server.base.dir={{ basedir }} -Djboss.tx.node.id={{ instance_name }} {% if wildfly_instance_id is defined %}-Djboss.socket.binding.port-offset={{ wildfly_instance_id * wildfly_port_range_offset }}{% endif %} -Djboss.node.name={{ instance_name }} -Dwildfly.statistics-enabled={{ wildfly_statistics_enabled | lower }}
+WILDFLY_YAML={% if wildfly_enable_yml_config and wildfly_yml_configs | length > 0 %}-y={{ wildfly_yml_configs | flatten | map('regex_replace', '^', basedir+'/') | list | join(':') }}{% endif %}

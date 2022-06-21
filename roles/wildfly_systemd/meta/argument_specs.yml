@@ -101,3 +101,7 @@ argument_specs:
                 description: "Multicast address for jgroup cluster discovery"
                 default: "230.0.0.4"
                 type: "str"
+            wildfly_statistics_enabled:
+                default: False
+                description: "Whether to enable statistics"
+                type: "bool"

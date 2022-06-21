@@ -36,7 +36,7 @@ Role Defaults
 |`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
 |`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |
 |`wildfly_multicast_addr`| Multicast address for jgroup cluster discovery |`230.0.0.4` |
-
+|`wildfly_staistics_enabled`| Whether to enable statistics | `False` |
 
 Role Variables
 --------------

@@ -8,6 +8,24 @@
       - wildfly_systemd.group is defined
     quiet: true
 
+- name: Fetch current EAP patch installed
+  ansible.builtin.slurp:
+    src: "{{ wildfly_home }}/.latest_applied_patch.txt"
+  register: slurped_eap_version
+  when:
+      - wildfly_enable_yml_config
+      - wildfly_jboss_eap_enable
+
+- name: Check arguments for yaml configuration
+  ansible.builtin.assert:
+    that:
+      - slurped_eap_version | b64decode is version('7.4.5', '>=')
+    quiet: true
+    when:
+      - wildfly_enable_yml_config
+      - wildfly_jboss_eap_enable
+    fail_msg: "Can only enable YAML configuration with EAP >= 7.4.5"
+
 - name: "Ensure required local user and group exists."
   ansible.builtin.include_role:
     name: wildfly_install

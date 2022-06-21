@@ -111,16 +111,29 @@
         - cli_result is defined
         - cli_result.stdout is defined
 
-    - name: Set checksum file
-      ansible.builtin.copy:
-        dest: "{{ patch_checksum_file }}"
-        content: "Patch v{{ rhn_cp_v }}"
-        owner: "{{ wildfly_user }}"
-        group: "{{ wildfly_group }}"
-        mode: 0640
-      when:
-        - not last_patch_status.stat.exists
-      become: yes
+    - name: Set checksum files
+      block:
+        - name: Set checksum file
+          ansible.builtin.copy:
+            dest: "{{ patch_checksum_file }}"
+            content: "Patch v{{ rhn_cp_v }}"
+            owner: "{{ wildfly_user }}"
+            group: "{{ wildfly_group }}"
+            mode: 0640
+          when:
+            - not last_patch_status.stat.exists
+          become: yes
+
+        - name: Set latest patch file
+          ansible.builtin.copy:
+            dest: "{{ wildfly_home }}/.latest_applied_patch.txt"
+            content: "{{ rhn_cp_v }}"
+            owner: "{{ wildfly_user }}"
+            group: "{{ wildfly_group }}"
+            mode: 0640
+          when:
+            - not last_patch_status.stat.exists
+          become: yes
 
     - name: "Restart server to ensure patch content is running"
       ansible.builtin.include_tasks: jboss_cli.yml

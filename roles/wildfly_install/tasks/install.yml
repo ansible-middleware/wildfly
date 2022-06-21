@@ -128,7 +128,7 @@
     quiet: true
     fail_msg: "Server home directory has not been created: {{ wildfly_install.home }}."
 
-- name: "EAP cumulative patch"
+- name: "Install EAP cumulative patch"
   become: yes
   when:
     - wildfly_jboss_eap_apply_cp
@@ -136,6 +136,7 @@
   block:
     - name: "Start wildfly for patching"
       ansible.builtin.command: "{{ wildfly_install.home }}/bin/standalone.sh"
+      changed_when: True
       async: 120
       poll: 0
 

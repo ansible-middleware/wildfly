@@ -134,14 +134,6 @@
     - wildfly_jboss_eap_apply_cp
     - wildfly_jboss_eap_enable
   block:
-    - name: "Start wildfly for patching"
-      ansible.builtin.command: "{{ wildfly_install.home }}/bin/standalone.sh"
-      changed_when: True
-      async: 120
-      poll: 0
-      become: yes
-      become_user: "{{ wildfly_install.user }}"
-
     - name: "Apply latest cumulative patch"
       ansible.builtin.include_role:
         name: wildfly_utils

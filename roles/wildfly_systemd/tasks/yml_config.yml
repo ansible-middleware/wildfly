@@ -14,7 +14,7 @@
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
-      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
@@ -34,7 +34,7 @@
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
-      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644

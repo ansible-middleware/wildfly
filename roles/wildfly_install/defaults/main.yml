@@ -9,9 +9,6 @@ wildfly_archive_dir: "{{ wildfly_install_workdir }}"
 wildfly_config_base: 'standalone.xml'
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_jvm_memory_min: '64m'
-wildfly_jvm_memory_max: '512m'
-wildfly_jvm_metaspace_size: '96m'
 wildfly_java_package_name: 'java-1.8.0-openjdk-headless'
 wildfly_systemd_enable: False
 

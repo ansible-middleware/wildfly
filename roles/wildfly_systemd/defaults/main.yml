@@ -6,6 +6,7 @@ wildfly_config_base: 'standalone.xml'
 wildfly_port_range_offset: 100
 
 wildfly_java_package_name: java-1.8.0-openjdk-headless
+wildfly_java_opts: '-Xmx1024M -Xms512M'
 
 wildfly_systemd_enabled: yes
 wildfly_systemd_service_config_location: '/usr/lib/systemd/system'

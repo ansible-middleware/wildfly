@@ -39,6 +39,10 @@ argument_specs:
             wildfly_java_home:
                 description: "JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path"
                 type: "str"
+            wildfly_java_opts:
+                description: "Additional settings for the JVM running wildfly"
+                type: "str"
+                default: "-Xmx1024M -Xms512M"
             wildfly_systemd_service_config_location:
                 # line 9 of wildfly_systemd/defaults/main.yml
                 default: "/usr/lib/systemd/system"

@@ -6,5 +6,7 @@ wildfly_systemd:
   config: "{{ wildfly_config_base }}"
   enabled: "{{ wildfly_systemd_enabled }}"
   yml_config:
-    path: /modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/
+    base_path: '/modules/system/layers/base'
+    eap_path: 'modules/system/layers/base/.overlays/layer-base-jboss-eap-'
+    path: /org/jboss/as/controller/main/dir/META-INF/services
     file: org.jboss.as.controller.persistence.ConfigurationExtension

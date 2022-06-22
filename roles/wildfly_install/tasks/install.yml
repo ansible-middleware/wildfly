@@ -128,19 +128,22 @@
     quiet: true
     fail_msg: "Server home directory has not been created: {{ wildfly_install.home }}."
 
+- name: "Install EAP cumulative patch"
+  become: yes
+  when:
+    - wildfly_jboss_eap_apply_cp
+    - wildfly_jboss_eap_enable
+  block:
+    - name: "Apply latest cumulative patch"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: apply_cp.yml
+      vars:
+        rhn_cp_id: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.id }}"
+        rhn_cp_v: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.v }}"
+
 - name: "Configure systemd"
   ansible.builtin.include_role:
     name: wildfly_systemd
   when:
     - wildfly_systemd_enable
-
-- name: "Apply latest cumulative patch"
-  ansible.builtin.include_role:
-    name: wildfly_utils
-    tasks_from: apply_cp.yml
-  vars:
-    rhn_cp_id: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.id }}"
-    rhn_cp_v: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.v }}"
-  when:
-    - wildfly_jboss_eap_apply_cp
-    - wildfly_jboss_eap_enable

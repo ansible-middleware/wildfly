@@ -51,21 +51,6 @@ argument_specs:
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly"
                 type: "str"
-            wildfly_jvm_memory_min:
-                # line 12 of wildfly_install/defaults/main.yml
-                default: "64m"
-                description: "wildfly jvm initial heap size"
-                type: "str"
-            wildfly_jvm_memory_max:
-                # line 13 of wildfly_install/defaults/main.yml
-                default: "512m"
-                description: "wildfly jvm max heap size"
-                type: "str"
-            wildfly_jvm_metaspace_size:
-                # line 14 of wildfly_install/defaults/main.yml
-                default: "96m"
-                description: "wildfly jvm metaspace setting"
-                type: "str"
             wildfly_java_package_name:
                 # line 15 of wildfly_install/defaults/main.yml
                 default: "java-1.8.0-openjdk-headless"

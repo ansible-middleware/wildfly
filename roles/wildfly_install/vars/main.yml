@@ -13,9 +13,6 @@ wildfly_install:
   config: "{{ wildfly_config_base }}"
   user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
-  min_mem: "{{ wildfly_jvm_memory_min }}"
-  max_mem: "{{ wildfly_jvm_memory_max }}"
-  metaspace_size: "{{ wildfly_jvm_metaspace_size }}"
   java:
     package_name: "{{ wildfly_java_package_name }}"
 

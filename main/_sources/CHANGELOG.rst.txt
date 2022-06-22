@@ -15,6 +15,7 @@ Minor Changes
 - Add ``wildfly_statistics_enabled`` var to enable statistics `#58 <https://github.com/ansible-middleware/wildfly/pull/58>`_
 - Add variable ``wildfly_bind_addr_private`` to set private if bind address `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
 - Add variable ``wildfly_multicast_addr`` to set tcp/udp mc address `#56 <https://github.com/ansible-middleware/wildfly/pull/56>`_
+- Add wildfly_java_opts to set parameters for wfly JVM `#60 <https://github.com/ansible-middleware/wildfly/pull/60>`_
 
 Bugfixes
 --------

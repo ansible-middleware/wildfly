@@ -26,9 +26,6 @@ Role Defaults
 |`wildfly_config_base`| wildfly standalone.xml filename override | `standalone.xml` |
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
-|`wildfly_jvm_memory_min`| wildfly jvm initial heap size | `64m` |
-|`wildfly_jvm_memory_max`| wildfly jvm max heap size | `512m` |
-|`wildfly_jvm_metaspace_size`| wildfly jvm metaspace setting | `96m` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk` |
 |`wildfly_jboss_eap_version`| Red Hap EAP version to install | `7.4.0` |
 |`wildfly_jboss_eap_archive_filename`| Red Hat EAP archive name | `jboss-eap-7.4.0.zip` |

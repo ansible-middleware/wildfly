@@ -10,7 +10,7 @@
       - full_path_to_archive is defined
     quiet: true
 
-- name: "Download Wildfly zipfile from {{ wildfly_install.download_url }} into {{ local_path_to_archive }}"
+- name: "Download zipfile from {{ wildfly_install.download_url }} into {{ local_path_to_archive }}"
   delegate_to: localhost
   run_once: true
   ansible.builtin.get_url:

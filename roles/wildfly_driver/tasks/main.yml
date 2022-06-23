@@ -31,7 +31,7 @@
   when:
     - not dest_path.stat.exists
 
-- name: "Retrieve Wildfly JDBC Driver from {{ wildfly_driver.jar_url }}"
+- name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
   ansible.builtin.uri:
     url: "{{ wildfly_driver.jar_url }}"
     dest: "{{ wildfly_driver.jar_installation_path }}"

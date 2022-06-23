@@ -95,7 +95,7 @@
     mode: '0755'
   become: yes
 
-- name: "Deploy Wildfy configuration"
+- name: "Deploy configuration"
   ansible.builtin.copy:
     src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
     dest: "{{ wildfly_systemd.home }}/standalone/configuration/{{ instance_name }}.xml"
@@ -133,7 +133,7 @@
   register: rpm_java_home
   become: yes
 
-- name: "Deploy Wildfly service instance configuration: {{ service_systemd_env_file }}"
+- name: "Deploy service instance configuration: {{ service_systemd_env_file }}"
   ansible.builtin.template:
     src: "{{ wildfly_service_config_file_template }}"
     dest: "{{ service_systemd_env_file }}"
@@ -151,7 +151,7 @@
   when:
     - not service_systemd_conf_file is defined
 
-- name: "Deploy Systemd configuration for Wildfly service: {{ service_systemd_conf_file }}"
+- name: "Deploy Systemd configuration for service: {{ service_systemd_conf_file }}"
   ansible.builtin.template:
     src: "{{ wildfly_systemd_service_config_file_template }}"
     dest: "{{ service_systemd_conf_file }}"

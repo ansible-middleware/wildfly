@@ -25,7 +25,7 @@
     path: "{{ full_path_to_archive }}"
   register: archive_path
 
-- name: "Retrieve archive from Wildfly website: {{ wildfly_download_baseurl }}"
+- name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
     - not wildfly_jboss_eap_enable
@@ -91,7 +91,7 @@
         quiet: true
         fail_msg: "Archive file does NOT exists: {{ full_path_to_archive }}"
 
-    - name: "Extract Wildfly files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
+    - name: "Extract files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
       become: yes
       become_user: "{{ wildfly_install.user }}"
       ansible.builtin.unarchive:

@@ -33,8 +33,10 @@ Role Defaults
 |`wildfly_enable_yml_config`| Enable yaml file configuration feature (WFCORE5343) | `False` |
 |`wildfly_yml_configs`| List of filenames for wildfly configuration bootstrap | `[]` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk-headless` |
+|`wildfly_java_opts`| Additional settings for the JVM running wildfly | `-Xmx1024M -Xms512M` |
 |`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
 |`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |
+|`wildfly_bind_addr_management`| Bind address for management console port |`127.0.0.1` |
 |`wildfly_multicast_addr`| Multicast address for jgroup cluster discovery |`230.0.0.4` |
 |`wildfly_statistics_enabled`| Whether to enable statistics | `False` |
 

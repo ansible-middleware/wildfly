@@ -178,12 +178,20 @@ role.</p>
 <td class="text-left"><p>RHEL java rpm package</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-1.8.0-openjdk-headless</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_opts</span></code></p></td>
+<td class="text-left"><p>Additional settings for the JVM running wildfly</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">-Xmx1024M</span> <span class="pre">-Xms512M</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr</span></code></p></td>
 <td class="text-left"><p>Bind address for listening to public network</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_private</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_private</span></code></p></td>
 <td class="text-left"><p>Bind address for listening to private network</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_management</span></code></p></td>
+<td class="text-left"><p>Bind address for management console port</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_multicast_addr</span></code></p></td>

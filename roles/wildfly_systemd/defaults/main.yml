@@ -22,6 +22,7 @@ wildfly_yml_configs: []
 
 wildfly_bind_addr: 0.0.0.0
 wildfly_bind_addr_private: 127.0.0.1
+wildfly_bind_addr_management: 127.0.0.1
 wildfly_multicast_addr: 230.0.0.4
 
 wildfly_statistics_enabled: False

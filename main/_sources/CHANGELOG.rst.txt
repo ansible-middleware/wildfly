@@ -12,15 +12,15 @@ v1.0.5-devel
 Minor Changes
 -------------
 
+- Add ``wildfly_java_opts`` to set parameters for wfly JVM `#60 <https://github.com/ansible-middleware/wildfly/pull/60>`_
 - Add ``wildfly_statistics_enabled`` var to enable statistics `#58 <https://github.com/ansible-middleware/wildfly/pull/58>`_
-- Add variable ``wildfly_bind_addr_private`` to set private if bind address `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
-- Add variable ``wildfly_multicast_addr`` to set tcp/udp mc address `#56 <https://github.com/ansible-middleware/wildfly/pull/56>`_
-- Add wildfly_java_opts to set parameters for wfly JVM `#60 <https://github.com/ansible-middleware/wildfly/pull/60>`_
+- Add variable ``wildfly_bind_addr_private`` to set private iface bind address `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
+- Add variable ``wildfly_multicast_addr`` to set tcp/udp mcast address `#56 <https://github.com/ansible-middleware/wildfly/pull/56>`_
 
 Bugfixes
 --------
 
-- EAP patch apply when yaml configuration is enabled `#59 <https://github.com/ansible-middleware/wildfly/pull/59>`_
+- Fix EAP patch apply when yaml configuration is enabled `#59 <https://github.com/ansible-middleware/wildfly/pull/59>`_
 
 v1.0.4
 ======

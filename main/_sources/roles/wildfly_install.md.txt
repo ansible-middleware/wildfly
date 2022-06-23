@@ -53,7 +53,7 @@ Installs the default version of Wildfly to the default location with the default
 
 ```
 ---
-- name: "Wildfly installation and configuration"
+- name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
   become: yes
   collections:
@@ -68,7 +68,7 @@ Older Wildfly versions can be download from outside Github.
 
 ```
 ---
-- name: "Wildfly installation and configuration"
+- name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
   become: yes
   vars:

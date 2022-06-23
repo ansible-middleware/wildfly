@@ -105,6 +105,10 @@ argument_specs:
                 description: "Multicast address for jgroup cluster discovery"
                 default: "230.0.0.4"
                 type: "str"
+            wildfly_bind_addr_management:
+                description: "Bind address for management console port"
+                default: "127.0.0.1"
+                type: "str"
             wildfly_statistics_enabled:
                 default: False
                 description: "Whether to enable statistics"

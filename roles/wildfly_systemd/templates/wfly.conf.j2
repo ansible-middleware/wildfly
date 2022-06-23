@@ -3,6 +3,7 @@
 JAVA_HOME={{ wildfly_java_home  | default(wildfly_rpm_java_home, true) }}
 JAVA_OPTS='{{ wildfly_java_opts }}'
 WILDFLY_BIND={{ wildfly_bind_addr }}
+WILDFLY_BIND_MGMT={{ wildfly_bind_addr_management }}
 WILDFLY_HOME={{ wildfly_systemd.home }}
 JBOSS_PIDFILE={{ basedir }}/{{ instance_name }}.pid
 WILDFLY_SERVER_CONFIG={{ instance_name }}.xml

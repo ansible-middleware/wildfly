@@ -63,3 +63,35 @@ releases:
     - 52.yaml
     - 53.yaml
     release_date: '2022-06-13'
+  1.0.5:
+    changes:
+      bugfixes:
+      - 'Fix EAP patch apply when yaml configuration is enabled `#59 <https://github.com/ansible-middleware/wildfly/pull/59>`_
+
+        '
+      minor_changes:
+      - 'Add ``wildfly_java_opts`` to set parameters for wfly JVM `#60 <https://github.com/ansible-middleware/wildfly/pull/60>`_
+
+        '
+      - 'Add ``wildfly_statistics_enabled`` var to enable statistics `#58 <https://github.com/ansible-middleware/wildfly/pull/58>`_
+
+        '
+      - 'Add variable ``wildfly_bind_addr_private`` to set private iface bind address
+        `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
+
+        '
+      - 'Add variable ``wildfly_multicast_addr`` to set tcp/udp mcast address `#56
+        <https://github.com/ansible-middleware/wildfly/pull/56>`_
+
+        '
+      - 'Added variable for setting management port bind address `#62 <https://github.com/ansible-middleware/wildfly/pull/62>`_
+
+        '
+    fragments:
+    - 55.yaml
+    - 56.yaml
+    - 58.yaml
+    - 59.yaml
+    - 60.yaml
+    - 62.yaml
+    release_date: '2022-06-23'

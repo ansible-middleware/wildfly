@@ -11,13 +11,9 @@ wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_java_package_name: 'java-1.8.0-openjdk-headless'
 wildfly_systemd_enable: False
+wildfly_enable: True
+wildfly_apply_cp: False
 
-### wildfly/eap choice: by default install jboss eap if rhn credentials are defined
-wildfly_jboss_eap_version: '7.4.0'
-wildfly_jboss_eap_archive_filename: 'jboss-eap-7.4.0.zip'
-wildfly_jboss_eap_home: "{{ wildfly_install_workdir }}jboss-eap-{{ wildfly_jboss_eap_version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}/"
-wildfly_jboss_eap_enable: "{{ True if rhn_username is defined and rhn_password is defined else False }}"
-wildfly_jboss_eap_apply_cp: False
 
 # whether to install from local archive
 wildfly_offline_install: False

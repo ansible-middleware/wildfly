@@ -27,11 +27,6 @@ Role Defaults
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk` |
-|`wildfly_jboss_eap_version`| Red Hap EAP version to install | `7.4.0` |
-|`wildfly_jboss_eap_archive_filename`| Red Hat EAP archive name | `jboss-eap-7.4.0.zip` |
-|`wildfly_jboss_eap_home`| Red Hat EAP installation path | `{{ wildfly_install_workdir }}jboss-eap-{{ wildfly_jboss_eap_version | regex_replace('^([0-9])\.([0-9]*).*', '\1.\2') }}/` |
-|`wildfly_jboss_eap_enable`| Choice between wildfly (usptream) or Red Hat JBoss EAP (product) | `{{ True if rhn_username is defined and rhn_password is defined else False }}` |
-|`wildfly_jboss_eap_apply_cp`| Whether to apply the latest cumulative patch on top of baseline version | `False` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 |`wildfly_systemd_enable`| Whether to configure the systemd unit for the service | `False` |
 

@@ -28,7 +28,7 @@
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
-    - not wildfly_jboss_eap_enable
+    - not jboss_eap_enable
     - not wildfly_install.rpm is defined
     - not wildfly_offline_install
     - archive_path.stat is defined
@@ -39,7 +39,7 @@
   vars:
     rhn_id_file: "{{ wildfly_install.rhn.id }}"
   when:
-    - wildfly_jboss_eap_enable
+    - jboss_eap_enable
     - not wildfly_offline_install
     - archive_path.stat is defined
     - not archive_path.stat.exists
@@ -131,16 +131,24 @@
 - name: "Install EAP cumulative patch"
   become: yes
   when:
-    - wildfly_jboss_eap_apply_cp
-    - wildfly_jboss_eap_enable
+    - jboss_eap_apply_cp
+    - jboss_eap_enable
   block:
+    - name: "Ensures required parameters for cumulative patch application are provided."
+      ansible.builtin.assert:
+        that:
+          - jboss_eap_rhn_ids is defined
+          - jboss_eap_rhn_ids | length > 0
+          - jboss_eap_version is defined
+        quiet: "Missing required parameters for CP application"
+
     - name: "Apply latest cumulative patch"
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: apply_cp.yml
       vars:
-        rhn_cp_id: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.id }}"
-        rhn_cp_v: "{{ jboss_eap_rhn_ids[wildfly_jboss_eap_version].cp.v }}"
+        rhn_cp_id: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.id }}"
+        rhn_cp_v: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.v }}"
 
 - name: "Configure systemd"
   ansible.builtin.include_role:

@@ -1,6 +1,6 @@
 ---
 - name: Converge
-  hosts: all
+  hosts: localhost
   vars:
     # for wildfly_install
     wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'

@@ -25,6 +25,9 @@
     path: "{{ full_path_to_archive }}"
   register: archive_path
 
+- debug:
+    msg: "jboss_eap_enable: {{ jboss_eap_enable }} (False) / wildfly_install.rpm: (Not defined), wildfly_offline_install: {{ wildfly_offline_install }} (False) , archive_path.stat: {{ archive_path.stat }} (defined) and archive_path.stat.exists: {{ archive_path.stat.exists }} (False)."
+
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
@@ -37,8 +40,11 @@
 - name: "Retrieve archive from RHN"
   ansible.builtin.include_tasks: install/rhn.yml
   vars:
-    rhn_id_file: "{{ wildfly_install.rhn.id }}"
+    rhn_id_file: "{{ wildfly_install_rhn.id }}"
   when:
+    - rhn_username is defined
+    - rhn_password is defined
+    - jboss_eap_enable is defined
     - jboss_eap_enable
     - not wildfly_offline_install
     - archive_path.stat is defined

@@ -4,4 +4,4 @@ jboss_cli_controller_port: '9990'
 wildfly_no_restart_after_patch:  False
 wildfly_user: wildfly
 wildfly_group: wildfly
-wildfly_apply_cp_verbose: False
+jboss_eap_apply_cp_verbose: False

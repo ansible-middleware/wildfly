@@ -37,8 +37,11 @@
 - name: "Retrieve archive from RHN"
   ansible.builtin.include_tasks: install/rhn.yml
   vars:
-    rhn_id_file: "{{ wildfly_install.rhn.id }}"
+    rhn_id_file: "{{ wildfly_install_rhn.id }}"
   when:
+    - rhn_username is defined
+    - rhn_password is defined
+    - jboss_eap_enable is defined
     - jboss_eap_enable
     - not wildfly_offline_install
     - archive_path.stat is defined

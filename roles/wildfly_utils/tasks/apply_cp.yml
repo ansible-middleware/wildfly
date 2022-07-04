@@ -123,7 +123,7 @@
       ansible.builtin.debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
-        - wildfly_apply_cp_verbose is defined
+        - jboss_eap_apply_cp_verbose is defined
         - cli_result is defined
         - cli_result.stdout is defined
 

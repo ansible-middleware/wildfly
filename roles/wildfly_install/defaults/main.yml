@@ -11,8 +11,8 @@ wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_java_package_name: 'java-1.8.0-openjdk-headless'
 wildfly_systemd_enable: False
-wildfly_enable: True
-wildfly_apply_cp: False
+jboss_eap_enable: False
+jboss_eap_apply_cp: False
 
 
 # whether to install from local archive

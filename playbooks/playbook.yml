@@ -1,9 +1,11 @@
 ---
 - name: Converge
-  hosts: localhost
+  hosts: all
   vars:
     # for wildfly_install
     wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
+    wildfly_install_workdir: '/opt/wildfly/'
+    wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
     wildfly_user: 'wildfly'
     wildfly_group: "{{ wildfly_user }}"
     # for wildfly_driver

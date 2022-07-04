@@ -4,19 +4,20 @@ wildfly_install:
   download_url: "{{ wildfly_install_download_url }}"
   workdir: "{{ wildfly_install_workdir }}"
   archive_dir: "{{ wildfly_archive_dir }}"
-  archive_name: "{{ jboss_eap_archive_filename if jboss_eap_enable else wildfly_archive_filename }}"
-  rhn:
-    id: "{{ jboss_eap_rhn_ids[jboss_eap_version].id }}"
-    cp_id: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.id }}"
-    cp_v: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.v }}"
-  home: "{{ jboss_eap_home if jboss_eap_enable else wildfly_home }}"
+  archive_name: "{{ wildfly_archive_filename if wildfly_enable else wildfly_archive_filename }}"
+  home: "{{ wildfly_home if wildfly_enable else wildfly_home }}"
   config: "{{ wildfly_config_base }}"
   user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
   java:
     package_name: "{{ wildfly_java_package_name }}"
 
-jboss_eap_rhn_ids:
+wildfly_install_rhn:
+  id: "{{ rhn_ids[wildfly_version].id }}"
+  cp_id: "{{ rhn_ids[wildfly_version].cp.id }}"
+  cp_v: "{{ rhn_ids[wildfly_version].cp.v }}"
+
+rhn_ids:
   '7.4.0':  # noqa vars_in_vars_files_have_valid_names
     id: '99481'
     cp:

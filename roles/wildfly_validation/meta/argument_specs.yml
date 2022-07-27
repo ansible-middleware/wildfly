@@ -13,3 +13,7 @@ argument_specs:
                 default: "wildfly"
                 description: "Systemd service name for wildfly"
                 type: "str"
+            wildfly_http_port:
+                default: "8080"
+                description: "Server HTTP port"
+                type: "str"

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wildfly Driver role &mdash; Wildfly Ansible Collection  documentation</title>
+  <title>Wildfly Subs role &mdash; Wildfly Ansible Collection  documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/ansible-basic-sphinx-ext.css" type="text/css" />
@@ -20,8 +20,8 @@
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Wildfly Install role" href="wildfly_install.html" />
-    <link rel="prev" title="Role Index" href="index.html" /> 
+    <link rel="next" title="Wildfly systemd role" href="wildfly_systemd.html" />
+    <link rel="prev" title="Wildfly Install role" href="wildfly_install.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -43,18 +43,21 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Wildfly Driver role</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">Wildfly Driver role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html">Wildfly Install role</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Wildfly Subs role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#example-playbook">Example Playbook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-playbooks">Example Playbooks</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#enable-repository">Enable repository</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#author-information">Author Information</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="wildfly_install.html">Wildfly Install role</a></li>
-<li class="toctree-l2"><a class="reference internal" href="wildfly_subs.html">Wildfly Subs role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html">Wildfly systemd role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html">Wildfly uninstall role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_utils.html">JBoss EAP role</a></li>
@@ -88,9 +91,9 @@
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
           <li><a href="index.html">Role Index</a> &raquo;</li>
-      <li>Wildfly Driver role</li>
+      <li>Wildfly Subs role</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/roles/wildfly_driver.md.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/roles/wildfly_subs.md.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -98,14 +101,14 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="wildfly-driver-role">
-<h1>Wildfly Driver role<a class="headerlink" href="#wildfly-driver-role" title="Permalink to this heading"></a></h1>
-<p>This role provides a playbook to easily install a JDBC driver within
-the server modules directory tree. It comes with a template for the main.xml
-(that can be overriden).</p>
+  <section id="wildfly-subs-role">
+<h1>Wildfly Subs role<a class="headerlink" href="#wildfly-subs-role" title="Permalink to this heading"></a></h1>
+<p>This role is designed to help set up JBoss EAP (Red Hat product based on Wildfly) using RPM
+delivered by Red Hat to its customer. The playbook provides handy reusable content to enable
+or disable a repo and install EAP using the group install feature.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p>A valid Java runtime environment must be available for execution of the jcliff utility</p>
+<p>Requirements on the target system are ensured by the role.</p>
 <!--start argument_specs-->
 </section>
 <section id="role-defaults">
@@ -118,65 +121,57 @@ the server modules directory tree. It comes with a template for the main.xml
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
-<td class="text-left"><p>posix user account for wildfly</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_enable</span></code></p></td>
+<td class="text-left"><p>Enable repo</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">True</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
-<td class="text-left"><p>posix group for wildfly</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_disabled</span></code></p></td>
+<td class="text-left"><p>Disable repo</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">&quot;{{</span> <span class="pre">wildfly_subs_check_repo_enable</span> <span class="pre">}}&quot;</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_version</span></code></p></td>
-<td class="text-left"><p>Version of jdbc driver to download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9.4.1212</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_skip_remove</span></code></p></td>
+<td class="text-left"><p>Remove installed server</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_filename</span></code></p></td>
-<td class="text-left"><p>Filename of jdbc driver to download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_homedir</span></code></p></td>
+<td class="text-left"><p>State file home directory</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">/opt</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_url</span></code></p></td>
-<td class="text-left"><p>URL for jdbc driver download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}/postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_prefix</span></code></p></td>
+<td class="text-left"><p>State filename prefix</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">.eap</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_installation_path</span></code></p></td>
-<td class="text-left"><p>Path for jdbc driver installation</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">jdbc_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">jdbc_driver_jar_filename</span> <span class="pre">}}</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_suffix</span></code></p></td>
+<td class="text-left"><p>State filename suffix</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">.repo</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_name</span></code></p></td>
-<td class="text-left"><p>Name for the jdbc driver module</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">org.postgresql</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_rpm_install_root_dir</span></code></p></td>
+<td class="text-left"><p>RPM install root dir</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">/opt/rh/eap7/</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">override_module_xml_template</span></code></p></td>
-<td class="text-left"><p>Override path of template used for module configuration</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_eap_group_install_name</span></code></p></td>
+<td class="text-left"><p>EAP group install package name</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">jboss-eap7-jdk11</span></code></p></td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="role-variables">
 <h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this heading"></a></h2>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="text-left head"><p>Variable</p></th>
-<th class="text-left head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>Home directory of jboss installation</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_dir</span></code></p></td>
-<td class="text-left"><p>Path for module installation</p></td>
-</tr>
-</tbody>
-</table>
+<ul class="simple">
+<li><p>No required variables</p></li>
+</ul>
 <!--end argument_specs-->
 </section>
 <section id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h2>
 </section>
-<section id="example-playbook">
-<h2>Example Playbook<a class="headerlink" href="#example-playbook" title="Permalink to this heading"></a></h2>
+<section id="example-playbooks">
+<h2>Example Playbooks<a class="headerlink" href="#example-playbooks" title="Permalink to this heading"></a></h2>
+<section id="enable-repository">
+<h3>Enable repository<a class="headerlink" href="#enable-repository" title="Permalink to this heading"></a></h3>
+<p>TODO</p>
+</section>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
@@ -194,8 +189,8 @@ the server modules directory tree. It comes with a template for the main.xml
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Role Index" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="wildfly_install.html" class="btn btn-neutral float-right" title="Wildfly Install role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="wildfly_install.html" class="btn btn-neutral float-left" title="Wildfly Install role" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wildfly_systemd.html" class="btn btn-neutral float-right" title="Wildfly systemd role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

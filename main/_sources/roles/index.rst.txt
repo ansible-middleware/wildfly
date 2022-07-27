@@ -4,6 +4,7 @@ Role Index
 .. toctree::
     wildfly_driver
     wildfly_install
+    wildfly_subs
     wildfly_systemd
     wildfly_uninstall
     wildfly_utils

@@ -1,0 +1,47 @@
+---
+- name: "Ensures all required parameters are defined"
+  ansible.builtin.assert:
+    that:
+      - eap_version is defined
+      - ansible_distribution_major_version is defined
+      - ansible_architecture is defined
+      - ansible_os_family is defined
+      - ansible_os_family == "RedHat"
+    quiet: True
+    fail_msg: "Required parameters are missing and/or system is NOT RHEL."
+
+- ansible.builtin.set_fact:
+    eap_repo_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}-rpms"
+  when:
+    - not eap_repo_name is defined
+
+- ansible.builtin.set_fact:
+    eap_repo_state_file: "{{ wildfly_subs.repos_state_file.homedir }}/{{ wildfly_subs.repos_state_file.prefix }}-{{ eap_version }}.{{ wildfly_subs.repos_state_file.suffix }}.enabled"
+  when:
+    - not eap_repo_state_file is defined
+
+- block:
+    - name: "Ensures JBoss repos for {{ eap_version }} are enabled."
+      ansible.builtin.command: "subscription-manager repos --enable={{ eap_repo_name }}"
+      args:
+        creates: "{{ eap_repo_state_file }}"
+      when:
+        - wildfly_subs is defined
+        - wildfly_subs.check_repo_enable is defined
+        - wildfly_subs.check_repo_enable
+
+    - name: "Ensures state file exists"
+      ansible.builtin.file:
+        path: "{{ eap_repo_state_file }}"
+        state: touch
+        modification_time: preserve
+        access_time: preserve
+
+    - name: "Ensures group package {{ jboss_eap_group_install_name }} is installed"
+      ansible.builtin.command: "dnf groupinstall -y {{ jboss_eap_group_install_name }}"
+      args:
+        creates: /opt/rh/eap7/
+
+  when:
+   - installed_eap_source is defined
+   - installed_eap_source

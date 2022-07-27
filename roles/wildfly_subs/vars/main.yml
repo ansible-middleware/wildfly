@@ -1,0 +1,10 @@
+---
+wildfly_subs:
+  check_repo_enable: "{{ wildfly_subs_check_repo_enable }}"
+  check_repo_disabled: "{{ wildfly_subs_check_repo_disabled }}"
+  skip_group_remove: "{{ wildfly_subs_skip_remove }}"
+  repos_state_file:
+    homedir: "{{ wildfly_repos_state_file_homedir }}"
+    prefix: "{{ wildfly_repos_state_file_prefix }}"
+    suffix: "{{ wildfly_repos_state_file_suffix }}"
+  remove_root_dir: True

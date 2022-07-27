@@ -1,0 +1,54 @@
+---
+- name: "Check that required parameters are provided"
+  ansible.builtin.assert:
+    that:
+      - jboss_eap_group_install_name is defined
+      - eap_version is defined
+    quiet: True
+    fail_msg: "Missing required parameters"
+
+- block:
+
+    - name: "Ensures group package {{ jboss_eap_group_install_name }} is removed"
+      ansible.builtin.command: "dnf group remove -y {{ jboss_eap_group_install_name }}"
+      register: dnf_group_res
+      changed_when:
+        - 'not "Nothing to do." in dnf_group_res.stdout'
+
+    - name: "Ensures JBoss EAP Home has been removed {{ jboss_eap_home }}."
+      ansible.builtin.file:
+        path: "{{ wildfly_rpm_install_root_dir }}"
+        state: absent
+      when:
+        - wildfly_subs.remove_root_dir is defined
+        - wildfly_subs.remove_root_dir
+
+  when:
+    - wildfly_subs is defined
+    - wildfly_subs.skip_group_remove is defined
+    - not wildfly_subs.skip_group_remove
+
+- block:
+    - name: "Check that required parameters are provided"
+      ansible.builtin.assert:
+        that:
+          - ansible_distribution_major_version is defined
+          - ansible_architecture is defined
+        quiet: True
+        fail_msg: "Missing required parameters"
+      when:
+        - not eap_repos_name is defined
+
+    - ansible.builtin.set_fact:
+        eap_repos_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}-rpms"
+      when:
+        - not eap_repos_name is defined
+
+    - name: "Ensures JBoss EAP {{ eap_version }} repos are disabled."
+      ansible.builtin.command: "subscription-manager repos --disable={{ eap_repos_name }}"
+      changed_when: False
+
+  when:
+    - wildfly_subs is defined
+    - wildfly_subs.check_repo_disabled is defined
+    - wildfly_subs.check_repo_disabled

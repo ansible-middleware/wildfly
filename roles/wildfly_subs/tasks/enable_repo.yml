@@ -1,5 +1,5 @@
 ---
-- name: "Ensures all required parameters are defined"
+- name: "Ensure all required parameters are defined"
   ansible.builtin.assert:
     that:
       - eap_version is defined
@@ -10,18 +10,21 @@
     quiet: True
     fail_msg: "Required parameters are missing and/or system is NOT RHEL."
 
-- ansible.builtin.set_fact:
+- name: "Determine repository name."
+  ansible.builtin.set_fact:
     eap_repo_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}-rpms"
   when:
     - not eap_repo_name is defined
 
-- ansible.builtin.set_fact:
+- name: "Determine state file."
+  ansible.builtin.set_fact:
     eap_repo_state_file: "{{ wildfly_subs.repos_state_file.homedir }}/{{ wildfly_subs.repos_state_file.prefix }}-{{ eap_version }}.{{ wildfly_subs.repos_state_file.suffix }}.enabled"
   when:
     - not eap_repo_state_file is defined
 
-- block:
-    - name: "Ensures JBoss repos for {{ eap_version }} are enabled."
+- name: "Enable repository."
+  block:
+    - name: "Ensure JBoss repos for {{ eap_version }} are enabled."
       ansible.builtin.command: "subscription-manager repos --enable={{ eap_repo_name }}"
       args:
         creates: "{{ eap_repo_state_file }}"
@@ -30,14 +33,17 @@
         - wildfly_subs.check_repo_enable is defined
         - wildfly_subs.check_repo_enable
 
-    - name: "Ensures state file exists"
+    - name: "Ensure state file exists"
       ansible.builtin.file:
         path: "{{ eap_repo_state_file }}"
         state: touch
         modification_time: preserve
         access_time: preserve
+        owner: "{{ wildfly_user | default('root') }}"
+        group: "{{ wildfly_group | default('root') }}"
+        mode: 0644
 
-    - name: "Ensures group package {{ jboss_eap_group_install_name }} is installed"
+    - name: "Ensure group package {{ jboss_eap_group_install_name }} is installed"
       ansible.builtin.command: "dnf groupinstall -y {{ jboss_eap_group_install_name }}"
       args:
         creates: /opt/rh/eap7/

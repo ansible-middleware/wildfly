@@ -1,0 +1,50 @@
+---
+- name: "Ensure required parameters are provided."
+  ansible.builtin.assert:
+    that:
+      - target_wildfly_home is defined
+      - previous_wildfly_home is defined
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+- name: "Determine path to migration tool."
+  ansible.builtin.set_fact:
+    migration_tool: "{{ target_wildfly_home }}/bin/jboss-server-migration.sh"
+
+- name: "Load metadata on migration tool full path."
+  ansible.builtin.stat:
+    path: "{{ migration_tool }}"
+  register: migration_tool_state
+
+- name: "Check that path to migration tool is valid."
+  ansible.builtin.assert:
+    that:
+      - migration_tool_state is defined
+      - migration_tool_state.stat is defined
+      - migration_tool_state.stat.exists is defined
+      - migration_tool_state.stat.exists
+      - migration_tool_state.stat.isreg is defined
+      - migration_tool_state.stat.isreg
+    quiet: True
+    fail_msg: "Invalid path to migration tool: {{ migration_tool }}."
+
+- name: "Ensure migration configuration is deployed"
+  ansible.builtin.template:
+    src: "{{ wildfly_migration.environment_props }}"
+    dest: "{{ target_wildfly_home }}/migration/configuration/environment.properties"
+    owner: "{{ wildfly_user | default('root') }}"
+    group: "{{ wildfly_group | default('root') }}"
+    mode: 0644
+
+- name: "Run migration tool"
+  ansible.builtin.command: "{{ migration_tool }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ target_wildfly_home }}/migration/configuration/environment.properties"
+  register: migration_results
+  changed_when:
+    - '"Migration Result: SUCCESS" in migration_results.stdout'
+
+- name: "Display results of migration"
+  ansible.builtin.debug:
+    msg: "{{ migration_results }}"
+  changed_when: False
+  when:
+    - '"Migration Result: SUCCESS" in migration_results.stdout'

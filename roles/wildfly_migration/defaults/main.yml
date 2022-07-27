@@ -1,0 +1,2 @@
+---
+wildfly_migration_environment_props: templates/environment.properties.j2

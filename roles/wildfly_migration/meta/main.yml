@@ -1,0 +1,26 @@
+---
+collections:
+  - middleware_automation.redhat_csp_download
+
+galaxy_info:
+  role_name: wildfly_migration
+  namespace: middleware_automation
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  description: Install wildfly application server or JBoss Enterprise Application (EAP)
+  company: Red Hat, Inc.
+
+  license: Apache License 2.0
+
+  min_ansible_version: "2.9"
+
+  platforms:
+   - name: EL
+     versions:
+     - 8
+
+  galaxy_tags:
+    - java
+    - jboss
+    - wildfly
+    - cli
+    - server

@@ -95,3 +95,5 @@ releases:
     - 60.yaml
     - 62.yaml
     release_date: '2022-06-23'
+  1.0.6:
+    release_date: '2022-07-28'

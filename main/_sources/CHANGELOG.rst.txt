@@ -6,12 +6,13 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.1.0-devel
-============
+v1.1.0
+======
 
 Minor Changes
 -------------
 
+- Bump version to 1.1.0 to align with downstream (1.1.0 is identical to 1.0.6 upstream) `#67 <https://github.com/ansible-middleware/wildfly/pull/67>`_
 - Bump version to 1.1.0 to align with downstream (1.1.0 is identical to 1.0.6 upstream) `#67 <https://github.com/ansible-middleware/wildfly/pull/67>`_
 
 v1.0.6

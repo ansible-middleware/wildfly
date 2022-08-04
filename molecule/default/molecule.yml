@@ -41,7 +41,7 @@ scenario:
     - cleanup
     - destroy
     - syntax
-    - lint
+      #    - lint
     - create
     - prepare
     - converge

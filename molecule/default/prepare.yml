@@ -14,3 +14,20 @@
     - name: Display Ansible version
       ansible.builtin.debug:
         msg: "Ansible version is  {{ ansible_version.full }}"
+
+    - name: "Retrieve assets server from env"
+      ansible.builtin.set_fact:
+        assets_server: "{{ lookup('env','MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL') }}"
+
+    - name: "Download and deploy JWS zips from {{ assets_server }}"
+      ansible.builtin.get_url:
+        url: "{{ asset }}"
+        dest: "/opt"
+        validate_certs: no
+      loop:
+        - "{{ assets_server }}/eap7/7.4.0/jboss-eap-7.4.0.zip"
+      loop_control:
+        loop_var: asset
+      when:
+        - assets_server is defined
+        - assets_server | length > 0

@@ -29,6 +29,7 @@ warn_list:
   - no-log-password
   - unnamed-task
   - schema
+  - meta-no-tags
 
 use_default_rules: true
 parseable: true

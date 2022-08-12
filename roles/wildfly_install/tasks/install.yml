@@ -134,15 +134,13 @@
 - name: "Install EAP cumulative patch"
   become: yes
   when:
-    - jboss_eap_apply_cp
+    - jboss_eap_apply_cp is defined and jboss_eap_apply_cp
     - jboss_eap_enable is enabled and jboss_eap_enable
   block:
     - name: "Ensure required parameters for cumulative patch application are provided."
       ansible.builtin.assert:
         that:
-          - jboss_eap_rhn_ids is defined
-          - jboss_eap_rhn_ids | length > 0
-          - jboss_eap_version is defined
+          - jboss_eap_patch_version is defined
         quiet: "Missing required parameters for CP application"
 
     - name: "Apply latest cumulative patch"

@@ -11,15 +11,3 @@ wildfly_install:
   group: "{{ wildfly_group }}"
   java:
     package_name: "{{ wildfly_java_package_name }}"
-
-wildfly_install_rhn:
-  id: "0" #{{ rhn_ids[wildfly_version].id [ default('0') }}"
-  cp_id: "0" #"{{ rhn_ids[wildfly_version].cp.id | default('0') }}"
-  cp_v: "0" #{{ rhn_ids[wildfly_version].cp.v | default('0') }}"
-
-rhn_ids:
-  '7.4.0':  # noqa vars_in_vars_files_have_valid_names
-    id: '99481'
-    cp:
-      id: '99481'
-      v: '7.4.5'

@@ -28,7 +28,7 @@
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
-    - not jboss_eap_enable
+    - jboss_eap_enable is not defined or not jboss_eap_enable
     - not wildfly_install.rpm is defined
     - not wildfly_offline_install
     - archive_path.stat is defined
@@ -37,13 +37,14 @@
 - name: "Retrieve archive from RHN"
   ansible.builtin.include_tasks: install/rhn.yml
   vars:
-    rhn_id_file: "{{ wildfly_install_rhn.id }}"
+    rhn_id_file: "{{ jboss_eap_install_rhn_id | default(0) }}"
   when:
+    - not wildfly_offline_install
     - rhn_username is defined
     - rhn_password is defined
+    - jboss_eap_install_rhn_id is defined
     - jboss_eap_enable is defined
     - jboss_eap_enable
-    - not wildfly_offline_install
     - archive_path.stat is defined
     - not archive_path.stat.exists
 
@@ -150,8 +151,8 @@
         name: wildfly_utils
         tasks_from: apply_cp.yml
       vars:
-        rhn_cp_id: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.id }}"
-        rhn_cp_v: "{{ jboss_eap_rhn_ids[jboss_eap_version].cp.v }}"
+        rhn_cp_id: "{{ jboss_eap_patch_install_rhn_id | default(0) }}"
+        rhn_cp_v: "{{ jboss_eap_patch_version }}"
 
 - name: "Configure systemd"
   ansible.builtin.include_role:

@@ -19,7 +19,7 @@ argument_specs:
             wildfly_install_workdir:
                 # line 5 of wildfly_install/defaults/main.yml
                 default: "/opt/wildfly/"
-                description: "TODO document argument"
+                description: "Root directory for installation"
                 type: "str"
             wildfly_home:
                 # line 6 of wildfly_install/defaults/main.yml
@@ -56,15 +56,6 @@ argument_specs:
                 default: "java-1.8.0-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
-            jboss_eap_enable:
-                # line 21 of wildfly_install/defaults/main.yml
-                default: "{{ True if rhn_username is defined and rhn_password is defined else False }}"
-                description: "Choice between wildfly (usptream) or Red Hat JBoss EAP (product)"
-                type: "str"
-            jboss_eap_apply_cp:
-                default: false
-                description: "Whether to apply the latest cumulative patch on top of baseline version"
-                type: "bool"
             wildfly_systemd_enable:
                 default: false
                 description: "Whether to configure the systemd unit for the service"
@@ -82,3 +73,45 @@ argument_specs:
                   - sudo
                 description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
                 type: "list"
+    downstream:
+        options:
+            jboss_eap_enable:
+                default: True
+                description: "Enable install of Red Hat JBoss EAP"
+                type: "str"
+            jboss_eap_apply_cp:
+                default: false
+                description: "Whether to apply the latest cumulative patch on top of baseline version"
+                type: "bool"
+            jboss_eap_version:
+                default: "7.4.0"
+                description: "Red Hat EAP version to install"
+                type: "str"
+            jboss_eap_patch_version:
+                default: "7.4.5"
+                description: "Red Hat EAP cumulative patch version to install"
+                type: "str"
+            jboss_eap_archive_filename:
+                default: "jboss-eap-7.4.0.zip"
+                description: "Red Hat EAP archive name"
+                type: "str"
+            jboss_eap_install_workdir:
+                default: "/opt/jboss_eap/"
+                description: "Root directory for installation"
+                type: "str"
+            jboss_eap_home:
+                default: "{{ jboss_eap_install_workdir }}jboss-eap-{{ jboss_eap_version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}/"
+                description: "Red Hat EAP installation path"
+                type: "str"
+            jboss_eap_offline_install:
+                default: True
+                description: "Whether to install from local archive"
+                type: "bool"
+            jboss_eap_install_rhn_id:
+                default: "99481"
+                description: "Red Hat EAP CSP download ID"
+                type: "str"
+            jboss_eap_patch_install_rhn_id:
+                default: "99481"
+                description: "Red Hat EAP cumulative patch CSP download ID"
+                type: "str"

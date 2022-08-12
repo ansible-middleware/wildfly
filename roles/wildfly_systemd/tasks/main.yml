@@ -13,8 +13,8 @@
     src: "{{ wildfly_home }}/.latest_applied_patch.txt"
   register: slurped_eap_version
   when:
-      - wildfly_enable_yml_config
-      - jboss_eap_enable
+    - wildfly_enable_yml_config
+    - jboss_eap_enable id defined and jboss_eap_enable
 
 - name: Check arguments for yaml configuration
   ansible.builtin.assert:
@@ -24,7 +24,7 @@
     fail_msg: "Can only enable YAML configuration with EAP >= 7.4.5"
   when:
     - wildfly_enable_yml_config
-    - jboss_eap_enable
+    - jboss_eap_enable id defined and jboss_eap_enable
 
 - name: "Ensure required local user and group exists."
   ansible.builtin.include_role:

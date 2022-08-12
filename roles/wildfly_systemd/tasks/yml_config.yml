@@ -1,6 +1,6 @@
 ---
 - name: Enable extension in wildfly
-  when: not jboss_eap_enable
+  when: jboss_eap_enable is not defined or not jboss_eap_enable
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:
@@ -20,7 +20,7 @@
       mode: 0644
     become: yes
 - name: Enable extension in EAP
-  when: jboss_eap_enable
+  when: jboss_eap_enable is defined and jboss_eap_enable
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:

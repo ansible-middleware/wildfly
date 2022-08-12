@@ -2,10 +2,9 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - rhn_cp_id is defined
       - rhn_cp_v is defined
-      - rhn_username is defined
-      - rhn_password is defined
+      - wildfly_offline_install or rhn_cp_id is defined
+      - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
       - wildfly_home is defined
     quiet: true
     fail_msg: "One or more required parameters for cumulative patch application is missing."

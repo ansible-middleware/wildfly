@@ -43,8 +43,7 @@
     - rhn_username is defined
     - rhn_password is defined
     - jboss_eap_install_rhn_id is defined
-    - jboss_eap_enable is defined
-    - jboss_eap_enable
+    - jboss_eap_enable is defined and jboss_eap_enable
     - archive_path.stat is defined
     - not archive_path.stat.exists
 
@@ -136,7 +135,7 @@
   become: yes
   when:
     - jboss_eap_apply_cp
-    - jboss_eap_enable
+    - jboss_eap_enable is enabled and jboss_eap_enable
   block:
     - name: "Ensure required parameters for cumulative patch application are provided."
       ansible.builtin.assert:

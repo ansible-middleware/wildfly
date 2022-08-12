@@ -92,7 +92,7 @@ argument_specs:
                 description: "Red Hat EAP cumulative patch version to install"
                 type: "str"
             jboss_eap_archive_filename:
-                default: "jboss-eap-7.4.0.zip"
+                default: "jboss-eap-{{ jboss_eap_version }}.zip"
                 description: "Red Hat EAP archive name"
                 type: "str"
             jboss_eap_install_workdir:
@@ -100,7 +100,7 @@ argument_specs:
                 description: "Root directory for installation"
                 type: "str"
             jboss_eap_home:
-                default: "{{ jboss_eap_install_workdir }}jboss-eap-{{ jboss_eap_version | regex_replace('^([0-9])\\.([0-9]*).*', '\\1.\\2') }}/"
+                default: "{{ jboss_eap_install_workdir }}jboss-eap-{{ jboss_eap_version | split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"
             jboss_eap_offline_install:

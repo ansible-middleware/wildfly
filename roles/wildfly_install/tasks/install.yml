@@ -24,6 +24,7 @@
   ansible.builtin.stat:
     path: "{{ full_path_to_archive }}"
   register: archive_path
+  become: yes
 
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml

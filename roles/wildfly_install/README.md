@@ -50,7 +50,6 @@ Installs the default version of Wildfly to the default location with the default
 ---
 - name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
-  become: yes
   collections:
     - middleware_automation.wildfly
   roles:
@@ -65,7 +64,6 @@ Older Wildfly versions can be download from outside Github.
 ---
 - name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
-  become: yes
   vars:
     wildfly_version: '24.0.1.Final'
     wildfly_download_baseurl: "https://download.jboss.org/wildfly"

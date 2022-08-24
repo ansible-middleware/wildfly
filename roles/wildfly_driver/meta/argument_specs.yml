@@ -1,11 +1,8 @@
 argument_specs:
     main:
         options:
-            wildfly_home:
-                description: "Path of jboss installation"
-                type: "str"
             jdbc_driver_module_dir:
-                required: True
+                default: "{{ wildfly_home }}/modules/{{ jdbc_driver_module_name | replace('.', '/') }}/main"
                 description: "Path for module installation"
                 type: "str"
             jdbc_driver_version:
@@ -28,6 +25,14 @@ argument_specs:
                 default: "org.postgresql"
                 description: "Name for the jdbc driver module"
                 type: "str"
+            wildfly_version:
+                default: "26.0.0.Final"
+                description: "Wildfly version to install"
+                type: "str"
+            wildfly_home:
+                default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+                description: "Wildfly installation directory"
+                type: "str"
             wildfly_user:
                 default: "wildfly"
                 description: "posix user account for wildfly"
@@ -40,3 +45,17 @@ argument_specs:
                 description: "Override path of template used for module configuration"
                 type: "str"
                 required: False
+    downstream:
+        options:
+            jboss_eap_enable:
+                default: True
+                description: "Enable install of Red Hat JBoss EAP"
+                type: "bool"
+            jboss_eap_version:
+                default: "7.4.0"
+                description: "Red Hat EAP version to install"
+                type: "str"
+            jboss_eap_home:
+                default: "/opt/jboss_eap/jboss-eap-{{ (jboss_eap_version | split('.'))[0:2] | join('.') }}/"
+                description: "Red Hat EAP installation path"
+                type: "str"

@@ -1,9 +1,8 @@
 Wildfly Install role
 ====================
 
-A set of playbooks to automate the installation the JEE server, including retrieving the
-source archive (wildfly or JBoss EAP from the Red Hat Customer Portal, if proper credentials
-are provided)
+A role to automate the installation the Wildfly JEE server, including retrieving the
+source archive.
 
 Requirements
 ------------

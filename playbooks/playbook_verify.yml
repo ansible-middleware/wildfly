@@ -2,8 +2,6 @@
 - name: Verify
   hosts: all
   gather_facts: false
-  vars:
-    wildfly_http_port: 8080
   collections:
     - middleware_automation.wildfly
   roles:

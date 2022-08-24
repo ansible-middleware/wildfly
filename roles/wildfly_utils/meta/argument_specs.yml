@@ -29,6 +29,10 @@ argument_specs:
                 required: True
                 description: "Wildfly installation directory"
                 type: "str"
+            jboss_home:
+                default: "{{ wildfly_home }}"
+                description: "Wildfly installation directory, for backwards compatibility"
+                type: "str"
             wildfly_no_restart_after_patch:
                 default: False
                 description: "When true, skip restarting after applying a cumulative patch"

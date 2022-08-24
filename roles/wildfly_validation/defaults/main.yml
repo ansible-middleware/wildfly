@@ -3,3 +3,5 @@ wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
 wildfly_service_name: wildfly
 wildfly_http_port: 8080
+wildfly_version: '26.0.0.Final'
+wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"

@@ -17,3 +17,11 @@ argument_specs:
                 default: "8080"
                 description: "Server HTTP port"
                 type: "str"
+            wildfly_version:
+                default: "26.0.0.Final"
+                description: "Wildfly version to install"
+                type: "str"
+            wildfly_home:
+                default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+                description: "Wildfly installation directory"
+                type: "str"

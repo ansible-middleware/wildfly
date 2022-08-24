@@ -14,6 +14,12 @@ Minor Changes
 
 - Bump version to 1.1.0 to align with downstream (1.1.0 is identical to 1.0.6 upstream) `#67 <https://github.com/ansible-middleware/wildfly/pull/67>`_
 
+Bugfixes
+--------
+
+- Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
+- wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
+
 v1.0.6
 ======
 

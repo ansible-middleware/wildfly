@@ -5,7 +5,7 @@
 
 ## About
 
-This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart [JBoss Enterprise Application (EAP)](https://www.redhat.com/en/technologies/jboss-middleware/application-platform) ) within the configuration management tool Ansible.
+This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.
 
 <!--start requires_ansible-->
 ## Ansible version compatibility
@@ -39,6 +39,10 @@ To install this Ansible collection:
 or with a downloaded or built tarball, run the following command:
 
     $ ansible-galaxy collection install /path/to/middleware_automation.wildfly.tgz
+
+or via the included requirements file:
+
+    $ ansible-galaxy collection install -r requirements.yml
 
 
 ## Building the collection

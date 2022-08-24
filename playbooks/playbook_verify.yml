@@ -2,11 +2,6 @@
 - name: Verify
   hosts: all
   gather_facts: false
-  vars:
-    wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final'
-    wildfly_user: 'wildfly'
-    wildfly_group: "{{ wildfly_user }}"
-    wildfly_http_port: 8080
   collections:
     - middleware_automation.wildfly
   roles:

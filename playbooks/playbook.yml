@@ -1,21 +1,6 @@
 ---
 - name: Converge
   hosts: all
-  vars:
-    # for wildfly_install
-    wildfly_version: '26.0.0.Final'
-    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
-    wildfly_install_workdir: '/opt/wildfly/'
-    wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
-    wildfly_user: 'wildfly'
-    wildfly_group: "{{ wildfly_user }}"
-    jboss_eap_enable: False
-    # for wildfly_driver
-    jdbc_driver_module_dir: "{{ wildfly_home }}/modules/org/postgresql/main"
-    jdbc_driver_version: 9.2-1002-jdbc4
-    jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
-    jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/{{ jdbc_driver_jar_filename }}"
-    jdbc_driver_module_name: "org.postgresql"
   collections:
     - middleware_automation.wildfly
   roles:

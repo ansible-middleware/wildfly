@@ -21,16 +21,77 @@ argument_specs:
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly"
                 type: "str"
+            wildfly_version:
+                default: "26.0.0.Final"
+                description: "Wildfly version to install"
+                type: "str"
             wildfly_home:
-                # line 6 of wildfly_install/defaults/main.yml
                 required: True
                 description: "Wildfly installation directory"
+                type: "str"
+            jboss_home:
+                default: "{{ wildfly_home }}"
+                description: "Wildfly installation directory, for backwards compatibility"
                 type: "str"
             wildfly_no_restart_after_patch:
                 default: False
                 description: "When true, skip restarting after applying a cumulative patch"
                 type: "bool"
+    downstream:
+        options:
+            jboss_eap_enable:
+                default: True
+                description: "Enable install of Red Hat JBoss EAP"
+                type: "bool"
+            jboss_eap_apply_cp:
+                default: false
+                description: "Whether to apply the latest cumulative patch on top of baseline version"
+                type: "bool"
+            jboss_eap_version:
+                default: "7.4.0"
+                description: "Red Hat EAP version to install"
+                type: "str"
+            jboss_eap_patch_version:
+                default: "7.4.5"
+                description: "Red Hat EAP cumulative patch version to install"
+                type: "str"
+            jboss_eap_install_workdir:
+                default: "/opt/jboss_eap/"
+                description: "Root directory for installation"
+                type: "str"
+            jboss_eap_home:
+                default: "{{ jboss_eap_install_workdir }}jboss-eap-{{ (jboss_eap_version | split('.'))[0:2] | join('.') }}/"
+                description: "Red Hat EAP installation path"
+                type: "str"
+            jboss_eap_offline_install:
+                default: True
+                description: "Whether to install from local archive"
+                type: "bool"
+            jboss_eap_install_rhn_id:
+                default: "99481"
+                description: "Red Hat EAP CSP download ID"
+                type: "str"
+            jboss_eap_patch_install_rhn_id:
+                default: "99481"
+                description: "Red Hat EAP cumulative patch CSP download ID"
+                type: "str"
             jboss_eap_apply_cp_verbose:
                 default: False
-                description: "When true, emits verbose output from jboss-cli"
+                description: "Whether to output verbose patch output"
                 type: "bool"
+    jboss_cli:
+        options:
+            jboss_cli_controller_host:
+                # line 2 of jboss_eap/defaults/main.yml
+                default: "localhost"
+                description: "Hostname for connecting to cli"
+                type: "str"
+            jboss_cli_controller_port:
+                # line 3 of jboss_eap/defaults/main.yml
+                default: "9990"
+                description: "Port for connecting to cli"
+                type: "str"
+            query:
+                required: True
+                description: "The command to sed to jboss-cli"
+                type: "str"

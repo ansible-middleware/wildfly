@@ -1,7 +1,9 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-jdbc_driver_module_dir:
+wildfly_version: '26.0.0.Final'
+wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+jdbc_driver_module_dir: "{{ wildfly_home }}/modules/{{ jdbc_driver_module_name | replace('.', '/') }}/main"
 jdbc_driver_version: 9.4.1212
 jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
 jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/postgresql-{{ jdbc_driver_version }}.jar"

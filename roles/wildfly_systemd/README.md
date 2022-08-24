@@ -1,11 +1,9 @@
 Wildfly systemd role
 =========
 
-Using basic information on the JEE app server installation, this
-role setup a systemd service to manager.
+Role setting up a systemd service to manage a Wildfly app server instance, using basic information on server installation.
 
-Note: default values are based on the one of the wildfly install
-role.
+Note: default values are based on the one of the wildfly_install role.
 
 Requirements
 ------------

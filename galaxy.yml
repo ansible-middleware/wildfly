@@ -1,6 +1,6 @@
 namespace: middleware_automation
 name: wildfly
-version: "1.1.0"
+version: "1.2.0"
 readme: README.md
 authors:
   - Romain Pelisse <belaran@redhat.com>
@@ -27,3 +27,4 @@ build_ignore:
   - '*.tar.gz'
   - '*.zip'
   - changelogs/fragments/.gitignore
+  - .gitignore

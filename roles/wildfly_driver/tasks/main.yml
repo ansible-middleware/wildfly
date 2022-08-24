@@ -2,16 +2,9 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - wildfly_user is defined
       - wildfly_driver.module_dir is defined
     quiet: true
     fail_msg: 'Required variables not provided.'
-
-- name: Set widfly user/group
-  ansible.builtin.set_fact:
-    wildfly_group: "{{ wildfly_user }}"
-  when:
-    - not wildfly_group is defined
 
 - name: "Check module directory: {{ wildfly_driver.module_dir }}"
   ansible.builtin.stat:

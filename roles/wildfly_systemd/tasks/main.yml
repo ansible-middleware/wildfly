@@ -112,7 +112,7 @@
 
 - name: Check YAML configuration is disabled
   ansible.builtin.file:
-    path: "{{ wildfly_systemd.home }}{{  wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+    path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
     state: absent
   when: not wildfly_enable_yml_config
   become: yes

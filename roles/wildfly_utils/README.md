@@ -13,12 +13,12 @@ Role Defaults
 |`jboss_cli_controller_host`| Hostname for connecting to cli | `localhost` |
 |`jboss_cli_controller_port`| Port for connecting to cli | `9990` |
 |`wildfly_no_restart_after_patch`| When true, skip restarting after applying a cumulative patch | `False` |
-
+|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-{{ wildfly_version }}/` |
 
 Role Variables
 --------------
 
 | Variable | Description | Required |
 |:---------|:------------|:---------|
-|`wildfly_home`| Wildfly home directory | `Yes` |
+|`query`| The command to sed to jboss-cli when tasks from jboss_cli.yml are used | `Yes` |
 <!--end argument_specs-->

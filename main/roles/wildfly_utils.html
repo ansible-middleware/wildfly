@@ -121,6 +121,10 @@ feature (such as apply cumulative patches).</p>
 <td class="text-left"><p>When true, skip restarting after applying a cumulative patch</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<td class="text-left"><p>Wildfly installation directory</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -134,8 +138,8 @@ feature (such as apply cumulative patches).</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>Wildfly home directory</p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">query</span></code></p></td>
+<td class="text-left"><p>The command to sed to jboss-cli when tasks from jboss_cli.yml are used</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Yes</span></code></p></td>
 </tr>
 </tbody>

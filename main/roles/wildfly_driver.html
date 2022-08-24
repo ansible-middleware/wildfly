@@ -44,9 +44,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Wildfly Driver role</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-playbook">Example Playbook</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#license">License</a></li>
@@ -104,11 +102,7 @@
 <p>This role provides a playbook to easily install a JDBC driver within
 the server modules directory tree. It comes with a template for the main.xml
 (that can be overriden).</p>
-<section id="requirements">
-<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p>A valid Java runtime environment must be available for execution of the jcliff utility</p>
 <!--start argument_specs-->
-</section>
 <section id="role-defaults">
 <h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Permalink to this heading"></a></h2>
 <table class="colwidths-auto docutils align-default">
@@ -127,47 +121,37 @@ the server modules directory tree. It comes with a template for the main.xml
 <td class="text-left"><p>posix group for wildfly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_version</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<td class="text-left"><p>Wildfly installation directory</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_version</span></code></p></td>
 <td class="text-left"><p>Version of jdbc driver to download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9.4.1212</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_filename</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_filename</span></code></p></td>
 <td class="text-left"><p>Filename of jdbc driver to download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_url</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_url</span></code></p></td>
 <td class="text-left"><p>URL for jdbc driver download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}/postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_installation_path</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_installation_path</span></code></p></td>
 <td class="text-left"><p>Path for jdbc driver installation</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">jdbc_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">jdbc_driver_jar_filename</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_name</span></code></p></td>
 <td class="text-left"><p>Name for the jdbc driver module</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">org.postgresql</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_dir</span></code></p></td>
+<td class="text-left"><p>Path for module installation</p></td>
+<td class="text-left"><p>`{{ wildfly_home }}/modules/{{ jdbc_driver_module_name</p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">override_module_xml_template</span></code></p></td>
 <td class="text-left"><p>Override path of template used for module configuration</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="role-variables">
-<h2>Role Variables<a class="headerlink" href="#role-variables" title="Permalink to this heading"></a></h2>
-<table class="colwidths-auto docutils align-default">
-<thead>
-<tr class="row-odd"><th class="text-left head"><p>Variable</p></th>
-<th class="text-left head"><p>Description</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>Home directory of jboss installation</p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_dir</span></code></p></td>
-<td class="text-left"><p>Path for module installation</p></td>
 </tr>
 </tbody>
 </table>

@@ -100,7 +100,7 @@
 <p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main" /></a></p>
 <section id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
-<p>This Ansible Collection regroups several playbooks (packaged as role) to help install, setup and maintain Java JEE appserver Wildfly (and its product counterpart <a class="reference external" href="https://www.redhat.com/en/technologies/jboss-middleware/application-platform">JBoss Enterprise Application (EAP)</a> ) within the configuration management tool Ansible.</p>
+<p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.</p>
 <!--start requires_ansible-->
 </section>
 <section id="ansible-version-compatibility">
@@ -133,6 +133,10 @@
 </div>
 <p>or with a downloaded or built tarball, run the following command:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install /path/to/middleware_automation.wildfly.tgz
+</pre></div>
+</div>
+<p>or via the included requirements file:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install -r requirements.yml
 </pre></div>
 </div>
 </section>

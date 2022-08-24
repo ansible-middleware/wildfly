@@ -1,4 +1,6 @@
 ---
+wildfly_user: 'wildfly'
+wildfly_group: "{{ wildfly_user }}"
 jdbc_driver_module_dir:
 jdbc_driver_version: 9.4.1212
 jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"

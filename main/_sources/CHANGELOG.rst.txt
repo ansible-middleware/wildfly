@@ -14,12 +14,15 @@ Major Changes
 
 - Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
 - Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
+- Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
 
 Bugfixes
 --------
 
 - Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
 - Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
+- Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
+- wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 - wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 - wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 

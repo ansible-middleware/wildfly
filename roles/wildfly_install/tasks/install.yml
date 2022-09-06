@@ -29,7 +29,7 @@
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
-    - jboss_eap_enable is not defined or not jboss_eap_enable
+    - eap_enable is not defined or not eap_enable
     - not wildfly_install.rpm is defined
     - not wildfly_offline_install
     - archive_path.stat is defined
@@ -38,13 +38,13 @@
 - name: "Retrieve archive from RHN"
   ansible.builtin.include_tasks: install/rhn.yml
   vars:
-    rhn_id_file: "{{ jboss_eap_install_rhn_id | default(0) }}"
+    rhn_id_file: "{{ eap_install_rhn_id | default(0) }}"
   when:
     - not wildfly_offline_install
     - rhn_username is defined
     - rhn_password is defined
-    - jboss_eap_install_rhn_id is defined
-    - jboss_eap_enable is defined and jboss_eap_enable
+    - eap_install_rhn_id is defined
+    - eap_enable is defined and eap_enable
     - archive_path.stat is defined
     - not archive_path.stat.exists
 
@@ -135,13 +135,13 @@
 - name: "Install EAP cumulative patch"
   become: yes
   when:
-    - jboss_eap_apply_cp is defined and jboss_eap_apply_cp
-    - jboss_eap_enable is enabled and jboss_eap_enable
+    - eap_apply_cp is defined and eap_apply_cp
+    - eap_enable is enabled and eap_enable
   block:
     - name: "Ensure required parameters for cumulative patch application are provided."
       ansible.builtin.assert:
         that:
-          - jboss_eap_patch_version is defined
+          - eap_patch_version is defined
         quiet: "Missing required parameters for CP application"
 
     - name: "Apply latest cumulative patch"
@@ -149,8 +149,8 @@
         name: wildfly_utils
         tasks_from: apply_cp.yml
       vars:
-        rhn_cp_id: "{{ jboss_eap_patch_install_rhn_id | default(0) }}"
-        rhn_cp_v: "{{ jboss_eap_patch_version }}"
+        rhn_cp_id: "{{ eap_patch_install_rhn_id | default(0) }}"
+        rhn_cp_v: "{{ eap_patch_version }}"
 
 - name: "Configure systemd"
   ansible.builtin.include_role:

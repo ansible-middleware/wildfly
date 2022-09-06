@@ -6,4 +6,4 @@ wildfly_repos_state_file_homedir: /opt
 wildfly_repos_state_file_prefix: .eap
 wildfly_repos_state_file_suffix: .repo
 wildfly_rpm_install_root_dir: /opt/rh/eap7/
-jboss_eap_group_install_name: jboss-eap7-jdk11
+eap_group_install_name: jboss-eap7-jdk11

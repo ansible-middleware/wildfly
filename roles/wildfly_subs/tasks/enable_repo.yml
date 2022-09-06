@@ -43,8 +43,8 @@
         group: "{{ wildfly_group | default('root') }}"
         mode: 0644
 
-    - name: "Ensure group package {{ jboss_eap_group_install_name }} is installed"
-      ansible.builtin.command: "dnf groupinstall -y {{ jboss_eap_group_install_name }}"
+    - name: "Ensure group package {{ eap_group_install_name }} is installed"
+      ansible.builtin.command: "dnf groupinstall -y {{ eap_group_install_name }}"
       args:
         creates: /opt/rh/eap7/
 

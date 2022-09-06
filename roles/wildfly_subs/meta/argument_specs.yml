@@ -29,7 +29,7 @@ argument_specs:
                 default: "/opt/rh/eap7/"
                 description: "Wildfly or JBoss EAP install folder"
                 type: "str"
-            jboss_eap_group_install_name:
+            eap_group_install_name:
                 default: "jboss-eap7-jdk11"
                 description: "Group install package name"
                 type: "str"

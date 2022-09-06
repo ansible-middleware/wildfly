@@ -47,15 +47,15 @@ argument_specs:
                 required: False
     downstream:
         options:
-            jboss_eap_enable:
+            eap_enable:
                 default: True
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
-            jboss_eap_version:
+            eap_version:
                 default: "7.4.0"
                 description: "Red Hat EAP version to install"
                 type: "str"
-            jboss_eap_home:
-                default: "/opt/jboss_eap/jboss-eap-{{ (jboss_eap_version | split('.'))[0:2] | join('.') }}/"
+            eap_home:
+                default: "/opt/jboss_eap/jboss-eap-{{ (eap_version | split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"

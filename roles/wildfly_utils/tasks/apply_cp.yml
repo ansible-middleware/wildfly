@@ -2,7 +2,7 @@
 - name: Check installation
   ansible.builtin.assert:
     that:
-      - jboss_eap_enable is defined and jboss_eap_enable
+      - eap_enable is defined and eap_enable
     quiet: true
     fail_msg: "Patching is only available on Red Hat EAP installations."
 
@@ -129,7 +129,7 @@
       ansible.builtin.debug:
         msg: "Apply patch operation result: {{ cli_result.stdout | string }}"
       when:
-        - jboss_eap_apply_cp_verbose is defined
+        - eap_apply_cp_verbose is defined
         - cli_result is defined
         - cli_result.stdout is defined
 

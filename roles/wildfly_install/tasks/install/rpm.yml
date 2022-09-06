@@ -2,7 +2,7 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - jboss_eap_package_name is defined
+      - eap_package_name is defined
     quiet: true
 
 - name: Show error

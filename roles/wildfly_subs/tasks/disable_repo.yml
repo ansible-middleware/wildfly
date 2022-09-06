@@ -2,7 +2,7 @@
 - name: "Check that required parameters are provided"
   ansible.builtin.assert:
     that:
-      - jboss_eap_group_install_name is defined
+      - eap_group_install_name is defined
       - eap_version is defined
     quiet: True
     fail_msg: "Missing required parameters"
@@ -10,13 +10,13 @@
 - name: "Install group package"
   block:
 
-    - name: "Ensure group package {{ jboss_eap_group_install_name }} is removed"
-      ansible.builtin.command: "dnf group remove -y {{ jboss_eap_group_install_name }}"
+    - name: "Ensure group package {{ eap_group_install_name }} is removed"
+      ansible.builtin.command: "dnf group remove -y {{ eap_group_install_name }}"
       register: dnf_group_res
       changed_when:
         - 'not "Nothing to do." in dnf_group_res.stdout'
 
-    - name: "Ensure JBoss EAP Home has been removed {{ jboss_eap_home }}."
+    - name: "Ensure JBoss EAP Home has been removed {{ eap_home }}."
       ansible.builtin.file:
         path: "{{ wildfly_rpm_install_root_dir }}"
         state: absent

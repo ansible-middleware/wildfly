@@ -23,7 +23,7 @@ Role Defaults
 |`wildfly_repos_state_file_prefix`| State filename prefix | ` .eap`
 |`wildfly_repos_state_file_suffix`| State filename suffix | ` .repo`
 |`wildfly_rpm_install_root_dir`| RPM install root dir | ` /opt/rh/eap7/`
-|`jboss_eap_group_install_name`| EAP group install package name| ` jboss-eap7-jdk11`
+|`eap_group_install_name`| EAP group install package name| ` jboss-eap7-jdk11`
 
 Role Variables
 --------------

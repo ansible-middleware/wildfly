@@ -16,14 +16,14 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_subs_check_repo_enable`| Enable repo | ` True`
-|`wildfly_subs_check_repo_disabled`| Disable repo | ` "{{ wildfly_subs_check_repo_enable }}"`
-|`wildfly_subs_skip_remove`| Remove installed server | ` False`
-|`wildfly_repos_state_file_homedir`| State file home directory | ` /opt`
-|`wildfly_repos_state_file_prefix`| State filename prefix | ` .eap`
-|`wildfly_repos_state_file_suffix`| State filename suffix | ` .repo`
-|`wildfly_rpm_install_root_dir`| RPM install root dir | ` /opt/rh/eap7/`
-|`jboss_eap_group_install_name`| EAP group install package name| ` jboss-eap7-jdk11`
+|`wildfly_subs_check_repo_enable`| Enable repo | `True` |
+|`wildfly_subs_check_repo_disabled`| Disable repo | `"{{ wildfly_subs_check_repo_enable }}"` |
+|`wildfly_subs_skip_remove`| Remove installed server | `False` |
+|`wildfly_repos_state_file_homedir`| State file home directory | `/opt` |
+|`wildfly_repos_state_file_prefix`| State filename prefix | `.eap` |
+|`wildfly_repos_state_file_suffix`| State filename suffix | `.repo` |
+|`wildfly_rpm_install_root_dir`| RPM install root dir | `/opt/rh/eap7/` |
+|`eap_group_install_name`| EAP group install package name| `jboss-eap7-jdk11` |
 
 Role Variables
 --------------

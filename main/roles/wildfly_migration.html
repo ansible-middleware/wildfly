@@ -76,6 +76,16 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">Changelog</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Middleware collections</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/infinispan/">Infinispan / Red Hat Data Grid</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/keycloak/">Keycloak / Red Hat Single Sign-On</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">Wildfly / Red Hat JBoss EAP</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/jws/">Tomcat / Red Hat JWS</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq/">ActiveMQ / Red Hat AMQ</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/redhat-csp-download/">Red Hat CSP Download</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/ansible_collections_jcliff/">JCliff</a></li>
+</ul>
 
         </div>
       </div>
@@ -124,35 +134,35 @@ or disable a repo and install EAP using the group install feature.</p>
 <tbody>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_enable</span></code></p></td>
 <td class="text-left"><p>Enable repo</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">True</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_disabled</span></code></p></td>
 <td class="text-left"><p>Disable repo</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">&quot;{{</span> <span class="pre">wildfly_subs_check_repo_enable</span> <span class="pre">}}&quot;</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;{{</span> <span class="pre">wildfly_subs_check_repo_enable</span> <span class="pre">}}&quot;</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_skip_remove</span></code></p></td>
 <td class="text-left"><p>Remove installed server</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">False</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_homedir</span></code></p></td>
 <td class="text-left"><p>State file home directory</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">/opt</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_prefix</span></code></p></td>
 <td class="text-left"><p>State filename prefix</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">.eap</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.eap</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_suffix</span></code></p></td>
 <td class="text-left"><p>State filename suffix</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">.repo</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.repo</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_rpm_install_root_dir</span></code></p></td>
 <td class="text-left"><p>RPM install root dir</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">/opt/rh/eap7/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/rh/eap7/</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_eap_group_install_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">eap_group_install_name</span></code></p></td>
 <td class="text-left"><p>EAP group install package name</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"> <span class="pre">jboss-eap7-jdk11</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss-eap7-jdk11</span></code></p></td>
 </tr>
 </tbody>
 </table>

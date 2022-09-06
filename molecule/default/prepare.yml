@@ -22,7 +22,7 @@
     - name: "Download and deploy jboss zips from {{ assets_server }}"
       ansible.builtin.get_url:
         url: "{{ asset }}"
-        dest: "/opt"
+        dest: "{{ lookup('env', 'PWD') | default('/opt') }}"
         validate_certs: no
       delegate_to: localhost
       loop:

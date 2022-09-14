@@ -14,7 +14,7 @@
   register: slurped_eap_version
   when:
     - wildfly_enable_yml_config
-    - eap_enable id defined and eap_enable
+    - eap_enable is defined and eap_enable
 
 - name: Check arguments for yaml configuration
   ansible.builtin.assert:
@@ -24,7 +24,7 @@
     fail_msg: "Can only enable YAML configuration with EAP >= 7.4.5"
   when:
     - wildfly_enable_yml_config
-    - eap_enable id defined and eap_enable
+    - eap_enable is defined and eap_enable
 
 - name: "Ensure required local user and group exists."
   ansible.builtin.include_role:

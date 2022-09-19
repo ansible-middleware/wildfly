@@ -139,3 +139,5 @@ releases:
     - 80.yaml
     - 80.yaml
     release_date: '2022-09-05'
+  1.2.1:
+    release_date: '2022-09-19'

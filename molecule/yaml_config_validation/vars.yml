@@ -1,0 +1,14 @@
+---
+wildfly_user: wildfly
+wildfly_group: "{{ wildfly_user }}"
+wildfly_service_name: wildfly
+wildfly_http_port: 8080
+wildfly_version: '26.0.0.Final'
+wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
+wildfly_enable_yml_config: True
+yaml_service: wildfly_yaml
+wildfly_yaml_config_location: "/usr/lib/systemd/system"
+wildfly_yaml_config_file_suffix: ".service"
+wildfly_config_file_template: "templates/wfly.yaml.config.j2"
+wildfly_yml_configs:
+    - wildfly_yaml_configuration.yml

@@ -15,7 +15,7 @@
     query: "'{{ validation_query }}'"
     jboss_home: "{{ wildfly_home }}"
 
-- name: "Validate CLI query was sucessful"
+- name: "Validate CLI query was successful"
   ansible.builtin.assert:
     that:
       - cli_result is defined
@@ -23,7 +23,7 @@
       - cli_result.rc == 0
       - cli_result.stdout_lines is defined
     quiet: true
-    fail_msg: "Fail to validate state of server using CLI query: {{ validation_query }}. Server may not be functionnal!"
+    fail_msg: "Fail to validate state of server using CLI query: {{ validation_query }}. Server may not be functional!"
 
 - name: "Transform output to JSON"
   ansible.builtin.set_fact:
@@ -44,4 +44,4 @@
       - query_result.outcome == "success"
       - query_result.result
     quiet: true
-    fail_msg: "CLI query was not successfull: {{ validation_query }}, server may not be functionnal!"
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"

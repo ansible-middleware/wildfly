@@ -77,3 +77,6 @@
   loop:
     - { query: '/core-service=server-environment:read-attribute(name=start-gracefully)' }
     - { query: '/subsystem=undertow/server=default-server/http-listener=default:read-attribute(name=enabled)' }
+
+- name: "Ensure yaml setup"
+  ansible.builtin.include_tasks: yaml_setup.yml

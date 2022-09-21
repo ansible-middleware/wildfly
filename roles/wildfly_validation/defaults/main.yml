@@ -5,3 +5,6 @@ wildfly_service_name: wildfly
 wildfly_http_port: 8080
 wildfly_version: '26.0.0.Final'
 wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+wildfly_standard_sockets_validation_query: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
+wildfly_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
+wildfly_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"

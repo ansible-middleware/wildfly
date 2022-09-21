@@ -1,0 +1,5 @@
+---
+collections:
+  - name: middleware_automation.redhat_csp_download
+  - name: community.general
+  - name: community.docker

@@ -1,0 +1,88 @@
+wildfly-configuration:
+  socket-binding-group:
+    standard-sockets:
+      remote-destination-outbound-socket-binding:
+        site1-loadbalancer:
+          host: mail-smtp
+          port: 6666
+  subsystem:
+    modcluster:
+      proxy:
+        default:
+          proxies:
+            - site1-loadbalancer
+    messaging-activemq:
+      servers:
+        default:
+          jms-queues:
+            ExpiryQueue:
+              entries:
+                - 'java:/jms/queue/ExpiryQueue'
+            DLQ:
+              entries:
+                - 'java:/jms/queue/DLQ'
+            CSIRequestQueue:
+              entries:
+                - 'java:/jms/queue/CSIRequestQueue'
+            CsiDLQ:
+              entries:
+                - 'java:/jms/queue/CsiDLQ'
+            CCDLQ:
+              entries:
+                - 'java:/jms/queue/CCDLQ'
+            CCRequestQueue:
+              entries:
+                - 'java:/jms/queue/CCRequestQueue'
+          address-settings:
+            default:
+              message-counter-history-day-limit: 10
+              page-size-bytes: 2097152
+              max-size-bytes: 10485760
+              expiry-address: jms.queue.ExpiryQueue
+              dead-letter-address: jms.queue.DLQ
+              redistribution-delay: 1000
+            CCRequestQueue:
+              message-counter-history-day-limit: 10
+              page-size-bytes: 2097152
+              max-size-bytes: 10485760
+              expiry-address: jms.queue.ExpiryQueue
+              dead-letter-address: CCDLQ
+              redistribution-delay: 1000
+          security-settings:
+            default:
+              roles:
+                guest:
+                  send: true
+                  delete-durable-queue: true
+                  create-non-durable-queue: true
+                  consume: true
+          http-acceptors:
+            http-acceptor-mq:
+              http-listener: default
+          http-connectors:
+            http-connector-mq:
+              socket-binding: http
+              endpoint: http-acceptor
+          cluster-password: ${jboss.messaging.cluster.password:CHANGEME}
+          discovery-groups:
+            activemq-discovery:
+              jgroups-cluster: activemq-cluster
+          broadcast-groups:
+            activemq-broadcast:
+              jgroups-cluster: activemq-cluster
+              connectors:
+                - 'http-connector'
+          cluster-connections:
+            activemq-cluster:
+              cluster-connection-address: jms
+              connector-name: http-connector
+              discovery-group: activemq-discover
+      remote-connector:
+        messaging-remote-site1-amq1-connector:
+          socket-binding: txn-recovery-environment
+    ejb3:
+      default-resource-adapter-name: RemoteConnectionFactory
+    ee:
+      service:
+        default-bindings:
+          jms-connection-factory: "java:jboss/RemoteConnectionFactory"

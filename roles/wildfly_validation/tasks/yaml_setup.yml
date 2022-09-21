@@ -1,0 +1,54 @@
+- name: "Check standard-sockets configuration settings"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    query: "{{ wildfly_standard_sockets_validation_query }}"
+    jboss_home: "{{ wildfly_home }}"
+
+- name: "Display result of standard-sockets configuration settings"
+  ansible.builtin.assert:
+    that:
+      - cli_result is defined
+      - cli_result.rc is defined
+      - cli_result.rc == 0
+      - cli_result.stdout_lines is defined
+    quiet: True
+    fail_msg: "Fail to validate state of server using CLI query: {{ wildfly_standard_sockets_validation_query }}. Server may not be functional."
+
+- name: "Check ejb configuration settings"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    query: "{{ wildfly_ejb_validation_query }}"
+    jboss_home: "{{ wildfly_home }}"
+
+- name: "Display result of ejb configuration settings"
+  ansible.builtin.assert:
+    that:
+      - cli_result is defined
+      - cli_result.rc is defined
+      - cli_result.rc == 0
+      - cli_result.stdout_lines is defined
+    quiet: True
+    fail_msg: "Fail to validate state of server using CLI query: {{ wildfly_ejb_validation_query }}. Server may not be functional."
+
+- name: "Check ee configuration settings"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    query: "{{ wildfly_ee_validation_query }}"
+    jboss_home: "{{ wildfly_home }}"
+  register: ee_result
+
+- name: "Display result of ee configuration settings"
+  ansible.builtin.assert:
+    that:
+      - cli_result is defined
+      - cli_result.rc is defined
+      - cli_result.rc == 0
+      - cli_result.stdout_lines is defined
+    quiet: True
+    fail_msg: "Fail to validate state of server using CLI query: {{ wildfly_ee_validation_query }}. Server may not be functional."

@@ -1,0 +1,57 @@
+---
+- name: Create a required directory
+  ansible.builtin.file:
+    path: '{{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/'
+    state: directory
+    mode: 0644
+
+- name: Enable that feature you need to add a ServiceLoader configuration
+  ansible.builtin.command: >
+    echo 'org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension' > {{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/org.jboss.as.controller.persistence.ConfigurationExtension
+  changed_when: false
+
+- name: Setting up the yaml configuration
+  ansible.builtin.command: >
+    '{{ wildfly_home }}bin/standalone.sh -Djboss.socket.binding.port-offset=1000 -c standalone-full.xml -y {{ wildfly_home }}standalone/wildfly_yaml_configuration.yml'
+  changed_when: false
+  async: 1000
+  poll: 0
+
+- name: Check standard-sockets configuration settings
+  ansible.builtin.command: >
+    '{{ wildfly_home }}bin/jboss-cli.sh -c /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-resource'
+  register: standard_sockets_result
+  changed_when: false
+
+- name: Result of standard-sockets configuration settings
+  ansible.builtin.assert:
+    that:
+      - standard_sockets_result is defined
+      - standard_sockets_result.rc is defined
+    quiet: True
+
+- name: Check ejb configuration settings
+  ansible.builtin.command: >
+    '{{ wildfly_home }} bin/jboss-cli.sh -c /subsystem=ejb3:read-resource'
+  register: ejb_result
+  changed_when: false
+
+- name: Result of ejb configuration settings
+  ansible.builtin.assert:
+    that:
+      - ejb_result is defined
+      - ejb_result.rc is defined
+    quiet: True
+
+- name: Check ee configuration settings
+  ansible.builtin.command: >
+    '{{ wildfly_home }}bin/jboss-cli.sh -c /subsystem=ee/service=default-bindings:read-resource'
+  register: ee_result
+  changed_when: false
+
+- name: Result of ee configuration settings
+  ansible.builtin.assert:
+    that:
+      - ee_result is defined
+      - ee_result.rc is defined
+    quiet: True

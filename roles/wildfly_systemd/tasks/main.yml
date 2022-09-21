@@ -173,3 +173,6 @@
   ansible.builtin.include_tasks: service.yml
   vars:
     instance_state: "started"
+
+- name: "Ensure YAML configuration is done"
+  ansible.builtin.include_tasks: yml_config.yml

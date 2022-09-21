@@ -1,0 +1,10 @@
+---
+wildfly_user: wildfly
+wildfly_group: "{{ wildfly_user }}"
+wildfly_service_name: wildfly
+wildfly_http_port: 8080
+wildfly_version: '26.1.0.Final'
+wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
+wildfly_enable_yml_config: True
+wildfly_yml_configs:
+    - wildfly_yaml_configuration.yml

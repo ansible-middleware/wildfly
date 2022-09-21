@@ -12,6 +12,7 @@
       mode: 0755
     become: yes
     notify: "Restart Wildfly"
+    tags: molecule-idempotence-notest
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -21,6 +22,7 @@
       mode: 0644
     become: yes
     notify: "Restart Wildfly"
+    tags: molecule-idempotence-notest
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable
   block:

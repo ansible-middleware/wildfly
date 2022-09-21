@@ -1,0 +1,47 @@
+---
+- name: Prepare
+  hosts: all
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: "Ensure required packages are installed."
+      ansible.builtin.yum:
+        name:
+          - sudo
+          - java-1.8.0-openjdk
+          - procps-ng
+        state: present
+
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"
+
+    - name: "Retrieve assets server from env"
+      ansible.builtin.set_fact:
+        assets_server: "{{ lookup('env','MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL') }}"
+
+    - name: "Download and deploy jboss zips from {{ assets_server }}"
+      ansible.builtin.get_url:
+        url: "{{ asset }}"
+        dest: "{{ lookup('env', 'PWD') | default('/opt') }}"
+        validate_certs: no
+      delegate_to: localhost
+      loop:
+        - "{{ assets_server }}/eap7/7.4.0/jboss-eap-7.4.0.zip"
+        - "{{ assets_server }}/eap7/7.4.5/jboss-eap-7.4.5.zip"
+      loop_control:
+        loop_var: asset
+      when:
+        - assets_server is defined
+        - assets_server | length > 0
+
+  tasks:
+    - name: "Proceed with installation"
+      ansible.builtin.include_role:
+        name: "wildfly_install"
+
+  post_tasks:
+    - name: "Proceed with yaml setup"
+      ansible.builtin.include_role:
+        name: "wildfly_systemd"

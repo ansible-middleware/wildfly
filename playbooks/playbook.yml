@@ -9,6 +9,11 @@
     - wildfly_driver
     - wildfly_utils
   tasks:
+    - name: "Copying the setup file"
+      ansible.builtin.copy:
+        src: wildfly_yaml_configuration.yml
+        dest: "{{ wildfly_home }}/standalone/wildfly_yaml_configuration.yml"
+
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:
         name: wildfly_driver

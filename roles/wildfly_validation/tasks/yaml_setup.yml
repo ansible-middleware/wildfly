@@ -1,0 +1,47 @@
+---
+- name: "Created a required directory"
+  ansible.builtin.command: >
+    mkdir -p {{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/
+
+- name: "enable that feature you need to add a ServiceLoader configuration"
+  ansible.builtin.command: >
+    echo 'org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension' > {{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/org.jboss.as.controller.persistence.ConfigurationExtension
+
+- name: "Setting up the yaml configuration"
+  ansible.builtin.command: >
+    {{ wildfly_home + 'bin/standalone.sh' }} -Djboss.socket.binding.port-offset=1000 -c standalone-full.xml -y {{ wildfly_home + 'standalone/wildfly_yaml_configuration.yml' }}
+  async: 1000
+  poll: 0
+
+- name: "Check standard-sockets configuration settings"
+  ansible.builtin.command: >
+    {{ wildfly_home + 'bin/jboss-cli.sh' }} -c /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-resource
+  register: standard_sockets_result
+
+- ansible.builtin.assert:
+    that:
+      - standard_sockets_result is defined
+      - standard_sockets_result.rc is defined
+    quiet: True
+
+- name: "Check ejb configuration settings"
+  ansible.builtin.command: >
+    {{ wildfly_home + 'bin/jboss-cli.sh' }} -c /subsystem=ejb3:read-resource
+  register: ejb_result
+
+- ansible.builtin.assert:
+    that:
+      - ejb_result is defined
+      - ejb_result.rc is defined
+    quiet: True
+
+- name: "Check ee configuration settings"
+  ansible.builtin.command: >
+    {{ wildfly_home + 'bin/jboss-cli.sh' }} -c /subsystem=ee/service=default-bindings:read-resource
+  register: ee_result
+
+- ansible.builtin.assert:
+    that:
+      - ee_result is defined
+      - ee_result.rc is defined
+    quiet: True

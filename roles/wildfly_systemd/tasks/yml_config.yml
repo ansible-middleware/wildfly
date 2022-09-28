@@ -11,6 +11,7 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
     become: yes
+    notify: "Restart wildfly"
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -19,6 +20,7 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
     become: yes
+    notify: "Restart wildfly"
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable
   block:
@@ -39,6 +41,7 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
     become: yes
+    notify: "Restart wildfly"
 - name: Deploy YAML configuration files
   ansible.builtin.copy:
     src: "{{ file }}"
@@ -50,3 +53,4 @@
   loop_control:
     loop_var: file
   become: yes
+  notify: "Restart wildfly"

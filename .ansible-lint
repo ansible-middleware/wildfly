@@ -31,6 +31,7 @@ warn_list:
   - unnamed-task
   - schema
   - meta-no-tags
+  - name[template]
 
 use_default_rules: true
 parseable: true

@@ -133,6 +133,12 @@
   register: rpm_java_home
   become: yes
 
+- name: Set systemd unit file destination
+  ansible.builtin.set_fact:
+    service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
+  when:
+    - not service_systemd_conf_file is defined
+
 - name: "Deploy service instance configuration: {{ service_systemd_env_file }}"
   ansible.builtin.template:
     src: "{{ wildfly_service_config_file_template }}"
@@ -144,12 +150,6 @@
   become: yes
   vars:
     wildfly_rpm_java_home: "{{ rpm_java_home.stdout }}"
-
-- name: Set systemd unit file destination
-  ansible.builtin.set_fact:
-    service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
-  when:
-    - not service_systemd_conf_file is defined
 
 - name: "Deploy Systemd configuration for service: {{ service_systemd_conf_file }}"
   ansible.builtin.template:

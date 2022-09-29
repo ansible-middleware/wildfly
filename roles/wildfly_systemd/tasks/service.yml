@@ -8,7 +8,7 @@
 
 - name: "Start Wildfly instance {{ instance_name }}"
   ansible.builtin.service:
-    name: "{{ service_systemd_conf_file }}"
+    name: "{{ service_systemd_conf_file | basename }}"
     state: "{{ instance_state }}"
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
   become: yes

@@ -1,7 +1,7 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_home: '/opt/wildfly/wildfly-26.0.0.Final/'
+wildfly_home: '/opt/wildfly/wildfly-26.1.0.Final/'
 wildfly_config_base: 'standalone.xml'
 wildfly_port_range_offset: 100
 

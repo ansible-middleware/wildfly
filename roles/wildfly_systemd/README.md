@@ -18,7 +18,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_user`| posix user account for wildfly service | `wildfly` |
 |`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
-|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-26.0.0.Final/` |
+|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-26.1.0.Final/` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` |
 |`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `100` |
 |`wildfly_systemd_enabled`| Enable systemd unit | `True` |

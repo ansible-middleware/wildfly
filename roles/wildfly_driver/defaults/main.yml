@@ -1,7 +1,7 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '26.0.0.Final'
+wildfly_version: '26.1.0.Final'
 wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
 jdbc_driver_module_dir: "{{ wildfly_home }}/modules/{{ jdbc_driver_module_name | replace('.', '/') }}/main"
 jdbc_driver_version: 9.4.1212

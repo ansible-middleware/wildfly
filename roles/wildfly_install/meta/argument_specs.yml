@@ -3,7 +3,7 @@ argument_specs:
         options:
             wildfly_version:
                 # line 2 of wildfly_install/defaults/main.yml
-                default: "26.0.0.Final"
+                default: "26.1.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_archive_filename:

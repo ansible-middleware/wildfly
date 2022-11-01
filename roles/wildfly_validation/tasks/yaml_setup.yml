@@ -1,4 +1,8 @@
 ---
+# @Ranabir:
+# This is the validation playbook, right? So this is supposed to check that everything has been propoerly configured, not
+# perform any changes or configuration. However, the next two steps **activate** the Yaml Config feature. I don't understand
+#  why this is done here and not in the wildfly_systemd role.
 - name: Create a required directory
   ansible.builtin.file:
     path: '{{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/'
@@ -9,7 +13,9 @@
   ansible.builtin.command: >
     echo 'org.jboss.as.controller.persistence.yaml.YamlConfigurationExtension' > {{ wildfly_home }}/modules/system/layers/base/org/jboss/as/controller/main/dir/META-INF/services/org.jboss.as.controller.persistence.ConfigurationExtension
   changed_when: false
+## END
 
+# @Ranabir same question below: why do you start the server like that (instead of using systemd) and why do the start is here instead of the converge.yml ?
 - name: Setting up the yaml configuration
   ansible.builtin.command: >
     '{{ wildfly_home }}bin/standalone.sh -Djboss.socket.binding.port-offset=1000 -c standalone-full.xml -y {{ wildfly_home }}standalone/wildfly_yaml_configuration.yml'
@@ -17,6 +23,7 @@
   async: 1000
   poll: 0
 
+# @Ranabir, instead of calling "manually" the CLI, just use the playbook provided in wildfly_utils.
 - name: Check standard-sockets configuration settings
   ansible.builtin.command: >
     '{{ wildfly_home }}bin/jboss-cli.sh -c /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-resource'
@@ -29,6 +36,7 @@
       - standard_sockets_result is defined
       - standard_sockets_result.rc is defined
     quiet: True
+    fail_msg: "{{ standard_sockets_result }}"
 
 - name: Check ejb configuration settings
   ansible.builtin.command: >

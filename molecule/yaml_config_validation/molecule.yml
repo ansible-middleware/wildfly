@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
   options:
-    requirements-file: molecule/yaml_config_validation/requirements.yml
+    requirements-file: molecule/requirements.yml
 driver:
   name: docker
 lint: |

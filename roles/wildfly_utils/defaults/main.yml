@@ -4,6 +4,6 @@ jboss_cli_controller_port: '9990'
 wildfly_no_restart_after_patch:  False
 wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '26.1.0.Final'
+wildfly_version: '27.0.0.Final'
 wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
 jboss_home: "{{ wildfly_home }}"

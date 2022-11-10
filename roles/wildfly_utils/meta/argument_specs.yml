@@ -22,7 +22,7 @@ argument_specs:
                 description: "posix group for wildfly"
                 type: "str"
             wildfly_version:
-                default: "26.0.0.Final"
+                default: "27.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_home:

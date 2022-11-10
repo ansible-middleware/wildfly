@@ -3,7 +3,7 @@ argument_specs:
         options:
             wildfly_version:
                 # line 2 of wildfly_install/defaults/main.yml
-                default: "26.1.0.Final"
+                default: "27.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_archive_filename:
@@ -53,7 +53,7 @@ argument_specs:
                 type: "str"
             wildfly_java_package_name:
                 # line 15 of wildfly_install/defaults/main.yml
-                default: "java-1.8.0-openjdk-headless"
+                default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
             wildfly_systemd_enable:

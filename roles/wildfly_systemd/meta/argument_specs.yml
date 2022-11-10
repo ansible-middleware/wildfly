@@ -13,7 +13,7 @@ argument_specs:
                 type: "str"
             wildfly_home:
                 # line 4 of wildfly_systemd/defaults/main.yml
-                default: "/opt/wildfly/wildfly-26.1.0.Final/"
+                default: "/opt/wildfly/wildfly-27.0.0.Final/"
                 description: "Wildfly installation directory"
                 type: "str"
             wildfly_config_base:
@@ -33,7 +33,7 @@ argument_specs:
                 type: "bool"
             wildfly_java_package_name:
                 # line 15 of wildfly_install/defaults/main.yml
-                default: "java-1.8.0-openjdk-headless"
+                default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
             wildfly_java_home:

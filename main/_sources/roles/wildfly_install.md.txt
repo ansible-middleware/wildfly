@@ -15,7 +15,7 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_version`| Wildfly version to install | `26.1.0.Final` |
+|`wildfly_version`| Wildfly version to install | `27.0.0.Final` |
 |`wildfly_archive_filename`| Wildfly download archive name | `wildfly-{{ wildfly_version }}.zip` |
 |`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
 |`wildfly_install_workdir`| TODO document argument | `/opt/wildfly/` |
@@ -25,7 +25,7 @@ Role Defaults
 |`wildfly_config_base`| wildfly standalone.xml filename override | `standalone.xml` |
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
-|`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk` |
+|`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 |`wildfly_systemd_enable`| Whether to configure the systemd unit for the service | `False` |
 

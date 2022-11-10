@@ -8,7 +8,7 @@ Note: default values are based on the one of the wildfly_install role.
 Requirements
 ------------
 
-A working systemd environnment is required on target's system.
+A working systemd environment is required on target's system.
 
 <!--start argument_specs-->
 Role Defaults
@@ -18,7 +18,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_user`| posix user account for wildfly service | `wildfly` |
 |`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
-|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-26.1.0.Final/` |
+|`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-27.0.0.Final/` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` |
 |`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `100` |
 |`wildfly_systemd_enabled`| Enable systemd unit | `True` |
@@ -30,7 +30,7 @@ Role Defaults
 |`wildfly_service_config_file_location`| Path for wildfly systemd unit file | `/etc/` |
 |`wildfly_enable_yml_config`| Enable yaml file configuration feature (WFCORE5343) | `False` |
 |`wildfly_yml_configs`| List of filenames for wildfly configuration bootstrap | `[]` |
-|`wildfly_java_package_name`| RHEL java rpm package | `java-1.8.0-openjdk-headless` |
+|`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk-headless` |
 |`wildfly_java_opts`| Additional settings for the JVM running wildfly | `-Xmx1024M -Xms512M` |
 |`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
 |`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |
@@ -44,8 +44,8 @@ Role Variables
 | Variable | Description | Required |
 |:---------|:------------|:---------|
 |`wildfly_java_home`| JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path | `No` |
-|`wildfly_instance_id`| When colocating services on the same host, EAP instance ID (integer value) | `No` |
-|`wildfly_instance_name`| When colocating services on the same host, EAP instance name | `No` |
+|`wildfly_instance_id`| When collocating services on the same host, EAP instance ID (integer value) | `No` |
+|`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `No` |
 <!--end argument_specs-->
 
 Dependencies

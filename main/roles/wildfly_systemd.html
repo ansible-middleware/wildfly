@@ -116,7 +116,7 @@
 <p>Note: default values are based on the one of the wildfly_install role.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this heading"></a></h2>
-<p>A working systemd environnment is required on target’s system.</p>
+<p>A working systemd environment is required on target’s system.</p>
 <!--start argument_specs-->
 </section>
 <section id="role-defaults">
@@ -139,7 +139,7 @@
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
 <td class="text-left"><p>Wildfly installation directory</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-26.1.0.Final/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-27.0.0.Final/</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_config_base</span></code></p></td>
 <td class="text-left"><p>Base standalone.xml config for instance</p></td>
@@ -187,7 +187,7 @@
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
 <td class="text-left"><p>RHEL java rpm package</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-1.8.0-openjdk-headless</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-11-openjdk-headless</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_opts</span></code></p></td>
 <td class="text-left"><p>Additional settings for the JVM running wildfly</p></td>
@@ -231,11 +231,11 @@
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_instance_id</span></code></p></td>
-<td class="text-left"><p>When colocating services on the same host, EAP instance ID (integer value)</p></td>
+<td class="text-left"><p>When collocating services on the same host, EAP instance ID (integer value)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_instance_name</span></code></p></td>
-<td class="text-left"><p>When colocating services on the same host, EAP instance name</p></td>
+<td class="text-left"><p>When collocating services on the same host, EAP instance name</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
 </tr>
 </tbody>

@@ -25,6 +25,18 @@ argument_specs:
                 default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
                 description: "Wildfly installation directory"
                 type: "str"
+            wildfly_standard_sockets_validation_query:
+                default: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
+                type: "str"
+                description: "CLI query used to validation standard sockets configuration"
+            wildfly_ejb_validation_query:
+                default: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
+                type: "str"
+                description: "CLI query used to validate the ejb config"
+            wildfly_ee_validation_query:
+                default: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
+                type: "str"
+                description: "CLI query used to validate the JMS connection factory"
     downstream:
         options:
             eap_enable:

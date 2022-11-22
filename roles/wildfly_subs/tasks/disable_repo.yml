@@ -7,7 +7,7 @@
     quiet: True
     fail_msg: "Missing required parameters"
 
-- name: "Install group package"
+- name: "Uninstall group package"
   block:
 
     - name: "Ensure group package {{ eap_group_install_name }} is removed"

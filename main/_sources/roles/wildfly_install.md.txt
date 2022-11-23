@@ -27,6 +27,7 @@ Role Defaults
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
+|`wildfly_systemd_enable`| Whether to configure the systemd unit for the service | `False` |
 
 
 Role Variables

@@ -21,7 +21,7 @@ Role Defaults
 |`wildfly_home`| Wildfly installation directory | `/opt/wildfly/wildfly-27.0.0.Final/` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` |
 |`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `100` |
-|`wildfly_systemd_unit_enabled`| Enable systemd unit to autostart after reboot | `True` |
+|`wildfly_systemd_enabled`| Enable systemd unit | `True` |
 |`wildfly_systemd_service_config_location`| Path for systemd unit file | `/usr/lib/systemd/system` |
 |`wildfly_systemd_service_config_file_suffix`| Systemd unit file extension | `.service` |
 |`wildfly_systemd_conf_file_suffix`| Suffix for systemd conf file | `.conf` |

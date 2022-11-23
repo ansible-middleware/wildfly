@@ -88,7 +88,7 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_patch_version:
-                default: "7.4.5"
+                default: "7.4.7"
                 description: "Red Hat EAP cumulative patch version to install"
                 type: "str"
             eap_archive_filename:
@@ -112,6 +112,6 @@ argument_specs:
                 description: "Red Hat EAP CSP download ID"
                 type: "str"
             eap_patch_install_rhn_id:
-                default: "99481"
+                default: "104759"
                 description: "Red Hat EAP cumulative patch CSP download ID"
                 type: "str"

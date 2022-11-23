@@ -26,10 +26,10 @@ argument_specs:
                 default: 100
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
-            wildfly_systemd_unit_enabled:
+            wildfly_systemd_enabled:
                 # line 7 of wildfly_systemd/defaults/main.yml
                 default: true
-                description: "Enable systemd unit to autostart after a reboot"
+                description: "Enable systemd unit"
                 type: "bool"
             wildfly_java_package_name:
                 # line 15 of wildfly_install/defaults/main.yml

@@ -151,9 +151,3 @@
       vars:
         rhn_cp_id: "{{ eap_patch_install_rhn_id | default(0) }}"
         rhn_cp_v: "{{ eap_patch_version }}"
-
-- name: "Configure systemd"
-  ansible.builtin.include_role:
-    name: wildfly_systemd
-  when:
-    - wildfly_systemd_enable

@@ -1,13 +1,4 @@
 ---
-- name: "Check if both apply_cp and systemd are enabled."
-  ansible.builtin.assert:
-    that:
-      - (eap_apply_cp and wildfly_systemd_enable) or not eap_apply_cp
-    quiet: true
-    fail_msg: "wildfly_systemd_enable must be true when setting eap_apply_cp"
-    success_msg: "Will configure systemd and apply the latest cumulative patch"
-  when: eap_enable is defined and eap_enable
-
 - name: "Check that required packages list has been provided."
   ansible.builtin.assert:
     that:

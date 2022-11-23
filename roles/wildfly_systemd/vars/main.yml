@@ -4,7 +4,7 @@ wildfly_systemd:
   group: "{{ wildfly_group }}"
   home: "{{ wildfly_home }}"
   config: "{{ wildfly_config_base }}"
-  enabled: "{{ wildfly_systemd_enabled }}"
+  enabled: "{{ wildfly_systemd_unit_enabled }}"
   yml_config:
     base_path: '/modules/system/layers/base'
     eap_path: 'modules/system/layers/base/.overlays/layer-base-jboss-eap-'

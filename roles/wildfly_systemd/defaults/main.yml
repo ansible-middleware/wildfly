@@ -8,7 +8,7 @@ wildfly_port_range_offset: 100
 wildfly_java_package_name: java-11-openjdk-headless
 wildfly_java_opts: '-Xmx1024M -Xms512M'
 
-wildfly_systemd_enabled: yes
+wildfly_systemd_unit_enabled: yes
 wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
 wildfly_systemd_service_config_file_suffix: '.service'
 wildfly_systemd_conf_file_suffix: '.conf'

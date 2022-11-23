@@ -56,10 +56,6 @@ argument_specs:
                 default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
-            wildfly_systemd_enable:
-                default: false
-                description: "Whether to configure the systemd unit for the service"
-                type: "bool"
             wildfly_offline_install:
                 # line 24 of wildfly_install/defaults/main.yml
                 default: false

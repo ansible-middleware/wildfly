@@ -6,13 +6,16 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.2.1
-======
+v1.2.2-devel
+============
 
 Major Changes
 -------------
 
 - wildfly_install: (eap) apply_cp does not depend on systemd `#90 <https://github.com/ansible-middleware/wildfly/pull/90>`_
+
+v1.2.1
+======
 
 v1.2.0
 ======

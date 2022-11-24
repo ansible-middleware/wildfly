@@ -17,9 +17,8 @@ wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
 wildfly_service_config_file_template: 'templates/wfly.conf.j2'
 wildfly_service_config_file_location: '/etc/'
 
-wildfly_enable_yml_config: yes
-wildfly_yml_configs:
-  - wildfly_yaml_configuration.yml
+wildfly_enable_yml_config: no
+wildfly_yml_configs: []
 
 wildfly_bind_addr: 0.0.0.0
 wildfly_bind_addr_private: 127.0.0.1

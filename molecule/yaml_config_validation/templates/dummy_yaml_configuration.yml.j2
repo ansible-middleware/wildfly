@@ -1,0 +1,7 @@
+wildfly-configuration:
+  socket-binding-group:
+    standard-sockets:
+      remote-destination-outbound-socket-binding:
+        site1-loadbalancer:
+          host: mail-smtp
+          port: {{ wildfly_custom_proxy_port }}

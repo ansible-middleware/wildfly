@@ -113,12 +113,6 @@ releases:
       - 'Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
 
         '
-      - 'Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
-
-        '
-      - 'wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
-
-        '
       - 'wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 
         '
@@ -127,17 +121,14 @@ releases:
         <https://github.com/ansible-middleware/wildfly/pull/80>`_
 
         '
-      - 'Propagate wildfly_install defaults to driver, systemd and utils roles `#80
-        <https://github.com/ansible-middleware/wildfly/pull/80>`_
-
-        '
     fragments:
     - 74.yaml
-    - 74.yaml
     - 77.yaml
-    - 77.yaml
-    - 80.yaml
     - 80.yaml
     release_date: '2022-09-05'
   1.2.1:
+    changes:
+      release_summary: 'Patch release with internal changes only.
+
+        '
     release_date: '2022-09-19'

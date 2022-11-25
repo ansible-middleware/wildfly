@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.2.1
 ======
 
+Release Summary
+---------------
+
+Patch release with internal changes only.
+
 v1.2.0
 ======
 
@@ -16,14 +21,11 @@ Major Changes
 -------------
 
 - Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
-- Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
 
 Bugfixes
 --------
 
 - Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
-- Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
-- wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 - wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
 
 v1.1.0

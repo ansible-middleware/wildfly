@@ -7,6 +7,8 @@ authors:
   - Romain Pelisse <belaran@redhat.com>
   - Andrew Block <ablock@redhat.com>
   - Harsha Cherukuri <hcheruku@redhat.com>
+  - Guido Grazioli <ggraziol@redhat.com>
+  - Ranabir Chakraborty <rchakrab@redhat.com>
 description: Enable Ansible to provisioning JBoss EAP or Wildfly instances.
 license_file: "LICENSE"
 tags:

@@ -14,6 +14,11 @@ Major Changes
 
 - wildfly_install: (eap) apply_cp does not depend on systemd `#90 <https://github.com/ansible-middleware/wildfly/pull/90>`_
 
+Minor Changes
+-------------
+
+- wildfly-systemd: yaml configuration extension accept templates `#91 <https://github.com/ansible-middleware/wildfly/pull/91>`_
+
 v1.2.1
 ======
 

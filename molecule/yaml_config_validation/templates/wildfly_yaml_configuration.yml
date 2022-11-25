@@ -1,10 +1,4 @@
 wildfly-configuration:
-  socket-binding-group:
-    standard-sockets:
-      remote-destination-outbound-socket-binding:
-        site1-loadbalancer:
-          host: mail-smtp
-          port: 6666
   subsystem:
     modcluster:
       proxy:

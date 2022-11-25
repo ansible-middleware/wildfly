@@ -45,9 +45,9 @@
     become: yes
     notify: "Restart Wildfly"
 - name: Deploy YAML configuration files
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ file }}"
-    dest: "{{ basedir }}/{{ file }}"
+    dest: "{{ basedir }}/{{ file | regex_replace('.j2', '') }}"
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
     mode: 0644

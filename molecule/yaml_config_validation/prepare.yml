@@ -8,7 +8,7 @@
       ansible.builtin.yum:
         name:
           - sudo
-          - java-1.8.0-openjdk
+          - java-11-openjdk
           - procps-ng
         state: present
 

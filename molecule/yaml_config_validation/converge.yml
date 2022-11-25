@@ -7,12 +7,5 @@
     - middleware_automation.wildfly
   roles:
     - wildfly_install
-    - wildfly_systemd
     - wildfly_driver
-    - wildfly_utils
-  tasks:
-    - name: "Set up for WildFly instance"
-      ansible.builtin.include_role:
-        name: wildfly_systemd
-      vars:
-        wildfly_config_base: 'standalone-full.xml'
+    - wildfly_systemd

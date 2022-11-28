@@ -68,10 +68,14 @@
     - local_archive_path.stat.exists
   become: yes
 
-- name: "Check patch state"
-  ansible.builtin.stat:
-    path: "{{ path_to_patch }}"
-  register: patch_info
+- name: Extract Adapter zipfile
+  ansible.builtin.unarchive:
+    src: "{{ path_to_patch }}"
+    dest: "{{ eap_home }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    remote_src: yes
+    creates: "{{ eap_home }}/modules/system/add-ons/keycloak"
   become: yes
 
 - name: Perform installation

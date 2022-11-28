@@ -20,6 +20,7 @@ tags:
   - application
 dependencies:
   middleware_automation.redhat_csp_download: '>=1.1.2'
+  community.general: '>=5.6.0'
 repository: https://github.com/ansible-middleware/wildfly
 documentation: https://ansible-middleware.github.io/wildfly
 homepage: https://github.com/ansible-middleware/wildfly

@@ -111,3 +111,15 @@ argument_specs:
                 default: "104759"
                 description: "Red Hat EAP cumulative patch CSP download ID"
                 type: "str"
+            eap_elytron_adapter:
+                default: False
+                description: "Install SSO (keycloak) elytron adapter"
+                type: "bool"
+            eap_elytron_adapter_version:
+                default: "7.5.0-eap7"
+                description: "Version of SSO (keycloak) adapter to install"
+                type: "str"
+            eap_elytron_adapter_rhn_id:
+                default: "104759"
+                description: "Red Hat SSO elytron adapter for EAP download ID"
+                type: "str"

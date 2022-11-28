@@ -99,23 +99,23 @@
             retries: 10
             delay: 10
 
-    - name: keycloak adapter
+    - name: Install adapter
       throttle: 1
       block:
-        - name: Check if Keycloak extensions installed
-          command: >
+        - name: Check if Keycloak extension is already installed
+          ansible.builtin.command: >
             {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command='/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'
           changed_when: false
       rescue:
         - name: Install Keycloak Adapter and Reload
           block:
             - name: Install Keycloak Adapter
-              command: >
+              ansible.builtin.command: >
                 {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --file={{ eap.home }}/bin/adapter-elytron-install.cli
               changed_when: true
               register: cli_result
             - name: Reload After Keycloak Adapter Install
-              command: >
+              ansible.builtin.command: >
                 {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command=":reload"
               changed_when: true
               when: "'process-state: reload-required' in cli_result.stdout"

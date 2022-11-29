@@ -17,6 +17,7 @@ Major Changes
 Minor Changes
 -------------
 
+- Add elytron adapter install (EAP) `#92 <https://github.com/ansible-middleware/wildfly/pull/92>`_
 - wildfly-systemd: yaml configuration extension accept templates `#91 <https://github.com/ansible-middleware/wildfly/pull/91>`_
 
 v1.2.1

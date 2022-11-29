@@ -1,0 +1,131 @@
+---
+- name: Check installation
+  ansible.builtin.assert:
+    that:
+      - eap_enable is defined and eap_enable
+    quiet: true
+    fail_msg: "SSO (keycloak) adapter is only available on Red Hat EAP installations."
+
+- name: Check arguments
+  ansible.builtin.assert:
+    that:
+      - rhn_sso_adapter_v is defined
+      - wildfly_offline_install or rhn_cp_id is defined
+      - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
+      - wildfly_home is defined
+    quiet: true
+    fail_msg: "One or more required parameters for adapter installation are missing."
+
+- name: Set patch directory
+  ansible.builtin.set_fact:
+    patches_repository: "{{ override_patches_repository | default('/opt') }}"
+
+- name: Set patch filename
+  ansible.builtin.set_fact:
+    patch_filename: "{{ override_adapter_filename | default('rh-sso-' + rhn_sso_adapter_v + '-adapter-dist.zip') }}"
+
+- name: Set patch destination directory
+  ansible.builtin.set_fact:
+    path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
+
+- name: Check download patch archive path
+  ansible.builtin.stat:
+    path: "{{ path_to_patch }}"
+  register: patch_archive_path
+
+- name: Check local download archive path
+  ansible.builtin.stat:
+    path: "{{ lookup('env', 'PWD') }}"
+  register: local_path
+  delegate_to: localhost
+
+- name: "Check downloaded archive: {{ patch_filename }}"
+  ansible.builtin.stat:
+    path: "{{ local_path.stat.path }}/{{ patch_filename }}"
+  register: local_archive_path
+  delegate_to: localhost
+
+- name: "Download archive from RHN"
+  ansible.builtin.include_tasks: tasks/download_from_rhn.yml
+  vars:
+    rhn_id_file: "{{ rhn_sso_adapter_id }}"
+    zipfile_dest: "{{ path_to_patch }}"
+  when:
+    - not wildfly_offline_install
+    - not local_archive_path.stat.exists
+
+- name: Copy adapter archive to target nodes
+  ansible.builtin.copy:
+    src: "{{ local_path.stat.path }}/{{ patch_filename }}"
+    dest: "{{ path_to_patch }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: 0640
+  register: new_version_downloaded
+  when:
+    - not patch_archive_path.stat.exists
+    - local_archive_path.stat is defined
+    - local_archive_path.stat.exists
+  become: yes
+
+- name: Extract Adapter zipfile
+  ansible.builtin.unarchive:
+    src: "{{ path_to_patch }}"
+    dest: "{{ eap_home }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    remote_src: yes
+    creates: "{{ eap_home }}/modules/system/add-ons/keycloak"
+  become: yes
+
+- name: Perform installation
+  block:
+    - name: "Check service status, start for elytron if not running"
+      block:
+        - name: "Check if management interface is reachable"
+          ansible.builtin.wait_for:
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
+            timeout: 1
+      rescue:
+        - name: "Start wildfly for installation"
+          ansible.builtin.command: "{{ wildfly_home }}/bin/standalone.sh"
+          changed_when: True
+          async: 120
+          poll: 0
+          become: yes
+          become_user: "{{ wildfly_user }}"
+        - name: "Check if management interface is reachable"
+          ansible.builtin.wait_for:
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
+            timeout: 1
+            retries: 10
+            delay: 10
+
+    - name: Install adapter
+      throttle: 1
+      block:
+        - name: Check if Keycloak extension is already installed
+          ansible.builtin.command: >
+            {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command='/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'
+          changed_when: false
+      rescue:
+        - name: Install Keycloak Adapter and Reload
+          block:
+            - name: Install Keycloak Adapter
+              ansible.builtin.command: >
+                {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --file={{ eap.home }}/bin/adapter-elytron-install.cli
+              changed_when: true
+              register: cli_result
+            - name: Reload After Keycloak Adapter Install
+              ansible.builtin.command: >
+                {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command=":reload"
+              changed_when: true
+              when: "'process-state: reload-required' in cli_result.stdout"
+
+    - name: "Display resulting output"
+      ansible.builtin.debug:
+        msg: "{{ cli_result.stdout }}"
+      when:
+        - cli_result.stdout | length > 0

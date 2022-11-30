@@ -16,19 +16,19 @@
     quiet: true
     fail_msg: "One or more required parameters for adapter installation are missing."
 
-- name: Set patch directory
+- name: Set adapter directory
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
-- name: Set patch filename
+- name: Set adapter filename
   ansible.builtin.set_fact:
     patch_filename: "{{ override_adapter_filename | default('rh-sso-' + rhn_sso_adapter_v + '-adapter-dist.zip') }}"
 
-- name: Set patch destination directory
+- name: Set adapter destination directory
   ansible.builtin.set_fact:
     path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
 
-- name: Check download patch archive path
+- name: Check download adapter archive path
   ansible.builtin.stat:
     path: "{{ path_to_patch }}"
   register: patch_archive_path
@@ -95,13 +95,13 @@
           poll: 0
           become: yes
           become_user: "{{ wildfly_user }}"
-        - name: "Check if management interface is reachable"
+        - name: "Wait for management interface is reachable"
           ansible.builtin.wait_for:
             host: "{{ jboss_cli_controller_host }}"
             port: "{{ jboss_cli_controller_port }}"
-            timeout: 1
-            retries: 10
+            timeout: 60
             delay: 10
+            sleep: 5
 
     - name: Install adapter
       throttle: 1
@@ -110,12 +110,13 @@
           ansible.builtin.command: >
             {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command='/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'
           changed_when: false
+          register: cli_result
       rescue:
         - name: Install Keycloak Adapter and Reload
           block:
             - name: Install Keycloak Adapter
               ansible.builtin.command: >
-                {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --file={{ eap.home }}/bin/adapter-elytron-install.cli
+                {{ eap_home + '/bin/jboss-cli.sh' }} -c --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --file={{ eap.home }}/bin/adapter-elytron-install.cli
               changed_when: true
               register: cli_result
             - name: Reload After Keycloak Adapter Install

@@ -118,6 +118,13 @@
           poll: 0
           become: yes
           become_user: "{{ wildfly_user }}"
+        - name: "Wait for management interface is reachable"
+          ansible.builtin.wait_for:
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
+            timeout: 60
+            delay: 10
+            sleep: 5
 
     - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
       ansible.builtin.include_tasks: jboss_cli.yml
@@ -165,6 +172,14 @@
       when:
         - not wildfly_no_restart_after_patch
         - cli_result.rc == 0
+
+    - name: "Wait for management interface is reachable"
+      ansible.builtin.wait_for:
+        host: "{{ jboss_cli_controller_host }}"
+        port: "{{ jboss_cli_controller_port }}"
+        timeout: 60
+        delay: 10
+        sleep: 5
 
     - name: "Display resulting output"
       ansible.builtin.debug:

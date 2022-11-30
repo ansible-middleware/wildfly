@@ -6,7 +6,7 @@
       - instance_state is defined
     quiet: true
 
-- name: "Start Wildfly instance {{ instance_name }}"
+- name: "Set instance {{ instance_name }} state to {{ instance_state }}"
   ansible.builtin.service:
     name: "{{ service_systemd_conf_file | basename }}"
     state: "{{ instance_state }}"

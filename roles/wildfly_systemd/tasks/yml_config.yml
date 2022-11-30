@@ -30,7 +30,6 @@
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}"
       state: directory
-      recurse: yes
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755

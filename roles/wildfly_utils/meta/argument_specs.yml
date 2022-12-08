@@ -91,7 +91,15 @@ argument_specs:
                 default: "9990"
                 description: "Port for connecting to cli"
                 type: "str"
-            query:
-                required: True
-                description: "The command to sed to jboss-cli"
+            jboss_cli_query:
+                required: False
+                description: "The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
                 type: "str"
+            jboss_cli_file:
+                required: False
+                description: "The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
+                type: "str"
+            jboss_cli_timeout:
+                required: False
+                description: "Seconds to wait for jboss-cli connection to server"
+                type: "int"

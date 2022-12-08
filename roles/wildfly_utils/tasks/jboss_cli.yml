@@ -3,7 +3,7 @@
   ansible.builtin.assert:
     that:
       - jboss_home is defined
-      - query is defined
+      - jboss_cli_query is defined or jboss_cli_file is defined
       - jboss_cli_controller_host is defined
       - jboss_cli_controller_port is defined
     fail_msg: "Missing required parameters to execute JBoss CLI."
@@ -13,12 +13,18 @@
   ansible.builtin.wait_for:
     host: "{{ jboss_cli_controller_host }}"
     port: "{{ jboss_cli_controller_port }}"
+    timeout: 10
+    delay: 1
+    sleep: 2
 
-- name: "Execute CLI query: {{ query }}"
+- name: "Execute CLI query {{ jboss_cli_query | default(jboss_cli_file) }}"
   ansible.builtin.command: >
-    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }} -c --output-json --command={{ query }} --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }}
+    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }} -c
+    {{ '--command=' + jboss_cli_query if jboss_cli_query is defined else '' }}
+    {{ '--file=' + jboss_cli_file if jboss_cli_file is defined else '' }}
+    --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }}
+    --timeout={{ jboss_cli_timeout * 1000 | default('5000') }}
+    {{ '' if jboss_cli_output_dmr is defined else '--output-json' }}
   register: cli_result
   changed_when: false
   become: yes
-  retries: 3
-  delay: 5

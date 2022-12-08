@@ -16,19 +16,19 @@
     quiet: true
     fail_msg: "One or more required parameters for adapter installation are missing."
 
-- name: Set patch directory
+- name: Set adapter directory
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
-- name: Set patch filename
+- name: Set adapter filename
   ansible.builtin.set_fact:
     patch_filename: "{{ override_adapter_filename | default('rh-sso-' + rhn_sso_adapter_v + '-adapter-dist.zip') }}"
 
-- name: Set patch destination directory
+- name: Set adapter destination directory
   ansible.builtin.set_fact:
     path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
 
-- name: Check download patch archive path
+- name: Check download adapter archive path
   ansible.builtin.stat:
     path: "{{ path_to_patch }}"
   register: patch_archive_path
@@ -71,11 +71,11 @@
 - name: Extract Adapter zipfile
   ansible.builtin.unarchive:
     src: "{{ path_to_patch }}"
-    dest: "{{ eap_home }}"
+    dest: "{{ wildfly_home }}"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     remote_src: yes
-    creates: "{{ eap_home }}/modules/system/add-ons/keycloak"
+    creates: "{{ wildfly_home }}/modules/system/add-ons/keycloak"
   become: yes
 
 - name: Perform installation
@@ -88,44 +88,70 @@
             port: "{{ jboss_cli_controller_port }}"
             timeout: 1
       rescue:
-        - name: "Start wildfly for installation"
-          ansible.builtin.command: "{{ wildfly_home }}/bin/standalone.sh"
+        - name: Set instance name
+          ansible.builtin.set_fact:
+            instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
+          when:
+            - instance_name is not defined
+        - name: "Deploy configuration"
+          ansible.builtin.copy:
+            src: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_config_base }}"
+            dest: "{{ wildfly_home }}/standalone/configuration/{{ instance_name }}.xml"
+            group: "{{ wildfly_group }}"
+            owner: "{{ wildfly_user }}"
+            mode: 0640
+            remote_src: true
+            force: false
+          become: yes
+        - name: "Start wildfly for adapter installation"
+          ansible.builtin.command: "{{ wildfly_home }}/bin/standalone.sh -c {{ instance_name }}.xml -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ -Djboss.server.base.dir={{ wildfly_home }}/standalone"
           changed_when: True
-          async: 120
+          async: 180
           poll: 0
           become: yes
           become_user: "{{ wildfly_user }}"
-        - name: "Check if management interface is reachable"
+          register: adapter_install_process
+        - name: "Wait for management interface is reachable"
           ansible.builtin.wait_for:
             host: "{{ jboss_cli_controller_host }}"
             port: "{{ jboss_cli_controller_port }}"
-            timeout: 1
-            retries: 10
+            timeout: 60
             delay: 10
+            sleep: 5
 
     - name: Install adapter
       throttle: 1
       block:
-        - name: Check if Keycloak extension is already installed
-          ansible.builtin.command: >
-            {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command='/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'
-          changed_when: false
+        - name: "Check if Keycloak extension is already installed"
+          ansible.builtin.include_tasks: jboss_cli.yml
+          vars:
+            jboss_home: "{{ wildfly_home }}"
+            jboss_cli_query: "'/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'"
+            jboss_cli_timeout: 10
       rescue:
         - name: Install Keycloak Adapter and Reload
           block:
             - name: Install Keycloak Adapter
-              ansible.builtin.command: >
-                {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --file={{ eap.home }}/bin/adapter-elytron-install.cli
-              changed_when: true
-              register: cli_result
+              ansible.builtin.include_tasks: jboss_cli.yml
+              vars:
+                jboss_home: "{{ wildfly_home }}"
+                jboss_cli_file: "{{ wildfly_home }}/bin/adapter-elytron-install.cli"
+                jboss_cli_timeout: 10
             - name: Reload After Keycloak Adapter Install
-              ansible.builtin.command: >
-                {{ eap_home + '/bin/jboss-cli.sh' }} -c --output-json --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }} --command=":reload"
-              changed_when: true
+              ansible.builtin.include_tasks: jboss_cli.yml
+              vars:
+                jboss_home: "{{ wildfly_home }}"
+                jboss_cli_query: ":reload"
+                jboss_cli_timeout: 60
               when: "'process-state: reload-required' in cli_result.stdout"
 
-    - name: "Display resulting output"
-      ansible.builtin.debug:
-        msg: "{{ cli_result.stdout }}"
+    - name: "Stop service if it was started for adapter install"
+      ansible.builtin.include_tasks: jboss_cli.yml
+      vars:
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'shutdown'"
+        jboss_cli_timeout: 60
       when:
-        - cli_result.stdout | length > 0
+        - adapter_install_process is defined
+        - not eap_no_restart_after_patch
+        - cli_result.rc == 0

@@ -3,7 +3,7 @@
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    query: "{{ wildfly_standard_sockets_validation_query }}"
+    jboss_cli_query: "{{ wildfly_standard_sockets_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
 
 - name: "Display result of standard-sockets configuration settings"
@@ -21,7 +21,7 @@
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    query: "{{ wildfly_ejb_validation_query }}"
+    jboss_cli_query: "{{ wildfly_ejb_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
 
 - name: "Display result of ejb configuration settings"
@@ -39,7 +39,7 @@
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    query: "{{ wildfly_ee_validation_query }}"
+    jboss_cli_query: "{{ wildfly_ee_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
   register: ee_result
 

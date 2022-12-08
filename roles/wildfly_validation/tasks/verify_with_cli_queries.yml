@@ -12,7 +12,7 @@
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    query: "'{{ validation_query }}'"
+    jboss_cli_query: "'{{ validation_query }}'"
     jboss_home: "{{ wildfly_home }}"
 
 - name: "Validate CLI query was successful"

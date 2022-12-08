@@ -6,13 +6,11 @@
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}"
       state: directory
-      recurse: yes
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
     become: yes
     notify: "Restart Wildfly"
-    tags: molecule-idempotence-notest
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -22,7 +20,6 @@
       mode: 0644
     become: yes
     notify: "Restart Wildfly"
-    tags: molecule-idempotence-notest
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable
   block:
@@ -30,7 +27,6 @@
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}"
       state: directory
-      recurse: yes
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755

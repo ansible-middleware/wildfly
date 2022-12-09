@@ -1,8 +1,11 @@
 ---
+#dependency:
+#  name: galaxy
+#  options:
+#    requirements-file: molecule/requirements.yml
 dependency:
   name: galaxy
-  options:
-    requirements-file: molecule/requirements.yml
+  enabled: False
 driver:
   name: docker
 lint: |

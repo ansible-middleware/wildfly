@@ -5,3 +5,7 @@ wildfly-configuration:
         site1-loadbalancer:
           host: mail-smtp
           port: {{ wildfly_custom_proxy_port }}
+      remote-destination-outbound-socket-binding:
+        jgroups-instance:
+          host: instance
+          port: 7600

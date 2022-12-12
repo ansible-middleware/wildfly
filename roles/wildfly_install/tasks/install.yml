@@ -149,7 +149,6 @@
   become: yes
 
 - name: "Install EAP cumulative patch"
-  become: yes
   when:
     - eap_apply_cp is defined and eap_apply_cp
     - eap_enable is defined and eap_enable
@@ -169,7 +168,6 @@
         rhn_cp_v: "{{ eap_patch_version }}"
 
 - name: "Install EAP elytron adapter"
-  become: yes
   when:
     - eap_elytron_adapter is defined and eap_elytron_adapter
     - eap_enable is defined and eap_enable

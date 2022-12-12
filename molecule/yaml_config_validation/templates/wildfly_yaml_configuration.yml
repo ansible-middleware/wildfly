@@ -1,10 +1,65 @@
 wildfly-configuration:
+  system-property:
+    JBOSS_ID:
+      value: instance1
   subsystem:
+    jgroups:
+      stack:
+        tcpping:
+          transport:
+            TCP:
+              socket-binding: jgroups-tcp
+          protocol:
+            TCPPING:
+              socket-bindings:
+                - jgroups-instance
+              properties:
+                initial_hosts: "127.0.0.1[7600]"
+                port_range: 0
+            MERGE3:
+            FD_SOCK:
+            FD_ALL:
+            VERIFY_SUSPECT:
+            pbcast.NAKACK2:
+            UNICAST3:
+            pbcast.STABLE:
+            pbcast.GMS:
+            MFC:
+            FRAG3:
+      channel:
+        ee:
+          stack: tcpping
+    transactions:
+      node-identifier: instance1
+    datasources:
+      jdbc-driver:
+        postgresql:
+          driver-name: postgresql
+          driver-xa-datasource-class-name: org.postgresql.xa.PGXADataSource
+          driver-module-name: org.postgresql
+      data-source:
+          AddressBookDS:
+            enabled: true
+            jndi-name: java:jboss/datasources/AddressbookDS
+            jta: true
+            max-pool-size: 20
+            min-pool-size: 2
+            connection-url: "jdbc:postgresql://localhost/test"
+            driver-name: postgresql
+            user-name: addressbook
+            password: addressbookpass
+            validate-on-match: true
+            background-validation: false
+            background-validation-millis: 10000
+            flush-strategy: FailingConnectionOnly
+            transaction-isolation: TRANSACTION_READ_COMMITTED
     modcluster:
       proxy:
         default:
           proxies:
             - site1-loadbalancer
+          advertise: false
+          listener: ajp
     messaging-activemq:
       servers:
         default:

@@ -1,4 +1,5 @@
 ---
+n: True
 wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
 wildfly_service_name: wildfly
@@ -11,7 +12,7 @@ wildfly_yaml_config_file_suffix: ".service"
 wildfly_config_file_template: "templates/wfly.yaml.config.j2"
 wildfly_custom_proxy_port: 6666
 wildfly_enable_yml_config: True
-wildfly_config_base: 'standalone-full.xml'
+wildfly_config_base: 'standalone-full-ha.xml'
 wildfly_yml_configs:
     - wildfly_yaml_configuration.yml
-    - dummy_yaml_configuration.yml.j2
+    - wildfly_yaml_socket_bindings.yml.j2

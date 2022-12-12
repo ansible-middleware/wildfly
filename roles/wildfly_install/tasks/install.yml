@@ -146,6 +146,7 @@
     owner: "{{ wildfly_install.user }}"
     mode: 0640
     remote_src: true
+    force: false
   become: yes
 
 - name: "Install EAP cumulative patch"

@@ -4,7 +4,7 @@ wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
 wildfly_service_name: wildfly
 wildfly_http_port: 8080
-wildfly_version: '28.0.0.Beta1-SNAPSHOT'
+wildfly_version: '27.0.0.Final'
 wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
 yaml_service: wildfly_yaml
 wildfly_yaml_config_location: "/usr/lib/systemd/system"

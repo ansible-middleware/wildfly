@@ -52,7 +52,7 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_patch_version:
-                default: "7.4.7"
+                default: "7.4.8"
                 description: "Red Hat EAP cumulative patch version to install"
                 type: "str"
             eap_install_workdir:

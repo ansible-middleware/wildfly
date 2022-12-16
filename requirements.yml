@@ -1,6 +1,6 @@
 ---
 collections:
   - name: middleware_automation.redhat_csp_download
-    version: ">=1.2.1"
+    version: ">=1.2.3"
   - name: community.general
     version: ">=5.6.0"

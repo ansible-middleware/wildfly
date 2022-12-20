@@ -132,3 +132,27 @@ releases:
 
         '
     release_date: '2022-09-19'
+  1.2.2:
+    changes:
+      bugfixes:
+      - 'Correctly handle server restarts post apply_cp and keycloak_adapter `#94
+        <https://github.com/ansible-middleware/wildfly/pull/94>`_
+
+        '
+      major_changes:
+      - 'wildfly_install: (eap) apply_cp does not depend on systemd `#90 <https://github.com/ansible-middleware/wildfly/pull/90>`_
+
+        '
+      minor_changes:
+      - 'Add elytron adapter install (EAP) `#92 <https://github.com/ansible-middleware/wildfly/pull/92>`_
+
+        '
+      - 'wildfly-systemd: yaml configuration extension accept templates `#91 <https://github.com/ansible-middleware/wildfly/pull/91>`_
+
+        '
+    fragments:
+    - 90.yaml
+    - 91.yaml
+    - 92.yaml
+    - 94.yaml
+    release_date: '2022-12-20'

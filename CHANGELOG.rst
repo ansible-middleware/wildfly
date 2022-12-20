@@ -6,6 +6,25 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.2.2
+======
+
+Major Changes
+-------------
+
+- wildfly_install: (eap) apply_cp does not depend on systemd `#90 <https://github.com/ansible-middleware/wildfly/pull/90>`_
+
+Minor Changes
+-------------
+
+- Add elytron adapter install (EAP) `#92 <https://github.com/ansible-middleware/wildfly/pull/92>`_
+- wildfly-systemd: yaml configuration extension accept templates `#91 <https://github.com/ansible-middleware/wildfly/pull/91>`_
+
+Bugfixes
+--------
+
+- Correctly handle server restarts post apply_cp and keycloak_adapter `#94 <https://github.com/ansible-middleware/wildfly/pull/94>`_
+
 v1.2.1
 ======
 
@@ -13,6 +32,7 @@ Release Summary
 ---------------
 
 Patch release with internal changes only.
+
 
 v1.2.0
 ======

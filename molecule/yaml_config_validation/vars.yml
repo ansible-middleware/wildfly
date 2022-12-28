@@ -1,17 +1,7 @@
 ---
-wildfly_user: wildfly
-wildfly_group: "{{ wildfly_user }}"
-wildfly_service_name: wildfly
-wildfly_http_port: 8080
-wildfly_version: '27.0.0.Final'
-wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
-yaml_service: wildfly_yaml
-wildfly_yaml_config_location: "/usr/lib/systemd/system"
-wildfly_yaml_config_file_suffix: ".service"
-wildfly_config_file_template: "templates/wfly.yaml.config.j2"
 wildfly_custom_proxy_port: 6666
 wildfly_enable_yml_config: True
 wildfly_config_base: 'standalone-full-ha.xml'
 wildfly_yml_configs:
-    - wildfly_yaml_configuration.yml
-    - wildfly_yaml_socket_bindings.yml.j2
+    - yaml_configuration.yml
+    - yaml_socket_bindings.yml.j2

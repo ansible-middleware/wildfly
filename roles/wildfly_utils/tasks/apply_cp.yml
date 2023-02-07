@@ -142,11 +142,17 @@
             delay: 10
             sleep: 5
 
+    - name: "Set apply CP conflict default strategy to default (if not defined): {{ jboss_cli_apply_cp_default_conflict_default }}"
+      ansible.builtin.set_fact:
+        apply_options: "{{ jboss_cli_apply_cp_default_conflict_default }}"
+      when:
+        - not apply_options is defined
+
     - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         jboss_home: "{{ wildfly_home }}"
-        jboss_cli_query: "'patch apply {{ path_to_patch }}'"
+        jboss_cli_query: "'patch apply {{ apply_options }} {{ path_to_patch }}'"
         jboss_cli_timeout: 30
 
     - name: "Display patching result"

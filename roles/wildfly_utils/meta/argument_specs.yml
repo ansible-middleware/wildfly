@@ -11,6 +11,10 @@ argument_specs:
                 default: "9990"
                 description: "Port for connecting to cli"
                 type: "str"
+            jboss_cli_apply_cp_default_conflict_default:
+                default: '--override-all'
+                description: "Apply CP strategy for conflicts handling"
+                type: "str"
             wildfly_user:
                 # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"

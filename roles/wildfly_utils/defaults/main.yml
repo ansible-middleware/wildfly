@@ -1,6 +1,7 @@
 ---
 jboss_cli_controller_host: 'localhost'
 jboss_cli_controller_port: '9990'
+jboss_cli_apply_cp_default_conflict_default: '--override-all'
 wildfly_no_restart_after_patch:  False
 wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"

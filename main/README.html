@@ -43,7 +43,10 @@
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Wildfly Collection for Ansible - middleware_automation.wildfly</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#about">About</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about">About</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">I know nothing about Ansible, but I want to install Wildfly, can I?</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="#ansible-version-compatibility">Ansible version compatibility</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install">Install</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#included-content">Included content</a><ul>
@@ -112,7 +115,15 @@
 <section id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
 <p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.</p>
+<section id="i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">
+<h3>I know nothing about Ansible, but I want to install Wildfly, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i" title="Permalink to this heading"></a></h3>
+<p>Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install Wildfly on):</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install middleware_automation.wildfly
+$ ansible-playbook -i inventory middleware_automation.wildfly.playbook
+</pre></div>
+</div>
 <!--start requires_ansible-->
+</section>
 </section>
 <section id="ansible-version-compatibility">
 <h2>Ansible version compatibility<a class="headerlink" href="#ansible-version-compatibility" title="Permalink to this heading"></a></h2>
@@ -191,7 +202,7 @@ contact us on <a class="reference external" href="mailto:Ansible-middleware-core
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2022, Red Hat, Inc..</p>
+    <p>&#169; Copyright 2023, Red Hat, Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

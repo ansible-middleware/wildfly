@@ -6,6 +6,14 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.3.0
+======
+
+Minor Changes
+-------------
+
+- Apply cp options `#99 <https://github.com/ansible-middleware/wildfly/pull/99>`_
+
 v1.2.2
 ======
 

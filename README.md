@@ -7,6 +7,13 @@
 
 This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.
 
+### I know nothing about Ansible, but I want to install Wildfly, can I?
+
+Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install Wildfly on):
+
+    $ ansible-galaxy collection install middleware_automation.wildfly
+    $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
+
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
@@ -59,7 +66,7 @@ or via the included requirements file:
 
 ## Support
 
-The wildfly collection is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to 
+The wildfly collection is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to
 contact us on <Ansible-middleware-core@redhat.com> or open an issue on https://github.com/ansible-middleware/wildfly/issues
 
 

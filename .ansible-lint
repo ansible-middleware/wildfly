@@ -34,6 +34,7 @@ warn_list:
   - name[template]
   - name[casing]
   - template-instead-of-copy
+  - fqcn[keyword]
 
 use_default_rules: true
 parseable: true

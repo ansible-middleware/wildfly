@@ -13,7 +13,7 @@ Minor Changes
 -------------
 
 - Apply cp options `#99 <https://github.com/ansible-middleware/wildfly/pull/99>`_
-- Apply cp options `#99 <https://github.com/ansible-middleware/wildfly/pull/99>`_
+- Remove dependency to community.general (not required) `#100 <https://github.com/ansible-middleware/wildfly/pull/100>`_
 
 v1.2.2
 ======

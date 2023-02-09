@@ -1,0 +1,18 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    wildfly_install_user: 'wildfly'
+    wildfly_install_group: "{{ wildfly_install_user }}"
+    wildfly_install_use_prospero: True
+  collections:
+    - middleware_automation.wildfly
+  roles:
+    - wildfly_install
+    - wildfly_systemd
+  pre_tasks:
+
+    - name: "Ensure required local user and group exists."
+      ansible.builtin.include_role:
+        name: wildfly_install
+        tasks_from: user.yml

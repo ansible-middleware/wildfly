@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+
+    - name: "Ensure required packages are installed."
+      ansible.builtin.yum:
+        name:
+          - sudo
+          - java-11-openjdk-headless
+          - procps-ng
+        state: present

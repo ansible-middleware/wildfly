@@ -1,0 +1,9 @@
+---
+- import_playbook: ../../playbooks/validate.yml
+
+- name: Validation
+  hosts: all
+  tasks:
+    - name: Verify we are running on requested jvm
+      ansible.builtin.shell: |
+        ps -ef | grep /usr/lib/jvm/java-11 | grep -v grep

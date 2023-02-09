@@ -1,8 +1,8 @@
 ---
-- name: "Ensures prerequirements are fullfilled."
+- name: "Ensure prerequirements are fullfilled."
   ansible.builtin.include_tasks: prereqs.yml
 
-- name: "Ensures required local user exists."
+- name: "Ensure required local user exists."
   ansible.builtin.include_tasks: user.yml
 
 - name: "Ensure workdir {{ wildfly_install.workdir }} exists."
@@ -25,6 +25,13 @@
 
 - name: "Ensure server is installed"
   ansible.builtin.include_tasks: install.yml
+  when:
+    - not wildfly_install_use_prospero is defined or not wildfly_install_use_prospero
+
+- name: "Install server using Prospero"
+  ansible.builtin.include_tasks: install/prospero.yml
+  when:
+    - wildfly_install_use_prospero is defined and wildfly_install_use_prospero
 
 - name: Check wildfly install directory state
   ansible.builtin.stat:

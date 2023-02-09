@@ -1,0 +1,15 @@
+argument_specs:
+    main:
+        options:
+            wildfly_prospero_install_dir:
+                default: "/opt"
+                description: "Path to the installation dir for Prospero"
+                type: "str"
+            wildfly_prospero_home:
+                default: "/opt/prospero"
+                description: "Home of the prospero tool"
+                type: "str"
+            wildfly_install_workdir:
+                default: "/opt"
+                description: "Path to the installation dir for Wildfly"
+                type: "str"

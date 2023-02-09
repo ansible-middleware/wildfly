@@ -1,0 +1,19 @@
+---
+- name: "Ensure required parameter(s) are provided."
+  ansible.builtin.assert:
+    that:
+      - wildfly_home is defined
+      - wildfly_prospero_home is defined
+      - wildfly_prospero_repos_urls is defined
+    quiet: True
+
+- name: "Ensure Prospero is properly installed on target."
+  ansible.builtin.unarchive:
+    src: "{{ wildfly_prospero_download_url }}"
+    dest: "{{ wildfly_prospero_install_dir }}"
+    remote_src: yes
+
+- name: "Run Proposero manifest exists."
+  ansible.builtin.command: >
+    {{ wildfly_prospero_home }}/bin/prospero.sh install --dir {{ wildfly_home }} --fpl wildfly --repositories={{ wildfly_prospero_repos_urls }}
+  register: prospero_run_results   #TODO: changed: not {{ prospero_run_results.rc }}

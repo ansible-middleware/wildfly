@@ -42,6 +42,43 @@
     - wildfly_home is defined # repl by not is install
     - not path_to_workdir.stat.exists
 
+- name: "List available updates for server in {{ wildfly_home }}"
+  ansible.builtin.command: >
+    {{ wildfly_prospero_home }}/bin/prospero.sh update list \
+    --dir {{ wildfly_home }}
+  register: prospero_run_results
+  become: true
+  changed_when: false
+  when:
+    - wildfly_home is defined
+    - path_to_workdir.stat.exists
+    - wildfly_prospero_update is defined
+
+- ansible.builtin.debug:
+    var: prospero_run_results
+
+- name: "Check if any updates are available"
+  ansible.builtin.shell: |
+    echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
+  register: updates_available
+  ignore_errors: true
+  changed_when: false
+
+- ansible.builtin.debug:
+    var: updates_available
+
+- name: "Run prospero to update server in {{ wildfly_home }}."
+  ansible.builtin.command: >
+    {{ wildfly_prospero_home }}/bin/prospero.sh update perform \
+    --dir {{ wildfly_home }} -y
+  register: prospero_run_results
+  become: true
+  when:
+    - wildfly_home is defined
+    - path_to_workdir.stat.exists
+    - wildfly_prospero_update is defined
+    - updates_available.rc == 1
+
 - name: "Ensure that {{ wildfly_home }} belongs to appropriate user - if defined."
   ansible.builtin.file:
     path: "{{ wildfly_home }}"

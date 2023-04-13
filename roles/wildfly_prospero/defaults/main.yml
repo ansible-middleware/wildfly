@@ -1,4 +1,7 @@
 ---
-wildfly_prospero_install_dir: /opt
-wildfly_prospero_home: /opt/prospero
+wildfly_prospero_install_dir: /opt/prospero
+wildfly_prospero_version: 1.0.0.Beta8
+wildfly_prospero_home: /opt/prospero/prospero-{{ wildfly_prospero_version }}
 wildfly_install_workdir: '/opt/wildfly/'
+wildfly_prospero_download_url: 'https://repository.jboss.org/nexus/content/groups/public/org/wildfly/prospero/prospero-build/{{ wildfly_prospero_version }}/prospero-build-{{ wildfly_prospero_version }}.zip'
+wildfly_prospero_manifest_url: 'https://raw.githubusercontent.com/wildfly-extras/prospero/{{ wildfly_prospero_version }}/examples/wildfly-27.0.0.Alpha2-manifest.yaml'

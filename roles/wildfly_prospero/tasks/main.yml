@@ -4,9 +4,17 @@
     that:
       - wildfly_home is defined
       - wildfly_prospero_home is defined
-      - wildfly_prospero_repos_urls is defined
     quiet: True
       #todo install prospero on target
+
+- name: "Ensure workdir {{ wildfly_prospero_install_dir }} exists."
+  ansible.builtin.file:
+    path: "{{ wildfly_prospero_install_dir }}"
+    state: directory
+    owner: "{{ wildfly_install_user | default(omit) }}"
+    group: "{{ wildfly_install_group | default(omit) }}"
+    mode: 0750
+  become: yes
 
 - name: "Ensure Prospero is properly installed on target."
   ansible.builtin.unarchive:
@@ -15,15 +23,24 @@
     owner: "{{ wildfly_install_user | default(omit) }}"
     group: "{{ wildfly_install_group | default(omit) }}"
     remote_src: yes
+  become: yes
 
-- name: "Run Proposero to install server in {{ wildfly_home }}."
+- name: "Read target directory information: {{ wildfly_home }}"
+  ansible.builtin.stat:
+    path: "{{ wildfly_home }}"
+  become: yes
+  register: path_to_workdir
+
+- name: "Run Prospero to install server in {{ wildfly_home }}."
   ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh install --dir {{ wildfly_home }} --fpl wildfly --repositories={{ wildfly_prospero_repos_urls }}
+    {{ wildfly_prospero_home }}/bin/prospero.sh install \
+    --dir {{ wildfly_home }} --profile wildfly \
+    --manifest {{ wildfly_prospero_manifest_url }}
   register: prospero_run_results
-  changed_when: not prospero_run_results.rc == 2
-  failed_when: prospero_run_results.rc == 1 or prospero_run_results.rc > 2
+  become: true
   when:
     - wildfly_home is defined # repl by not is install
+    - not path_to_workdir.stat.exists
 
 - name: "Ensure that {{ wildfly_home }} belongs to appropriate user - if defined."
   ansible.builtin.file:

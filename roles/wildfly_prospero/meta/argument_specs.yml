@@ -5,11 +5,23 @@ argument_specs:
                 default: "/opt"
                 description: "Path to the installation dir for Prospero"
                 type: "str"
+            wildfly_prospero_version:
+                default: "1.0.0.Beta8"
+                description: "Version of Prospero to use"
+                type: "str"
+            wildfly_install_workdir:
+                default: "/opt/wildfly/"
+                description: "Path to the installation dir for Wildfly"
+                type: "str"
             wildfly_prospero_home:
                 default: "/opt/prospero"
                 description: "Home of the prospero tool"
                 type: "str"
-            wildfly_install_workdir:
-                default: "/opt"
-                description: "Path to the installation dir for Wildfly"
+            wildfly_prospero_download_url:
+                default: "https://repository.jboss.org/nexus/content/groups/public/org/wildfly/           prospero/prospero-build/{{ wildfly_prospero_version }}/prospero-build-{{ wildfly_prospero_version }}.zip"
+                description: "URL to download Prospero"
+                type: "str"
+            wildfly_prospero_manifest_url:
+                default: "https://raw.githubusercontent.com/wildfly-extras/prospero/{{                    wildfly_prospero_version }}/examples/wildfly-27.0.0.Alpha2-manifest.yaml"
+                description: "URL to Prospero manifest"
                 type: "str"

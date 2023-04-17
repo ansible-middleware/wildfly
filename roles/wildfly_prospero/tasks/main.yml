@@ -42,7 +42,7 @@
     - wildfly_home is defined # repl by not is install
     - not path_to_workdir.stat.exists
 
-- name: "List available updates for server in {{ wildfly_home }}"
+- name: "Determine available updates for server in {{ wildfly_home }}"
   ansible.builtin.command: >
     {{ wildfly_prospero_home }}/bin/prospero.sh update list \
     --dir {{ wildfly_home }}
@@ -58,7 +58,7 @@
     var: prospero_run_results
 
 - name: "Check if any updates are available"
-  ansible.builtin.shell: |
+  ansible.builtin.command: |
     echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
   register: updates_available
   ignore_errors: true

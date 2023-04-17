@@ -36,6 +36,8 @@ warn_list:
   - template-instead-of-copy
   - fqcn[keyword]
   - no-changed-when
+  - key-order[task]
+
 
 use_default_rules: true
 parseable: true

@@ -45,3 +45,9 @@
       - is_wildfly_home is defined and is_wildfly_home.stat is defined and is_wildfly_home.stat.exists is defined
       - is_wildfly_home.stat.exists
     quiet: true
+
+- name: "Ensure firewalld configuration allows server port (if enabled)."
+  ansible.builtin.include_role:
+    name: wildfly_firewalld
+  when:
+    - wildfly_app_firewalld_enabled is defined and wildfly_app_firewalld_enabled

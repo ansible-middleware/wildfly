@@ -1,0 +1,9 @@
+---
+wildfly_firewalld_package_name: firewalld
+wildfly_app_firewalld_enabled: false
+wildfly_listen_ports:
+- 8009
+- 8080
+- 8443
+- 4712
+- 4713

@@ -1,0 +1,20 @@
+argument_specs:
+    main:
+        options:
+            wildfly_firewalld_package_name:
+                default: "firewalld"
+                description: "Package name for firewalld"
+                type: "str"
+            wildfly_app_firewalld_enabled:
+                default: "false"
+                description: "Indicate if firewalld is enabled for this collection"
+                type: "str"
+            wildfly_listen_ports:
+                default:
+                  - 8009
+                  - 8080
+                  - 8443
+                  - 4712
+                  - 4713
+                description: "Default ports to open for Wildfly"
+                type: "str"

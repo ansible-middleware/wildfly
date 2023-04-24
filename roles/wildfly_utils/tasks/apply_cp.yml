@@ -78,7 +78,7 @@
 
     - name: Determine latest version
       ansible.builtin.set_fact:
-         eap_latest_version: "{{ filtered_versions | middleware_automation.keycloak.version_sort | last }}"
+         eap_latest_version: "{{ filtered_versions | middleware_automation.common.version_sort | last }}"
       when: eap_patch_version is not defined or eap_patch_version | length == 0
       delegate_to: localhost
       run_once: yes

@@ -63,10 +63,9 @@ or via the included requirements file:
 * [middleware_automation.common](https://github.com/ansible-middleware/common)
 * [ansible-posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html)
 
-## Support
 
-The wildfly collection is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to
-contact us on <Ansible-middleware-core@redhat.com> or open an issue on https://github.com/ansible-middleware/wildfly/issues
+<!--start support -->
+<!--end support -->
 
 
 ## License

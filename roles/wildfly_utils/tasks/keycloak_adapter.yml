@@ -9,7 +9,6 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - rhn_sso_adapter_v is defined
       - wildfly_offline_install or rhn_cp_id is defined
       - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
       - wildfly_home is defined
@@ -22,7 +21,7 @@
 
 - name: Set adapter filename
   ansible.builtin.set_fact:
-    patch_filename: "{{ override_adapter_filename | default('rh-sso-' + rhn_sso_adapter_v + '-adapter-dist.zip') }}"
+    patch_filename: "{{ override_adapter_filename | default('rh-sso-' + eap_elytron_adapter_version + '-eap7-adapter-dist.zip') }}"
 
 - name: Set adapter destination directory
   ansible.builtin.set_fact:
@@ -45,14 +44,33 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: "Download archive from RHN"
-  ansible.builtin.include_tasks: tasks/download_from_rhn.yml
-  vars:
-    rhn_id_file: "{{ rhn_sso_adapter_id }}"
-    zipfile_dest: "{{ path_to_patch }}"
-  when:
-    - not wildfly_offline_install
-    - not local_archive_path.stat.exists
+- name: Retrieve product download using JBoss Network API
+  middleware_automation.common.product_search:
+    client_id: "{{ rhn_username }}"
+    client_secret: "{{ rhn_password }}"
+    product_type: DISTRIBUTION
+    product_version: "{{ eap_elytron_adapter_version.split('.')[:2] | join('.') }}"
+    product_category: "core.service.rhsso"
+  register: rhn_products
+  no_log: "{{ omit_rhn_output | default(true) }}"
+  delegate_to: localhost
+  run_once: yes
+
+- name: Determine install zipfile from search results
+  ansible.builtin.set_fact:
+    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + patch_filename + '$') }}"
+  delegate_to: localhost
+  run_once: yes
+
+- name: Download Red Hat Single Sign-On
+  middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
+    client_id: "{{ rhn_username }}"
+    client_secret: "{{ rhn_password }}"
+    product_id: "{{ (rhn_filtered_products | first).id }}"
+    dest: "{{ zipfile_dest }}"
+  no_log: "{{ omit_rhn_output | default(true) }}"
+  delegate_to: localhost
+  run_once: yes
 
 - name: Copy adapter archive to target nodes
   ansible.builtin.copy:

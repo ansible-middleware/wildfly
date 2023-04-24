@@ -34,12 +34,3 @@
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
   run_once: yes
-
-- name: "Install zipfile from RHN: {{ rhn_download_url }}"
-  delegate_to: localhost
-  middleware_automation.redhat_csp_download.redhat_csp_download:
-    url: "{{ rhn_download_url }}"
-    dest: "{{ zipfile_dest }}"
-    username: "{{ rhn_username }}"
-    password: "{{ rhn_password }}"
-  become: yes

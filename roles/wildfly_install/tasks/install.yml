@@ -177,6 +177,3 @@
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: keycloak_adapter.yml
-      vars:
-        rhn_sso_adapter_id: "{{ eap_elytron_adapter_rhn_id | default(0) }}"
-        rhn_sso_adapter_v: "{{ eap_elytron_adapter_version }}"

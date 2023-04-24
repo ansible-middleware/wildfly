@@ -112,12 +112,8 @@ argument_specs:
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
             eap_elytron_adapter_version:
-                default: "7.5.0-eap7"
+                default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
-                type: "str"
-            eap_elytron_adapter_rhn_id:
-                default: "104759"
-                description: "Red Hat SSO elytron adapter for EAP download ID"
                 type: "str"
             eap_product_category:
                 default: "appplatform"

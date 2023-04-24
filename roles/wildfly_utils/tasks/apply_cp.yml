@@ -43,10 +43,11 @@
   register: local_path
   delegate_to: localhost
 
-- name: "Check downloaded archive: {{ patch_filename }}"
+- name: "Check local downloaded archive: {{ patch_bundle }}"
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ patch_filename }}"
+    path: "{{ local_path.stat.path }}/{{ patch_bundle }}"
   register: local_archive_path
+  when: eap_patch_version is defined
   delegate_to: localhost
 
 - name: Perform patch download from RHN via JBossNetwork API
@@ -101,7 +102,13 @@
       delegate_to: localhost
       run_once: yes
 
-    - name: Download Red Hat Single Sign-On patch
+    - name: "Check local downloaded archive: {{ patch_bundle }}"
+      ansible.builtin.stat:
+        path: "{{ local_path.stat.path }}/{{ patch_bundle }}"
+      register: local_archive_path
+      delegate_to: localhost
+
+    - name: Download Red Hat EAP patch
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
@@ -110,12 +117,15 @@
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: yes
+      when: 
+        - local_archive_path is defined
+        - not local_archive_path.stat.exists
 
 - name: Set download patch archive path
   ansible.builtin.set_fact:
     patch_archive: "{{ path_to_patch }}"
 
-- name: Check download patch archive path
+- name: Check remote download patch archive path
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_archive_path

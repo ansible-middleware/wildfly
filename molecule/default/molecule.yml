@@ -1,8 +1,7 @@
 ---
 dependency:
-  name: galaxy
-  options:
-    requirements-file: molecule/requirements.yml
+  name: shell
+  command: ansible-galaxy install -r molecule/requirements.yml --force
 driver:
   name: docker
 lint: |

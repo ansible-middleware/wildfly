@@ -6,15 +6,6 @@
     quiet: true
     fail_msg: "Patching is only available on Red Hat EAP installations."
 
-- name: Check arguments
-  ansible.builtin.assert:
-    that:
-      - wildfly_offline_install or rhn_cp_id is defined
-      - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
-      - wildfly_home is defined
-    quiet: true
-    fail_msg: "One or more required parameters for cumulative patch application is missing."
-
 - name: Set patch directory
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"

@@ -6,15 +6,6 @@
     quiet: true
     fail_msg: "SSO (keycloak) adapter is only available on Red Hat EAP installations."
 
-- name: Check arguments
-  ansible.builtin.assert:
-    that:
-      - wildfly_offline_install or rhn_cp_id is defined
-      - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
-      - wildfly_home is defined
-    quiet: true
-    fail_msg: "One or more required parameters for adapter installation are missing."
-
 - name: Set adapter directory
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"

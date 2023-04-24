@@ -80,7 +80,7 @@
 
     - name: "Read target directory information: {{ wildfly_install.home }}"
       ansible.builtin.stat:
-        path: "{{ wildfly_install.home }}"
+        path: "{{ wildfly_install.home }}/bin"
       become: yes
       register: path_to_workdir
 

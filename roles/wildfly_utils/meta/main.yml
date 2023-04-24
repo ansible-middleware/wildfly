@@ -1,4 +1,7 @@
 ---
+collections:
+  - middleware_automation.common
+
 galaxy_info:
   role_name: wildfly_utils
   namespace: middleware_automation

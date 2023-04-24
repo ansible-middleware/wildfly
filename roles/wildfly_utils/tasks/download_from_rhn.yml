@@ -2,19 +2,38 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - rhn_id_file is defined
       - zipfile_dest is defined
       - rhn_username is defined
       - rhn_password is defined
     quiet: true
 
-- name: Set base download directory
-  ansible.builtin.set_fact:
-    rhn_base_url: "{{ override_rhn_base_url | default('https://access.redhat.com/jbossnetwork/restricted/softwareDownload.html?softwareId=') }}"
+- name: Retrieve product download using JBoss Network API
+  middleware_automation.common.product_search:
+    client_id: "{{ rhn_username }}"
+    client_secret: "{{ rhn_password }}"
+    product_type: DISTRIBUTION
+    product_version: "{{ eap_version.split('.')[:2] | join('.') }}"
+    product_category: "{{ eap_product_category }}"
+  register: rhn_products
+  no_log: "{{ omit_rhn_output | default(true) }}"
+  delegate_to: localhost
+  run_once: yes
 
-- name: Set full download URI
+- name: Determine install zipfile from search results
   ansible.builtin.set_fact:
-    rhn_download_url: "{{ rhn_base_url }}{{ rhn_id_file }}"
+    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + eap_archive_filename + '$') }}"
+  delegate_to: localhost
+  run_once: yes
+
+- name: Download Red Hat Single Sign-On
+  middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
+    client_id: "{{ rhn_username }}"
+    client_secret: "{{ rhn_password }}"
+    product_id: "{{ (rhn_filtered_products | first).id }}"
+    dest: "{{ zipfile_dest }}"
+  no_log: "{{ omit_rhn_output | default(true) }}"
+  delegate_to: localhost
+  run_once: yes
 
 - name: "Install zipfile from RHN: {{ rhn_download_url }}"
   delegate_to: localhost

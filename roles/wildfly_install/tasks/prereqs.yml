@@ -1,4 +1,12 @@
 ---
+- name: Validate credentials
+  ansible.builtin.assert:
+    that:
+      - (rhn_username is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or eap_offline_install
+      - (rhn_password is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or eap_offline_install
+    quiet: True
+    fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
+
 - name: "Check that required packages list has been provided."
   ansible.builtin.assert:
     that:

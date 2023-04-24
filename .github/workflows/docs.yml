@@ -6,6 +6,7 @@ on:
       - main
     tags:
       - "[0-9]+.[0-9]+.[0-9]+"
+  workflow_dispatch:
 
 env:
   COLORTERM: 'yes'
@@ -31,9 +32,10 @@ jobs:
           fetch-depth: 0
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: 3.9
+          cache: 'pip'
 
       - name: Install doc dependencies
         run: |
@@ -44,7 +46,8 @@ jobs:
 
       - name: Create default collection path
         run: |
-          mkdir -p /home/runner/.ansible/collections/ansible_collections
+          mkdir -p /home/runner/.ansible/
+          ln -s /home/runner/work/wildfly/wildfly /home/runner/.ansible/collections
 
       - name: Create changelog and documentation
         uses: ansible-middleware/collection-docs-action@main

@@ -1,4 +1,5 @@
 ---
 collections:
-  - name: middleware_automation.redhat_csp_download
+  - name: middleware_automation.common
+  - name: ansible.posix
   - name: community.docker

@@ -3,6 +3,8 @@
   hosts: all
   collections:
     - middleware_automation.wildfly
+    - middleware_automation.common
+    - ansible.posix
   roles:
     - wildfly_install
     - wildfly_systemd

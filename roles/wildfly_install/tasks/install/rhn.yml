@@ -2,13 +2,12 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - rhn_id_file is defined
       - rhn_username is defined
       - rhn_password is defined
       - local_path_to_archive is defined
     quiet: true
 
-- name: "Download JBoss EAP from RHN (id: {{ rhn_id_file }})"
+- name: "Download JBoss EAP from CSP"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: download_from_rhn.yml

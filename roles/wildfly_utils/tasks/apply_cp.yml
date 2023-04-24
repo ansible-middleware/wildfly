@@ -9,7 +9,6 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - rhn_cp_v is defined
       - wildfly_offline_install or rhn_cp_id is defined
       - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
       - wildfly_home is defined
@@ -20,26 +19,23 @@
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
-- name: Set patch filename
+- name: Set download patch archive path
   ansible.builtin.set_fact:
-    patch_filename: "{{ override_patch_filename | default('jboss-eap-' + rhn_cp_v + '-patch.zip') }}"
+    patch_archive: "{{ patches_repository }}/{{ eap_patch_archive_filename }}"
+    patch_bundle: "{{ eap_patch_archive_filename }}"
+    patch_version: "{{ eap_patch_version }}"
+  when: eap_patch_version is defined
 
 - name: Set patch destination directory
   ansible.builtin.set_fact:
-    path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
-  when:
-    - not override_path_to_patch is defined
-
-- name: Set patch destination directory
-  ansible.builtin.set_fact:
-    path_to_patch: "{{ override_path_to_patch }}"
-  when:
-   - override_path_to_patch is defined
+    path_to_patch: "{{ patch_archive }}"
 
 - name: Check download patch archive path
   ansible.builtin.stat:
     path: "{{ path_to_patch }}"
   register: patch_archive_path
+  when: eap_patch_version is defined
+  become: yes
 
 - name: Check local download archive path
   ansible.builtin.stat:
@@ -53,14 +49,67 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: "Download archive from RHN"
-  ansible.builtin.include_tasks: tasks/download_from_rhn.yml
-  vars:
-    rhn_id_file: "{{ rhn_cp_id }}"
-    zipfile_dest: "{{ path_to_patch }}"
+- name: Perform patch download from RHN via JBossNetwork API
+  delegate_to: localhost
+  run_once: yes
   when:
+    - eap_enable is defined and eap_enable
+    - eap_apply_cp
     - not wildfly_offline_install
-    - not local_archive_path.stat.exists
+  block:
+    - name: Retrieve product download using JBossNetwork API
+      middleware_automation.common.product_search:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_type: BUGFIX
+        product_version: "{{ eap_version.split('.')[:2] | join('.') }}"
+        product_category: "{{ eap_product_category }}"
+      register: rhn_products
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Determine patch versions list
+      ansible.builtin.set_fact:
+        filtered_versions: "{{ rhn_products.results | map(attribute='file_path') | select('match', '^[^/]*/jboss-eap-.*[0-9]*[.][0-9]*[.][0-9]*.*$') | map('regex_replace','[^/]*/jboss-eap-([0-9]*[.][0-9]*[.][0-9]*)-.*','\\1' ) | list | unique }}"
+      when: eap_patch_version is not defined or eap_patch_version | length == 0
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Determine latest version
+      ansible.builtin.set_fact:
+         eap_latest_version: "{{ filtered_versions | middleware_automation.common.version_sort | last }}"
+      when: eap_patch_version is not defined or eap_patch_version | length == 0
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Determine install zipfile from search results
+      ansible.builtin.set_fact:
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/jboss-eap-' + eap_latest_version + '-patch.zip$') }}"
+        patch_bundle: "jboss-eap-{{ eap_latest_version }}-patch.zip"
+        patch_version: "{{ eap_latest_version }}"
+      when: eap_patch_version is not defined or eap_patch_version | length == 0
+      delegate_to: localhost
+      run_once: yes
+
+    - name: "Determine selected patch from supplied version: {{ eap_patch_version }}"
+      ansible.builtin.set_fact:
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + eap_patch_archive_filename + '$') }}"
+        patch_bundle: "{{ eap_patch_archive_filename }}"
+        patch_version: "{{ eap_patch_version }}"
+      when: eap_patch_version is defined
+      delegate_to: localhost
+      run_once: yes
+
+    - name: Download Red Hat Single Sign-On patch
+      middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_id: "{{ (rhn_filtered_products | first).id }}"
+        dest: "{{ local_path.stat.path }}/{{ eap_patch_archive_filename }}"
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: yes
 
 - name: Copy patch archive to target nodes
   ansible.builtin.copy:

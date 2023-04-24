@@ -37,13 +37,10 @@
 
 - name: "Retrieve archive from RHN"
   ansible.builtin.include_tasks: install/rhn.yml
-  vars:
-    rhn_id_file: "{{ eap_install_rhn_id | default(0) }}"
   when:
     - not wildfly_offline_install
     - rhn_username is defined
     - rhn_password is defined
-    - eap_install_rhn_id is defined
     - eap_enable is defined and eap_enable
     - archive_path.stat is defined
     - not archive_path.stat.exists
@@ -164,9 +161,6 @@
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: apply_cp.yml
-      vars:
-        rhn_cp_id: "{{ eap_patch_install_rhn_id | default(0) }}"
-        rhn_cp_v: "{{ eap_patch_version }}"
 
 - name: "Install EAP elytron adapter"
   when:
@@ -183,6 +177,3 @@
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: keycloak_adapter.yml
-      vars:
-        rhn_sso_adapter_id: "{{ eap_elytron_adapter_rhn_id | default(0) }}"
-        rhn_sso_adapter_v: "{{ eap_elytron_adapter_version }}"

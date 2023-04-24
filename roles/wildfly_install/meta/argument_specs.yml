@@ -84,12 +84,16 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_patch_version:
-                default: "7.4.8"
-                description: "Red Hat EAP cumulative patch version to install"
+                required: False
+                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_apply_cp is True"
                 type: "str"
             eap_archive_filename:
                 default: "jboss-eap-{{ eap_version }}.zip"
                 description: "Red Hat EAP archive name"
+                type: "str"
+            eap_patch_archive_filename:
+                default: "jboss-eap-{{ eap_patch_version | default('[0-9]+[.][0-9]+[.][0-9]+') }}-patch.zip"
+                description: "Red Hat SSO patch archive filename"
                 type: "str"
             eap_install_workdir:
                 default: "/opt/jboss_eap/"
@@ -100,26 +104,18 @@ argument_specs:
                 description: "Red Hat EAP installation path"
                 type: "str"
             eap_offline_install:
-                default: True
+                default: False
                 description: "Whether to install from local archive"
                 type: "bool"
-            eap_install_rhn_id:
-                default: "99481"
-                description: "Red Hat EAP CSP download ID"
-                type: "str"
-            eap_patch_install_rhn_id:
-                default: "104759"
-                description: "Red Hat EAP cumulative patch CSP download ID"
-                type: "str"
             eap_elytron_adapter:
                 default: False
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
             eap_elytron_adapter_version:
-                default: "7.5.0-eap7"
+                default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
                 type: "str"
-            eap_elytron_adapter_rhn_id:
-                default: "104759"
-                description: "Red Hat SSO elytron adapter for EAP download ID"
+            eap_product_category:
+                default: "appplatform"
+                description: "JBossNetwork API category for EAP"
                 type: "str"

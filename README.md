@@ -1,7 +1,8 @@
 # Wildfly Collection for Ansible - middleware_automation.wildfly
 
+<!--start build_status -->
 [![Build Status](https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml)
-
+<!--end build_status -->
 
 ## About
 
@@ -59,15 +60,12 @@ or via the included requirements file:
 
 ### Dependencies
 
-- middleware_automation.redhat_csp_download
-    - This collection is required to download resources from RedHat Customer Portal.
-    - Documentation to collection can be found at <https://github.com/ansible-middleware/redhat-csp-download>
+* [middleware_automation.common](https://github.com/ansible-middleware/common)
+* [ansible-posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html)
 
 
-## Support
-
-The wildfly collection is a Beta release and for [Technical Preview](https://access.redhat.com/support/offerings/techpreview). If you have any issues or questions related to collection, please don't hesitate to
-contact us on <Ansible-middleware-core@redhat.com> or open an issue on https://github.com/ansible-middleware/wildfly/issues
+<!--start support -->
+<!--end support -->
 
 
 ## License

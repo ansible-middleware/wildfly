@@ -106,14 +106,24 @@
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_id: "{{ (rhn_filtered_products | first).id }}"
-        dest: "{{ local_path.stat.path }}/{{ eap_patch_archive_filename }}"
+        dest: "{{ local_path.stat.path }}/{{ patch_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: yes
 
+- name: Set download patch archive path
+  ansible.builtin.set_fact:
+    patch_archive: "{{ path_to_patch }}"
+
+- name: Check download patch archive path
+  ansible.builtin.stat:
+    path: "{{ patch_archive }}"
+  register: patch_archive_path
+  become: yes
+
 - name: Copy patch archive to target nodes
   ansible.builtin.copy:
-    src: "{{ local_path.stat.path }}/{{ patch_filename }}"
+    src: "{{ local_path.stat.path }}/{{ patch_bundle }}"
     dest: "{{ path_to_patch }}"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
@@ -121,8 +131,6 @@
   register: new_version_downloaded
   when:
     - not patch_archive_path.stat.exists
-    - local_archive_path.stat is defined
-    - local_archive_path.stat.exists
   become: yes
 
 - name: "Check patch state"

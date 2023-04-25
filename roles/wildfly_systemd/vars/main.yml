@@ -3,7 +3,8 @@ wildfly_systemd:
   user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
   home: "{{ wildfly_home }}"
-  config: "{{ wildfly_config_base }}"
+  config: "{{ wildfly_config_custom_file | basename if wildfly_config_custom_file | length > 0 else wildfly_config_base }}"
+  config_custom: "{{ wildfly_config_custom_file }}"
   enabled: "{{ wildfly_systemd_unit_enabled }}"
   yml_config:
     base_path: '/modules/system/layers/base'

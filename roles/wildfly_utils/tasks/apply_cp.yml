@@ -154,7 +154,7 @@
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
-    msg: "Patch v{{ rhn_cp_v }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
+    msg: "Patch v{{ patch_version }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
   when:
     - last_patch_status.stat.exists
 
@@ -226,7 +226,7 @@
         - name: Set checksum file
           ansible.builtin.copy:
             dest: "{{ patch_checksum_file }}"
-            content: "Patch v{{ rhn_cp_v }}"
+            content: "Patch v{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
             mode: 0640
@@ -237,7 +237,7 @@
         - name: Set latest patch file
           ansible.builtin.copy:
             dest: "{{ wildfly_home }}/.latest_applied_patch.txt"
-            content: "{{ rhn_cp_v }}"
+            content: "{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
             mode: 0640

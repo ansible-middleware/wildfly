@@ -135,6 +135,16 @@
   when:
     - instance_name is not defined
 
+- name: "Deploy custom configuration"
+  ansible.builtin.copy:
+    src: "{{ wildfly_install.config_custom }}"
+    dest: "{{ wildfly_install.home }}/standalone/configuration/"
+    group: "{{ wildfly_install.group }}"
+    owner: "{{ wildfly_install.user }}"
+    mode: 0640
+  become: yes
+  when: wildfly_install.config_custom | length > 0
+
 - name: "Deploy configuration"
   ansible.builtin.copy:
     src: "{{ wildfly_install.home }}/standalone/configuration/{{ wildfly_install.config }}"

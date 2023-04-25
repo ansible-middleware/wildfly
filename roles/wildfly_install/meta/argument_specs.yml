@@ -41,6 +41,10 @@ argument_specs:
                 default: "standalone.xml"
                 description: "wildfly standalone.xml filename override"
                 type: "str"
+            wildfly_config_custom_file:
+                default: ""
+                description: "Custom standalone.xml config to be copied to target instance and used as base"
+                type: "str"
             wildfly_user:
                 # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"

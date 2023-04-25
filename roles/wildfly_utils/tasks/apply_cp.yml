@@ -42,8 +42,6 @@
   delegate_to: localhost
 
 - name: Perform patch download from RHN via JBossNetwork API
-  delegate_to: localhost
-  run_once: yes
   when:
     - eap_enable is defined and eap_enable
     - eap_apply_cp
@@ -93,7 +91,7 @@
       delegate_to: localhost
       run_once: yes
 
-    - name: "Check local downloaded archive: {{ patch_bundle }}"
+    - name: "Check remote downloaded archive: {{ patches_repository }}/{{ patch_bundle }}"
       ansible.builtin.stat:
         path: "{{ patches_repository }}/{{ patch_bundle }}"
       register: remote_archive_path

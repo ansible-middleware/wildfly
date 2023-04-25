@@ -96,7 +96,7 @@
   become: yes
 
 - name: "Deploy custom configuration"
-  ansible.builtin.copy:
+  ansible.builtin.template:
     src: "{{ wildfly_systemd.config_custom }}"
     dest: "{{ wildfly_systemd.home }}/standalone/configuration/"
     group: "{{ wildfly_systemd.group }}"

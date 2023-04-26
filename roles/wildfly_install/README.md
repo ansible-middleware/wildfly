@@ -22,7 +22,8 @@ Role Defaults
 |`wildfly_home`| Wildfly installation directory | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
 |`wildfly_install_download_url`| Wildfly download URL | `{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}` |
 |`wildfly_archive_dir`| Target download directory | `{{ wildfly_install_workdir }}` |
-|`wildfly_config_base`| wildfly standalone.xml filename override | `standalone.xml` |
+|`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |
+|`wildfly_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk` |

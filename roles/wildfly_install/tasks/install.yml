@@ -78,19 +78,19 @@
       register: is_archive_file_created
       become: yes
 
-    - name: "Read target directory information: {{ wildfly_install.home }}"
-      ansible.builtin.stat:
-        path: "{{ wildfly_install.home }}"
-      become: yes
-      register: path_to_workdir
-
-    - name: "Check target directory state: {{ wildfly_install.home }}"
+    - name: "Verify target archive state: {{ full_path_to_archive }}"
       ansible.builtin.assert:
         that:
           - is_archive_file_created is defined and is_archive_file_created.stat is defined
           - is_archive_file_created.stat.exists
         quiet: true
-        fail_msg: "Archive file does NOT exists: {{ full_path_to_archive }}"
+        fail_msg: "Archive file does NOT exist: {{ full_path_to_archive }}"
+
+    - name: "Read target directory information: {{ wildfly_install.home }}"
+      ansible.builtin.stat:
+        path: "{{ wildfly_install.home }}/bin"
+      become: yes
+      register: path_to_workdir
 
     - name: "Extract files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
       become: yes
@@ -101,7 +101,7 @@
         owner: "{{ wildfly_install.user }}"
         group: "{{ wildfly_install.group }}"
         remote_src: yes
-        creates: "{{ wildfly_install.home }}"
+        creates: "{{ wildfly_install.home }}/bin"
       when:
         - new_version_downloaded.changed or not path_to_workdir.stat.exists
 
@@ -134,6 +134,16 @@
     instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
   when:
     - instance_name is not defined
+
+- name: "Deploy custom configuration"
+  ansible.builtin.template:
+    src: "{{ wildfly_install.config_custom }}"
+    dest: "{{ wildfly_install.home }}/standalone/configuration/"
+    group: "{{ wildfly_install.group }}"
+    owner: "{{ wildfly_install.user }}"
+    mode: 0640
+  become: yes
+  when: wildfly_install.config_custom | length > 0
 
 - name: "Deploy configuration"
   ansible.builtin.copy:

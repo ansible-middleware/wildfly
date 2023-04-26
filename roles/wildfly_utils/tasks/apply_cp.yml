@@ -6,15 +6,6 @@
     quiet: true
     fail_msg: "Patching is only available on Red Hat EAP installations."
 
-- name: Check arguments
-  ansible.builtin.assert:
-    that:
-      - wildfly_offline_install or rhn_cp_id is defined
-      - wildfly_offline_install or (rhn_username is defined and rhn_password is defined)
-      - wildfly_home is defined
-    quiet: true
-    fail_msg: "One or more required parameters for cumulative patch application is missing."
-
 - name: Set patch directory
   ansible.builtin.set_fact:
     patches_repository: "{{ override_patches_repository | default('/opt') }}"
@@ -43,15 +34,14 @@
   register: local_path
   delegate_to: localhost
 
-- name: "Check downloaded archive: {{ patch_filename }}"
+- name: "Check local downloaded archive: {{ patch_bundle }}"
   ansible.builtin.stat:
-    path: "{{ local_path.stat.path }}/{{ patch_filename }}"
+    path: "{{ local_path.stat.path }}/{{ patch_bundle }}"
   register: local_archive_path
+  when: eap_patch_version is defined
   delegate_to: localhost
 
 - name: Perform patch download from RHN via JBossNetwork API
-  delegate_to: localhost
-  run_once: yes
   when:
     - eap_enable is defined and eap_enable
     - eap_apply_cp
@@ -101,7 +91,13 @@
       delegate_to: localhost
       run_once: yes
 
-    - name: Download Red Hat Single Sign-On patch
+    - name: "Check remote downloaded archive: {{ patches_repository }}/{{ patch_bundle }}"
+      ansible.builtin.stat:
+        path: "{{ patches_repository }}/{{ patch_bundle }}"
+      register: remote_archive_path
+      become: yes
+
+    - name: Download Red Hat EAP patch
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
@@ -110,12 +106,15 @@
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: yes
+      when: 
+        - remote_archive_path is defined
+        - not remote_archive_path.stat.exists
 
 - name: Set download patch archive path
   ansible.builtin.set_fact:
     patch_archive: "{{ path_to_patch }}"
 
-- name: Check download patch archive path
+- name: Check remote download patch archive path
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_archive_path
@@ -153,7 +152,7 @@
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
-    msg: "Patch v{{ rhn_cp_v }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
+    msg: "Patch v{{ patch_version }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
   when:
     - last_patch_status.stat.exists
 
@@ -225,7 +224,7 @@
         - name: Set checksum file
           ansible.builtin.copy:
             dest: "{{ patch_checksum_file }}"
-            content: "Patch v{{ rhn_cp_v }}"
+            content: "Patch v{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
             mode: 0640
@@ -236,7 +235,7 @@
         - name: Set latest patch file
           ansible.builtin.copy:
             dest: "{{ wildfly_home }}/.latest_applied_patch.txt"
-            content: "{{ rhn_cp_v }}"
+            content: "{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
             mode: 0640

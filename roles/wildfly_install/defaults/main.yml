@@ -7,6 +7,7 @@ wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
 wildfly_archive_dir: "{{ wildfly_install_workdir }}"
 wildfly_config_base: 'standalone.xml'
+wildfly_config_custom_file: ''
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_java_package_name: 'java-11-openjdk-headless'

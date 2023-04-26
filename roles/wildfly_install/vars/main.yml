@@ -6,7 +6,8 @@ wildfly_install:
   archive_dir: "{{ wildfly_archive_dir }}"
   archive_name: "{{ wildfly_archive_filename }}"
   home: "{{ wildfly_home }}"
-  config: "{{ wildfly_config_base }}"
+  config: "{{ wildfly_config_custom_file | basename if wildfly_config_custom_file | length > 0 else wildfly_config_base }}"
+  config_custom: "{{ wildfly_config_custom_file }}"
   user: "{{ wildfly_user }}"
   group: "{{ wildfly_group }}"
   java:

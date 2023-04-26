@@ -3,6 +3,7 @@ wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_home: '/opt/wildfly/wildfly-27.0.0.Final/'
 wildfly_config_base: 'standalone.xml'
+wildfly_config_custom_file: ''
 wildfly_port_range_offset: 100
 
 wildfly_java_package_name: java-11-openjdk-headless

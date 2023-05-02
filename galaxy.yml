@@ -18,6 +18,8 @@ tags:
   - cli
   - server
   - application
+  - runtimes
+  - middleware
 dependencies:
   middleware_automation.common: '>=1.1.0'
   ansible.posix: '>=1.5.2'

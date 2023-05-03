@@ -52,7 +52,7 @@
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_type: BUGFIX
-        product_version: "{{ eap_version.split('.')[:2] | join('.') }}"
+        product_version: "{{ eap_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]([A-Za-z]+)?', '\\1.\\2 \\3') }}"
         product_category: "{{ eap_product_category }}"
       register: rhn_products
       no_log: "{{ omit_rhn_output | default(true) }}"

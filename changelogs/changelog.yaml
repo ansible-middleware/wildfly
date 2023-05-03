@@ -174,3 +174,30 @@ releases:
     fragments:
     - 100.yaml
     release_date: '2023-02-08'
+  1.3.2:
+    changes:
+      minor_changes:
+      - 'Add check for offline installs and allow to specify custom xml config `#108
+        <https://github.com/ansible-middleware/wildfly/pull/108>`_
+
+        '
+      - 'Add support for firewalld `#106 <https://github.com/ansible-middleware/wildfly/pull/106>`_
+
+        '
+      - 'Implement JBossNetwork API client for downloading install archives `#107
+        <https://github.com/ansible-middleware/wildfly/pull/107>`_
+
+        '
+      - 'Install: add prospero as alternative install mechanism `#102 <https://github.com/ansible-middleware/wildfly/pull/102>`_
+
+        '
+      - 'Update default Wildfly version to 28 `#103 <https://github.com/ansible-middleware/wildfly/pull/103>`_
+
+        '
+    fragments:
+    - 102.yaml
+    - 103.yaml
+    - 106.yaml
+    - 107.yaml
+    - 108.yaml
+    release_date: '2023-05-03'

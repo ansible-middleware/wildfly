@@ -1,23 +1,27 @@
 argument_specs:
     main:
         options:
+            wildfly_version:
+                default: "27.0.0.Final"
+                description: "Wildfly version to install"
+                type: "str"
             wildfly_user:
-                # line 2 of wildfly_systemd/defaults/main.yml
                 default: "wildfly"
                 description: "posix user account for wildfly service"
                 type: "str"
             wildfly_group:
-                # line 3 of wildfly_systemd/defaults/main.yml
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly service"
                 type: "str"
+            wildfly_install_workdir:
+                default: "/opt/wildfly/"
+                description: "Root directory for installation"
+                type: "str"
             wildfly_home:
-                # line 4 of wildfly_systemd/defaults/main.yml
-                default: "/opt/wildfly/wildfly-27.0.0.Final/"
+                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
                 description: "Wildfly installation directory"
                 type: "str"
             wildfly_config_base:
-                # line 5 of wildfly_systemd/defaults/main.yml
                 default: "standalone.xml"
                 description: "Base standalone.xml config for instance from distribution zipfile"
                 type: "str"
@@ -26,17 +30,14 @@ argument_specs:
                 description: "Custom standalone.xml config to be copied to target instance and used as base"
                 type: "str"
             wildfly_port_range_offset:
-                # line 6 of wildfly_systemd/defaults/main.yml
                 default: 100
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
             wildfly_systemd_unit_enabled:
-                # line 7 of wildfly_systemd/defaults/main.yml
                 default: true
                 description: "Enable systemd unit to autostart after a reboot"
                 type: "bool"
             wildfly_java_package_name:
-                # line 15 of wildfly_install/defaults/main.yml
                 default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
@@ -48,7 +49,6 @@ argument_specs:
                 type: "str"
                 default: "-Xmx1024M -Xms512M"
             wildfly_systemd_service_config_location:
-                # line 9 of wildfly_systemd/defaults/main.yml
                 default: "/usr/lib/systemd/system"
                 description: "Path for systemd unit file"
                 type: "str"

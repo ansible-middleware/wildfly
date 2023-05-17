@@ -2,7 +2,8 @@
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_version: '27.0.0.Final'
-wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
+wildfly_install_workdir: '/opt/wildfly/'
+wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}"
 wildfly_config_base: 'standalone.xml'
 wildfly_config_custom_file: ''
 wildfly_port_range_offset: 100

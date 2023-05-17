@@ -1,5 +1,4 @@
 ---
-wildfly_version: '29.0.0.Alpha1-SNAPSHOT'
 wildfly_custom_proxy_port: 6666
 wildfly_enable_yml_config: True
 wildfly_config_base: 'standalone-full-ha.xml'

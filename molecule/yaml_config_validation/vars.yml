@@ -1,10 +1,10 @@
 ---
-wildfly_version: '27.0.0.Final'
+wildfly_version: '29.0.0.Alpha1-SNAPSHOT'
 wildfly_custom_proxy_port: 6666
 wildfly_enable_yml_config: True
 wildfly_config_base: 'standalone-full-ha.xml'
 wildfly_yml_configs:
-    - yaml_configuration.yml
+    - yaml_configuration.yml.j2
     - yaml_socket_bindings.yml.j2
 eap_offline_install: True
 eap_apply_cp: True

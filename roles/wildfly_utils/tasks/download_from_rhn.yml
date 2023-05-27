@@ -25,7 +25,7 @@
   delegate_to: localhost
   run_once: yes
 
-- name: Download Red Hat Single Sign-On
+- name: Download Red Hat JBoss Enterprise Application Platform
   middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
     client_id: "{{ rhn_username }}"
     client_secret: "{{ rhn_password }}"

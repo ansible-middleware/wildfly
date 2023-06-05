@@ -54,22 +54,12 @@
   ansible.builtin.uri:
     url: "http://localhost:{{ wildfly_http_port }}/"
 
-- name: "Populate service facts"
-  ansible.builtin.service_facts:
-
-- name: "Check if service is running"
-  ansible.builtin.assert:
-    that:
-      - ansible_facts is defined
-      - ansible_facts.services is defined
-      - ansible_facts.services["{{ wildfly_service_name }}.service"] is defined
-      - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] is defined
-      - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] == 'running'
-      - ansible_facts.services["{{ wildfly_service_name }}.service"]['status'] == 'enabled'
+- name: "Verify systemd service state."
+  ansible.builtin.include_tasks: systemd.yml
   when:
-    - wildfly_service_name is defined
+    - wildfly_systemd_unit_enabled is defined and wildfly_systemd_unit_enabled
+    - wildfly_service_name
 
-# This needs to be enhance to implements checking results with expectation
 - name: "Verify server's internal configuration"
   ansible.builtin.include_tasks: verify_with_cli_queries.yml
   vars:

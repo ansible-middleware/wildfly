@@ -29,13 +29,13 @@
   register: local_path
   delegate_to: localhost
 
-- name: "Check downloaded archive: {{ patch_filename }}"
+- name: "Check downloaded archive: {{ patch_filename }}."
   ansible.builtin.stat:
     path: "{{ local_path.stat.path }}/{{ patch_filename }}"
   register: local_archive_path
   delegate_to: localhost
 
-- name: "Access JBoss Network API (if file not already present)."
+- name: "Check if JBoss Network API access is needed."
   block:
     - name: Retrieve product download using JBoss Network API
       middleware_automation.common.product_search:

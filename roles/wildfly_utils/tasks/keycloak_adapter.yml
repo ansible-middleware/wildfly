@@ -35,33 +35,38 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: Retrieve product download using JBoss Network API
-  middleware_automation.common.product_search:
-    client_id: "{{ rhn_username }}"
-    client_secret: "{{ rhn_password }}"
-    product_type: DISTRIBUTION
-    product_version: "{{ eap_elytron_adapter_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+([.][A-Za-z]+)?', '\\1.\\2 \\3') }}"
-    product_category: "core.service.rhsso"
-  register: rhn_products
-  no_log: "{{ omit_rhn_output | default(true) }}"
-  delegate_to: localhost
-  run_once: yes
+- name: "Access JBoss Network API (if file not already present)."
+  block:
+    - name: Retrieve product download using JBoss Network API
+      middleware_automation.common.product_search:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_type: DISTRIBUTION
+        product_version: "{{ eap_elytron_adapter_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+([.][A-Za-z]+)?', '\\1.\\2 \\3') }}"
+        product_category: "core.service.rhsso"
+      register: rhn_products
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: yes
 
-- name: Determine install zipfile from search results
-  ansible.builtin.set_fact:
-    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + patch_filename + '$') }}"
-  delegate_to: localhost
-  run_once: yes
+    - name: Determine install zipfile from search results
+      ansible.builtin.set_fact:
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + patch_filename + '$') }}"
+      delegate_to: localhost
+      run_once: yes
 
-- name: Download Red Hat Single Sign-On
-  middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
-    client_id: "{{ rhn_username }}"
-    client_secret: "{{ rhn_password }}"
-    product_id: "{{ (rhn_filtered_products | first).id }}"
-    dest: "{{ zipfile_dest }}"
-  no_log: "{{ omit_rhn_output | default(true) }}"
-  delegate_to: localhost
-  run_once: yes
+    - name: Download Red Hat Single Sign-On
+      middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_id: "{{ (rhn_filtered_products | first).id }}"
+        dest: "{{ zipfile_dest }}"
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: yes
+  when:
+    - local_archive_path is defined and local_archive_path.stat is defined
+    - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists
 
 - name: Copy adapter archive to target nodes
   ansible.builtin.copy:

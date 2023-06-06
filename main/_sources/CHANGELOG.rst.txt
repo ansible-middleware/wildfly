@@ -6,13 +6,32 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.3.2
+======
+
+Minor Changes
+-------------
+
+- Add check for offline installs and allow to specify custom xml config `#108 <https://github.com/ansible-middleware/wildfly/pull/108>`_
+- Add support for firewalld `#106 <https://github.com/ansible-middleware/wildfly/pull/106>`_
+- Check that systemd is running and pidfile exists `#117 <https://github.com/ansible-middleware/wildfly/pull/117>`_
+- Implement JBossNetwork API client for downloading install archives `#107 <https://github.com/ansible-middleware/wildfly/pull/107>`_
+- Install: add prospero as alternative install mechanism `#102 <https://github.com/ansible-middleware/wildfly/pull/102>`_
+- Update default Wildfly version to 28 `#103 <https://github.com/ansible-middleware/wildfly/pull/103>`_
+- wildfly_systemd: accept same default vars as wildfly_install `#111 <https://github.com/ansible-middleware/wildfly/pull/111>`_
+
+Bugfixes
+--------
+
+- '.Beta' in version: the dot is only optional `#119 <https://github.com/ansible-middleware/wildfly/pull/119>`_
+- ISSUE116 - PID File Creation Failure `#118 <https://github.com/ansible-middleware/wildfly/pull/118>`_
+
 v1.3.1
 ======
 
 Minor Changes
 -------------
 
-- Remove dependency to community.general (not required) `#100 <https://github.com/ansible-middleware/wildfly/pull/100>`_
 - Remove dependency to community.general (not required) `#100 <https://github.com/ansible-middleware/wildfly/pull/100>`_
 
 v1.3.0

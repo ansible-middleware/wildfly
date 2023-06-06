@@ -12,10 +12,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/sphinx_highlight.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -62,7 +61,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#support">Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
@@ -115,7 +113,9 @@
              
   <section id="wildfly-collection-for-ansible-middleware-automation-wildfly">
 <h1>Wildfly Collection for Ansible - middleware_automation.wildfly<a class="headerlink" href="#wildfly-collection-for-ansible-middleware-automation-wildfly" title="Permalink to this heading"></a></h1>
+<!--start build_status -->
 <p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main" /></a></p>
+<!--end build_status -->
 <section id="about">
 <h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
 <p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.</p>
@@ -175,19 +175,12 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 <section id="dependencies">
 <h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
 <ul class="simple">
-<li><p>middleware_automation.redhat_csp_download</p>
-<ul>
-<li><p>This collection is required to download resources from RedHat Customer Portal.</p></li>
-<li><p>Documentation to collection can be found at <a class="reference external" href="https://github.com/ansible-middleware/redhat-csp-download">https://github.com/ansible-middleware/redhat-csp-download</a></p></li>
+<li><p><a class="reference external" href="https://github.com/ansible-middleware/common">middleware_automation.common</a></p></li>
+<li><p><a class="reference external" href="https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html">ansible-posix</a></p></li>
 </ul>
-</li>
-</ul>
+<!--start support -->
+<!--end support -->
 </section>
-</section>
-<section id="support">
-<h2>Support<a class="headerlink" href="#support" title="Permalink to this heading"></a></h2>
-<p>The wildfly collection is a Beta release and for <a class="reference external" href="https://access.redhat.com/support/offerings/techpreview">Technical Preview</a>. If you have any issues or questions related to collection, please don’t hesitate to
-contact us on <a class="reference external" href="mailto:Ansible-middleware-core&#37;&#52;&#48;redhat&#46;com">Ansible-middleware-core<span>&#64;</span>redhat<span>&#46;</span>com</a> or open an issue on https://github.com/ansible-middleware/wildfly/issues</p>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>

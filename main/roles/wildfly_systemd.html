@@ -12,10 +12,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
-        <script src="../_static/underscore.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/doctools.js"></script>
         <script src="../_static/sphinx_highlight.js"></script>
     <script src="../_static/js/theme.js"></script>
@@ -49,8 +48,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">Wildfly Driver role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_firewalld.html">wildfly firewalld role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_install.html">Wildfly Install role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_migration.html">Wildfly Subs role</a></li>
+<li class="toctree-l2"><a class="reference internal" href="wildfly_prospero.html">wildfly prospero role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_subs.html">Wildfly Subs role</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Wildfly systemd role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#requirements">Requirements</a></li>
@@ -141,79 +142,91 @@
 <td class="text-left"><p>posix group for wildfly service</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
+<td class="text-left"><p>Wildfly version to install</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">27.0.0.Final</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_workdir</span></code></p></td>
+<td class="text-left"><p>TODO document argument</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
+</tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
 <td class="text-left"><p>Wildfly installation directory</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-27.0.0.Final/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_config_base</span></code></p></td>
 <td class="text-left"><p>Base standalone.xml config for instance</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">standalone.xml</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">standalone.xml</span></code> unless <code class="docutils literal notranslate"><span class="pre">wildfly_config_custom_file</span></code> is used</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_port_range_offset</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_config_custom_file</span></code></p></td>
+<td class="text-left"><p>Custom standalone.xml config to be copied to target instance and used as base</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_port_range_offset</span></code></p></td>
 <td class="text-left"><p>Increment for <code class="docutils literal notranslate"><span class="pre">jboss.socket.binding.port-offset</span></code></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">100</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_unit_enabled</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_unit_enabled</span></code></p></td>
 <td class="text-left"><p>Enable systemd unit to autostart after reboot</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_location</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_location</span></code></p></td>
 <td class="text-left"><p>Path for systemd unit file</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/usr/lib/systemd/system</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_file_suffix</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_file_suffix</span></code></p></td>
 <td class="text-left"><p>Systemd unit file extension</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.service</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_conf_file_suffix</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_conf_file_suffix</span></code></p></td>
 <td class="text-left"><p>Suffix for systemd conf file</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.conf</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_file_template</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_file_template</span></code></p></td>
 <td class="text-left"><p>Template for systemd unit</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">templates/wfly.service.j2</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_service_config_file_template</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_service_config_file_template</span></code></p></td>
 <td class="text-left"><p>Template for systemd config</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">templates/wfly.conf.j2</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_service_config_file_location</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_service_config_file_location</span></code></p></td>
 <td class="text-left"><p>Path for wildfly systemd unit file</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/etc/</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_enable_yml_config</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_enable_yml_config</span></code></p></td>
 <td class="text-left"><p>Enable yaml file configuration feature (WFCORE5343)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_yml_configs</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_yml_configs</span></code></p></td>
 <td class="text-left"><p>List of filenames for wildfly configuration bootstrap</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[]</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
 <td class="text-left"><p>RHEL java rpm package</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-11-openjdk-headless</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_opts</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_opts</span></code></p></td>
 <td class="text-left"><p>Additional settings for the JVM running wildfly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">-Xmx1024M</span> <span class="pre">-Xms512M</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr</span></code></p></td>
 <td class="text-left"><p>Bind address for listening to public network</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0.0.0.0</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_private</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_private</span></code></p></td>
 <td class="text-left"><p>Bind address for listening to private network</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_management</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_bind_addr_management</span></code></p></td>
 <td class="text-left"><p>Bind address for management console port</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">127.0.0.1</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_multicast_addr</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_multicast_addr</span></code></p></td>
 <td class="text-left"><p>Multicast address for jgroup cluster discovery</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">230.0.0.4</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_statistics_enabled</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_statistics_enabled</span></code></p></td>
 <td class="text-left"><p>Whether to enable statistics</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>

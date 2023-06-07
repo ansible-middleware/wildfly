@@ -25,6 +25,15 @@
   delegate_to: localhost
   run_once: yes
 
+- name: Verify that filtered products has been properly populated.
+  ansible.builtin.assert:
+    that:
+      - rhn_filtered_products is defined
+      - (rhn_filtered_products | first) is defined
+      - (rhn_filtered_products | first).id is defined
+    quiet: true
+    fail_msg: "No list of products could be found based on {{ eap_archive_filename }}."
+
 - name: Download Red Hat JBoss Enterprise Application Platform
   middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
     client_id: "{{ rhn_username }}"

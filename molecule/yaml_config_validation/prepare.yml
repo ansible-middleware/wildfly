@@ -3,11 +3,6 @@
   hosts: all
   vars_files:
     - vars.yml
-  collections:
-    - middleware_automation.wildfly
-  roles:
-    - wildfly_install
-    - wildfly_driver
   pre_tasks:
     - name: "Ensure required packages are installed."
       ansible.builtin.yum:

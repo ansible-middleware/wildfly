@@ -6,4 +6,5 @@
   collections:
     - middleware_automation.wildfly
   roles:
+    - wildfly_install
     - wildfly_systemd

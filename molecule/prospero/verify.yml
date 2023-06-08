@@ -1,5 +1,7 @@
 ---
 - import_playbook: ../../playbooks/validate.yml
+  when:
+    - not eap_enable is defined or not eap_enable
 
 - name: Validation
   hosts: all
@@ -7,3 +9,5 @@
     - name: Verify we are running on requested jvm
       ansible.builtin.shell: |
         ps -ef | grep /usr/lib/jvm/java-11 | grep -v grep
+      when:
+        - not eap_enable is defined or not eap_enable

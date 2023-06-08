@@ -54,18 +54,12 @@
     - path_to_workdir.stat.exists
     - wildfly_prospero_update is defined
 
-- ansible.builtin.debug:
-    var: prospero_run_results
-
 - name: "Check if any updates are available"
   ansible.builtin.command: |
     echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
   register: updates_available
   ignore_errors: true
   changed_when: false
-
-- ansible.builtin.debug:
-    var: updates_available
 
 - name: "Run prospero to update server in {{ wildfly_home }}."
   ansible.builtin.command: >

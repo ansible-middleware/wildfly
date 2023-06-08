@@ -7,12 +7,20 @@
     wildfly_install_use_prospero: True
   collections:
     - middleware_automation.wildfly
-  roles:
-    - wildfly_install
-    - wildfly_systemd
-  pre_tasks:
+  tasks:
+    - name: "Run Prospero scenario only upstream."
+      block:
+        - name: "Ensure required local user and group exists."
+          ansible.builtin.include_role:
+            name: wildfly_install
+            tasks_from: user.yml
 
-    - name: "Ensure required local user and group exists."
-      ansible.builtin.include_role:
-        name: wildfly_install
-        tasks_from: user.yml
+        - name: "Install server using Prospero"
+          ansible.builtin.include_role:
+            name: wildfly_install
+
+        - name: "Run server with systemd"
+          ansible.builtin.include_role:
+            name: wildfly_systemd
+      when:
+        - eap_enable is not defined or not eap_enable

@@ -7,7 +7,7 @@
     quiet: True
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
 
-- name: Validate existing zipfiles for offline installs
+- name: "Validate existing zipfiles {{ wildfly_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
       - wildfly_version is defined and wildfly_archive_filename is exists
@@ -17,7 +17,7 @@
     - wildfly_offline_install
     - eap_enable is not defined or not eap_enable
 
-- name: Validate existing zipfiles for offline installs
+- name: "Validate existing zipfiles {{ eap_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
       - eap_version is defined and eap_archive_filename is exists

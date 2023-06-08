@@ -30,7 +30,6 @@
         url: "{{ asset }}"
         dest: "{{ lookup('env', 'PWD') | default('/opt') }}"
         validate_certs: no
-      delegate_to: localhost
       loop:
         - "{{ assets_server }}/eap7/7.4.0/jboss-eap-7.4.0.zip"
         - "{{ assets_server }}/eap7/7.4.8/jboss-eap-7.4.8-patch.zip"

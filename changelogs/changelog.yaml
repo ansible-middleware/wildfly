@@ -201,3 +201,29 @@ releases:
     - 107.yaml
     - 108.yaml
     release_date: '2023-05-03'
+  1.3.3:
+    changes:
+      bugfixes:
+      - '''.Beta'' in version: the dot is only optional `#119 <https://github.com/ansible-middleware/wildfly/pull/119>`_
+
+        '
+      - 'ISSUE116 - PID File Creation Failure `#118 <https://github.com/ansible-middleware/wildfly/pull/118>`_
+
+        '
+      minor_changes:
+      - 'Check that systemd is running and pidfile exists `#117 <https://github.com/ansible-middleware/wildfly/pull/117>`_
+
+        '
+      - 'elytron_adapter: skip download if file is already present `#120 <https://github.com/ansible-middleware/wildfly/pull/120>`_
+
+        '
+      - 'wildfly_systemd: accept same default vars as wildfly_install `#111 <https://github.com/ansible-middleware/wildfly/pull/111>`_
+
+        '
+    fragments:
+    - 111.yaml
+    - 117.yaml
+    - 118.yaml
+    - 119.yaml
+    - 120.yaml
+    release_date: '2023-06-09'

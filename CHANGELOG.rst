@@ -6,6 +6,22 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.3.3
+======
+
+Minor Changes
+-------------
+
+- Check that systemd is running and pidfile exists `#117 <https://github.com/ansible-middleware/wildfly/pull/117>`_
+- elytron_adapter: skip download if file is already present `#120 <https://github.com/ansible-middleware/wildfly/pull/120>`_
+- wildfly_systemd: accept same default vars as wildfly_install `#111 <https://github.com/ansible-middleware/wildfly/pull/111>`_
+
+Bugfixes
+--------
+
+- '.Beta' in version: the dot is only optional `#119 <https://github.com/ansible-middleware/wildfly/pull/119>`_
+- ISSUE116 - PID File Creation Failure `#118 <https://github.com/ansible-middleware/wildfly/pull/118>`_
+
 v1.3.2
 ======
 

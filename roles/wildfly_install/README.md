@@ -1,4 +1,4 @@
-Wildfly Install role
+wildfly install role
 ====================
 
 A role to automate the installation the Wildfly JEE server, including retrieving the

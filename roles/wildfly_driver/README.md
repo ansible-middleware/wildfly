@@ -1,4 +1,4 @@
-Wildfly Driver role
+wildfly driver role
 ====================
 
 This role provides a playbook to easily install a JDBC driver within

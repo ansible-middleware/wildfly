@@ -1,4 +1,4 @@
-Wildfly validation role
+wildfly validation role
 =======================
 
 Role to validate that the app server installed was successful

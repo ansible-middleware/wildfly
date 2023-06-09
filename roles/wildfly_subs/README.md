@@ -1,4 +1,4 @@
-Wildfly Subs role
+wildfly subs role
 ====================
 
 This role is designed to help set up JBoss EAP (Red Hat product based on Wildfly) using RPM

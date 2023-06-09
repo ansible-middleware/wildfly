@@ -92,7 +92,7 @@ jobs:
     needs: release
     strategy:
       matrix:
-        repo: ['ansible-middleware/flange-demo', 'ansible-middleware/wildfly-cluster-demo', 'ansible-middleware/ansible-middleware-ee', 'ansible-middleware/common_criteria']
+        repo: ['ansible-middleware/flange-demo', 'ansible-middleware/wildfly-cluster-demo', 'ansible-middleware/ansible-middleware-ee']
     runs-on: ubuntu-latest
     steps:
       - name: Repository Dispatch

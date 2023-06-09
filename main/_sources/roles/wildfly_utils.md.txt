@@ -1,5 +1,5 @@
-JBoss EAP role
-==============
+wildfly utils role
+==================
 
 This roles regroups reusable content to manage the server, but also dealing with JBoss EAP specific
 feature (such as apply cumulative patches).

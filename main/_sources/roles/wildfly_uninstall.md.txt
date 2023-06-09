@@ -1,4 +1,4 @@
-Wildfly uninstall role
+wildfly uninstall role
 ======================
 
 Role to uninstall and clean wildfly from ansible nodes.

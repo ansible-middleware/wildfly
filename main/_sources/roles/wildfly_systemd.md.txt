@@ -1,5 +1,5 @@
-Wildfly systemd role
-=========
+wildfly systemd role
+====================
 
 Role setting up a systemd service to manage a Wildfly app server instance, using basic information on server installation.
 

@@ -17,13 +17,9 @@
     patch_version: "{{ eap_patch_version }}"
   when: eap_patch_version is defined
 
-- name: Set patch destination directory
-  ansible.builtin.set_fact:
-    path_to_patch: "{{ patch_archive }}"
-
 - name: Check download patch archive path
   ansible.builtin.stat:
-    path: "{{ path_to_patch }}"
+    path: "{{ patch_archive }}"
   register: patch_archive_path
   when: eap_patch_version is defined
   become: yes
@@ -110,31 +106,31 @@
         - remote_archive_path is defined
         - not remote_archive_path.stat.exists
 
-- name: Set download patch archive path
-  ansible.builtin.set_fact:
-    patch_archive: "{{ path_to_patch }}"
+    - name: Update patch archive path after download
+      ansible.builtin.set_fact:
+        patch_archive: "{{ patches_repository }}/{{ patch_bundle }}"
 
 - name: Check remote download patch archive path
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
-  register: patch_archive_path
+  register: patch_info
   become: yes
 
 - name: Copy patch archive to target nodes
   ansible.builtin.copy:
     src: "{{ local_path.stat.path }}/{{ patch_bundle }}"
-    dest: "{{ path_to_patch }}"
+    dest: "{{ patch_archive }}"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
     mode: 0640
   register: new_version_downloaded
   when:
-    - not patch_archive_path.stat.exists
+    - not patch_info.stat.exists
   become: yes
 
 - name: "Check patch state"
   ansible.builtin.stat:
-    path: "{{ path_to_patch }}"
+    path: "{{ patch_archive }}"
   register: patch_info
   become: yes
 
@@ -204,11 +200,11 @@
       when:
         - not apply_options is defined
 
-    - name: "Apply patch {{ path_to_patch }} to server installed in {{ wildfly_home }}"
+    - name: "Apply patch {{ patch_archive }} to server installed in {{ wildfly_home }}"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         jboss_home: "{{ wildfly_home }}"
-        jboss_cli_query: "'patch apply {{ apply_options }} {{ path_to_patch }}'"
+        jboss_cli_query: "'patch apply {{ apply_options }} {{ patch_archive }}'"
         jboss_cli_timeout: 30
 
     - name: "Display patching result"
@@ -282,3 +278,4 @@
     - name: "Show resulting output"
       ansible.builtin.debug:
         msg: "{{ cli_result.stdout }}"
+      when: cli_result is defined and cli_result.stdout is defined

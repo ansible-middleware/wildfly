@@ -55,6 +55,12 @@
       delegate_to: localhost
       run_once: yes
 
+    - name: "Check remote downloaded archive: {{ path_to_patch }}"
+      ansible.builtin.stat:
+        path: "{{ path_to_patch }}"
+      register: remote_archive_path
+      become: yes
+
     - name: Download Red Hat Single Sign-On Adapter
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
         client_id: "{{ rhn_username }}"
@@ -64,6 +70,9 @@
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: yes
+      when:
+        - remote_archive_path is defined
+        - not remote_archive_path.stat.exists
   when:
     - local_archive_path is defined and local_archive_path.stat is defined
     - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists

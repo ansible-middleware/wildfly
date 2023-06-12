@@ -163,6 +163,18 @@
   changed_when: False
   register: rpm_java_home
   become: yes
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+  
+- name: Determine JAVA_HOME for selected JVM Package  # noqa blocked_modules
+  ansible.builtin.shell: |
+    set -o pipefail
+    update-alternatives --query java | grep 'Value: ' | grep -o '/.*/jre'
+  args:
+    executable: /bin/bash
+  changed_when: False
+  register: rpm_java_home
+  become: yes
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
 
 - name: Set systemd unit file destination
   ansible.builtin.set_fact:

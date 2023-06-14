@@ -161,12 +161,6 @@
     - eap_apply_cp is defined and eap_apply_cp
     - eap_enable is defined and eap_enable
   block:
-    - name: "Ensure required parameters for cumulative patch application are provided."
-      ansible.builtin.assert:
-        that:
-          - eap_patch_version is defined
-        quiet: "Missing required parameters for CP application"
-
     - name: "Apply latest cumulative patch"
       ansible.builtin.include_role:
         name: wildfly_utils

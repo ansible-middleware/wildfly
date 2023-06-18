@@ -154,7 +154,7 @@
   when:
     - not service_systemd_env_file is defined
 
-- name: Determine JAVA_HOME for selected JVM RPM  # noqa blocked_modules
+- name: Determine JAVA_HOME for selected JVM RPM RedHat # noqa blocked_modules
   ansible.builtin.shell: |
     set -o pipefail
     rpm -ql {{ wildfly_java_package_name }} | grep -Po '/usr/lib/jvm/.*(?=/bin/java$)'
@@ -165,7 +165,7 @@
   become: yes
   when: ansible_os_family == "RedHat"
   
-- name: Determine JAVA_HOME for selected JVM Package  # noqa blocked_modules
+- name: Determine JAVA_HOME for selected JVM Package Debian  # noqa blocked_modules
   ansible.builtin.shell: |
     set -o pipefail
     update-alternatives --query java | grep 'Value: ' | grep -o '/.*/jre'

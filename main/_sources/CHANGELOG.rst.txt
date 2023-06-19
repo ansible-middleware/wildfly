@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.3.4-devel
 ============
 
+Minor Changes
+-------------
+
+- wildfly_systemd: detect Java home path on different os_family `#125 <https://github.com/ansible-middleware/wildfly/pull/125>`_
+
 v1.3.3
 ======
 

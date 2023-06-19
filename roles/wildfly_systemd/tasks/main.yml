@@ -154,10 +154,10 @@
   when:
     - not service_systemd_env_file is defined
 
-- name: Determine JAVA_HOME for selected JVM RPM  # noqa blocked_modules
+- name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
   ansible.builtin.shell: |
     set -o pipefail
-    rpm -ql {{ wildfly_java_package_name }} | grep -Po '/usr/lib/jvm/.*(?=/bin/java$)'
+    {{ wildfly_systemd.jvm_version_command[ansible_os_family] }}
   args:
     executable: /bin/bash
   changed_when: False

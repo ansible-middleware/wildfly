@@ -11,3 +11,7 @@ wildfly_systemd:
     eap_path: 'modules/system/layers/base/.overlays/layer-base-jboss-eap-'
     path: /org/jboss/as/controller/main/dir/META-INF/services
     file: org.jboss.as.controller.persistence.ConfigurationExtension
+  jvm_version_command:
+    RedHat: "rpm -ql {{ wildfly_java_package_name }} | grep -Po '/usr/lib/jvm/.*(?=/bin/java$)'"
+    Debian: "update-alternatives --query java | grep 'Value: ' | grep -o '/.*/jre'"
+    

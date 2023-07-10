@@ -227,3 +227,17 @@ releases:
     - 119.yaml
     - 120.yaml
     release_date: '2023-06-09'
+  1.3.4:
+    changes:
+      bugfixes:
+      - 'Do not re-download elytron adapter if present `#124 <https://github.com/ansible-middleware/wildfly/pull/124>`_
+
+        '
+      minor_changes:
+      - 'wildfly_systemd: detect Java home path on different os_family `#125 <https://github.com/ansible-middleware/wildfly/pull/125>`_
+
+        '
+    fragments:
+    - 124.yaml
+    - 125.yaml
+    release_date: '2023-07-10'

@@ -27,7 +27,7 @@
         validate_certs: no
       loop:
         - "{{ assets_server }}/eap7/7.4.0/jboss-eap-7.4.0.zip"
-        - "{{ assets_server }}/eap7/7.4.8/jboss-eap-7.4.8-patch.zip"
+        - "{{ assets_server }}/eap7/7.4.9/jboss-eap-7.4.9-patch.zip"
       loop_control:
         loop_var: asset
       when:

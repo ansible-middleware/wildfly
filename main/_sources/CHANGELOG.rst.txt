@@ -13,12 +13,10 @@ Minor Changes
 -------------
 
 - wildfly_systemd: detect Java home path on different os_family `#125 <https://github.com/ansible-middleware/wildfly/pull/125>`_
-- wildfly_systemd: detect Java home path on different os_family `#125 <https://github.com/ansible-middleware/wildfly/pull/125>`_
 
 Bugfixes
 --------
 
-- Do not re-download elytron adapter if present `#124 <https://github.com/ansible-middleware/wildfly/pull/124>`_
 - Do not re-download elytron adapter if present `#124 <https://github.com/ansible-middleware/wildfly/pull/124>`_
 
 v1.3.3

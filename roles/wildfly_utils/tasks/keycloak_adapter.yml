@@ -12,7 +12,7 @@
 
 - name: Set adapter filename
   ansible.builtin.set_fact:
-    patch_filename: "{{ override_adapter_filename | default('rh-sso-' + eap_elytron_adapter_version + '-eap7-adapter-dist.zip') }}"
+    patch_filename: "{{ override_adapter_filename | default(eap_elytron_adapter_archive_filename) }}"
 
 - name: Set adapter destination directory
   ansible.builtin.set_fact:

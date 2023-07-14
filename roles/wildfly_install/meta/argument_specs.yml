@@ -119,6 +119,10 @@ argument_specs:
                 default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
                 type: "str"
+            eap_elytron_adapter_archive_filename:
+                default: "rh-sso-{{ eap_elytron_adapter_version }}-eap7-adapter-dist.zip"
+                description: "SSO (keycloak) adapter install filename"
+                type: "str"
             eap_product_category:
                 default: "appplatform"
                 description: "JBossNetwork API category for EAP"

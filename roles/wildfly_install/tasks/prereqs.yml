@@ -31,9 +31,9 @@
   ansible.builtin.assert:
     that:
       - not eap_apply_cp or (eap_patch_version is defined and eap_patch_archive_filename is exists)
-      - not eap_elytron_adapter or ('rh-sso-' + eap_elytron_adapter_version + '-eap7-adapter-dist.zip' is exists)
+      - not eap_elytron_adapter or (eap_elytron_adapter_archive_filename is exists)
     quiet: True
-    fail_msg: "An offline install was requested, but files are not present on the controller: {{ eap_patch_archive_filename if eap_apply_cp else '' }} {{ 'rh-sso-' + eap_elytron_adapter_version + '-eap7-adapter-dist.zip' if eap_elytron_adapter else '' }}"
+    fail_msg: "An offline install was requested, but files are not present on the controller: {{ eap_patch_archive_filename if eap_apply_cp else '' }} {{ eap_elytron_adapter_archive_filename if eap_elytron_adapter else '' }}"
   when:
     - wildfly_offline_install
     - eap_enable is defined and eap_enable

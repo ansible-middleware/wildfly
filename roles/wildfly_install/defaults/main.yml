@@ -19,3 +19,4 @@ wildfly_prereqs_packages:
   - unzip
   - tar
   - sudo
+  - tzdata-java

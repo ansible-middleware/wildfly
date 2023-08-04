@@ -1,12 +1,6 @@
 ---
-dependency:
-  name: shell
-  command: ansible-galaxy install -r molecule/requirements.yml --force
 driver:
   name: docker
-lint: |
-  ansible-lint --version
-  ansible-lint -v
 platforms:
   - name: instance
     image: registry.access.redhat.com/ubi8/ubi-init:latest
@@ -37,11 +31,9 @@ verifier:
   name: ansible
 scenario:
   test_sequence:
-    - dependency
     - cleanup
     - destroy
     - syntax
-    - lint
     - create
     - prepare
     - converge

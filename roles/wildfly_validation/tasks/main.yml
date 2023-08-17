@@ -49,16 +49,21 @@
 - name: "Wait for HTTP port {{ wildfly_http_port }} to become available."
   ansible.builtin.wait_for:
     port: "{{ wildfly_http_port }}"
+  when:
+    - not wildfly_validation_skip_http_port_wait is defined
 
 - name: "Check if web connector is accessible"
   ansible.builtin.uri:
-    url: "http://localhost:{{ wildfly_http_port }}/"
+    url: "http://{{ ansible_nodename | default('localhost') }}:{{ wildfly_http_port }}/"
+  when:
+    - not wildfly_validation_skip_web_connector_check is defined
 
 - name: "Verify systemd service state."
   ansible.builtin.include_tasks: systemd.yml
   when:
     - wildfly_systemd_unit_enabled is defined and wildfly_systemd_unit_enabled
     - wildfly_service_name
+    - not wildfly_validation_skip_systemd_check is defined
 
 - name: "Verify server's internal configuration"
   ansible.builtin.include_tasks: verify_with_cli_queries.yml
@@ -67,6 +72,10 @@
   loop:
     - { query: '/core-service=server-environment:read-attribute(name=start-gracefully)' }
     - { query: '/subsystem=undertow/server=default-server/http-listener=default:read-attribute(name=enabled)' }
+  when:
+    - not wildfly_validation_skip_internal_config_check is defined
 
 - name: "Ensure yaml setup"
   ansible.builtin.include_tasks: yaml_setup.yml
+  when:
+    - not wildfly_validation_skip_yaml_setup_check is defined

@@ -44,7 +44,7 @@ argument_specs:
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_apply_cp:
-                default: false
+                default: True
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
             eap_version:

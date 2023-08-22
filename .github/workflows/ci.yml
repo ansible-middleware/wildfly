@@ -120,11 +120,6 @@ jobs:
           python-version: ${{ matrix.python_version }}
           cache: 'pip'
 
-      - name: Create default collection path
-        run: |
-          mkdir -p /home/runner/.ansible/
-          ln -s /home/runner/work/wildfly/wildfly /home/runner/.ansible/collections
-
       - name: Install ansible and molecule
         run: |
           python -m pip install --upgrade pip

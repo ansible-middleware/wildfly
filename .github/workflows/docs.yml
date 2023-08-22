@@ -34,7 +34,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.9
+          python-version: 3.11
           cache: 'pip'
 
       - name: Install doc dependencies
@@ -50,7 +50,7 @@ jobs:
       - name: Create default collection path
         run: |
           mkdir -p /home/runner/.ansible/
-          ln -s /home/runner/work/wildfly/wildfly /home/runner/.ansible/collections
+          ln -s ${{ github.workspace }} /home/runner/.ansible/collections
 
       - name: Create changelog and documentation
         uses: ansible-middleware/collection-docs-action@main

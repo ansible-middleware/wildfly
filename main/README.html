@@ -7,16 +7,17 @@
   <title>Wildfly Collection for Ansible - middleware_automation.wildfly &mdash; Wildfly Ansible Collection  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/antsibull-minimal.css" type="text/css" />
       <link rel="stylesheet" href="_static/ansible-basic-sphinx-ext.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="_static/jquery.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -112,15 +113,15 @@
            <div itemprop="articleBody">
              
   <section id="wildfly-collection-for-ansible-middleware-automation-wildfly">
-<h1>Wildfly Collection for Ansible - middleware_automation.wildfly<a class="headerlink" href="#wildfly-collection-for-ansible-middleware-automation-wildfly" title="Permalink to this heading"></a></h1>
+<h1>Wildfly Collection for Ansible - middleware_automation.wildfly<a class="headerlink" href="#wildfly-collection-for-ansible-middleware-automation-wildfly" title="Link to this heading"></a></h1>
 <!--start build_status -->
 <p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main" /></a></p>
 <!--end build_status -->
 <section id="about">
-<h2>About<a class="headerlink" href="#about" title="Permalink to this heading"></a></h2>
+<h2>About<a class="headerlink" href="#about" title="Link to this heading"></a></h2>
 <p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.</p>
 <section id="i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">
-<h3>I know nothing about Ansible, but I want to install Wildfly, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i" title="Permalink to this heading"></a></h3>
+<h3>I know nothing about Ansible, but I want to install Wildfly, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i" title="Link to this heading"></a></h3>
 <p>Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install Wildfly on):</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install middleware_automation.wildfly
 $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
@@ -130,18 +131,18 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </section>
 </section>
 <section id="ansible-version-compatibility">
-<h2>Ansible version compatibility<a class="headerlink" href="#ansible-version-compatibility" title="Permalink to this heading"></a></h2>
+<h2>Ansible version compatibility<a class="headerlink" href="#ansible-version-compatibility" title="Link to this heading"></a></h2>
 <p>This collection has been tested against following Ansible versions: <strong>&gt;=2.9.10</strong>.</p>
 </section>
 <section id="install">
-<h2>Install<a class="headerlink" href="#install" title="Permalink to this heading"></a></h2>
+<h2>Install<a class="headerlink" href="#install" title="Link to this heading"></a></h2>
 <p>Plugins and modules within a collection may be tested with only specific Ansible versions. A collection may contain metadata that identifies these versions.</p>
 <!--end requires_ansible-->
 </section>
 <section id="included-content">
-<h2>Included content<a class="headerlink" href="#included-content" title="Permalink to this heading"></a></h2>
+<h2>Included content<a class="headerlink" href="#included-content" title="Link to this heading"></a></h2>
 <section id="roles">
-<h3>Roles<a class="headerlink" href="#roles" title="Permalink to this heading"></a></h3>
+<h3>Roles<a class="headerlink" href="#roles" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_install/README.md">wildfly_install</a>: download and install</p></li>
 <li><p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_systemd/README.md">wildfly_systemd</a>: configure systemd unit</p></li>
@@ -152,7 +153,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </ul>
 </section>
 <section id="installing-the-collection">
-<h3>Installing the collection<a class="headerlink" href="#installing-the-collection" title="Permalink to this heading"></a></h3>
+<h3>Installing the collection<a class="headerlink" href="#installing-the-collection" title="Link to this heading"></a></h3>
 <p>To install this Ansible collection:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install middleware_automation.wildfly
 </pre></div>
@@ -168,12 +169,12 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </section>
 </section>
 <section id="building-the-collection">
-<h2>Building the collection<a class="headerlink" href="#building-the-collection" title="Permalink to this heading"></a></h2>
+<h2>Building the collection<a class="headerlink" href="#building-the-collection" title="Link to this heading"></a></h2>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection build .
 </pre></div>
 </div>
 <section id="dependencies">
-<h3>Dependencies<a class="headerlink" href="#dependencies" title="Permalink to this heading"></a></h3>
+<h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p><a class="reference external" href="https://github.com/ansible-middleware/common">middleware_automation.common</a></p></li>
 <li><p><a class="reference external" href="https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html">ansible-posix</a></p></li>
@@ -183,7 +184,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </section>
 </section>
 <section id="license">
-<h2>License<a class="headerlink" href="#license" title="Permalink to this heading"></a></h2>
+<h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
 <p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/blob/main/LICENSE">GNU General Public License v2.0</a></p>
 </section>
 </section>

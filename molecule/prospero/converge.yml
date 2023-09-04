@@ -5,6 +5,7 @@
     wildfly_install_user: 'wildfly'
     wildfly_install_group: "{{ wildfly_install_user }}"
     wildfly_install_use_prospero: True
+    wildfly_version: '27.0.0.Final'
   collections:
     - middleware_automation.wildfly
   tasks:

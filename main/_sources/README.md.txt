@@ -67,6 +67,15 @@ or via the included requirements file:
 <!--start support -->
 <!--end support -->
 
+## Using the collection to customize Wildfly configuration
+
+Regarding the configuration of the Java app server itself, the Ansible collection has a specific strategy, designed to ensure idempotency of the resulting setup, but also ensure Ansible has the capacity to fine-tune, as much as needed, the server.
+
+First, the collection will use a template configuration file as a base (by default, it's the standalone.xml provided with the server files). This file is first copy into wildfly.yml (can be renamed and relocated if needed to). Then, the server starts with this copy in read-only. So to apply any change to the configuration after this point, the user will need to use, either the YAML Config or the JBoss CLI. This ensures that the configuration can change can be performed by Ansible in an idempotent fashion.
+
+Depending on the number of configuration changes and if the server is a new deployment, the user can decide to implement its configuration changes directly in the base template (for instance removing some subsystem from the standalone-full.xml and use this modified file as a base) or perform all the changes using the Yaml Config. The latter is generally the better approach, because it will also work with a running system, while the previous approach requires to deploy again the configuration file.
+
+A last option is to use JBoss cli queries, within the Ansible, but it requires more work as the state has to be managed for Ansible. Which means, a first query will assess the current state of the server (is the configuration already correct?), then a second will be need to update, if needed, the configuration.
 
 ## License
 

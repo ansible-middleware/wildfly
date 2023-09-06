@@ -6,6 +6,15 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.4.0-devel
+============
+
+Bugfixes
+--------
+
+- Eap apply cp def true `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
+- Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
+
 v1.3.4
 ======
 
@@ -18,8 +27,6 @@ Bugfixes
 --------
 
 - Do not re-download elytron adapter if present `#124 <https://github.com/ansible-middleware/wildfly/pull/124>`_
-- Eap apply cp def true `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
-- Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
 
 v1.3.3
 ======

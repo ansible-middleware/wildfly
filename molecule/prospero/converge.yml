@@ -5,7 +5,6 @@
     wildfly_install_user: 'wildfly'
     wildfly_install_group: "{{ wildfly_install_user }}"
     wildfly_install_use_prospero: True
-    wildfly_version: '27.0.0.Final'
   collections:
     - middleware_automation.wildfly
   tasks:
@@ -25,3 +24,4 @@
             name: wildfly_systemd
       when:
         - eap_enable is not defined or not eap_enable
+        - prospero_scenario_enable is defined and prospero_scenario_enable

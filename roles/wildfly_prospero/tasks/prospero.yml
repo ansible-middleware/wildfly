@@ -15,5 +15,5 @@
 
 - name: "Run Proposero manifest exists."
   ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh install --dir {{ wildfly_home }} --fpl wildfly --repositories={{ wildfly_prospero_repos_urls }}
+    {{ wildfly_prospero_home }}/bin/prospero.sh install --dir {{ wildfly_home }} --profile wildfly --repositories={{ wildfly_prospero_repos_urls }}
   register: prospero_run_results   #TODO: changed: not {{ prospero_run_results.rc }}

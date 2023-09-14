@@ -23,5 +23,4 @@
           ansible.builtin.include_role:
             name: wildfly_systemd
       when:
-        - eap_enable is not defined or not eap_enable
-        - prospero_scenario_enable is defined and prospero_scenario_enable
+        - wildfly_prospero_scenario_enable is defined and wildfly_prospero_scenario_enable

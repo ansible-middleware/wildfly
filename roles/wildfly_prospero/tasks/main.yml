@@ -33,12 +33,17 @@
   become: yes
   register: path_to_workdir
 
+- name: "Verify metadata on {{ wildfly_home }} are available."
+  ansible.builtin.assert:
+    that:
+      - path_to_workdir is defined and path_to_workdir.stat is defined
+    quiet: True
+
 - name: "Run Prospero to install server in {{ wildfly_home }}."
   ansible.builtin.include_tasks: run_cli.yml
   vars:
     wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --manifest {{ wildfly_prospero_manifest_url }}"
   when:
-    - wildfly_home is defined # repl by not is install
     - not path_to_workdir.stat.exists
 
 - name: "Determine available updates for server in {{ wildfly_home }}"
@@ -46,25 +51,29 @@
   vars:
     wildfly_prospero_run_args: "update list --dir {{ wildfly_home }}"
   when:
-    - wildfly_home is defined
-    - path_to_workdir.stat.exists
     - wildfly_prospero_update is defined
+    - path_to_workdir.stat.exists
 
 - name: "Check if any updates are available"
   ansible.builtin.command: |
     echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
   register: updates_available
-  ignore_errors: true
-  changed_when: false
+  ignore_errors: True
+  changed_when: False
+
+- name: "Verify results from update query."
+  ansible.builtin.assert:
+    that:
+      - updates_available is defined and updates_available.rc is defined
+    quiet: True
 
 - name: "Run prospero to update server in {{ wildfly_home }}."
   ansible.builtin.include_tasks: run_cli.yml
   vars:
     wildfly_prospero_run_args: "update perform --dir {{ wildfly_home }} -y"
   when:
-    - wildfly_home is defined
     - path_to_workdir.stat.exists
-    - wildfly_prospero_update is defined
+    - wildfly_prospero_update is defined and wildfly_prospero_update
     - updates_available.rc == 1
 
 - name: "Ensure that {{ wildfly_home }} belongs to appropriate user - if defined."

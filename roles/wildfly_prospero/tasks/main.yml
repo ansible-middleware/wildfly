@@ -31,6 +31,8 @@
   become: yes
   register: path_to_workdir
 
+    # --definition=provisioning.xml --channel=channel.yaml, repl profile + manifest
+    # plus custom prospero command
 - name: "Run Prospero to install server in {{ wildfly_home }}."
   ansible.builtin.command: >
     {{ wildfly_prospero_home }}/bin/prospero.sh install \

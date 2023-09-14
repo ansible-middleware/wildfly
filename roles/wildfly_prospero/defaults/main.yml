@@ -2,6 +2,7 @@
 wildfly_prospero_version: 1.1.0.Final
 wildfly_version: 29.0.0.Final
 wildfly_prospero_install_dir: /opt/prospero
+wildfly_prospero_profile_name: wildfly
 wildfly_prospero_home: "/opt/prospero/prospero-{{ wildfly_prospero_version }}"
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_prospero_download_url: "https://repo1.maven.org/maven2/org/wildfly/prospero/prospero-build/{{ wildfly_prospero_version }}/prospero-build-{{ wildfly_prospero_version }}.tar.gz"

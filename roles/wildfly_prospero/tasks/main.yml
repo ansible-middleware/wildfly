@@ -4,8 +4,10 @@
     that:
       - wildfly_home is defined
       - wildfly_prospero_home is defined
+      - wildfly_prospero_manifest_url is defined
+      - wildfly_prospero_profile_name is defined
+      - wildfly_prospero_install_dir is defined
     quiet: True
-      #todo install prospero on target
 
 - name: "Ensure workdir {{ wildfly_prospero_install_dir }} exists."
   ansible.builtin.file:
@@ -16,7 +18,7 @@
     mode: 0750
   become: yes
 
-- name: "Ensure Prospero is properly installed on target."
+- name: "Ensure Prospero is installed on target."
   ansible.builtin.unarchive:
     src: "{{ wildfly_prospero_download_url }}"
     dest: "{{ wildfly_prospero_install_dir }}"
@@ -31,26 +33,18 @@
   become: yes
   register: path_to_workdir
 
-    # --definition=provisioning.xml --channel=channel.yaml, repl profile + manifest
-    # plus custom prospero command
 - name: "Run Prospero to install server in {{ wildfly_home }}."
-  ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh install \
-    --dir {{ wildfly_home }} --profile wildfly \
-    --manifest {{ wildfly_prospero_manifest_url }}
-  register: prospero_run_results
-  become: true
+  ansible.builtin.include_tasks: run_cli.yml
+  vars:
+    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --manifest {{ wildfly_prospero_manifest_url }}"
   when:
     - wildfly_home is defined # repl by not is install
     - not path_to_workdir.stat.exists
 
 - name: "Determine available updates for server in {{ wildfly_home }}"
-  ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh update list \
-    --dir {{ wildfly_home }}
-  register: prospero_run_results
-  become: true
-  changed_when: false
+  ansible.builtin.include_tasks: run_cli.yml
+  vars:
+    wildfly_prospero_run_args: "update list --dir {{ wildfly_home }}"
   when:
     - wildfly_home is defined
     - path_to_workdir.stat.exists
@@ -64,11 +58,9 @@
   changed_when: false
 
 - name: "Run prospero to update server in {{ wildfly_home }}."
-  ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh update perform \
-    --dir {{ wildfly_home }} -y
-  register: prospero_run_results
-  become: true
+  ansible.builtin.include_tasks: run_cli.yml
+  vars:
+    wildfly_prospero_run_args: "update perform --dir {{ wildfly_home }} -y"
   when:
     - wildfly_home is defined
     - path_to_workdir.stat.exists

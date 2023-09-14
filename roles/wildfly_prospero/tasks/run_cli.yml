@@ -5,9 +5,16 @@
       - wildfly_prospero_home is defined and wildfly_prospero_home | length > 0
       - wildfly_prospero_run_args is defined and wildfly_prospero_run_args | length > 0
 
-- name: "Run Prospero to install server in {{ wildfly_home }}."
+- name: "Run tool to install server in {{ wildfly_home }}."
   ansible.builtin.command: >
     {{ wildfly_prospero_home }}/bin/prospero.sh {{ wildfly_prospero_run_args }}
   register: prospero_run_results
   become: true
   changed_when: False # TODO: fix idempotency by parsing tool output
+
+- name: "Verify that tool stdout is available"
+  ansible.builtin.assert:
+    that:
+      - prospero_run_results is defined
+      - prospero_run_results.stdout is defined
+    quiet: True

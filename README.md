@@ -71,6 +71,8 @@ Note that depending on your use case, you might need to redefine some variables.
       vars:
         wildfly_config_base: 'standalone-full.xml'
 
+Overrideable variables are documented in the roles wildfly_install, wildfly_systemd, wildfly_drive
+
 ### Dependencies
 
 * [middleware_automation.common](https://github.com/ansible-middleware/common)

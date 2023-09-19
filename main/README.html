@@ -58,7 +58,8 @@
 <li class="toctree-l3"><a class="reference internal" href="#installing-the-collection">Installing the collection</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#building-the-collection">Building the collection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#building-the-collection">Building the collection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts">Using the collection to install and run Wildfly on target hosts</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
 </li>
@@ -174,6 +175,21 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection build .
 </pre></div>
 </div>
+</section>
+<section id="using-the-collection-to-install-and-run-wildfly-on-target-hosts">
+<h2>Using the collection to install and run Wildfly on target hosts<a class="headerlink" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts" title="Link to this heading"></a></h2>
+<p>The collection comes with a simple playbook that allows to directly install and run Wildfly:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-playbook -i inventory middleware_automation.wildfly.playbook
+</pre></div>
+</div>
+<p>Note that depending on your use case, you might need to redefine some variables. In this case, you can simply import the playbook with the appropriate values:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>---
+- ansible.builtin.import_playbook: middleware_automation.wildfly.playbook
+  vars:
+    wildfly_config_base: &#39;standalone-full.xml&#39;
+</pre></div>
+</div>
+<p>Overrideable variables are documented in the roles wildfly_install, wildfly_systemd, wildfly_drive</p>
 <section id="dependencies">
 <h3>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h3>
 <ul class="simple">

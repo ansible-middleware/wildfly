@@ -1,20 +1,20 @@
 argument_specs:
     main:
         options:
+            # line 2 of defaults/main.yml
             wildfly_firewalld_package_name:
                 default: "firewalld"
                 description: "Package name for firewalld"
                 type: "str"
+
+            # line 3 of defaults/main.yml
             wildfly_app_firewalld_enabled:
-                default: "false"
+                default: "False"
                 description: "Indicate if firewalld is enabled for this collection"
                 type: "str"
+
+            # line 4 of defaults/main.yml
             wildfly_listen_ports:
-                default:
-                  - 8009
-                  - 8080
-                  - 8443
-                  - 4712
-                  - 4713
+                default: "[8009, 8080, 8443, 4712, 4713]"
                 description: "Default ports to open for Wildfly"
                 type: "str"

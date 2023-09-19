@@ -58,6 +58,19 @@ or via the included requirements file:
     $ ansible-galaxy collection build .
 
 
+## Using the collection to install and run Wildfly on target hosts
+
+The collection comes with a simple playbook that allows to directly install and run Wildfly:
+
+    $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
+
+Note that depending on your use case, you might need to redefine some variables. In this case, you can simply import the playbook with the appropriate values:
+
+    ---
+    - ansible.builtin.import_playbook: middleware_automation.wildfly.playbook
+      vars:
+        wildfly_config_base: 'standalone-full.xml'
+
 ### Dependencies
 
 * [middleware_automation.common](https://github.com/ansible-middleware/common)

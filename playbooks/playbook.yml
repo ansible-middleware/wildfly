@@ -1,5 +1,5 @@
 ---
-- name: Converge
+- name: Ensure Wildfly is install and running as a service
   hosts: all
   vars:
 
@@ -19,7 +19,6 @@
     - wildfly_install
     - wildfly_systemd
     - wildfly_driver
-    - wildfly_utils
   tasks:
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:

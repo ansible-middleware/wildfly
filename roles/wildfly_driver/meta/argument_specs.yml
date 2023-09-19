@@ -2,27 +2,27 @@ argument_specs:
     main:
         options:
             jdbc_driver_module_dir:
-                default: "{{ wildfly_home }}/modules/{{ jdbc_driver_module_name | replace('.', '/') }}/main"
+                required: true
                 description: "Path for module installation"
                 type: "str"
             jdbc_driver_version:
-                default: "9.4.1212"
+                required: true
                 description: "Version of jdbc driver to download"
                 type: "str"
             jdbc_driver_jar_filename:
-                default: "postgresql-{{ jdbc_driver_version }}.jar"
+                required: true
                 description: "Filename of jdbc driver to download"
                 type: "str"
             jdbc_driver_jar_url:
-                default: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/postgresql-{{ jdbc_driver_version }}.jar"
+                required: true
                 description: "URL for jdbc driver download"
                 type: "str"
             jdbc_driver_jar_installation_path:
-                default: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
+                required: true
                 description: "Path for jdbc driver installation"
                 type: "str"
             jdbc_driver_module_name:
-                default: "org.postgresql"
+                required: true
                 description: "Name for the jdbc driver module"
                 type: "str"
             wildfly_version:

@@ -49,7 +49,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">wildfly driver role</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly firewalld role</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly firewalld role</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_install.html">wildfly install role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_migration.html">wildfly migration role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_prospero.html">wildfly prospero role</a></li>
@@ -110,6 +113,31 @@
   <section id="wildfly-firewalld-role">
 <h1>wildfly firewalld role<a class="headerlink" href="#wildfly-firewalld-role" title="Link to this heading"></a></h1>
 <p>Install and configure the firewalld service for wildfly application server or JBoss Enterprise Application (EAP)</p>
+<section id="role-defaults">
+<h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Link to this heading"></a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Variable</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Default</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_package_name</span></code></p></td>
+<td class="text-left"><p>Package name for firewalld on target hosts</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">firewalld</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_firewalld_enabled</span></code></p></td>
+<td class="text-left"><p>Indicate if firewalld should be used</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_listen_ports</span></code></p></td>
+<td class="text-left"><p>Indicate if firewalld should be used</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">['8009',</span> <span class="pre">'8080',</span> <span class="pre">'8443',</span> <span class="pre">'8443',</span> <span class="pre">'4712',</span> <span class="pre">'4713']</span></code></p></td>
+</tr>
+</tbody>
+</table>
+</section>
 </section>
 
 

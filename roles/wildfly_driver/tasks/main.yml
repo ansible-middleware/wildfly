@@ -1,50 +1,53 @@
 ---
-- name: Check arguments
+- name: "Check that all required arguments are provided."
   ansible.builtin.assert:
     that:
       - wildfly_driver.module_dir is defined
+      - wildfly_driver.module_name is defined
+      - wildfly_driver.jar_filename is defined
+      - wildfly_driver.jar_installation_path is defined
+      - wildfly_driver.version is defined
     quiet: true
     fail_msg: 'Required variables not provided.'
 
-- name: "Check module directory: {{ wildfly_driver.module_dir }}"
-  ansible.builtin.stat:
-    path: "{{ wildfly_driver.module_dir }}"
-  register: dest_path
-  become: "{{ wildfly_driver_become | defautl('yes') }}"
+- name: "Ensure driver {{ wildfly_driver.module_name }} is deployed."
+  become: "{{ wildfly_driver_become | default('yes') }}"
+  block:
+    - name: "Check module directory: {{ wildfly_driver.module_dir }}"
+      ansible.builtin.stat:
+        path: "{{ wildfly_driver.module_dir }}"
+      register: dest_path
 
-- name: "Set up module dir for JDBC Driver: {{ wildfly_driver.module_dir }}"
-  ansible.builtin.file:
-    path: "{{ wildfly_driver.module_dir }}"
-    state: directory
-    recurse: yes
-    owner: "{{ wildfly_user }}"
-    group: "{{ wildfly_group }}"
-    mode: 0750
-  become: yes
-  when:
-    - not dest_path.stat.exists
+    - name: "Set up module dir for JDBC Driver: {{ wildfly_driver.module_dir }}"
+      ansible.builtin.file:
+        path: "{{ wildfly_driver.module_dir }}"
+        state: directory
+        recurse: yes
+        owner: "{{ wildfly_user }}"
+        group: "{{ wildfly_group }}"
+        mode: 0750
+      when:
+        - not dest_path.stat.exists
 
-- name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
-  ansible.builtin.uri:
-    url: "{{ wildfly_driver.jar_url }}"
-    dest: "{{ wildfly_driver.jar_installation_path }}"
-    group: "{{ wildfly_group }}"
-    owner: "{{ wildfly_user }}"
-    mode: 0640
-    creates: "{{ wildfly_driver.jar_installation_path }}"
-  become: yes
-  when:
-    - wildfly_driver.jar_url is defined
+    - name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
+      ansible.builtin.uri:
+        url: "{{ wildfly_driver.jar_url }}"
+        dest: "{{ wildfly_driver.jar_installation_path }}"
+        group: "{{ wildfly_group }}"
+        owner: "{{ wildfly_user }}"
+        mode: 0640
+        creates: "{{ wildfly_driver.jar_installation_path }}"
+      when:
+        - wildfly_driver.jar_url is defined
 
-- name: Set source template path
-  ansible.builtin.set_fact:
-    module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
+    - name: Set source template path
+      ansible.builtin.set_fact:
+        module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
 
-- name: "Deploy module.xml for JDBC Driver"
-  ansible.builtin.template:
-    src: "{{ module_xml_template }}"
-    dest: "{{ wildfly_driver.module_dir }}/module.xml"
-    group: "{{ wildfly_group }}"
-    owner: "{{ wildfly_user }}"
-    mode: 0640
-  become: yes
+    - name: "Deploy module.xml for JDBC Driver"
+      ansible.builtin.template:
+        src: "{{ module_xml_template }}"
+        dest: "{{ wildfly_driver.module_dir }}/module.xml"
+        group: "{{ wildfly_group }}"
+        owner: "{{ wildfly_user }}"
+        mode: 0640

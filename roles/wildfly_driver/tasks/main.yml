@@ -9,18 +9,6 @@
     quiet: true
     fail_msg: 'Required variables not provided.'
 
-- name: "Determine driver module dir (if not defined)"
-  ansible.builtin.set_fact:
-    wildfly_driver_module_dir: "{{ wildfly_home }}/modules/{{ wildfly_driver.module_name | replace('.', '/') }}/main"
-  when:
-    - not wildfly_driver_module_dir is defined
-
-- name: "Determine jar installation path (if not defined)"
-  ansible.builtin.set_fact:
-    wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
-  when:
-    - not wildfly_driver_jar_installation_path is defined
-
 - name: "Ensure driver {{ wildfly_driver.module_name }} is deployed."
   become: "{{ wildfly_driver_become | default('yes') }}"
   block:

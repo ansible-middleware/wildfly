@@ -2,7 +2,7 @@ argument_specs:
     main:
         options:
             wildfly_driver_module_dir:
-                required: true
+                default: "{{ wildfly_home }}/modules/{{ wildfly_driver.module_name | replace('.', '/') }}/main"
                 description: "Path for module installation"
                 type: "str"
             wildfly_driver_version:
@@ -18,7 +18,6 @@ argument_specs:
                 description: "URL for jdbc driver download"
                 type: "str"
             wildfly_driver_jar_installation_path:
-                required: true
                 description: "Path for jdbc driver installation"
                 type: "str"
             wildfly_driver_module_name:

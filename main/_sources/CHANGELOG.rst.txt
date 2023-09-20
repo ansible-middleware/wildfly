@@ -14,6 +14,7 @@ Bugfixes
 
 - Eap apply cp def true `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
 - Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
+- Update references to ``split`` filter `#140 <https://github.com/ansible-middleware/wildfly/pull/140>`_
 
 v1.3.4
 ======

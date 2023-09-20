@@ -56,6 +56,6 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_home:
-                default: "/opt/jboss_eap/jboss-eap-{{ (eap_version | split('.'))[0:2] | join('.') }}/"
+                default: "/opt/jboss_eap/jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"

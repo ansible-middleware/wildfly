@@ -144,7 +144,7 @@ argument_specs:
                 description: "Root directory for installation"
                 type: "str"
             eap_home:
-                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version | split('.'))[0:2] | join('.') }}/"
+                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"
             eap_offline_install:

@@ -2,15 +2,14 @@
 - name: Ensure Wildfly is install and running as a service
   hosts: all
   vars:
-
     wildfly_version: '29.0.0.Final'
     wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
-    jdbc_driver_module_dir: "{{ wildfly_home }}/modules/{{ jdbc_driver_module_name | replace('.', '/') }}/main"
-    jdbc_driver_version: 9.4.1212
-    jdbc_driver_jar_filename: "postgresql-{{ jdbc_driver_version }}.jar"
-    jdbc_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ jdbc_driver_version }}/postgresql-{{ jdbc_driver_version }}.jar"
-    jdbc_driver_jar_installation_path: "{{ jdbc_driver_module_dir }}/{{ jdbc_driver_jar_filename }}"
-    jdbc_driver_module_name: org.postgresql
+
+      #wildfly_driver_module_dir: "{{ wildfly_home }}/modules/{{ wildfly_driver_module_name | replace('.', '/') }}/main"
+      #wildfly_driver_jar_filename: "postgresql-{{ wildfly_driver_version }}.jar"
+      #wildfly_driver_jar_url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ wildfly_driver_version }}/postgresql-{{ wildfly_driver_version }}.jar"
+      #wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
+    postgres_driver_version: 9.4.1212
   collections:
     - middleware_automation.wildfly
     - middleware_automation.common
@@ -18,14 +17,16 @@
   roles:
     - wildfly_install
     - wildfly_systemd
-    - wildfly_driver
   tasks:
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:
         name: wildfly_driver
       vars:
-        jdbc_driver_module_dir: "{{ wildfly_home }}/modules/org/mariadb/main"
-        jdbc_driver_version: 2.7.4
-        jdbc_driver_jar_filename: "mariadb-java-client-{{ jdbc_driver_version }}.jar"
-        jdbc_driver_jar_url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ jdbc_driver_version }}/mariadb-java-client-{{ jdbc_driver_version }}.jar"
-        jdbc_driver_module_name: "org.mariadb"
+        wildfly_driver_module_name: "{{ item.name }}"
+        wildfly_driver_version: "{{ item.version }}"
+        wildfly_driver_module_dir: "{{ wildfly_home }}/modules/{{ item.name | replace('.', '/') }}/main"
+        wildfly_driver_jar_filename: "{{ item.jar_file }}"
+        wildfly_driver_jar_url: "{{ item.url }}"
+        wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
+      loop:
+        - { version: "{{ postgres_driver_version }}", name: 'org.postgresql', jar_file: "postgresql-{{ postgres_driver_version }}.jar", url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ postgres_driver_version }}/postgresql-{{ postgres_driver_version }}.jar" }

@@ -1,8 +1,6 @@
 ---
 wildfly_driver:
   module_name: "{{ wildfly_driver_module_name }}"
-  module_dir: "{{ wildfly_driver_module_dir }}"
   version: "{{ wildfly_driver_version }}"
   jar_filename: "{{ wildfly_driver_jar_filename }}"
   jar_url: "{{ wildfly_driver_jar_url }}"
-  jar_installation_path: "{{ wildfly_driver_jar_installation_path }}"

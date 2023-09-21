@@ -3,6 +3,7 @@
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
   become: yes
   block:
+
   - name: Create YAML configuration directory
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}"
@@ -11,6 +12,7 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
     notify: "Restart Wildfly"
+
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -19,10 +21,12 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
     notify: "Restart Wildfly"
+
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
   become: yes
   block:
+
   - name: Create YAML configuration directory
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}"
@@ -30,6 +34,7 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
+
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -38,6 +43,7 @@
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
     notify: "Restart Wildfly"
+
 - name: Deploy YAML configuration files
   ansible.builtin.template:
     src: "{{ wildfly_yml_configs_repository }}{{ file }}"

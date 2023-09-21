@@ -286,3 +286,12 @@ releases:
     - 140.yaml
     - 142.yaml
     release_date: '2023-09-21'
+  1.4.2:
+    changes:
+      minor_changes:
+      - 'Remove unrequired vars from playbooks/playbook.yml `#144 <https://github.com/ansible-middleware/wildfly/pull/144>`_
+
+        '
+    fragments:
+    - 144.yaml
+    release_date: '2023-09-21'

@@ -6,6 +6,14 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.4.2
+======
+
+Minor Changes
+-------------
+
+- Remove unrequired vars from playbooks/playbook.yml `#144 <https://github.com/ansible-middleware/wildfly/pull/144>`_
+
 v1.4.0
 ======
 

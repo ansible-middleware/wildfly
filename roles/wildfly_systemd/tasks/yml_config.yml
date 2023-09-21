@@ -1,6 +1,7 @@
 ---
 - name: Enable extension in wildfly
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
+  become: yes
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:
@@ -9,7 +10,6 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
-    become: yes
     notify: "Restart Wildfly"
   - name: Enable YAML configuration extension
     ansible.builtin.template:
@@ -18,10 +18,10 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
-    become: yes
     notify: "Restart Wildfly"
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
+  become: yes
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:
@@ -30,7 +30,6 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
-    become: yes
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
@@ -38,7 +37,6 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
-    become: yes
     notify: "Restart Wildfly"
 - name: Deploy YAML configuration files
   ansible.builtin.template:
@@ -50,5 +48,4 @@
   loop: "{{ wildfly_yml_configs | flatten }}"
   loop_control:
     loop_var: file
-  become: yes
   notify: "Restart Wildfly"

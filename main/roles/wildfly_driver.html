@@ -130,29 +130,29 @@ the server modules directory tree. It comes with a template for the main.xml
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_dir</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_module_dir</span></code></p></td>
 <td class="text-left"><p>Path for module installation</p></td>
-<td class="text-left"><p>`{{ wildfly_home }}/modules/{{ jdbc_driver_module_name</p></td>
+<td class="text-left"><p>`{{ wildfly_home }}/modules/{{ wildfly_driver_module_name</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_version</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_version</span></code></p></td>
 <td class="text-left"><p>Version of jdbc driver to download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9.4.1212</span></code></p></td>
+<td class="text-left"><p>``</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_filename</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_filename</span></code></p></td>
 <td class="text-left"><p>Filename of jdbc driver to download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
+<td class="text-left"><p>``</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_url</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_url</span></code></p></td>
 <td class="text-left"><p>URL for jdbc driver download</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}/postgresql-{{</span> <span class="pre">jdbc_driver_version</span> <span class="pre">}}.jar</span></code></p></td>
+<td class="text-left"><p>``</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_jar_installation_path</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_installation_path</span></code></p></td>
 <td class="text-left"><p>Path for jdbc driver installation</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">jdbc_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">jdbc_driver_jar_filename</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p>``</p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jdbc_driver_module_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_module_name</span></code></p></td>
 <td class="text-left"><p>Name for the jdbc driver module</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">org.postgresql</span></code></p></td>
+<td class="text-left"><p>``</p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
 <td class="text-left"><p>Wildfly version to install</p></td>

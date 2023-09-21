@@ -2,8 +2,6 @@
 - name: Ensure Wildfly is install and running as a service
   hosts: all
   vars:
-    wildfly_version: '29.0.0.Final'
-    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
     postgres_driver_version: 9.4.1212
     mariadb_driver_version: 3.2.0
   collections:

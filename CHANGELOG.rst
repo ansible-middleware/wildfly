@@ -6,6 +6,30 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.4.0
+======
+
+Major Changes
+-------------
+
+- wildfly_driver: remove defaults in favor of required parameters `#138 <https://github.com/ansible-middleware/wildfly/pull/138>`_
+- wildfly_driver: rename parameters from ``jdbc_*`` to ``wildfly_driver_*`` `#142 <https://github.com/ansible-middleware/wildfly/pull/142>`_
+
+Minor Changes
+-------------
+
+- Cleanup and reorganize Prospero playbooks `#136 <https://github.com/ansible-middleware/wildfly/pull/136>`_
+- Update to Wildfly 29 `#135 <https://github.com/ansible-middleware/wildfly/pull/135>`_
+
+Bugfixes
+--------
+
+- Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
+- Set ``wildfly_offline_install`` default to False, ``eap_apply_cp`` to True `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
+- Update references to ``split`` filter `#140 <https://github.com/ansible-middleware/wildfly/pull/140>`_
+- Update yaml_configuration syntax (became less permissive) `#130 <https://github.com/ansible-middleware/wildfly/pull/130>`_
+- Workaround java-11 bugzilla #2224411 `#127 <https://github.com/ansible-middleware/wildfly/pull/127>`_
+
 v1.3.4
 ======
 

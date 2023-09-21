@@ -9,12 +9,23 @@ This changelog describes changes after version 0.0.7.
 v1.4.0-devel
 ============
 
+Major Changes
+-------------
+
+- wildfly_driver: remove defaults in favor of required parameters `#138 <https://github.com/ansible-middleware/wildfly/pull/138>`_
+
+Minor Changes
+-------------
+
+- Update to Wildfly 29 `#135 <https://github.com/ansible-middleware/wildfly/pull/135>`_
+
 Bugfixes
 --------
 
-- Eap apply cp def true `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
 - Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
+- Set ``wildfly_offline_install`` default to False, ``eap_apply_cp`` to True `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
 - Update references to ``split`` filter `#140 <https://github.com/ansible-middleware/wildfly/pull/140>`_
+- Workaround java-11 bugzilla #2224411 `#127 <https://github.com/ansible-middleware/wildfly/pull/127>`_
 
 v1.3.4
 ======

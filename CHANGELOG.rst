@@ -6,6 +6,14 @@ middleware_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.4.3
+======
+
+Minor Changes
+-------------
+
+- Use alternatives instead of rpm to determine java_home `#149 <https://github.com/ansible-middleware/wildfly/pull/149>`_
+
 v1.4.2
 ======
 

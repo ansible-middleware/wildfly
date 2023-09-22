@@ -15,4 +15,4 @@ jobs:
     with:
       fqcn: 'middleware_automation/wildfly'
       molecule_tests: >-
-        [ "default", "prospero", "yaml_config_validation" ]
+        [ "default", "prospero", "yaml_config_validation", "install_options" ]

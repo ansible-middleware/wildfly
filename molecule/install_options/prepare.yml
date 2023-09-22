@@ -1,0 +1,17 @@
+---
+- name: Prepare
+  hosts: all
+  tasks:
+
+    - name: "Ensure required packages are installed."
+      ansible.builtin.yum:
+        name:
+          - sudo
+          - java-17-openjdk-headless
+          - procps-ng
+          - tzdata-java
+        state: present
+
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"

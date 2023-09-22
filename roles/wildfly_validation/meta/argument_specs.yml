@@ -21,8 +21,12 @@ argument_specs:
                 default: "29.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
+            wildfly_install_workdir:
+                default: "/opt/wildfly/"
+                description: "Root directory for installation, path where the install zipfile is extracted"
+                type: "str"
             wildfly_home:
-                default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
                 description: "Wildfly installation directory"
                 type: "str"
             wildfly_standard_sockets_validation_query:

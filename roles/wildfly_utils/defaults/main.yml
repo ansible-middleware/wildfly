@@ -6,5 +6,6 @@ wildfly_no_restart_after_patch:  False
 wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
 wildfly_version: '29.0.0.Final'
-wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+wildfly_install_workdir: '/opt/wildfly/'
+wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 jboss_home: "{{ wildfly_home }}"

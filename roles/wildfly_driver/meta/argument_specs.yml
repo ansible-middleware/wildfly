@@ -18,6 +18,7 @@ argument_specs:
                 description: "URL for jdbc driver download"
                 type: "str"
             wildfly_driver_jar_installation_path:
+                default: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
                 description: "Path for jdbc driver installation"
                 type: "str"
             wildfly_driver_module_name:

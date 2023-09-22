@@ -19,7 +19,7 @@ argument_specs:
             wildfly_install_workdir:
                 # line 5 of wildfly_install/defaults/main.yml
                 default: "/opt/wildfly/"
-                description: "Root directory for installation"
+                description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
             wildfly_home:
                 # line 6 of wildfly_install/defaults/main.yml
@@ -71,6 +71,7 @@ argument_specs:
                   - unzip
                   - tar
                   - sudo
+                  - tzdata-java
                 description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
                 type: "list"
     downstream:
@@ -101,7 +102,7 @@ argument_specs:
                 type: "str"
             eap_install_workdir:
                 default: "/opt/jboss_eap/"
-                description: "Root directory for installation"
+                description: "Root directory for installation, where the install zipfile is extracted"
                 type: "str"
             eap_home:
                 default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"

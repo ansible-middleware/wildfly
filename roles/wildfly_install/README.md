@@ -18,8 +18,8 @@ Role Defaults
 |`wildfly_version`| Wildfly version to install | `29.0.0.Final` |
 |`wildfly_archive_filename`| Wildfly download archive name | `wildfly-{{ wildfly_version }}.zip` |
 |`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
-|`wildfly_install_workdir`| TODO document argument | `/opt/wildfly/` |
-|`wildfly_home`| Wildfly installation directory | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
+|`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
+|`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
 |`wildfly_install_download_url`| Wildfly download URL | `{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}` |
 |`wildfly_archive_dir`| Target download directory | `{{ wildfly_install_workdir }}` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |

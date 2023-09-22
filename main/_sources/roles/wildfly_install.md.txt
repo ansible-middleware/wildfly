@@ -1,8 +1,8 @@
 wildfly install role
 ====================
 
-A role to automate the installation the Wildfly JEE server, including retrieving the
-source archive.
+A role to automate the download and installation of the Wildfly JEE server.
+
 
 Requirements
 ------------
@@ -37,7 +37,6 @@ Role Variables
 
 <!--end argument_specs-->
 
-## Dependencies
 
 ## Example Playbooks
 

@@ -57,6 +57,7 @@
 <li class="toctree-l2"><a class="reference internal" href="wildfly_systemd.html">wildfly systemd role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html">wildfly uninstall role</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly utils role</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#entrypoints">Entrypoints</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
 </ul>
@@ -115,7 +116,16 @@
 <h1>wildfly utils role<a class="headerlink" href="#wildfly-utils-role" title="Link to this heading"></a></h1>
 <p>This roles regroups reusable content to manage the server, but also dealing with JBoss EAP specific
 feature (such as apply cumulative patches).</p>
+<section id="entrypoints">
+<h2>Entrypoints<a class="headerlink" href="#entrypoints" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>download_from_rhn: download resources from the Red Hat Customer Portal via the JBossNetwork API</p></li>
+<li><p>apply_cp: download and patch EAP</p></li>
+<li><p>keycloak_adapter: download and install the keycloak adapter module</p></li>
+<li><p>jboss_cli: execute arbitrary cli commands of command files</p></li>
+</ul>
 <!--start argument_specs-->
+</section>
 <section id="role-defaults">
 <h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Link to this heading"></a></h2>
 <table class="docutils align-default">
@@ -155,9 +165,17 @@ feature (such as apply cumulative patches).</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">query</span></code></p></td>
-<td class="text-left"><p>The command to sed to jboss-cli when tasks from jboss_cli.yml are used</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Yes</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_query</span></code></p></td>
+<td class="text-left"><p>The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_file</span></code></p></td>
+<td class="text-left"><p>The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_timeout</span></code></p></td>
+<td class="text-left"><p>Seconds to wait for jboss-cli connection to server</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
 </tbody>
 </table>

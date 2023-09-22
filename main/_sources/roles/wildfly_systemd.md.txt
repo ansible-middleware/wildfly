@@ -51,13 +51,11 @@ Role Variables
 |`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `No` |
 <!--end argument_specs-->
 
-Dependencies
-------------
 
 Example Playbook
 ----------------
 
-```
+```yaml
   tasks:
 
     - name: "Set up for WildFly instance {{ item }}"
@@ -75,9 +73,7 @@ Example Playbook
       loop: "{{ range(0,3) | list }}"
 ```
 
-
-License
--------
+## License
 
 GPL2
 

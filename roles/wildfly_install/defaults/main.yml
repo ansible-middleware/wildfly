@@ -10,7 +10,7 @@ wildfly_config_base: 'standalone.xml'
 wildfly_config_custom_file: ''
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_java_package_name: 'java-17-openjdk-headless'
+wildfly_java_package_name: 'java-11-openjdk-headless'
 wildfly_install_force_reinstall_config_base: false
 
 # whether to install from local archive

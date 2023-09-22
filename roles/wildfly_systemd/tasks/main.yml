@@ -154,6 +154,12 @@
   when:
     - not service_systemd_env_file is defined
 
+- name: Determine JAVA_HOME for selected JVM
+  ansible.builtin.set_fact:
+    rpm_java_home: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
+  when: ansible_os_family == 'RedHat'
+  become: yes
+
 - name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
   ansible.builtin.shell: |
     set -o pipefail
@@ -161,7 +167,8 @@
   args:
     executable: /bin/bash
   changed_when: False
-  register: rpm_java_home
+  register: rpm_java_home_other
+  when: not ansible_os_family == 'RedHat'
   become: yes
 
 - name: Set systemd unit file destination
@@ -180,7 +187,7 @@
   register: daemon_reload_env
   become: yes
   vars:
-    wildfly_rpm_java_home: "{{ rpm_java_home.stdout }}"
+    wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
 
 - name: "Deploy Systemd configuration for service: {{ service_systemd_conf_file }}"
   ansible.builtin.template:

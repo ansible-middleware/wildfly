@@ -6,4 +6,5 @@
   tasks:
     - name: Verify we are running on requested jvm
       ansible.builtin.shell: |
-        ps -ef | grep /usr/lib/jvm/java-11 | grep -v grep
+        ps -ef | grep /etc/alternatives/jre_11/bin/java | grep -v grep
+      changed_when: False

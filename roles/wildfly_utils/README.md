@@ -4,6 +4,15 @@ wildfly utils role
 This roles regroups reusable content to manage the server, but also dealing with JBoss EAP specific
 feature (such as apply cumulative patches).
 
+
+Entrypoints
+-----------
+
+* download_from_rhn: download resources from the Red Hat Customer Portal via the JBossNetwork API
+* apply_cp: download and patch EAP
+* keycloak_adapter: download and install the keycloak adapter module
+* jboss_cli: execute arbitrary cli commands of command files
+
 <!--start argument_specs-->
 Role Defaults
 -------------
@@ -20,5 +29,7 @@ Role Variables
 
 | Variable | Description | Required |
 |:---------|:------------|:---------|
-|`query`| The command to sed to jboss-cli when tasks from jboss_cli.yml are used | `Yes` |
+|`jboss_cli_query`| The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively | `False` |
+|`jboss_cli_file`| The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively | `False` |
+|`jboss_cli_timeout`| Seconds to wait for jboss-cli connection to server | `False` |
 <!--end argument_specs-->

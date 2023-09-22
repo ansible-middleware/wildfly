@@ -139,6 +139,14 @@ and the associated systemd service is currently running.</p>
 <td class="text-left"><p>Systemd service name for wildfly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_workdir</span></code></p></td>
+<td class="text-left"><p>Wildfly installation directory (where the server files are unzipped)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<td class="text-left"><p>Wildfly installation directory (WILDFLY_HOME)</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </section>

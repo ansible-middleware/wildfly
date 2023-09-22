@@ -1,0 +1,7 @@
+---
+- import_playbook: ../../playbooks/playbook.yml
+  vars:
+    wildfly_install_workdir: /apps
+    wildfly_user: mware
+    wildfly_group: sysgroup
+    wildfly_java_package_name: java-17-openjdk-headless

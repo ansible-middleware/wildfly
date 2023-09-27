@@ -94,7 +94,7 @@ A last option is to use JBoss cli queries, within the Ansible, but it requires m
 
 ## A note on domain mode
 
-This collection does not provides any support to use Wildfly's domain mode. The rationale behind this decision is that this Wildfly feature overlaps a lot with Ansible and it's unlikely, and cumbersome use case, to combine both. So, for simplicity sake, this collection focus only on standalone deployment of Wildfly JEE servers.
+This collection does not provides any support to use Wildfly's domain mode. The rationale behind this decision is that this Wildfly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of Wildfly JEE servers.
 
 ## License
 

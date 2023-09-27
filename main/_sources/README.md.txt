@@ -92,6 +92,10 @@ Depending on the number of configuration changes and if the server is a new depl
 
 A last option is to use JBoss cli queries, within the Ansible, but it requires more work as the state has to be managed for Ansible. Which means, a first query will assess the current state of the server (is the configuration already correct?), then a second will be need to update, if needed, the configuration.
 
+## A note on domain mode
+
+This collection does not provides any support to use Wildfly's domain mode. The rationale behind this decision is that this Wildfly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of Wildfly JEE servers.
+
 ## License
 
 [GNU General Public License v2.0](https://github.com/ansible-middleware/wildfly/blob/main/LICENSE)

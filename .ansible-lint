@@ -38,6 +38,7 @@ warn_list:
   - no-changed-when
   - key-order[task]
   - var-naming[no-role-prefix]
+  - meta-runtime[unsupported-version]
 
 use_default_rules: true
 parseable: true

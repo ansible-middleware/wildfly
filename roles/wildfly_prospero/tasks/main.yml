@@ -4,7 +4,7 @@
     that:
       - wildfly_home is defined
       - wildfly_prospero_home is defined
-      - wildfly_prospero_manifest_url is defined
+      - wildfly_install_manifest_dir is defined
       - wildfly_prospero_profile_name is defined
       - wildfly_prospero_install_dir is defined
     quiet: True
@@ -39,10 +39,26 @@
       - path_to_workdir is defined and path_to_workdir.stat is defined
     quiet: True
 
+- name: "Create manifests folder"
+  ansible.builtin.file:
+    path: "{{ wildfly_install_manifest_dir }}"
+    state: directory
+    group: "{{ wildfly_install.group }}"
+    owner: "{{ wildfly_install.user }}"
+    mode: '0640'
+
+- name: "Generate Wildfly manifest"
+  ansible.builtin.template:
+    src: "templates/manifest.yaml.j2"
+    dest: "{{ wildfly_install_manifest_dir }}/wildfly-{{ wildfly_version }}-manifest.yaml"
+    group: "{{ wildfly_install.group }}"
+    owner: "{{ wildfly_install.user }}"
+    mode: 0750
+
 - name: "Run Prospero to install server in {{ wildfly_home }}."
   ansible.builtin.include_tasks: run_cli.yml
   vars:
-    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --manifest {{ wildfly_prospero_manifest_url }}"
+    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --manifest {{ wildfly_install_manifest_dir }}/wildfly-{{ wildfly_version }}-manifest.yaml"
   when:
     - not path_to_workdir.stat.exists
 

@@ -1,0 +1,11 @@
+schemaVersion: 1.0.0
+streams:
+  - groupId: org.wildfly
+    artifactId: wildfly-galleon-pack
+    version: {{ wildfly_version }}
+  - groupId: org.wildfly
+    artifactId: wildfly-ee-galleon-pack
+    version: {{ wildfly_version }}
+  - groupId: org.wildfly.galleon-plugins
+    artifactId: "*"
+    versionPattern: "6\\.4\\..*\\.Final"

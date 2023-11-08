@@ -12,6 +12,7 @@
   ansible.builtin.slurp:
     src: "{{ wildfly_home }}/.latest_applied_patch.txt"
   register: slurped_eap_version
+  become: yes
   when:
     - wildfly_enable_yml_config
     - eap_enable is defined and eap_enable

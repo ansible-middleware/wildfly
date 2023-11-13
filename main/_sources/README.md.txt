@@ -27,7 +27,7 @@ Plugins and modules within a collection may be tested with only specific Ansible
 <!--end requires_ansible-->
 
 ## Included content
-
+<!--start roles_paths -->
 ### Roles
 
 * [wildfly_install](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_install/README.md): download and install
@@ -36,7 +36,7 @@ Plugins and modules within a collection may be tested with only specific Ansible
 * [wildfly_utils](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_utils/README.md): utilities related to EAP
 * [wildfly_validation](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_validation/README.md): validate deployed installation
 * [wildfly_uninstall](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_uninstall/README.md): restore status pre wildfly_install
-
+<!--end roles_paths -->
 
 ### Installing the collection
 

@@ -5,6 +5,7 @@
   vars:
     jboss_cli_query: "{{ wildfly_standard_sockets_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
+    jboss_cli_controller_port: "{{ wildfly_controller_port }}"
 
 - name: "Display result of standard-sockets configuration settings"
   ansible.builtin.assert:
@@ -23,6 +24,7 @@
   vars:
     jboss_cli_query: "{{ wildfly_ejb_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
+    jboss_cli_controller_port: "{{ wildfly_controller_port }}"
 
 - name: "Display result of ejb configuration settings"
   ansible.builtin.assert:
@@ -41,6 +43,7 @@
   vars:
     jboss_cli_query: "{{ wildfly_ee_validation_query }}"
     jboss_home: "{{ wildfly_home }}"
+    jboss_cli_controller_port: "{{ wildfly_controller_port }}"
   register: ee_result
 
 - name: "Display result of ee configuration settings"

@@ -7,7 +7,7 @@
 
 - name: "Run tool to install server in {{ wildfly_home }}."
   ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/prospero.sh {{ wildfly_prospero_run_args }}
+    {{ wildfly_prospero_home }}/bin/{{ wildfly_prospero_name }}.sh {{ wildfly_prospero_run_args }}
   register: prospero_run_results
   become: true
   changed_when: False # TODO: fix idempotency by parsing tool output

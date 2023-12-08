@@ -46,6 +46,9 @@
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
     mode: '0640'
+  become: yes
+  when:
+    - not eap_enable is defined or not eap_enable
 
 - name: "Generate Wildfly manifest"
   ansible.builtin.template:
@@ -54,11 +57,35 @@
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
     mode: 0750
+  become: yes
+  when:
+    - not eap_enable is defined or not eap_enable
+
+- name: Set install command arguments
+  block:
+    - name: Set default command arguments
+      ansible.builtin.set_fact:
+        prospero_command_args: ''
+    - name: Override repositories parameter
+      ansible.builtin.set_fact:
+        prospero_command_args: "{{ prospero_command_args }} --repositories {{ eap_prospero_override_repos }}"
+      when:
+        - eap_prospero_override_repos is defined
+    - name: Override provisioning manifest
+      ansible.builtin.set_fact:
+        prospero_command_args: "{{ prospero_command_args }} --manifest {{ wildfly_install_manifest_dir }}/wildfly-{{ wildfly_version }}-manifest.yaml"
+      when:
+        - not eap_enable is defined or not eap_enable
+    - name: Display prospero command arguments
+      ansible.builtin.debug: 
+        var: prospero_command_args
+      when:
+        - wildfly_prospero_debug_enabled is defined and wildfly_prospero_debug_enabled
 
 - name: "Run Prospero to install server in {{ wildfly_home }}."
   ansible.builtin.include_tasks: run_cli.yml
   vars:
-    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --manifest {{ wildfly_install_manifest_dir }}/wildfly-{{ wildfly_version }}-manifest.yaml"
+    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --accept-license-agreements {{ prospero_command_args }}"
   when:
     - not path_to_workdir.stat.exists
 
@@ -76,12 +103,16 @@
   register: updates_available
   ignore_errors: True
   changed_when: False
+  when:
+    - wildfly_prospero_update is defined
 
 - name: "Verify results from update query."
   ansible.builtin.assert:
     that:
       - updates_available is defined and updates_available.rc is defined
     quiet: True
+  when:
+    - wildfly_prospero_update is defined
 
 - name: "Run prospero to update server in {{ wildfly_home }}."
   ansible.builtin.include_tasks: run_cli.yml
@@ -96,7 +127,8 @@
   ansible.builtin.file:
     path: "{{ wildfly_home }}"
     recurse: yes
-    owner: "{{ wildfly_install_user }}"
-    group: "{{ wildfly_install_group | default(wildfly_install_user) }}"
+    owner: "{{ wildfly_install.user }}"
+    group: "{{ wildfly_install.group | default(wildfly_install.user) }}"
+  become: yes
   when:
-    - wildfly_install_user is defined
+    - wildfly_install.user is defined

@@ -18,14 +18,8 @@
     mode: 0750
   become: yes
 
-- name: "Ensure Prospero is installed on target."
-  ansible.builtin.unarchive:
-    src: "{{ wildfly_prospero_download_url }}"
-    dest: "{{ wildfly_prospero_install_dir }}"
-    owner: "{{ wildfly_install_user | default(omit) }}"
-    group: "{{ wildfly_install_group | default(omit) }}"
-    remote_src: yes
-  become: yes
+- name: "Install Prospero"
+  ansible.builtin.include_tasks: install_prospero.yml
 
 - name: "Read target directory information: {{ wildfly_home }}"
   ansible.builtin.stat:

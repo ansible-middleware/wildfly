@@ -54,16 +54,17 @@
 
 - name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
   ansible.builtin.set_fact:
-    wildfly_packages_list: "{{ wildfly_prereqs_packages + [ wildfly_install.java.package_name ] }}"
+    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ wildfly_install.java.package_name ] }}"
   when:
     - wildfly_install.java is defined
     - wildfly_install.java.package_name is defined
+    - wildfly_install.java.package_name | length > 0
 
-- name: "Install required packages ({{ wildfly_packages_list | length }})"
+- name: "Install required packages ({{ wildfly_prereqs_packages | length }})"
   ansible.builtin.package:
-    name: "{{ wildfly_packages_list }}"
+    name: "{{ wildfly_prereqs_packages }}"
     state: present
   become: yes
   when:
-    - wildfly_packages_list | length > 0
+    - wildfly_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined

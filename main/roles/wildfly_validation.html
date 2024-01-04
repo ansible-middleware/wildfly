@@ -62,6 +62,10 @@
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly validation role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-playbook">Example playbook</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wildfly-service-using-an-offset-port">Wildfly service using an offset port</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -149,6 +153,14 @@ and the associated systemd service is currently running.</p>
 <td class="text-left"><p>Wildfly installation directory (WILDFLY_HOME)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_http_port</span></code></p></td>
+<td class="text-left"><p>Port to verify the Wildfly server is listening to requests</p></td>
+<td class="text-left"><p>8080</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_controller_port</span></code></p></td>
+<td class="text-left"><p>Port to use to verify CLI connection to the Wildfly server</p></td>
+<td class="text-left"><p>9990</p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -158,6 +170,26 @@ and the associated systemd service is currently running.</p>
 <li><p>No required variables</p></li>
 </ul>
 <!--end argument_specs-->
+</section>
+<section id="example-playbook">
+<h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
+<section id="wildfly-service-using-an-offset-port">
+<h3>Wildfly service using an offset port<a class="headerlink" href="#wildfly-service-using-an-offset-port" title="Link to this heading"></a></h3>
+<p>Validate a Wildfly service that was created using port offset of 100.</p>
+<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Verify</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly</span>
+<span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_validation</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">wildfly_http_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">8180</span>
+<span class="w">    </span><span class="nt">wildfly_controller_port</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10090</span>
+</pre></div>
+</div>
+</section>
 </section>
 </section>
 
@@ -172,7 +204,7 @@ and the associated systemd service is currently running.</p>
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2023, Red Hat, Inc..</p>
+    <p>&#169; Copyright 2024, Red Hat, Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

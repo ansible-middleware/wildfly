@@ -9,6 +9,14 @@ This changelog describes changes after version 0.0.7.
 v1.4.4-devel
 ============
 
+Minor Changes
+-------------
+
+- AMWSUP-17 EAP Ansible Hub documentation link broken `#161 <https://github.com/ansible-middleware/wildfly/pull/161>`_
+- Download prospero on controller node and copy it to target servers `#167 <https://github.com/ansible-middleware/wildfly/pull/167>`_
+- Extracting prospero's name `#165 <https://github.com/ansible-middleware/wildfly/pull/165>`_
+- Validate the service running on an offset port `#162 <https://github.com/ansible-middleware/wildfly/pull/162>`_
+
 v1.4.3
 ======
 

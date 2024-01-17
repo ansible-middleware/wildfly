@@ -8,3 +8,4 @@
     wildfly_yml_configs:
         - yaml_configuration.yml.j2
         - yaml_socket_bindings.yml.j2
+        - yaml_infinispan.yml.j2

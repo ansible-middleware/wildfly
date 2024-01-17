@@ -1,0 +1,78 @@
+wildfly-configuration:
+  subsystem:
+    infinispan:
+      cache-container:
+        name: "server"
+        default-cache: "default"
+        module: "org.wildfly.clustering.server"
+        local-cache:
+          name: "default"
+          transaction:
+            mode: "BATCH"
+      cache-container:
+        name: "sessions"
+        default-cache: "passivation"
+        module: "org.wildfly.clustering.web.infinispan"
+        local-cache:
+          name: "passivation"
+          locking:
+            isolation: "REPEATABLE_READ"
+          transaction:
+            mode: "BATCH"
+          file-store:
+            passivation: "true"
+            purge: "false"
+        local-cache:
+          name: "persistent"
+          locking:
+            isolation: "REPEATABLE_READ"
+          transaction:
+            mode: "BATCH"
+          file-store:
+            passivation: "false"
+            purge: "false"
+      cache-container:
+        name: "ejb"
+        aliases: "sfsb"
+        default-cache: "passivation"
+        module: "org.wildfly.clustering.ejb.infinispan"    
+        local-cache:
+          name: "passivation"
+          locking:
+            isolation: "REPEATABLE_READ"
+          transaction:
+            mode: "BATCH"
+          file-store:
+            passivation: "true"
+            purge: "false"
+        local-cache:
+          name: "persistent"
+          locking:
+            isolation: "REPEATABLE_READ"
+          transaction:
+            mode: "BATCH"
+          file-store:
+            passivation: "false"
+            purge: "false"
+      cache-container:
+        name: "hibernate2lc"
+        default-cache: "local-query"
+        module: "org.hibernate.infinispan"
+        local-cache:
+          name: "entity"
+          transaction:
+            mode: "NON_XA"
+          eviction:
+            strategy: "LRU"
+            max-entries: "10000"
+          expiration:
+            max-idle: "100000" 
+        local-cache:
+          name: "local-query"
+          eviction:
+            strategy: "LRU"
+            max-entries: "10000"
+          expiration:
+            max-idle: "100000" 
+        local-cache:
+          name: "timestamps"

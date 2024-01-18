@@ -18,7 +18,7 @@ Yes, once Ansible is installed on your computer, you can simply run the followin
 <!--start requires_ansible-->
 ## Ansible version compatibility
 
-This collection has been tested against following Ansible versions: **>=2.9.10**.
+This collection has been tested against following Ansible versions: **>=2.14.0**.
 
 
 ## Install
@@ -52,6 +52,8 @@ or via the included requirements file:
 
     $ ansible-galaxy collection install -r requirements.yml
 
+<!--start rhn_credentials -->
+<!--end rhn_credentials -->
 
 ## Building the collection
 

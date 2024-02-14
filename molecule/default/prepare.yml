@@ -4,6 +4,7 @@
   tasks:
 
     - name: "Ensure required packages are installed."
+      become: yes
       ansible.builtin.yum:
         name:
           - sudo

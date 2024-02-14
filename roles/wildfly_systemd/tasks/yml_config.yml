@@ -44,7 +44,8 @@
       mode: 0644
     notify: "Restart Wildfly"
 
-- name: Deploy YAML configuration files
+- name: "Deploy YAML configuration files: {{ wildfly_yml_configs | flatten }}"
+  become: yes
   ansible.builtin.template:
     src: "{{ wildfly_yml_configs_repository }}{{ file }}"
     dest: "{{ basedir }}/{{ file | regex_replace('.j2', '') }}"

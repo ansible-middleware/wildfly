@@ -1,6 +1,6 @@
-===========================================
-middleware_automation.wildfly Release Notes
-===========================================
+============================================
+middleware\_automation.wildfly Release Notes
+============================================
 
 .. contents:: Topics
 
@@ -147,7 +147,6 @@ Release Summary
 
 Patch release with internal changes only.
 
-
 v1.2.0
 ======
 
@@ -231,7 +230,6 @@ Release Summary
 
 Minor enhancements, and documentation updates.
 
-
 v1.0.1
 ======
 
@@ -240,7 +238,6 @@ Release Summary
 
 Minor enhancements, and documentation updates.
 
-
 v1.0.0
 ======
 
@@ -248,4 +245,3 @@ Release Summary
 ---------------
 
 This is the first stable release of the ``middleware_automation.wildfly`` collection.
-

@@ -45,6 +45,12 @@
     - local_archive_path.stat.exists
   become: yes
 
+- name: "Read target directory information: {{ wildfly_prospero_install_dir }}"
+  ansible.builtin.stat:
+    path: "{{ wildfly_prospero_install_dir }}/bin"
+  become: yes
+  register: path_to_prospero_installation
+
 - name: "Ensure Prospero is installed on target."
   ansible.builtin.unarchive:
     src: "{{ full_path_to_prospero_archive }}"
@@ -54,4 +60,4 @@
     remote_src: True
   become: yes
   when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists
+    - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists

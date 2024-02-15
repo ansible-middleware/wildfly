@@ -1,16 +1,5 @@
 ---
-- name: Prepare
-  hosts: all
-  tasks:
-
-    - name: "Ensure required packages are installed."
-      become: yes
-      ansible.builtin.yum:
-        name:
-          - sudo
-          - java-11-openjdk-headless
-          - procps-ng
-        state: present
-      when:
-        - not eap_enable is defined or not eap_enable
-        - prospero_scenario_enable is defined and prospero_scenario_enable
+- import_playbook: ../prepare.yml
+  when:
+    - not eap_enable is defined or not eap_enable
+    - prospero_scenario_enable is defined and prospero_scenario_enable

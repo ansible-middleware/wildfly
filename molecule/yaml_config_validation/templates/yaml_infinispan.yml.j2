@@ -1,0 +1,74 @@
+wildfly-configuration:
+  subsystem:
+    infinispan:
+      cache-container:
+        sessions:
+          default-cache: "passivation"
+          local-cache:
+            passivation:
+              component:
+                locking:
+                  isolation: "REPEATABLE_READ"
+                transaction:
+                  mode: "BATCH"
+              store:
+                file:
+                  passivation: "true"
+                  purge: "false"
+            persistent:
+              component:
+                locking:
+                  isolation: "REPEATABLE_READ"
+                transaction:
+                  mode: "BATCH"
+              store:
+                file:
+                  passivation: "false"
+                  purge: "false"
+        ejb:
+          default-cache: "passivation"
+          distributed-cache:
+            persistent: !remove
+          local-cache:
+            passivation:
+              component:
+                locking:
+                  isolation: "REPEATABLE_READ"
+                transaction:
+                  mode: "BATCH"
+              store:
+                file:
+                  passivation: "true"
+                  purge: "false"
+            persistent:
+              component:
+                locking:
+                  isolation: "REPEATABLE_READ"
+                transaction:
+                  mode: "BATCH"
+              store:
+                file:
+                  passivation: "false"
+                  purge: "false"
+        hibernate2lc:
+          default-cache: "local-query"
+          modules:
+            - "org.hibernate.infinispan"
+          local-cache:
+            entity:
+              component:
+                expiration:
+                  max-idle: "100000"
+                transaction:
+                  mode: "NON_XA"
+                eviction:
+                  strategy: "LRU"
+                  max-entries: "10000"
+            local-query:
+              component:
+                eviction:
+                  strategy: "LRU"
+                  max-entries: "10000"
+                expiration:
+                  max-idle: "100000" 
+            timestamps:

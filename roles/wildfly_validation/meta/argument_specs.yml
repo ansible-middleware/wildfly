@@ -17,6 +17,10 @@ argument_specs:
                 default: "8080"
                 description: "Server HTTP port"
                 type: "str"
+            wildfly_https_port:
+                default: "8443"
+                description: "Server HTTPS port"
+                type: "str"
             wildfly_version:
                 default: "29.0.0.Final"
                 description: "Wildfly version to install"
@@ -41,6 +45,11 @@ argument_specs:
                 default: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
                 type: "str"
                 description: "CLI query used to validate the JMS connection factory"
+            wildfly_validation_queries:
+                default: []
+                type: "list"
+                description: "CLI queries used to validate configuration. List of dicts [{query => <jboss cli command>, expected_result => <expected string result of the cli op>, expected_result_undefined => <if defined, then check if the result is 'undefined'> }]"
+
     downstream:
         options:
             eap_enable:

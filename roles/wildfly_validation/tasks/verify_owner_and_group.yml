@@ -1,0 +1,55 @@
+- name: "Ensure installation directory."
+  ansible.builtin.stat:
+    path: "{{ wildfly_home }}"
+  register: wildfly_home_status
+
+- name: "Ensure installation directory."
+  ansible.builtin.assert:
+    that:
+      - wildfly_home_status.stat.exists
+      - wildfly_home_status.stat.isdir
+      - wildfly_home_status.stat.gr_name == "{{ wildfly_group }}"
+      - wildfly_home_status.stat.pw_name == "{{ wildfly_user }}"
+    fail_msg: wildfly installation folder is in a wrong state
+
+- name: "Ensure user of the installation: {{ wildfly_user }}"
+  ansible.builtin.shell:
+    cmd: |
+        set -o pipefail
+        find ./ -printf '%u %p\n' | { grep -v ^{{ wildfly_user | quote }} || true; }
+    chdir: "{{ wildfly_home }}"
+  changed_when: False
+  register: wildfly_files_wrong_user
+
+- name: "Print files or directories owned by wrong user"
+  ansible.builtin.debug:
+    msg: "{{ wildfly_files_wrong_user }}"
+  when:
+    - wildfly_validation_debug is defined
+
+- name: "Fail if there are files/directories owned by different user than"
+  ansible.builtin.fail:
+    msg: "There are files or directories owned by different user than {{ wildfly_user }}"
+  when:
+    - (wildfly_files_wrong_user is not defined) or (wildfly_files_wrong_user.stdout|length > 0)
+
+- name: "Ensure group of installation: {{ wildfly_group }}"
+  ansible.builtin.shell:
+    cmd: |
+        set -o pipefail
+        find ./ -printf '%g %p\n' | { grep -v ^{{ wildfly_group | quote }} || true; }
+    chdir: "{{ wildfly_home }}"
+  changed_when: False
+  register: wildfly_files_wrong_group
+
+- name: "Print files or directories added to wrong group"
+  ansible.builtin.debug:
+    msg: "{{ wildfly_files_wrong_group }}"
+  when:
+    - wildfly_validation_debug is defined
+
+- name: "Fail if there are files/directories that belong to different group"
+  ansible.builtin.fail:
+    msg: "There are files or directories that belong to different group than {{ wildfly_group }}"
+  when:
+    - (wildfly_files_wrong_group is not defined) or (wildfly_files_wrong_group.stdout|length > 0)

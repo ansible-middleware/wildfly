@@ -46,17 +46,44 @@
     quiet: true
     fail_msg: "User {{ wildfly_group }} was NOT created."
 
+- name: "Verify server's installation directory"
+  ansible.builtin.include_tasks: verify_owner_and_group.yml
+  when:
+    - not wildfly_validation_skip_installation_directory_check is defined
+
 - name: "Wait for HTTP port {{ wildfly_http_port }} to become available."
   ansible.builtin.wait_for:
     port: "{{ wildfly_http_port }}"
+    host: "{{ ansible_nodename | default('localhost') }}"
   when:
     - not wildfly_validation_skip_http_port_wait is defined
 
-- name: "Check if web connector is accessible"
+- name: "Wait for HTTPS port {{ wildfly_https_port }} to become available."
+  ansible.builtin.wait_for:
+    port: "{{ wildfly_https_port }}"
+    host: "{{ ansible_nodename | default('localhost') }}"
+  when:
+    - not wildfly_validation_skip_https_port_wait is defined
+
+- name: "Check if HTTP web connector is accessible"
   ansible.builtin.uri:
     url: "http://{{ ansible_nodename | default('localhost') }}:{{ wildfly_http_port }}/"
+    status_code: 200
   when:
-    - not wildfly_validation_skip_web_connector_check is defined
+    - not wildfly_validation_skip_http_web_connector_check is defined
+
+- name: "Check if HTTPS web connector is accessible"
+  ansible.builtin.uri:
+    url: "https://{{ ansible_nodename | default('localhost') }}:{{ wildfly_https_port }}/"
+    status_code: 200
+    validate_certs: false
+  when:
+    - not wildfly_validation_skip_https_web_connector_check is defined
+
+- name: "Verify installation user and group"
+  ansible.builtin.include_tasks: verify_owner_and_group.yml
+  when:
+    - not wildfly_validation_skip_user_and_group_check is defined
 
 - name: "Verify systemd service state."
   ansible.builtin.include_tasks: systemd.yml
@@ -75,7 +102,12 @@
   when:
     - not wildfly_validation_skip_internal_config_check is defined
 
-- name: "Ensure yaml setup"
-  ansible.builtin.include_tasks: yaml_setup.yml
+- name: "Verify server's configuration"
+  ansible.builtin.include_tasks: verify_with_cli_queries.yml
+  vars:
+    validation_query: "{{ item.query }}"
+    expected_result: "{{ item.expected_result }}"
+    expected_result_undefined: "{{ item.expected_result_undefined }}"
+  loop: "{{ wildfly_validation_queries }}"
   when:
-    - not wildfly_validation_skip_yaml_setup_check is defined
+    - not wildfly_validation_skip_config_check is defined

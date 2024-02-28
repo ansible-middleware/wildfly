@@ -8,3 +8,7 @@ wildfly_yml_configs:
 eap_offline_install: True
 eap_apply_cp: True
 eap_patch_version: 7.4.9
+wildfly_validation_queries:
+    - { query: '/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host, resolve-expressions=true)', expected_result:  'localhost', expected_result_undefined: false}
+    - { query: '/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)', expected_result:  'RemoteConnectionFactory', expected_result_undefined: false }
+    - { query: '/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)', expected_result:  'java:jboss/RemoteConnectionFactory', expected_result_undefined: false }

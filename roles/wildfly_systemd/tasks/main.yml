@@ -99,116 +99,111 @@
   ansible.builtin.set_fact:
     wildfly_bind_addr: "{{ overrides_wildfly_bind_addr | default('0.0.0.0') }}"
 
-- name: "Create basedir {{ basedir }} for instance: {{ instance_name }}"
-  ansible.builtin.file:
-    path: "{{ basedir }}"
-    state: directory
-    owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
-    mode: '0755'
-  become: yes
+- name: "Escalate privileges (if required) and ensure any changes in config file triggers a restart"
+  become: "{{ wildfly_systemd_require_privilege_escalation }}"
+  notify: 'Restart Wildfly'
+  block:
 
-- name: "Create deployment directories for instance: {{ instance_name }}"
-  ansible.builtin.file:
-    path: "{{ basedir }}/deployments"
-    state: directory
-    owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
-    mode: '0755'
-  become: yes
+    - name: "Create basedir {{ basedir }} for instance: {{ instance_name }}"
+      ansible.builtin.file:
+        path: "{{ basedir }}"
+        state: directory
+        owner: "{{ wildfly_systemd.user }}"
+        group: "{{ wildfly_systemd.group }}"
+        mode: '0755'
 
-- name: "Deploy custom configuration"
-  ansible.builtin.template:
-    src: "{{ wildfly_systemd.config_custom }}"
-    dest: "{{ wildfly_systemd.home }}/standalone/configuration/"
-    group: "{{ wildfly_systemd.group }}"
-    owner: "{{ wildfly_systemd.user }}"
-    mode: 0640
-  become: yes
-  when: wildfly_systemd.config_custom | length > 0
+    - name: "Create deployment directories for instance: {{ instance_name }}"
+      ansible.builtin.file:
+        path: "{{ basedir }}/deployments"
+        state: directory
+        owner: "{{ wildfly_systemd.user }}"
+        group: "{{ wildfly_systemd.group }}"
+        mode: '0755'
 
-- name: "Deploy configuration"
-  ansible.builtin.copy:
-    src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
-    dest: "{{ wildfly_systemd.home }}/standalone/configuration/{{ instance_name }}.xml"
-    group: "{{ wildfly_systemd.group }}"
-    owner: "{{ wildfly_systemd.user }}"
-    mode: 0640
-    remote_src: true
-    force: no
-  become: yes
+    - name: "Deploy custom configuration"
+      ansible.builtin.template:
+        src: "{{ wildfly_systemd.config_custom }}"
+        dest: "{{ wildfly_systemd.home }}/standalone/configuration/"
+        group: "{{ wildfly_systemd.group }}"
+        owner: "{{ wildfly_systemd.user }}"
+        mode: 0640
+      when: wildfly_systemd.config_custom | length > 0
 
-- name: Include YAML configuration extension
-  ansible.builtin.include_tasks: yml_config.yml
-  when: wildfly_enable_yml_config
+    - name: "Deploy configuration"
+      ansible.builtin.copy:
+        src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
+        dest: "{{ wildfly_systemd.home }}/standalone/configuration/{{ instance_name }}.xml"
+        group: "{{ wildfly_systemd.group }}"
+        owner: "{{ wildfly_systemd.user }}"
+        mode: 0640
+        remote_src: true
+        force: no
 
-- name: Check YAML configuration is disabled
-  ansible.builtin.file:
-    path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
-    state: absent
-  when: not wildfly_enable_yml_config
-  become: yes
+    - name: Include YAML configuration extension
+      ansible.builtin.include_tasks: yml_config.yml
+      when: wildfly_enable_yml_config
 
-- name: Set systemd envfile destination
-  ansible.builtin.set_fact:
-    service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
-  when:
-    - not service_systemd_env_file is defined
+    - name: Check YAML configuration is disabled
+      ansible.builtin.file:
+        path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+        state: absent
+      when: not wildfly_enable_yml_config
 
-- name: Determine JAVA_HOME for selected JVM
-  ansible.builtin.set_fact:
-    rpm_java_home: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-  when: ansible_os_family == 'RedHat'
-  become: yes
+    - name: Set systemd envfile destination
+      ansible.builtin.set_fact:
+        service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}"
+      when:
+        - not service_systemd_env_file is defined
 
-- name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
-  ansible.builtin.shell: |
-    set -o pipefail
-    {{ wildfly_systemd.jvm_version_command[ansible_os_family] }}
-  args:
-    executable: /bin/bash
-  changed_when: False
-  register: rpm_java_home_other
-  when: not ansible_os_family == 'RedHat'
-  become: yes
+    - name: Determine JAVA_HOME for selected JVM
+      ansible.builtin.set_fact:
+        rpm_java_home: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
+      when: ansible_os_family == 'RedHat'
 
-- name: Set systemd unit file destination
-  ansible.builtin.set_fact:
-    service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
-  when:
-    - not service_systemd_conf_file is defined
+    - name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
+      ansible.builtin.shell: |
+        set -o pipefail
+        {{ wildfly_systemd.jvm_version_command[ansible_os_family] }}
+      args:
+        executable: /bin/bash
+      changed_when: False
+      register: rpm_java_home_other
+      when: not ansible_os_family == 'RedHat'
 
-- name: "Deploy service instance configuration: {{ service_systemd_env_file }}"
-  ansible.builtin.template:
-    src: "{{ wildfly_service_config_file_template }}"
-    dest: "{{ service_systemd_env_file }}"
-    group: root
-    owner: root
-    mode: 0640
-  register: daemon_reload_env
-  become: yes
-  vars:
-    wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
+    - name: Set systemd unit file destination
+      ansible.builtin.set_fact:
+        service_systemd_conf_file: "{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}"
+      when:
+        - not service_systemd_conf_file is defined
 
-- name: "Deploy Systemd configuration for service: {{ service_systemd_conf_file }}"
-  ansible.builtin.template:
-    src: "{{ wildfly_systemd_service_config_file_template }}"
-    dest: "{{ service_systemd_conf_file }}"
-    group: root
-    owner: root
-    mode: 0640
-  register: daemon_reload
-  become: yes
+    - name: "Deploy service instance configuration: {{ service_systemd_env_file }}"
+      ansible.builtin.template:
+        src: "{{ wildfly_service_config_file_template }}"
+        dest: "{{ service_systemd_env_file }}"
+        group: root
+        owner: root
+        mode: 0640
+      register: daemon_reload_env
+      vars:
+        wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
 
-- name: "Perform daemon-reload to ensure the changes are picked up"
-  ansible.builtin.systemd:
-    daemon_reload: yes
-  become: yes
-  when:
-    - daemon_reload is defined or daemon_reload_env is defined
-    - daemon_reload.changed or daemon_reload_env.changed
+    - name: "Deploy Systemd configuration for service: {{ service_systemd_conf_file }}"
+      ansible.builtin.template:
+        src: "{{ wildfly_systemd_service_config_file_template }}"
+        dest: "{{ service_systemd_conf_file }}"
+        group: root
+        owner: root
+        mode: 0640
+      register: daemon_reload
 
-- name: "Ensure service is started"
-  ansible.builtin.include_tasks: service.yml
-  vars:
-    instance_state: "started"
+    - name: "Perform daemon-reload to ensure the changes are picked up"
+      ansible.builtin.systemd:
+        daemon_reload: yes
+      when:
+        - daemon_reload is defined or daemon_reload_env is defined
+        - daemon_reload.changed or daemon_reload_env.changed
+
+    - name: "Ensure service is started"
+      ansible.builtin.include_tasks: service.yml
+      vars:
+        instance_state: "started"

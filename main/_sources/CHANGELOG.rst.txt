@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.0-devel
 ============
 
+Major Changes
+-------------
+
+- systemd: regroup all tasks that requires become: and can triggers a service's restart `#179 <https://github.com/ansible-middleware/wildfly/pull/179>`_
+
 Minor Changes
 -------------
 

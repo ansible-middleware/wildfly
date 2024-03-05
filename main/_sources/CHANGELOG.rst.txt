@@ -9,24 +9,26 @@ This changelog describes changes after version 0.0.7.
 v1.5.0-devel
 ============
 
-Major Changes
--------------
-
-- systemd: regroup all tasks that requires become: and can triggers a service's restart `#179 <https://github.com/ansible-middleware/wildfly/pull/179>`_
-
 Minor Changes
 -------------
 
-- AMWSUP-17 EAP Ansible Hub documentation link broken `#161 <https://github.com/ansible-middleware/wildfly/pull/161>`_
+- Add check for prospero installed on host `#175 <https://github.com/ansible-middleware/wildfly/pull/175>`_
 - Download prospero on controller node and copy it to target servers `#167 <https://github.com/ansible-middleware/wildfly/pull/167>`_
-- Extracting prospero's name `#165 <https://github.com/ansible-middleware/wildfly/pull/165>`_
+- Few enhancements around the OpenJDK dependency handling `#168 <https://github.com/ansible-middleware/wildfly/pull/168>`_
 - Generate wildfly manifest to be used with wildfly `#158 <https://github.com/ansible-middleware/wildfly/pull/158>`_
+- New prospero name parameter ``wildfly_prospero_name`` `#165 <https://github.com/ansible-middleware/wildfly/pull/165>`_
 - Validate the service running on an offset port `#162 <https://github.com/ansible-middleware/wildfly/pull/162>`_
+- systemd: handling of privilege escalation and service restart `#179 <https://github.com/ansible-middleware/wildfly/pull/179>`_
 
 Breaking Changes / Porting Guide
 --------------------------------
 
 - Set minimum ansible version >= 2.14 `#173 <https://github.com/ansible-middleware/wildfly/pull/173>`_
+
+Bugfixes
+--------
+
+- Fix Ansible Hub documentation links `#161 <https://github.com/ansible-middleware/wildfly/pull/161>`_
 
 v1.4.3
 ======

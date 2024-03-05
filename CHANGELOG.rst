@@ -1,10 +1,34 @@
-===========================================
-middleware_automation.wildfly Release Notes
-===========================================
+============================================
+middleware\_automation.wildfly Release Notes
+============================================
 
 .. contents:: Topics
 
 This changelog describes changes after version 0.0.7.
+
+v1.5.0
+======
+
+Minor Changes
+-------------
+
+- Add check for prospero installed on host `#175 <https://github.com/ansible-middleware/wildfly/pull/175>`_
+- Download prospero on controller node and copy it to target servers `#167 <https://github.com/ansible-middleware/wildfly/pull/167>`_
+- Few enhancements around the OpenJDK dependency handling `#168 <https://github.com/ansible-middleware/wildfly/pull/168>`_
+- Generate wildfly manifest to be used with wildfly `#158 <https://github.com/ansible-middleware/wildfly/pull/158>`_
+- New prospero name parameter ``wildfly_prospero_name`` `#165 <https://github.com/ansible-middleware/wildfly/pull/165>`_
+- Validate the service running on an offset port `#162 <https://github.com/ansible-middleware/wildfly/pull/162>`_
+- systemd: handling of privilege escalation and service restart `#179 <https://github.com/ansible-middleware/wildfly/pull/179>`_
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Set minimum ansible version >= 2.14 `#173 <https://github.com/ansible-middleware/wildfly/pull/173>`_
+
+Bugfixes
+--------
+
+- Fix Ansible Hub documentation links `#161 <https://github.com/ansible-middleware/wildfly/pull/161>`_
 
 v1.4.3
 ======
@@ -130,7 +154,6 @@ Release Summary
 
 Patch release with internal changes only.
 
-
 v1.2.0
 ======
 
@@ -214,7 +237,6 @@ Release Summary
 
 Minor enhancements, and documentation updates.
 
-
 v1.0.1
 ======
 
@@ -223,7 +245,6 @@ Release Summary
 
 Minor enhancements, and documentation updates.
 
-
 v1.0.0
 ======
 
@@ -231,4 +252,3 @@ Release Summary
 ---------------
 
 This is the first stable release of the ``middleware_automation.wildfly`` collection.
-

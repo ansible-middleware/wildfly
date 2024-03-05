@@ -3,6 +3,7 @@ wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
 wildfly_service_name: wildfly
 wildfly_http_port: 8080
+wildfly_https_port: 8443
 wildfly_controller_port: 9990
 wildfly_version: '29.0.0.Final'
 wildfly_install_workdir: '/opt/wildfly/'
@@ -11,3 +12,4 @@ wildfly_validation_systemd_pidfile: "{{ wildfly_home }}/standalone/{{ wildfly_se
 wildfly_standard_sockets_validation_query: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
 wildfly_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
 wildfly_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
+wildfly_validation_queries: []

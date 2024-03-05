@@ -4,6 +4,7 @@
     that:
       - validation_query is defined
       - wildfly_home is defined
+      - wildfly_controller_port
     quiet: true
     fail_msg: "Missing required parameters"
 
@@ -43,6 +44,32 @@
       - query_result.result is defined
       - query_result.outcome is defined
       - query_result.outcome == "success"
-      - query_result.result
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+
+- name: "Check that query result is not undefined."
+  ansible.builtin.assert:
+    that:
+      - query_result.result | type_debug | string != "NoneType"
+    quiet: true
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+  when:
+    - expected_result_undefined is defined and not expected_result_undefined
+
+- name: "Check that query result is same as expected value."
+  ansible.builtin.assert:
+    that:
+      - query_result.result == "{{ expected_result }}"
+    quiet: true
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+  when:
+    - expected_result is defined
+
+- name: "Check that query result is undefined."
+  ansible.builtin.assert:
+    that:
+      - query_result.result | type_debug | string == "NoneType"
+    quiet: true
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+  when:
+    - expected_result_undefined is defined and expected_result_undefined

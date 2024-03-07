@@ -1,5 +1,2 @@
 ---
 - import_playbook: ../prepare.yml
-  when:
-    - not eap_enable is defined or not eap_enable
-    - prospero_scenario_enable is defined and prospero_scenario_enable

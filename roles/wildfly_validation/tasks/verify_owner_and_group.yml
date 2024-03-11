@@ -1,10 +1,10 @@
-- name: "Ensure installation directory."
+- name: "Load metadata on installation directory {{ wildfly_home }}."
   become: yes
   ansible.builtin.stat:
     path: "{{ wildfly_home }}"
   register: wildfly_home_status
 
-- name: "Ensure installation directory."
+- name: "Ensure installation directory {{ wildfly_home }} exists and belong to the appropriate user/group ({{ wildfly_group }}/{{ wildfly_user }}."
   become: yes
   ansible.builtin.assert:
     that:

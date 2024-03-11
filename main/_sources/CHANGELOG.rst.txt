@@ -6,8 +6,16 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.5.0-devel
+v1.5.1-devel
 ============
+
+Minor Changes
+-------------
+
+- Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
+
+v1.5.0
+======
 
 Minor Changes
 -------------

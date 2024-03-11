@@ -1,4 +1,5 @@
 - name: "Ensure installation directory."
+  become: yes
   ansible.builtin.stat:
     path: "{{ wildfly_home }}"
   register: wildfly_home_status

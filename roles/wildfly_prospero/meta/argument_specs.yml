@@ -1,27 +1,62 @@
 argument_specs:
     main:
         options:
-            wildfly_prospero_install_dir:
-                default: "/opt"
-                description: "Path to the installation dir for Prospero"
-                type: "str"
+            # line 2 of defaults/main.yml
             wildfly_prospero_version:
-                default: "1.0.0.Beta8"
+                default: "1.2.0.Final"
                 description: "Version of Prospero to use"
                 type: "str"
-            wildfly_install_workdir:
-                default: "/opt/wildfly/"
-                description: "Path to the installation dir for Wildfly"
+
+            # line 3 of defaults/main.yml
+            wildfly_prospero_name:
+                default: "prospero"
+                description: "TODO document argument"
                 type: "str"
-            wildfly_prospero_home:
+
+            # line 4 of defaults/main.yml
+            wildfly_prospero_install_dir:
                 default: "/opt/prospero"
+                description: "Path to the installation dir for Prospero"
+                type: "str"
+
+            # line 5 of defaults/main.yml
+            wildfly_prospero_profile_name:
+                default: "wildfly"
+                description: "TODO document argument"
+                type: "str"
+
+            # line 6 of defaults/main.yml
+            wildfly_prospero_scenario_enable:
+                default: true
+                description: "TODO document argument"
+                type: "bool"
+
+            # line 7 of defaults/main.yml
+            wildfly_prospero_archive_name:
+                default: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+                description: "TODO document argument"
+                type: "str"
+
+            # line 8 of defaults/main.yml
+            wildfly_prospero_home:
+                default: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}"
                 description: "Home of the prospero tool"
                 type: "str"
+
+            # line 9 of defaults/main.yml
+            wildfly_install_manifest_dir:
+                default: "{{ wildfly_install_workdir }}/manifest"
+                description: "TODO document argument"
+                type: "str"
+
+            # line 10 of defaults/main.yml
             wildfly_prospero_download_url:
-                default: "https://repository.jboss.org/nexus/content/groups/public/org/wildfly/           prospero/prospero-build/{{ wildfly_prospero_version }}/prospero-build-{{ wildfly_prospero_version }}.zip"
+                default: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
                 description: "URL to download Prospero"
                 type: "str"
-            wildfly_prospero_manifest_url:
-                default: "https://raw.githubusercontent.com/wildfly-extras/prospero/{{                    wildfly_prospero_version }}/examples/wildfly-27.0.0.Alpha2-manifest.yaml"
-                description: "URL to Prospero manifest"
-                type: "str"
+
+            # line 11 of defaults/main.yml
+            wildfly_prospero_download_check_ssl:
+                default: false
+                description: "TODO document argument"
+                type: "bool"

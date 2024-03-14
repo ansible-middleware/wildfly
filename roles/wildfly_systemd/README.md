@@ -28,6 +28,8 @@ Role Defaults
 |`wildfly_systemd_service_config_location`| Path for systemd unit file | `/usr/lib/systemd/system` |
 |`wildfly_systemd_service_config_file_suffix`| Systemd unit file extension | `.service` |
 |`wildfly_systemd_conf_file_suffix`| Suffix for systemd conf file | `.conf` |
+|`wildfly_systemd_config_name`| Custom standalone.xml config to be copied to target instance and used as base| `{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}`|
+|`wildfly_systemd_java_home`| JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path|``|
 |`wildfly_systemd_service_config_file_template`| Template for systemd unit | `templates/wfly.service.j2` |
 |`wildfly_service_config_file_template`| Template for systemd config | `templates/wfly.conf.j2` |
 |`wildfly_service_config_file_location`| Path for wildfly systemd unit file | `/etc/` |
@@ -40,6 +42,9 @@ Role Defaults
 |`wildfly_bind_addr_management`| Bind address for management console port |`127.0.0.1` |
 |`wildfly_multicast_addr`| Multicast address for jgroup cluster discovery |`230.0.0.4` |
 |`wildfly_statistics_enabled`| Whether to enable statistics | `False` |
+|`service_systemd_env_file`| Path to systemd service environment file | `{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}` |
+|`service_systemd_conf_file`| Path to systemd service configuration file | `{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}` |
+|`wildfly_systemd_require_privilege_escalation`| TODO document argument | `True` |
 
 Role Variables
 --------------
@@ -49,6 +54,7 @@ Role Variables
 |`wildfly_java_home`| JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path | `No` |
 |`wildfly_instance_id`| When collocating services on the same host, EAP instance ID (integer value) | `No` |
 |`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `No` |
+|`wildfly_yml_configs_repository`| TODO document argument | `True` |
 <!--end argument_specs-->
 
 

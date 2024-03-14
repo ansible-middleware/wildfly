@@ -64,7 +64,7 @@ Example Playbook
       vars:
         wildfly_config_base: 'standalone-ha.xml'
         wildfly_basedir_prefix: "/opt/{{ inventory_hostname }}"
-        wildfly_config_name: "{{ install_name }}"
+        wildfly_systemd_config_name: "{{ install_name }}"
         wildfly_port_range_offset: 100
         wildfly_instance_name: "{{ install_name }}"
         wildfly_instance_id: "{{ item }}"

@@ -79,13 +79,13 @@
     - name: Check arguments
       ansible.builtin.assert:
         that:
-          - wildfly_config_name is defined
-        fail_msg: "If wildfly_instance_id is set, wildfly_config_name must be defined too."
+          - wildfly_systemd_config_name is defined
+        fail_msg: "If wildfly_instance_id is set, wildfly_systemd_config_name must be defined too."
         quiet:
 
     - name: Set instance name
       ansible.builtin.set_fact:
-        instance_name: "{{ wildfly_config_name }}-{{ wildfly_instance_id }}"
+        instance_name: "{{ wildfly_systemd_config_name }}-{{ wildfly_instance_id }}"
   when:
     - wildfly_instance_id is defined
 

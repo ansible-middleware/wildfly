@@ -41,7 +41,8 @@ argument_specs:
                 default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
-            wildfly_java_home:
+
+            wildfly_systemd_java_home:
                 description: "JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path"
                 type: "str"
             wildfly_java_opts:

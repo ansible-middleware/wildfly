@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>wildfly migration role &mdash; Wildfly Ansible Collection  documentation</title>
@@ -124,9 +124,7 @@
              
   <section id="wildfly-migration-role">
 <h1>wildfly migration role<a class="headerlink" href="#wildfly-migration-role" title="Link to this heading"></a></h1>
-<p>This role is designed to help set up JBoss EAP (Red Hat product based on Wildfly) using RPM
-delivered by Red Hat to its customer. The playbook provides handy reusable content to enable
-or disable a repo and install EAP using the group install feature.</p>
+<p>This role encapsulate the <a class="reference external" href="https://docs.wildfly.org/28/Migration_Guide.html">Wildfly Migration Tool</a> to allow using it as part of a Playbook.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
 <p>Requirements on the target system are ensured by the role.</p>
@@ -142,39 +140,19 @@ or disable a repo and install EAP using the group install feature.</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_enable</span></code></p></td>
-<td class="text-left"><p>Enable repo</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_check_repo_disabled</span></code></p></td>
-<td class="text-left"><p>Disable repo</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">&quot;{{</span> <span class="pre">wildfly_subs_check_repo_enable</span> <span class="pre">}}&quot;</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_subs_skip_remove</span></code></p></td>
-<td class="text-left"><p>Remove installed server</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_homedir</span></code></p></td>
-<td class="text-left"><p>State file home directory</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_prefix</span></code></p></td>
-<td class="text-left"><p>State filename prefix</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.eap</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_repos_state_file_suffix</span></code></p></td>
-<td class="text-left"><p>State filename suffix</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.repo</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_rpm_install_root_dir</span></code></p></td>
-<td class="text-left"><p>RPM install root dir</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/rh/eap7/</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">eap_group_install_name</span></code></p></td>
-<td class="text-left"><p>EAP group install package name</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss-eap7-jdk11</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_migration_environment_props</span></code></p></td>
+<td class="text-left"><p>Template to configure the migration tool</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">templates/environment.properties.j2</span></code></p></td>
 </tr>
 </tbody>
+</table>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Variable</p></th>
+<th class="head text-left"><p>Description</p></th>
+<th class="head text-left"><p>Required</p></th>
+</tr>
+</thead>
 </table>
 </section>
 <section id="role-variables">
@@ -186,6 +164,7 @@ or disable a repo and install EAP using the group install feature.</p>
 </section>
 <section id="dependencies">
 <h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
+<p>None</p>
 </section>
 <section id="example-playbooks">
 <h2>Example Playbooks<a class="headerlink" href="#example-playbooks" title="Link to this heading"></a></h2>

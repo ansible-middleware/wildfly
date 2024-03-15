@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>wildfly systemd role &mdash; Wildfly Ansible Collection  documentation</title>
@@ -185,6 +185,14 @@
 <td class="text-left"><p>Suffix for systemd conf file</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">.conf</span></code></p></td>
 </tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_config_name</span></code></p></td>
+<td class="text-left"><p>Custom standalone.xml config to be copied to target instance and used as base</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_service_config_file_location</span> <span class="pre">}}/{{</span> <span class="pre">instance_name</span> <span class="pre">}}{{</span> <span class="pre">wildfly_systemd_conf_file_suffix</span> <span class="pre">}}</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_java_home</span></code></p></td>
+<td class="text-left"><p>JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path</p></td>
+<td class="text-left"><p>``</p></td>
+</tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_service_config_file_template</span></code></p></td>
 <td class="text-left"><p>Template for systemd unit</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">templates/wfly.service.j2</span></code></p></td>
@@ -233,6 +241,18 @@
 <td class="text-left"><p>Whether to enable statistics</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">service_systemd_env_file</span></code></p></td>
+<td class="text-left"><p>Path to systemd service environment file</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_service_config_file_location</span> <span class="pre">}}/{{</span> <span class="pre">instance_name</span> <span class="pre">}}{{</span> <span class="pre">wildfly_systemd_conf_file_suffix</span> <span class="pre">}}</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">service_systemd_conf_file</span></code></p></td>
+<td class="text-left"><p>Path to systemd service configuration file</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_systemd_service_config_location</span> <span class="pre">}}/{{</span> <span class="pre">instance_name</span> <span class="pre">}}{{</span> <span class="pre">wildfly_systemd_service_config_file_suffix</span> <span class="pre">}}</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_require_privilege_escalation</span></code></p></td>
+<td class="text-left"><p>Specify if Ansible needs to escalate privilege to interact with Systemd</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </section>
@@ -258,6 +278,10 @@
 <td class="text-left"><p>When collocating services on the same host, EAP instance name</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">No</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_yml_configs_repository</span></code></p></td>
+<td class="text-left"><p>Path to the folder containing the YAML config files</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
+</tr>
 </tbody>
 </table>
 <!--end argument_specs-->
@@ -272,7 +296,7 @@
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">wildfly_config_base</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;standalone-ha.xml&#39;</span>
 <span class="w">        </span><span class="nt">wildfly_basedir_prefix</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/{{</span><span class="nv"> </span><span class="s">inventory_hostname</span><span class="nv"> </span><span class="s">}}&quot;</span>
-<span class="w">        </span><span class="nt">wildfly_config_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">install_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">        </span><span class="nt">wildfly_systemd_config_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">install_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">        </span><span class="nt">wildfly_port_range_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
 <span class="w">        </span><span class="nt">wildfly_instance_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">install_name</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">        </span><span class="nt">wildfly_instance_id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">item</span><span class="nv"> </span><span class="s">}}&quot;</span>

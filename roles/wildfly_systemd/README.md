@@ -44,7 +44,7 @@ Role Defaults
 |`wildfly_statistics_enabled`| Whether to enable statistics | `False` |
 |`service_systemd_env_file`| Path to systemd service environment file | `{{ wildfly_service_config_file_location }}/{{ instance_name }}{{ wildfly_systemd_conf_file_suffix }}` |
 |`service_systemd_conf_file`| Path to systemd service configuration file | `{{ wildfly_systemd_service_config_location }}/{{ instance_name }}{{ wildfly_systemd_service_config_file_suffix }}` |
-|`wildfly_systemd_require_privilege_escalation`| TODO document argument | `True` |
+|`wildfly_systemd_require_privilege_escalation`| Specify if Ansible needs to escalate privilege to interact with Systemd | `True` |
 
 Role Variables
 --------------
@@ -54,7 +54,7 @@ Role Variables
 |`wildfly_java_home`| JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path | `No` |
 |`wildfly_instance_id`| When collocating services on the same host, EAP instance ID (integer value) | `No` |
 |`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `No` |
-|`wildfly_yml_configs_repository`| TODO document argument | `True` |
+|`wildfly_yml_configs_repository`| Path to the folder containing the YAML config files | `True` |
 <!--end argument_specs-->
 
 

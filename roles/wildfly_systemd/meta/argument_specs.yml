@@ -86,7 +86,7 @@ argument_specs:
             # line 15 of defaults/main.yml
             wildfly_systemd_require_privilege_escalation:
                 default: true
-                description: "TODO document argument"
+                description: "Specify if Ansible needs to escalate privilege to interact with Systemd"
                 type: "bool"
 
             # line 16 of defaults/main.yml
@@ -139,8 +139,7 @@ argument_specs:
 
             # line 26 of defaults/main.yml
             wildfly_yml_configs_repository:
-                required: true
-                description: "TODO document argument"
+                description: "Path to the folder containing the YAML config files"
                 type: "str"
 
             # line 28 of defaults/main.yml

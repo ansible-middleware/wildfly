@@ -1,0 +1,23 @@
+---
+- name: Set PID file location
+  ansible.builtin.set_fact:
+    wildfly_pid_file_location: "{{ pid_file_location | default('/var/run') }}"
+
+- name: Ensure PID directory exists
+  ansible.builtin.file:
+    path: "{{ wildfly_pid_file_location }}"
+    state: directory
+    mode: '0755'
+
+- name: Set SELinux context for custom PID file location
+  ansible.builtin.file:
+    path: "{{ wildfly_pid_file_location }}/wildfly.pid"
+    state: touch
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
+    seuser: system_u
+    serole: object_r
+    setype: var_run_t
+    selevel: s0
+    mode: '0755'
+  when: wildfly_pid_file_location is defined

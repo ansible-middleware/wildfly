@@ -204,6 +204,9 @@
         - daemon_reload.changed or daemon_reload_env.changed
 
     - name: "Ensure service is started"
+      ansible.builtin.include_tasks: selinux_config.yml
+
+    - name: "Ensure service is started"
       ansible.builtin.include_tasks: service.yml
       vars:
         instance_state: "started"

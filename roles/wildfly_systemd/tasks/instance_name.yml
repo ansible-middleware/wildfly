@@ -1,0 +1,22 @@
+---
+- name: Check arguments
+  ansible.builtin.assert:
+    that:
+      - wildfly_basedir_prefix is defined
+    quiet: true
+    fail_msg: "If wildfly_instance_id is set, wildfly_basedir_prefix must also be defined."
+
+- name: Set base directory for instance
+  ansible.builtin.set_fact:
+    basedir: "{{ wildfly_basedir_prefix }}{{ wildfly_instance_id }}"
+
+- name: Check arguments
+  ansible.builtin.assert:
+    that:
+      - wildfly_systemd_config_name is defined
+    fail_msg: "If wildfly_instance_id is set, wildfly_systemd_config_name must be defined too."
+    quiet:
+
+- name: Set instance name
+  ansible.builtin.set_fact:
+    instance_name: "{{ wildfly_systemd_config_name }}-{{ wildfly_instance_id }}"

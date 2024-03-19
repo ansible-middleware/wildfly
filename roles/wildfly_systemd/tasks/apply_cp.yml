@@ -1,0 +1,40 @@
+---
+- name: "Execute only if eap_enable is true."
+  when:
+    - eap_enable is defined and (eap_enable | bool)
+  block:
+    - name: Check current EAP patch installed
+      ansible.builtin.slurp:
+        src: "{{ wildfly_home }}/.latest_applied_patch.txt"
+      register: slurped_eap_version
+      become: yes
+      when:
+        - wildfly_enable_yml_config
+        - eap_apply_cp is defined and eap_apply_cp
+        - wildfly_version.split('.')[:1] | join('.') is version('7', '==')
+
+    - name: Check arguments for yaml configuration
+      ansible.builtin.assert:
+        that:
+          - (slurped_eap_version.content | b64decode is version('7.4.5', '>='))
+        quiet: true
+        fail_msg: "Can only enable YAML configuration with EAP >= 7.4.5"
+      when:
+        - wildfly_enable_yml_config
+        - wildfly_version.split('.')[:1] | join('.') is version('7', '==')
+
+    - name: Check if YAML configuration extension is supported in WildFly
+      ansible.builtin.assert:
+        that:
+          - (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>='))
+        fail_msg: "YAML configuration extension is not supported in this WildFly version."
+      when:
+        - wildfly_enable_yml_config
+
+    - name: Check if YAML configuration extension is supported in EAP
+      ansible.builtin.assert:
+        that:
+          - (wildfly_version.split('.')[:1] | join('.') is version('8', '>=')) or (slurped_eap_version is defined and slurped_eap_version.content | b64decode is version('7.4.5', '>='))
+        fail_msg: "YAML configuration extension is not supported in this EAP version"
+      when:
+        - wildfly_enable_yml_config

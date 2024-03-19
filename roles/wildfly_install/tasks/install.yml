@@ -156,15 +156,13 @@
     force: "{{ wildfly_install_force_reinstall_config_base }}"
   become: yes
 
-- name: "Install EAP cumulative patch"
+- name: "Apply latest cumulative patch"
   when:
-    - eap_apply_cp is defined and eap_apply_cp
-    - eap_enable is defined and eap_enable
-  block:
-    - name: "Apply latest cumulative patch"
-      ansible.builtin.include_role:
-        name: wildfly_utils
-        tasks_from: apply_cp.yml
+    - eap_apply_cp is defined and (eap_apply_cp | bool )
+    - eap_enable is defined and (eap_enable | bool )
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: apply_cp.yml
 
 - name: "Install EAP elytron adapter"
   when:

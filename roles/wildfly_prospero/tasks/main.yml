@@ -18,8 +18,8 @@
     mode: 0750
   become: yes
 
-- name: "Install Prospero"
-  ansible.builtin.include_tasks: install_prospero.yml
+- name: "Ensure installer is installed."
+  ansible.builtin.include_tasks: install.yml
 
 - name: "Read target directory information: {{ wildfly_home }}"
   ansible.builtin.stat:
@@ -71,7 +71,7 @@
       when:
         - not eap_enable is defined or not eap_enable
     - name: Display prospero command arguments
-      ansible.builtin.debug: 
+      ansible.builtin.debug:
         var: prospero_command_args
       when:
         - wildfly_prospero_debug_enabled is defined and wildfly_prospero_debug_enabled

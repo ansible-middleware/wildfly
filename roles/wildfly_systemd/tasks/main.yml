@@ -24,7 +24,24 @@
     name: wildfly_install
     tasks_from: user.yml
 
+- name: 'Check if PID directory exists'
+  ansible.builtin.stat:
+    path: "{{ wildfly_systemd.selinux.pid_path }}"
+  register: pid_directory
+
+- name: 'Create PID directory directory path if not exists'
+  ansible.builtin.file:
+    path: "{{ wildfly_systemd.selinux.pid_path }}"
+    state: directory
+    mode: '0755'
+    owner: "{{ wildfly_systemd.user }}"
+    group: "{{ wildfly_systemd.group }}"
+  when: not pid_directory.stat.exists
+
 - name: "Ensure server configuration and systemd configuration are set"
   ansible.builtin.include_tasks: systemd.yml
   vars:
     basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"
+
+- name: "Check PID file status"
+  ansible.builtin.include_tasks: pid_config.yml

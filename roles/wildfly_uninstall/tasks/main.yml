@@ -2,7 +2,7 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - instance_name is defined
+      - wildfly_instance_name is defined
     quiet: true
 
 - name: "Delete all runtimes data"
@@ -23,7 +23,7 @@
 
 - name: "Set destination path for systemd unit"
   ansible.builtin.set_fact:
-    wfly_systemd_config: "/usr/lib/systemd/system/{{ instance_name }}.service"
+    wfly_systemd_config: "/usr/lib/systemd/system/{{ wildfly_instance_name }}.service"
 
 - name: Check systemd config file state
   ansible.builtin.stat:

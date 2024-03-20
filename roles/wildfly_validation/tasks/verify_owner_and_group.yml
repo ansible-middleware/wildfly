@@ -10,8 +10,8 @@
     that:
       - wildfly_home_status.stat.exists
       - wildfly_home_status.stat.isdir
-      - wildfly_home_status.stat.gr_name == "{{ wildfly_group }}"
-      - wildfly_home_status.stat.pw_name == "{{ wildfly_user }}"
+      - wildfly_home_status.stat.gr_name == wildfly_group
+      - wildfly_home_status.stat.pw_name == wildfly_user
     fail_msg: wildfly installation folder is in a wrong state
 
 - name: "Ensure user of the installation: {{ wildfly_user }}"

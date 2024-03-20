@@ -4,17 +4,14 @@
   vars:
     postgres_driver_version: 9.4.1212
     mariadb_driver_version: 3.2.0
-  collections:
-    - middleware_automation.wildfly
-    - middleware_automation.common
-    - ansible.posix
   roles:
-    - wildfly_install
-    - wildfly_systemd
+    - middleware_automation.wildfly.wildfly_install
+    - middleware_automation.wildfly.wildfly_systemd
   tasks:
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:
         name: wildfly_driver
+      when: not skip_db_driver is defined
       vars:
         wildfly_driver_module_name: "{{ item.name }}"
         wildfly_driver_version: "{{ item.version }}"

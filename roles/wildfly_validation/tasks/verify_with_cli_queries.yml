@@ -59,7 +59,7 @@
 - name: "Check that query result is same as expected value."
   ansible.builtin.assert:
     that:
-      - query_result.result == "{{ expected_result }}"
+      - query_result.result == expected_result
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
   when:

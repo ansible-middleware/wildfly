@@ -18,6 +18,7 @@ enable_list:
 skip_list:
   - file_is_small_enough
   - vars_should_not_be_used
+  - name[template]
 
 warn_list:
   - role_vars_start_with_role_name
@@ -31,7 +32,6 @@ warn_list:
   - unnamed-task
   - schema
   - meta-no-tags
-  - name[template]
   - name[casing]
   - template-instead-of-copy
   - fqcn[keyword]

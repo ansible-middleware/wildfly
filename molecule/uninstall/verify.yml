@@ -1,0 +1,33 @@
+---
+- name: "Verify that server was properly uninstalled."
+  hosts: instance
+  gather_facts: no
+  vars_files:
+    - vars.yml
+  tasks:
+
+    - name: Populate service facts
+      ansible.builtin.service_facts:
+
+    - name: "Display state of the Wildfly service"
+      ansible.builtin.debug:
+        msg: "{{ ansible_facts.services['wildfly.service'] }}"
+
+    - name: "Fails if {{ wildfly_uninstall_service_name }} exists."
+      ansible.builtin.assert:
+        that:
+          - ansible_facts.services[wildfly_uninstall_service_name + '.service'].status == 'disabled'
+          - ansible_facts.services[wildfly_uninstall_service_name + '.service'].state == 'inactive'
+        quiet: True
+
+    - name: "Load metadata on server home: {{ wildfly_uninstall_home }}"
+      ansible.builtin.stat:
+        path: "{{ wildfly_uninstall_home }}"
+      register: wfly_home
+
+    - name: "Ensure server home does not exist"
+      ansible.builtin.assert:
+        that:
+          - wfly_home is defined and wfly_home.stat is defined
+          - wfly_home.stat.exists is defined and not wfly_home.stat.exists
+        quiet: True

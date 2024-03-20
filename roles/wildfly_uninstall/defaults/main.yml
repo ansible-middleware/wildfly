@@ -1,0 +1,10 @@
+---
+wildfly_uninstall_require_privileges_escalation: true
+wildfly_uninstall_instance_name: "{{ instance_name | default('wildfly') }}"
+wildfly_uninstall_home: "{{ wildfly_home }}"
+wildfly_uninstall_systemd_service_file: "/usr/lib/systemd/system/{{ wildfly_uninstall_service_name }}.service"
+wildfly_uninstall_systemd_service_conf_file: "/etc/{{ wildfly_uninstall_service_name }}.conf"
+wildfly_uninstall_delete_group: true
+wildfly_uninstall_delete_groupname: wildfly
+wildfly_uninstall_delete_user: true
+wildfly_uninstall_delete_username: wildfly

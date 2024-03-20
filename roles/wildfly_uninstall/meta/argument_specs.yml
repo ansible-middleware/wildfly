@@ -1,3 +1,55 @@
 argument_specs:
     main:
         options:
+            # line 2 of defaults/main.yml
+            wildfly_uninstall_require_privileges_escalation:
+                default: true
+                description: "Specifiy if the uninstallation process requires privileges escalation"
+                type: "bool"
+
+            # line 3 of defaults/main.yml
+            wildfly_uninstall_instance_name:
+                default: "{{ instance_name | default('wildfly') }}"
+                description: "Instance name of the server to uninstall"
+                type: "str"
+
+            # line 4 of defaults/main.yml
+            wildfly_uninstall_home:
+                description: "Path to server home"
+                type: "str"
+
+            # line 5 of defaults/main.yml
+            wildfly_uninstall_systemd_service_file:
+                default: "/usr/lib/systemd/system/{{ wildfly_uninstall_service_name }}.service"
+                description: "Path to the systemd configuration file associated to the server"
+                type: "str"
+
+            # line 6 of defaults/main.yml
+            wildfly_uninstall_systemd_service_conf_file:
+                default: "/etc/{{ wildfly_uninstall_service_name }}.conf"
+                description: "Path to the env file used by the systemd service associated to the server"
+                type: "str"
+
+            # line 7 of defaults/main.yml
+            wildfly_uninstall_delete_group:
+                default: true
+                description: "Specify if uninstall procedure should remove server specific group"
+                type: "bool"
+
+            # line 8 of defaults/main.yml
+            wildfly_uninstall_delete_groupname:
+                default: "wildfly"
+                description: "Name of the server's group"
+                type: "str"
+
+            # line 9 of defaults/main.yml
+            wildfly_uninstall_delete_user:
+                default: true
+                description: "Specify if uninstall procedure should remove server specific user"
+                type: "bool"
+
+            # line 10 of defaults/main.yml
+            wildfly_uninstall_delete_username:
+                default: "wildfly"
+                description: "Name of the server's group"
+                type: "str"

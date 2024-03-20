@@ -6,20 +6,22 @@ wildfly_install_workdir: '/opt/wildfly/'
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}"
 wildfly_config_base: 'standalone.xml'
 wildfly_config_custom_file: ''
-wildfly_port_range_offset: 100
+wildfly_port_range_offset: 0
 
 wildfly_java_package_name: java-11-openjdk-headless
 wildfly_java_opts: '-Xmx1024M -Xms512M'
 
 wildfly_systemd_unit_enabled: yes
 wildfly_systemd_require_privilege_escalation: yes
-wildfly_systemd_service_config_location: '/usr/lib/systemd/system'
+wildfly_systemd_service_config_location: '/etc/systemd/system'
 wildfly_systemd_service_config_file_suffix: '.service'
 wildfly_systemd_conf_file_suffix: '.conf'
 wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
-
 wildfly_service_config_file_template: 'templates/wfly.conf.j2'
-wildfly_service_config_file_location: '/etc/'
+wildfly_service_config_file_location: '/etc/sysconfig'
+
+wildfly_service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ wildfly_service_name }}{{ wildfly_systemd_conf_file_suffix }}"
+wildfly_service_systemd_file: "{{ wildfly_systemd_service_config_location}}/{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
 
 wildfly_enable_yml_config: no
 wildfly_yml_configs: []
@@ -31,3 +33,8 @@ wildfly_bind_addr_management: 127.0.0.1
 wildfly_multicast_addr: 230.0.0.4
 
 wildfly_statistics_enabled: False
+
+wildfly_instance_name: wildfly
+wildfly_node_id: "{{ inventory_hostname }}"
+wildfly_service_name: "{{ wildfly_instance_name }}"
+wildfly_basedir_prefix: "{{ wildfly_home }}"

@@ -3,7 +3,6 @@
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
   become: yes
   block:
-
   - name: Create YAML configuration directory
     ansible.builtin.file:
       path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}"

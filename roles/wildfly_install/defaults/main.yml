@@ -21,3 +21,5 @@ wildfly_prereqs_packages:
   - tar
   - sudo
   - tzdata-java
+
+wildfly_instance_name: wildfly

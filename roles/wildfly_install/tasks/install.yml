@@ -129,12 +129,6 @@
     quiet: true
     fail_msg: "Server home directory has not been created: {{ wildfly_install.home }}."
 
-- name: Set instance name
-  ansible.builtin.set_fact:
-    instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
-  when:
-    - instance_name is not defined
-
 - name: "Deploy custom configuration"
   ansible.builtin.template:
     src: "{{ wildfly_install.config_custom }}"
@@ -148,7 +142,7 @@
 - name: "Deploy configuration"
   ansible.builtin.copy:
     src: "{{ wildfly_install.home }}/standalone/configuration/{{ wildfly_install.config }}"
-    dest: "{{ wildfly_install.home }}/standalone/configuration/{{ instance_name }}.xml"
+    dest: "{{ wildfly_install.home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
     mode: 0640

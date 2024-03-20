@@ -2,42 +2,34 @@ argument_specs:
     main:
         options:
             wildfly_version:
-                # line 2 of wildfly_install/defaults/main.yml
                 default: "29.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_archive_filename:
-                # line 3 of wildfly_install/defaults/main.yml
                 default: "wildfly-{{ wildfly_version }}.zip"
                 description: "Wildfly download archive name"
                 type: "str"
             wildfly_download_baseurl:
-                # line 4 of wildfly_install/defaults/main.yml
                 default: "https://github.com/wildfly/wildfly/releases/download"
                 description: "Base URL for wildfly download"
                 type: "str"
             wildfly_install_workdir:
-                # line 5 of wildfly_install/defaults/main.yml
                 default: "/opt/wildfly/"
                 description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
             wildfly_home:
-                # line 6 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
                 description: "Wildfly installation directory"
                 type: "str"
             wildfly_install_download_url:
-                # line 7 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
                 description: "Wildfly download URL"
                 type: "str"
             wildfly_archive_dir:
-                # line 8 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_install_workdir }}"
                 description: "Target download directory"
                 type: "str"
             wildfly_config_base:
-                # line 9 of wildfly_install/defaults/main.yml
                 default: "standalone.xml"
                 description: "wildfly standalone.xml filename override"
                 type: "str"
@@ -46,27 +38,22 @@ argument_specs:
                 description: "Custom standalone.xml config to be copied to target instance and used as base"
                 type: "str"
             wildfly_user:
-                # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"
                 description: "posix user account for wildfly"
                 type: "str"
             wildfly_group:
-                # line 11 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly"
                 type: "str"
             wildfly_java_package_name:
-                # line 15 of wildfly_install/defaults/main.yml
                 default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
             wildfly_offline_install:
-                # line 24 of wildfly_install/defaults/main.yml
                 default: false
                 description: "Whether to install from local archive"
                 type: "bool"
             wildfly_prereqs_packages:
-                # line 25 of wildfly_install/defaults/main.yml
                 default:
                   - unzip
                   - tar
@@ -74,6 +61,10 @@ argument_specs:
                   - tzdata-java
                 description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
                 type: "list"
+            wildfly_instance_name:
+                default: "wildfly"
+                description: "Name of the wildfly instance"
+                type: "str"
     downstream:
         options:
             eap_enable:

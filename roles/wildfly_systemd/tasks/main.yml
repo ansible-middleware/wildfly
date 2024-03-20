@@ -8,38 +8,16 @@
       - wildfly_systemd.group is defined
     quiet: true
 
-- name: "Ensure that EAP patch level is correct (if using EAP: {{ eap_enable }})"
-  ansible.builtin.include_tasks: apply_cp.yml
+- name: "Ensure that version is correct for yaml config extension"
+  ansible.builtin.include_tasks: yml_config_version_prereq.yml
+  when: wildfly_enable_yml_config
 
 - name: "Ensure required local user and group exists."
   ansible.builtin.include_role:
     name: wildfly_install
     tasks_from: user.yml
 
-- name: Set destination directory for configuration
-  ansible.builtin.set_fact:
-    basedir_default_value: "{{ wildfly_systemd.home }}/standalone"
-
-- name: Set instance destination directory for configuration
-  ansible.builtin.set_fact:
-    basedir: "{{ wildfly_basedir_prefix | default(basedir_default_value) }}"
-  when:
-    - not wildfly_instance_id is defined
-
-- name: "Ensure instance is computed (if wildfly_instance_id is defined: {{ wildfly_instance_id }})."
-  ansible.builtin.include_tasks: instance_name.yml
-  when:
-    - wildfly_instance_id is defined and wildfly_instance_id | length > 0
-
-- name: Set instance name
-  ansible.builtin.set_fact:
-    instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
-  when:
-    - instance_name is not defined
-
-- name: Set bind address
-  ansible.builtin.set_fact:
-    wildfly_bind_addr: "{{ overrides_wildfly_bind_addr | default('0.0.0.0') }}"
-
 - name: "Ensure server configuration and systemd configuration are set"
   ansible.builtin.include_tasks: systemd.yml
+  vars:
+    basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"

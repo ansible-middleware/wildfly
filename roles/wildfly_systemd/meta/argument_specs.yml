@@ -1,176 +1,132 @@
 argument_specs:
     main:
         options:
-            service_systemd_env_file:
+            wildfly_service_systemd_env_file:
                 description: "Path to systemd service environment file"
                 type: "str"
-            service_systemd_conf_file:
+                default: "{{ wildfly_service_config_file_location }}/{{ wildfly_service_name }}{{ wildfly_systemd_conf_file_suffix }}"
+            wildfly_service_systemd_file:
                 description: "Path to systemd service configuration file"
                 type: "str"
-            # line 2 of defaults/main.yml
+                default: "{{ wildfly_systemd_service_config_location}} /{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
             wildfly_user:
                 default: "wildfly"
                 description: "posix user account for wildfly service"
                 type: "str"
-
-            # line 3 of defaults/main.yml
             wildfly_group:
                 default: "{{ wildfly_user }}"
                 description: "posix group for wildfly service"
                 type: "str"
-
-            # line 4 of defaults/main.yml
             wildfly_version:
                 default: "29.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
-
-            # line 5 of defaults/main.yml
             wildfly_install_workdir:
                 default: "/opt/wildfly/"
                 description: "Root directory for installation"
                 type: "str"
-
-            # line 6 of defaults/main.yml
             wildfly_home:
                 default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}"
                 description: "Wildfly installation directory"
                 type: "str"
-
-            # line 7 of defaults/main.yml
             wildfly_config_base:
                 default: "standalone.xml"
                 description: "Base standalone.xml config for instance from distribution zipfile"
                 type: "str"
-
-            # line 8 of defaults/main.yml
             wildfly_config_custom_file:
                 default: ""
                 description: "Custom standalone.xml config to be copied to target instance and used as base"
                 type: "str"
-
-            # line 8 of defaults/main.yml
-            wildfly_systemd_config_name:
-                description: "Custom standalone.xml config to be copied to target instance and used as base"
-                type: "str"
-
-
-            # line 9 of defaults/main.yml
             wildfly_port_range_offset:
-                default: 100
+                default: 0
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
-
-            # line 11 of defaults/main.yml
             wildfly_java_package_name:
                 default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
-
             wildfly_systemd_java_home:
                 description: "JAVA_HOME of installed JRE, leave empty for using specified wildfly_java_package_name RPM path"
                 type: "str"
-
-            # line 12 of defaults/main.yml
             wildfly_java_opts:
                 default: "-Xmx1024M -Xms512M"
                 description: "Additional settings for the JVM running wildfly"
                 type: "str"
-
-            # line 14 of defaults/main.yml
             wildfly_systemd_unit_enabled:
                 default: true
                 description: "Enable systemd unit to autostart after a reboot"
                 type: "bool"
-
-            # line 15 of defaults/main.yml
             wildfly_systemd_require_privilege_escalation:
                 default: true
                 description: "Specify if Ansible needs to escalate privilege to interact with Systemd"
                 type: "bool"
-
-            # line 16 of defaults/main.yml
             wildfly_systemd_service_config_location:
-                default: "/usr/lib/systemd/system"
+                default: "/etc/systemd/system"
                 description: "Path for systemd unit file"
                 type: "str"
-
-            # line 17 of defaults/main.yml
             wildfly_systemd_service_config_file_suffix:
                 default: ".service"
                 description: "Systemd unit file extension"
                 type: "str"
-
-            # line 18 of defaults/main.yml
             wildfly_systemd_conf_file_suffix:
                 default: ".conf"
                 description: "Suffix for systemd conf file"
                 type: "str"
-
-            # line 19 of defaults/main.yml
             wildfly_systemd_service_config_file_template:
                 default: "templates/wfly.service.j2"
                 description: "Template for systemd unit"
                 type: "str"
-
-            # line 21 of defaults/main.yml
             wildfly_service_config_file_template:
                 default: "templates/wfly.conf.j2"
                 description: "Template for systemd config"
                 type: "str"
-
-            # line 22 of defaults/main.yml
             wildfly_service_config_file_location:
-                default: "/etc/"
+                default: "/etc/sysconfig"
                 description: "Path for wildfly systemd unit file"
                 type: "str"
-
-            # line 24 of defaults/main.yml
             wildfly_enable_yml_config:
                 default: false
                 description: "Enable yaml file configuration feature (WFCORE5343)"
                 type: "bool"
-
-            # line 25 of defaults/main.yml
             wildfly_yml_configs:
                 default: "[]"
                 description: "List of filenames for wildfly configuration bootstrap"
                 type: "list"
-
-            # line 26 of defaults/main.yml
             wildfly_yml_configs_repository:
                 description: "Path to the folder containing the YAML config files"
                 type: "str"
-
-            # line 28 of defaults/main.yml
             wildfly_bind_addr:
                 default: "0.0.0.0"
                 description: "Bind address for listening to public network"
                 type: "str"
-
-            # line 29 of defaults/main.yml
             wildfly_bind_addr_private:
                 default: "127.0.0.1"
                 description: "Bind address for listening to private network"
                 type: "str"
-
-            # line 30 of defaults/main.yml
             wildfly_bind_addr_management:
                 default: "127.0.0.1"
                 description: "Bind address for management console port"
                 type: "str"
-
-            # line 31 of defaults/main.yml
             wildfly_multicast_addr:
                 default: "230.0.0.4"
                 description: "Multicast address for jgroup cluster discovery"
                 type: "str"
-
-            # line 33 of defaults/main.yml
             wildfly_statistics_enabled:
                 default: false
                 description: "Whether to enable statistics"
                 type: "bool"
+            wildfly_instance_name:
+                default: "wildfly"
+                description: "Name of the wildfly instance"
+                type: "str"
+            wildfly_node_id:
+                default: "{{ inventory_hostname }}"
+                description: "Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster"
+                type: "str"
+            wildfly_basedir_prefix:
+                default: "{{ wildfly_home }}"
+                description: "Install base directory for instance, ie. for colocated installations"
+                type: "str"
     downstream:
         options:
             eap_enable:

@@ -2,13 +2,13 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - instance_name is defined
       - instance_state is defined
     quiet: true
 
-- name: "Set instance {{ instance_name }} state to {{ instance_state }}"
-  ansible.builtin.service:
-    name: "{{ service_systemd_conf_file | basename }}"
+- name: "Set instance {{ wildfly_instance_name }} state to {{ instance_state }}"
+  ansible.builtin.systemd:
+    name: "{{ wildfly_service_name }}"
     state: "{{ instance_state }}"
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
+    daemon_reload: true
   become: yes

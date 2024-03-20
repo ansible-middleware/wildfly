@@ -2,39 +2,54 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - wildfly_instance_name is defined
+      - wildfly_uninstall_service_name is defined
+      - wildfly_uninstall_home is defined
     quiet: true
 
-- name: "Delete all runtimes data"
-  ansible.builtin.file:
-    state: absent
-    path: "{{ wildfly_runtime_data }}"
-  when:
-    - wildfly_runtime_data is defined
-  become: yes
+- name: "Ensure privileges escalation is performed if needed: {{ wildfly_uninstall_require_privileges_escalation }}"
+  become: "{{ wildfly_uninstall_require_privileges_escalation }}"
+  block:
+    - name: "Ensure systemd service associated to {{ wildfly_uninstall_service_name }}"
+      ansible.builtin.include_tasks: service.yml
 
-- name: "Delete configurations files"
-  ansible.builtin.file:
-    state: absent
-    path: "{{ wildfly_service_config }}"
-  when:
-    - wildfly_service_config is defined
-  become: yes
+    - name: "Delete server home directory ({{ wildfly_uninstall_home }})."
+      ansible.builtin.file:
+        state: absent
+        path: "{{ wildfly_uninstall_home }}"
+      when:
+        - wildfly_uninstall_home
 
-- name: "Set destination path for systemd unit"
-  ansible.builtin.set_fact:
-    wfly_systemd_config: "/usr/lib/systemd/system/{{ wildfly_instance_name }}.service"
+    - name: "Delete systemd service file ({{ wildfly_uninstall_systemd_service_conf_file }})."
+      ansible.builtin.file:
+        state: absent
+        path: "{{ wildfly_uninstall_systemd_service_conf_file }}"
+      when:
+        - wildfly_uninstall_systemd_service_conf_file
 
-- name: Check systemd config file state
-  ansible.builtin.stat:
-    path: "{{ wfly_systemd_config }}"
-  register: wfly_systemd_configfile
-  become: yes
+    - name: "Delete systemd env file ({{ wildfly_uninstall_systemd_service_file }})."
+      ansible.builtin.file:
+        state: absent
+        path: "{{ wildfly_uninstall_systemd_service_file }}"
+      when:
+        - wildfly_uninstall_systemd_service_file
 
-- name: "Delete all systems services"
-  ansible.builtin.file:
-    state: absent
-    path: "{{ wfly_systemd_config }}"
-  when:
-    - wfly_systemd_configfile.stat.exists
-  become: yes
+    - name: "Delete user - if requested {{ wildfly_uninstall_delete_username }}"
+      ansible.builtin.user:
+        state: absent
+        name: "{{ wildfly_uninstall_delete_username }}"
+      when:
+        - wildfly_uninstall_delete_user is defined and (wildfly_uninstall_delete_user | bool )
+
+    - name: "Delete user - if requested {{ wildfly_uninstall_delete_group }}"
+      ansible.builtin.group:
+        state: absent
+        name: "{{ wildfly_uninstall_delete_groupname }}"
+      when:
+        - wildfly_uninstall_delete_group is defined and (wildfly_uninstall_delete_group | bool )
+
+    - name: "Delete archive (if path provided)."
+      ansible.builtin.file:
+        path: "{{ wildfly_uninstall_path_to_archive }}"
+        state: absent
+      when:
+        - wildfly_uninstall_path_to_archive is defined

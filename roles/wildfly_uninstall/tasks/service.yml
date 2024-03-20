@@ -1,0 +1,19 @@
+---
+- name: Populate service facts
+  ansible.builtin.service_facts:
+
+- name: Determine full service name
+  when:
+    - not 'service' in wildfly_uninstall_service_name
+  ansible.builtin.set_fact:
+    wildfly_uninstall_service_name: "{{ wildfly_uninstall_service_name }}.service"
+
+- name: "Ensure the following service is stopped and disabled, if exists:{{ wildfly_uninstall_service_name }}"
+  when:
+    - wildfly_uninstall_service_name in ansible_facts.services
+  block:
+    - name: "Ensure systemd service associated to {{ wildfly_uninstall_service_name }}"
+      ansible.builtin.service:
+        name: "{{ wildfly_uninstall_service_name }}"
+        state: stopped
+        enabled: false

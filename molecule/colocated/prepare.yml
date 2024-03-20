@@ -1,0 +1,32 @@
+---
+- name: Prepare
+  hosts: all
+  vars:
+    sudo_pkg_name
+  tasks:
+
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: Print the package facts
+      ansible.builtin.debug:
+        var: ansible_facts.packages
+
+    - name: "Check if {{ sudo_pkg_name }} is installed."
+      ansible.builtin.assert:
+        that:
+          - sudo_pkg_name in ansible_facts.packages
+
+    - name: "Ensure required packages are installed."
+      become: yes
+      ansible.builtin.yum:
+        name:
+          - java-11-openjdk
+          - procps-ng
+          - tzdata-java
+        state: present
+
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is  {{ ansible_version.full }}"

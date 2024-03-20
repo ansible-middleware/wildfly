@@ -1,0 +1,22 @@
+---
+- name: Deploy first wildfly
+  import_playbook: ../../playbooks/validate.yml
+  vars:
+    wildfly_node_id: wildfly-1
+    wildfly_instance_name: wildfly-1
+    wildfly_service_name: wildfly-1
+    wildfly_config_base: standalone-ha.xml
+    wildfly_install_workdir: "/opt/wildfly-1"
+    wildfly_home: "{{ wildfly_install_workdir }}/wildfly-{{ wildfly_version }}/"
+    skip_db_driver: true
+- name: Deploy second wildfly
+  import_playbook: ../../playbooks/validate.yml
+  vars:
+    wildfly_node_id: wildfly-2
+    wildfly_instance_name: wildfly-2
+    wildfly_service_name: wildfly-2
+    wildfly_config_base: standalone-ha.xml
+    wildfly_install_workdir: "/opt/wildfly-2"
+    wildfly_home: "{{ wildfly_install_workdir }}/wildfly-{{ wildfly_version }}/"
+    wildfly_port_range_offset: 100
+    skip_db_driver: true

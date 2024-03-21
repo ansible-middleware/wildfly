@@ -254,8 +254,8 @@
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_node_id</span></code></p></td>
-<td class="text-left"><p>Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_instance_name</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p>Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster. Max length 23 characters</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">inventory_hostname_short</span> <span class="pre">}}</span></code></p></td>
 </tr>
 </tbody>
 </table>

@@ -45,7 +45,7 @@ Role Defaults
 |`wildfly_service_name`| Systemd unit service name | `{{ wildfly_instance_name }}`|
 |`wildfly_systemd_env_config_name`| Systemd unit service name | `{{ wildfly_instance_name }}`|
 |`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `wildfly` |
-|`wildfly_node_id`| Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster | `{{ wildfly_instance_name }}` |
+|`wildfly_node_id`| Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster. Max length 23 characters | `{{ inventory_hostname_short }}` |
 
 Role Variables
 --------------

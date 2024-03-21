@@ -120,8 +120,8 @@ argument_specs:
                 description: "Name of the wildfly instance"
                 type: "str"
             wildfly_node_id:
-                default: "{{ inventory_hostname }}"
-                description: "Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster"
+                default: "{{ inventory_hostname_short }}"
+                description: "Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster; max length 23 characters"
                 type: "str"
             wildfly_basedir_prefix:
                 default: "{{ wildfly_home }}"

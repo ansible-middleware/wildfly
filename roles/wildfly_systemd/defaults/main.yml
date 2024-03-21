@@ -35,6 +35,6 @@ wildfly_multicast_addr: 230.0.0.4
 wildfly_statistics_enabled: False
 
 wildfly_instance_name: wildfly
-wildfly_node_id: "{{ inventory_hostname }}"
+wildfly_node_id: "{{ inventory_hostname_short }}"
 wildfly_service_name: "{{ wildfly_instance_name }}"
 wildfly_basedir_prefix: "{{ wildfly_home }}"

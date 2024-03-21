@@ -8,6 +8,13 @@
       - wildfly_systemd.group is defined
     quiet: true
 
+- name: "Validate node identifier length"
+  ansible.builtin.assert:
+    that:
+      - wildfly_node_id | length <= 23
+    quiet: True
+    fail_msg: "The node ID in variable wildfly_node_id cannot exceed 23 characters length"
+
 - name: "Ensure that version is correct for yaml config extension"
   ansible.builtin.include_tasks: yml_config_version_prereq.yml
   when: wildfly_enable_yml_config

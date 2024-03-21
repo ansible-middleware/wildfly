@@ -25,6 +25,8 @@
         path: "{{ wildfly_uninstall_systemd_service_conf_file }}"
       when:
         - wildfly_uninstall_systemd_service_conf_file
+      notify:
+        - "Systemd Daemon Reload"
 
     - name: "Delete systemd env file ({{ wildfly_uninstall_systemd_service_file }})."
       ansible.builtin.file:
@@ -32,6 +34,8 @@
         path: "{{ wildfly_uninstall_systemd_service_file }}"
       when:
         - wildfly_uninstall_systemd_service_file
+      notify:
+        - "Systemd Daemon Reload"
 
     - name: "Delete user - if requested {{ wildfly_uninstall_delete_username }}"
       ansible.builtin.user:

@@ -6,3 +6,6 @@
     - vars.yml
   roles:
     - name: wildfly_uninstall
+  post_tasks:
+    - name: "Flush handlers to ensure they are executed"
+      ansible.builtin.meta: flush_handlers

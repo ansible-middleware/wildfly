@@ -26,7 +26,7 @@ argument_specs:
                 description: "Name for the jdbc driver module"
                 type: "str"
             wildfly_version:
-                default: "29.0.0.Final"
+                default: "31.0.1.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_home:

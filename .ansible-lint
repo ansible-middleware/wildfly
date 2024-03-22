@@ -1,5 +1,6 @@
 # .ansible-lint
 exclude_paths:
+  - bump-wildfly-version.sh
   - .cache/
   - .github/
   - molecule/

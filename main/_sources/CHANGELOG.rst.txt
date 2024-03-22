@@ -13,7 +13,6 @@ Minor Changes
 -------------
 
 - Allow to use different names for nodeId, instance name, systemd unit name `#192 <https://github.com/ansible-middleware/wildfly/pull/192>`_
-- Cleanup systemd role by breaking apart main.yml `#188 <https://github.com/ansible-middleware/wildfly/pull/188>`_
 - Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
 - Validate ``wildfly_node_id`` length and default to ``inventory_hostname_short`` `#195 <https://github.com/ansible-middleware/wildfly/pull/195>`_
 

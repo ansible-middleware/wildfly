@@ -39,11 +39,6 @@ Example Playbook
   collections:
     - middleware_automation.wildfly
   tasks:
-    - name: "Ensure required local user and group exists."
-      ansible.builtin.include_role:
-        name: wildfly_install
-        tasks_from: user.yml
-
     - name: "Install server using Prospero"
       ansible.builtin.include_role:
         name: wildfly_install

@@ -35,30 +35,22 @@ Example Playbook
 - name: Playbook to install Wildfly using Prospero
   hosts: all
   vars:
-    wildfly_install_user: 'wildfly'
-    wildfly_install_group: "{{ wildfly_install_user }}"
     wildfly_install_use_prospero: True
-    wildfly_prospero_scenario_enable: True
   collections:
     - middleware_automation.wildfly
   tasks:
-    - name: "Run Prospero scenario only upstream."
-      block:
-        - name: "Ensure required local user and group exists."
-          ansible.builtin.include_role:
-            name: wildfly_install
-            tasks_from: user.yml
+    - name: "Ensure required local user and group exists."
+      ansible.builtin.include_role:
+        name: wildfly_install
+        tasks_from: user.yml
 
-        - name: "Install server using Prospero"
-          ansible.builtin.include_role:
-            name: wildfly_install
+    - name: "Install server using Prospero"
+      ansible.builtin.include_role:
+        name: wildfly_install
 
-        - name: "Run server with systemd"
-          ansible.builtin.include_role:
-            name: wildfly_systemd
-      when:
-        - wildfly_prospero_scenario_enable is defined and wildfly_prospero_scenario_enable
-
+    - name: "Run server with systemd"
+      ansible.builtin.include_role:
+        name: wildfly_systemd
 ```
 
 Author Information

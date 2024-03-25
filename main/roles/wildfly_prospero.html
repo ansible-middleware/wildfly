@@ -190,29 +190,17 @@
 <div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Playbook to install Wildfly using Prospero</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">wildfly_install_user</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;wildfly&#39;</span>
-<span class="w">    </span><span class="nt">wildfly_install_group</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">wildfly_install_user</span> <span class="cp">}}</span><span class="s">&quot;</span>
 <span class="w">    </span><span class="nt">wildfly_install_use_prospero</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
-<span class="w">    </span><span class="nt">wildfly_prospero_scenario_enable</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">True</span>
 <span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly</span>
 <span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Run</span><span class="nv"> </span><span class="s">Prospero</span><span class="nv"> </span><span class="s">scenario</span><span class="nv"> </span><span class="s">only</span><span class="nv"> </span><span class="s">upstream.&quot;</span>
-<span class="w">      </span><span class="nt">block</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Ensure</span><span class="nv"> </span><span class="s">required</span><span class="nv"> </span><span class="s">local</span><span class="nv"> </span><span class="s">user</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">group</span><span class="nv"> </span><span class="s">exists.&quot;</span>
-<span class="w">          </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_install</span>
-<span class="w">            </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">user.yml</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Install</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">Prospero&quot;</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_install</span>
 
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Install</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">Prospero&quot;</span>
-<span class="w">          </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_install</span>
-
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Run</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">systemd&quot;</span>
-<span class="w">          </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
-<span class="w">            </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_systemd</span>
-<span class="w">      </span><span class="nt">when</span><span class="p">:</span>
-<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_prospero_scenario_enable is defined and wildfly_prospero_scenario_enable</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Run</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">with</span><span class="nv"> </span><span class="s">systemd&quot;</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_systemd</span>
 </pre></div>
 </div>
 </section>

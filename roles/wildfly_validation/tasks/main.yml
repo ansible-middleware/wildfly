@@ -26,9 +26,9 @@
     quiet: true
     fail_msg: "User {{ wildfly_user }} was NOT created."
 
-- name: "Ensure user {{ wildfly_group }} were created."
+- name: "Ensure group {{ wildfly_group }} were created."
   ansible.builtin.group:
-    name: "{{ wildfly_user }}"
+    name: "{{ wildfly_group }}"
     state: present
   register: wildfly_group_status
   become: yes

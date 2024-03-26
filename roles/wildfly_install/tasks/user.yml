@@ -18,5 +18,6 @@
   become: yes
   ansible.builtin.user:
     name: "{{ wildfly_install.user }}"
-    groups: "{{ group_name }}"
+    group: "{{ group_name }}"
     state: present
+    system: True

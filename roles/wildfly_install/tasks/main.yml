@@ -11,7 +11,7 @@
     state: directory
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
-    mode: 0750
+    mode: '0750'
   become: yes
 
 - name: "Ensure archive_dir {{ wildfly_install.archive_dir }} exists."
@@ -20,7 +20,7 @@
     state: directory
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
-    mode: 0750
+    mode: '0750'
   become: yes
 
 - name: "Ensure server is installed"

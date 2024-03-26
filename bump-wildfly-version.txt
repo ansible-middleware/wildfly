@@ -1,0 +1,27 @@
+To bump the versin of Wildfly use the script below:
+
+    #!/bin/bash
+    readonly CURRENT_VERSION=${1}
+    readonly NEW_VERSION=${2}
+
+    usage() {
+      echo ''
+      echo "ex: $(basename ${0}) 29.0. 31.0.1.Final."
+    }
+
+    if [ -z "${CURRENT_VERSION}" ]; then
+        echo 'Please provide the 5 first character of the current version.'
+        usage
+        exit 1
+    fi
+
+    if [ -z "${NEW_VERSION}" ]; then
+        echo 'Please provide the new version, including .Final'
+        usage
+        exit 2
+    fi
+
+    for file_to_edit in $(grep -e "${CURRENT_VERSION}" -r roles/ molecule/  | cut -f1 -d: | sort -u)
+    do
+      sed -e "s;${CURRENT_VERSION}.*.Final;${NEW_VERSION};g" -i "${file_to_edit}"
+    done

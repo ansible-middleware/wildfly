@@ -8,7 +8,7 @@ argument_specs:
                 type: "bool"
 
             # line 3 of defaults/main.yml
-            wildfly_uninstall_instance_name:
+            wildfly_uninstall_service_name:
                 default: "{{ instance_name | default('wildfly') }}"
                 description: "Instance name of the server to uninstall"
                 type: "str"

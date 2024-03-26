@@ -5,7 +5,7 @@ wildfly_service_name: wildfly
 wildfly_http_port: 8080
 wildfly_https_port: 8443
 wildfly_controller_port: 9990
-wildfly_version: '29.0.0.Final'
+wildfly_version: '31.0.1.Final'
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_validation_systemd_pidfile: "{{ wildfly_home }}/standalone/{{ wildfly_service_name }}.pid"

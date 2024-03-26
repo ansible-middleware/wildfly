@@ -18,7 +18,7 @@ argument_specs:
                 description: "posix group for wildfly service"
                 type: "str"
             wildfly_version:
-                default: "29.0.0.Final"
+                default: "31.0.1.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_install_workdir:

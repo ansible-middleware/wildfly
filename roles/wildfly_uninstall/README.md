@@ -10,7 +10,7 @@ Role Defaults
 | Variable | Description | Default |
 |:---------|:------------|:--------|
 |`wildfly_uninstall_require_privileges_escalation`| Specifiy if the uninstallation process requires privileges escalation | `True` |
-|`wildfly_uninstall_instance_name`| Instance name of the server to uninstall | `{{ instance_name | default('wildfly') }}` |
+|`wildfly_uninstall_service_name`| Instance name of the server to uninstall | `{{ instance_name | default('wildfly') }}` |
 |`wildfly_uninstall_home`| Path to server home | `{{ wildfly_home }}` |
 |`wildfly_uninstall_systemd_service_file`| Path to the systemd configuration file associated to the server | `/usr/lib/systemd/system/{{ wildfly_uninstall_service_name }}.service` |
 |`wildfly_uninstall_systemd_service_conf_file`| Path to the env file used by the systemd service associated to the server | `/etc/{{ wildfly_uninstall_service_name }}.conf` |
@@ -38,8 +38,8 @@ Role Variables
   gather_facts: no
   vars:
     wildfly_uninstall_service_name: wildfly
-    wildfly_uninstall_home: /opt/wildfly/wildfly-29.0.0.Final
-    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-29.0.0.Final.zip
+    wildfly_uninstall_home: /opt/wildfly/wildfly-31.0.1.Final
+    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-31.0.1.Final.zip
   roles:
     - name: wildfly_uninstall
 ```

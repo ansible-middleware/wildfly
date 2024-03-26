@@ -94,7 +94,6 @@
 
     - name: "Extract files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
       become: yes
-      become_user: "{{ wildfly_install.user }}"
       ansible.builtin.unarchive:
         src: "{{ full_path_to_archive }}"
         dest: "{{ wildfly_install.workdir }}"

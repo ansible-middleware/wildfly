@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.1-devel
 ============
 
+Major Changes
+-------------
+
+- Set pid file for systemd to /var/run/{{ instance }} or allow for custom pid file location `#190 <https://github.com/ansible-middleware/wildfly/pull/190>`_
+
 Minor Changes
 -------------
 

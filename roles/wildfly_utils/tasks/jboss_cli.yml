@@ -10,6 +10,7 @@
     quiet: true
 
 - name: "Ensure server's management interface is reachable"
+  when: jboss_cli_connect | default(true)
   ansible.builtin.wait_for:
     host: "{{ jboss_cli_controller_host }}"
     port: "{{ jboss_cli_controller_port }}"
@@ -19,9 +20,11 @@
 
 - name: "Execute CLI query {{ jboss_cli_query | default(jboss_cli_file) }}"
   ansible.builtin.command: >
-    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }} -c
+    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}
+    {{ '-c' if jboss_cli_connect | default(true) else '' }}
     {{ '--command=' + jboss_cli_query if jboss_cli_query is defined else '' }}
     {{ '--file=' + jboss_cli_file if jboss_cli_file is defined else '' }}
+    {{ ('-D' + jboss_cli_extra_param + '=' + jboss_cli_extra_param_value) if jboss_cli_extra_param is defined else '' }}
     --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }}
     --timeout={{ jboss_cli_timeout * 1000 if jboss_cli_timeout is defined else 5000 }}
     {{ '' if jboss_cli_output_dmr is defined else '--output-json' }}

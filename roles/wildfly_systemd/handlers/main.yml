@@ -3,3 +3,7 @@
   ansible.builtin.include_tasks: service.yml
   vars:
     instance_state: restarted
+
+- name: "Perform daemon-reload"
+  ansible.builtin.systemd:
+    daemon_reload: yes

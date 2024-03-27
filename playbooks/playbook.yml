@@ -4,6 +4,9 @@
   vars:
     postgres_driver_version: 9.4.1212
     mariadb_driver_version: 3.2.0
+    jdbc_drivers:
+        - { version: "{{ postgres_driver_version }}", name: 'org.postgresql', jar_file: "postgresql-{{ postgres_driver_version }}.jar", url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ postgres_driver_version }}/postgresql-{{ postgres_driver_version }}.jar" }
+        - { version: "{{ mariadb_driver_version }}", name: 'org.mariadb', jar_file: "mariadb-java-client-{{ mariadb_driver_version }}.jar", url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ mariadb_driver_version }}/mariadb-java-client-{{ mariadb_driver_version }}.jar" }
   roles:
     - middleware_automation.wildfly.wildfly_install
     - middleware_automation.wildfly.wildfly_systemd
@@ -11,12 +14,10 @@
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:
         name: wildfly_driver
-      when: not skip_db_driver is defined
+      when: jdbc_drivers is defined and jdbc_drivers | length > 0
       vars:
         wildfly_driver_module_name: "{{ item.name }}"
         wildfly_driver_version: "{{ item.version }}"
         wildfly_driver_jar_filename: "{{ item.jar_file }}"
         wildfly_driver_jar_url: "{{ item.url }}"
-      loop:
-        - { version: "{{ postgres_driver_version }}", name: 'org.postgresql', jar_file: "postgresql-{{ postgres_driver_version }}.jar", url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ postgres_driver_version }}/postgresql-{{ postgres_driver_version }}.jar" }
-        - { version: "{{ mariadb_driver_version }}", name: 'org.mariadb', jar_file: "mariadb-java-client-{{ mariadb_driver_version }}.jar", url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ mariadb_driver_version }}/mariadb-java-client-{{ mariadb_driver_version }}.jar" }
+      loop: "{{ jdbc_drivers }}"

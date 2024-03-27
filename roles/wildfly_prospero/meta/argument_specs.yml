@@ -60,3 +60,10 @@ argument_specs:
                 default: false
                 description: "Should Ansible check SSL when downloading Prospero"
                 type: "bool"
+    downstream:
+        options:
+            eap_prospero_version:
+                default: "1.1.6.Final-redhat-00001"
+                description: "Version of Prospero to use"
+                type: "str"
+

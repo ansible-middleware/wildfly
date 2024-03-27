@@ -20,3 +20,4 @@
             name: wildfly_systemd
       when:
         - wildfly_prospero_scenario_enable is defined and wildfly_prospero_scenario_enable
+        - not eap_enable is defined or not eap_enable

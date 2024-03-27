@@ -66,4 +66,3 @@ argument_specs:
                 default: "1.1.6.Final-redhat-00001"
                 description: "Version of Prospero to use"
                 type: "str"
-

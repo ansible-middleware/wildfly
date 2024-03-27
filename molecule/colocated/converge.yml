@@ -8,7 +8,8 @@
     wildfly_service_name: "wildfly-{{ id }}"
     wildfly_config_base: standalone-ha.xml
     wildfly_install_workdir: "/opt/wildfly-{{ id }}/"
-    wildfly_port_range_offset: "{{ 100 * (id -1) | int }}"
+    wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 9990
     skip_db_driver: true
 
 - name: Deploy second wildfly
@@ -21,6 +22,7 @@
     wildfly_config_base: standalone-ha.xml
     wildfly_install_workdir: "/opt/wildfly-{{ id }}/"
     wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 10090
     skip_db_driver: true
 
 - name: Deploy third wildfly
@@ -33,4 +35,5 @@
     wildfly_config_base: standalone-ha.xml
     wildfly_install_workdir: "/opt/wildfly-{{ id }}/"
     wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 10190
     skip_db_driver: true

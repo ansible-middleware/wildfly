@@ -16,4 +16,3 @@ wildfly_systemd:
     Debian: "update-alternatives --query java | grep 'Value: ' | grep -o '/.*/jre'"
   selinux:
     pid_path: "{{ wildfly_pidfile_homedir }}"
-    

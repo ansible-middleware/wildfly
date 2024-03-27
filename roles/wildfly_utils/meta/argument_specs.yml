@@ -115,3 +115,15 @@ argument_specs:
                 required: False
                 description: "Seconds to wait for jboss-cli connection to server"
                 type: "int"
+            jboss_cli_connect:
+                required: False
+                description: "Whether to pass -c to jboss-cli.sh"
+                type: 'bool'
+            jboss_cli_extra_param:
+                required: False
+                description: "An extra parameter name passed with -D to jboss-cli.sh"
+                type: 'str'
+            jboss_cli_extra_param_value:
+                required: False
+                description: "The value for the extra parameter specified in jboss_cli_extra_param"
+                type: 'str'

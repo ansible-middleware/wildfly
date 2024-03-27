@@ -174,7 +174,11 @@
             force: false
           become: yes
         - name: "Start wildfly for patching"
-          ansible.builtin.command: "{{ wildfly_home }}/bin/standalone.sh -c {{ wildfly_instance_name }}.xml -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ -Djboss.server.base.dir={{ wildfly_home }}/standalone"
+          ansible.builtin.shell: |
+            set -o pipefail
+            {{ wildfly_home }}/bin/standalone.sh -c {{ wildfly_instance_name }}.xml -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ -Djboss.server.base.dir={{ wildfly_home }}/standalone
+          environment:
+            JAVA_HOME: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
           changed_when: True
           async: 180
           poll: 0
@@ -235,39 +239,50 @@
           become: yes
 
     - name: "Restart server to ensure patch content is running"
-      ansible.builtin.include_tasks: jboss_cli.yml
-      vars:
-        jboss_home: "{{ wildfly_home }}"
-        jboss_cli_query: "'shutdown --restart'"
-        jboss_cli_timeout: 60
-      when:
-        - not wildfly_no_restart_after_patch
-        - cli_result.rc == 0
+      block:
+        - name: "Restart server to ensure patch content is running"
+          ansible.builtin.include_tasks: jboss_cli.yml
+          vars:
+            jboss_home: "{{ wildfly_home }}"
+            jboss_cli_query: "'shutdown --restart'"
+            jboss_cli_timeout: 20
+          when:
+            - not wildfly_no_restart_after_patch
+            - cli_result.rc == 0
 
-    - name: "Wait for management interface is reachable"
-      ansible.builtin.wait_for:
-        host: "{{ jboss_cli_controller_host }}"
-        port: "{{ jboss_cli_controller_port }}"
-        timeout: 60
-        delay: 10
-        sleep: 5
+        - name: "Wait for management interface is reachable"
+          ansible.builtin.wait_for:
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
+            timeout: 20
+            delay: 10
+            sleep: 5
 
-    - name: "Stop service if it was started for patching"
-      ansible.builtin.include_tasks: jboss_cli.yml
-      vars:
-        jboss_home: "{{ wildfly_home }}"
-        jboss_cli_query: "'shutdown'"
-        jboss_cli_timeout: 60
-      when:
-        - apply_cp_process is defined
-        - not eap_no_restart_after_patch
-        - cli_result.rc == 0
+        - name: "Stop service if it was started for patching"
+          ansible.builtin.include_tasks: jboss_cli.yml
+          vars:
+            jboss_home: "{{ wildfly_home }}"
+            jboss_cli_query: "'shutdown'"
+            jboss_cli_timeout: 30
+          when:
+            - apply_cp_process is defined
+            - not eap_no_restart_after_patch
+            - cli_result.rc == 0
 
-    - name: "Display resulting output"
-      ansible.builtin.debug:
-        msg: "{{ cli_result.stdout }}"
-      when:
-        - cli_result.stdout | length > 0
+      rescue:
+        - name: "Enable elytron when on jre17"
+          ansible.builtin.include_tasks: jboss_cli.yml
+          vars:
+            jboss_home: "{{ wildfly_home }}"
+            jboss_cli_file: "{{ wildfly_home }}/docs/examples/enable-elytron-se17.cli"
+            jboss_cli_timeout: 60
+            jboss_cli_connect: False
+            jboss_cli_extra_param: config
+            jboss_cli_extra_param_value: "{{ wildfly_instance_name }}.xml"
+          when:
+            - wildfly_java_package_name | regex_search('(?<=java-)[0-9]+') == '17'
+            - patch_version.split('.')[0:2] | join('.') == '7.4'
+            - patch_version.split('.')[2] | int >= 7
 
   rescue:
     - name: "Show resulting output"

@@ -1,0 +1,123 @@
+###############################################
+### JBoss Server Migration Environment ###
+###############################################
+
+# Please refer to user guide for these properties specification #
+
+####### REPORTS
+
+report.html.fileName=migration-report.html
+report.html.maxTaskPathSizeToDisplaySubtasks=4
+report.html.templateFileName=migration-report-template.html
+report.summary.maxTaskPathSizeToDisplaySubtasks=3
+report.xml.fileName=migration-report.xml
+
+####### SERVERS
+
+#server.source.standalone.serverDir=standalone
+#server.source.standalone.configDir=configuration
+server.source.standalone.configFiles=standalone.xml,standalone-full.xml,jboss_eap.xml
+#server.source.standalone.serverDir=standalone
+#server.source.standalone.configDir=configuration
+
+####### TASKS
+
+#domain.skip=true
+#standalone.skip=true
+
+### If set any deployment found is not migrated in non-interactive mode
+deployments.migrate-deployments.skip=true
+### If set any persistent deployment found is not migrated in non-interactive mode
+#deployments.migrate-persistent-deployments.skip=true
+### If set any deployment found in a directory watched by a deployment scanner, is not migrated in non-interactive mode
+#deployments.migrate-deployment-scanner-deployments.skip=true
+
+# a list with module names of extensions to exclude when migrating a server configuration
+extensions.excludes=
+# a list with module names of extensions to include when migrating a server configuration
+extensions.includes=
+# if set the migration of a server configuration will not remove any unsupported extensions
+#extensions.remove-unsupported-extensions.skip=true
+
+#management.setup-http-upgrade.skip=true
+#management.setup-http-upgrade.management-interface.http-interface.enable-http-upgrade.skip=true
+#management.setup-http-upgrade.socket-binding.management-https.update-port.port=${jboss.management.https.port:9993}
+#management.setup-http-upgrade.socket-binding.management-https.update-port.skip=true
+
+# a list with module names to migrate
+modules.includes={{ jdbc_driver_module_name }}
+# a list with module names to not migrate
+modules.excludes=
+#modules.migrate-modules-requested-by-configuration.skip=true
+#modules.migrate-modules-requested-by-user.skip=true
+
+### If set no paths referenced in server configurations will be migrated
+#paths.migrate-paths-requested-by-configuration.skip=true
+### If set no paths referenced in vault configurations will be migrated
+#paths.migrate-paths-requested-by-configuration.vault.skip=true
+#paths.migrate-paths-requested-by-configuration.vault.KEYSTORE_URL.skip=true
+#paths.migrate-paths-requested-by-configuration.vault.ENC_FILE_DIR.skip=true
+
+#security-realms.migrate-properties.skip=true
+
+#socket-binding.ajp.add-port-expression.skip=true
+#socket-binding.http.add-port-expression.skip=true
+#socket-binding.https.add-port-expression.skip=true
+#socket-bindings.add-port-expressions.skip=true
+
+# a list with xml namespaces (without version) of subsystems to exclude when migrating a server configuration
+subsystems.excludes=
+# a list with xml namespaces (without version) of subsystems to include when migrating a server configuration
+subsystems.includes=
+# if set the migration of a server configuration will not remove any unsupported subsystem configurations
+#subsystems.remove-unsupported-subsystems.skip=true
+
+#subsystem.batch-jberet.add.skip=true
+
+#subsystem.ee.update.skip=true
+#subsystem.ee.update.setup-ee-concurrency-utilities.skip=true
+#subsystem.ee.update.setup-javaee7-default-bindings.skip=true
+#subsystem.ee.update.setup-javaee7-default-bindings.defaultDataSourceJndiName=
+subsystem.ee.update.setup-javaee7-default-bindings.defaultDataSourceName=ExampleDS
+#subsystem.ee.update.setup-javaee7-default-bindings.defaultJmsConnectionFactoryJndiName=
+subsystem.ee.update.setup-javaee7-default-bindings.defaultJmsConnectionFactoryName=hornetq-ra
+
+#subsystem.ejb3.update.skip=true
+#subsystem.ejb3.update.add-infinispan-passivation-store-and-distributable-cache.skip=true
+#subsystem.ejb3.update.setup-default-sfsb-passivation-disabled-cache.skip=true
+#subsystem.ejb3.update.activate-ejb3-remoting-http-connector.skip=true
+
+#subsystem.infinispan.update.skip=false
+#subsystem.infinispan.update.add-infinispan-ejb-cache.skip=true
+#subsystem.infinispan.update.add-infinispan-server-cache.skip=true
+#subsystem.infinispan.update.fix-hibernate-cache-module-name.skip=true
+
+#subsystem.jacorb.migrate.skip=true
+
+subsystem.logging.update.remove-console-handler.skip=true
+
+#subsystem.messaging.migrate.skip=true
+
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.httpAcceptorName=
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.httpConnectorName=
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.skip=true
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.socketBindingName=
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.undertowHttpListenerName=
+#subsystem.messaging-activemq.update.add-messaging-http-acceptors-and-connectors.undertowServerName=
+#subsystem.messaging-activemq.update.skip:
+
+#subsystem.remoting.update.skip=true
+#subsystem.remoting.update.add-remoting-http-connector.skip=true
+
+#subsystem.request-controller.add.skip=true
+
+#subsystem.security-manager.add.skip=true
+
+#subsystem.singleton.add.skip=true
+
+#subsystem.undertow.update.skip=true
+#subsystem.undertow.update.add-undertow-default-buffer-cache.skip=true
+#subsystem.undertow.update.add-undertow-websockets.skip=true
+#subsystem.undertow.update.migrate-undertow-http-listener.skip=true
+
+#subsystem.web.migrate.skip=true

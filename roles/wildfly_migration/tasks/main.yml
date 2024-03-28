@@ -12,6 +12,7 @@
     migration_tool: "{{ target_wildfly_home }}/bin/jboss-server-migration.sh"
 
 - name: "Load metadata on migration tool full path."
+  become: "{{ wildfy_migration_require_privileges_escalation | default('true') }}"
   ansible.builtin.stat:
     path: "{{ migration_tool }}"
   register: migration_tool_state
@@ -29,6 +30,7 @@
     fail_msg: "Invalid path to migration tool: {{ migration_tool }}."
 
 - name: "Ensure migration configuration is deployed"
+  become: "{{ wildfy_migration_require_privileges_escalation | default('true') }}"
   ansible.builtin.template:
     src: "{{ wildfly_migration.environment_props }}"
     dest: "{{ target_wildfly_home }}/migration/configuration/environment.properties"

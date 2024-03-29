@@ -127,6 +127,10 @@ argument_specs:
                 default: "{{ wildfly_home }}"
                 description: "Install base directory for instance, ie. for colocated installations"
                 type: "str"
+            wildfly_pidfile_homedir:
+                description: "Directory that will contain the PID file"
+                default: "/run/wildfly"
+                type: "str"
             wildfly_selinux_enabled:
                 default: False
                 description: "Whether to deploy on a selinux enforcing target host"

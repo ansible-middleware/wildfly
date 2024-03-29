@@ -49,7 +49,10 @@ argument_specs:
                 default: []
                 type: "list"
                 description: "CLI queries used to validate configuration. List of dicts [{query => <jboss cli command>, expected_result => <expected string result of the cli op>, expected_result_undefined => <if defined, then check if the result is 'undefined'> }]"
-
+            wildfly_pidfile_homedir:
+                description: "Directory that will contain the PID file"
+                default: "/run/wildfly"
+                type: "str"
     downstream:
         options:
             eap_enable:

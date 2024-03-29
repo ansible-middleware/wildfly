@@ -27,7 +27,7 @@ wildfly_enable_yml_config: no
 wildfly_yml_configs: []
 wildfly_yml_configs_repository:
 
-wildfly_pidfile_homedir: '/var/run'
+wildfly_pidfile_homedir: '/run'
 
 wildfly_bind_addr: 0.0.0.0
 wildfly_bind_addr_private: 127.0.0.1

@@ -54,13 +54,6 @@
     quiet: true
     fail_msg: "Required packages list was not defined"
 
-- name: "Prepare packages list"
-  ansible.builtin.set_fact:
-    wildfly_packages_list: "{{ wildfly_prereqs_packages }}"
-  when:
-    - not wildfly_install is defined
-    - not wildfly_install.java.package_name is defined
-
 - name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
   ansible.builtin.set_fact:
     wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ wildfly_install.java.package_name ] }}"
@@ -68,6 +61,12 @@
     - wildfly_install.java is defined
     - wildfly_install.java.package_name is defined
     - wildfly_install.java.package_name | length > 0
+
+- name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
+  ansible.builtin.set_fact:
+    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ 'policycoreutils' ] }}"
+  when:
+    - wildfly_selinux_enabled
 
 - name: "Install required packages ({{ wildfly_prereqs_packages | length }})"
   ansible.builtin.package:

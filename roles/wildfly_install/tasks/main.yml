@@ -12,6 +12,10 @@
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
     mode: '0750'
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
   become: yes
 
 - name: "Ensure archive_dir {{ wildfly_install.archive_dir }} exists."
@@ -21,6 +25,10 @@
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
     mode: '0750'
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
   become: yes
 
 - name: "Ensure server is installed"

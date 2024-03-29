@@ -6,6 +6,7 @@
     quiet: true
 
 - name: "Set instance {{ wildfly_instance_name }} state to {{ instance_state }}"
+  throttle: 1
   ansible.builtin.systemd:
     name: "{{ wildfly_service_name }}"
     state: "{{ instance_state }}"

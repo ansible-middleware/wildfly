@@ -25,11 +25,13 @@
     tasks_from: user.yml
 
 - name: 'Check if PID directory exists'
+  become: true
   ansible.builtin.stat:
     path: "{{ wildfly_systemd.selinux.pid_path }}"
   register: pid_directory
 
 - name: 'Create PID directory directory path if not exists'
+  become: true
   ansible.builtin.file:
     path: "{{ wildfly_systemd.selinux.pid_path }}"
     state: directory
@@ -51,6 +53,7 @@
   ansible.builtin.include_tasks: pid_config.yml
 
 - name: Execute restorecon
+  become: true
   ansible.builtin.command: "restorecon -R -v {{ wildfly_install_workdir }}"
   register: selinux_output
   changed_when: selinux_output.stdout_lines | length > 0

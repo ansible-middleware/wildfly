@@ -186,8 +186,9 @@
         tasks_from: keycloak_adapter.yml
 
 - name: Execute restorecon after extraction
-  ansible.builtin.command: "restorecon -R -v {{ eap_install_workdir }}"
+  ansible.builtin.command: "restorecon -F -R -v {{ wildfly_install_workdir }}"
   register: selinux_output
   changed_when: selinux_output.stdout_lines | length > 0
   when:
     - new_version_downloaded.changed or not path_to_workdir.stat.exists
+    - wildfly_selinux_enabled

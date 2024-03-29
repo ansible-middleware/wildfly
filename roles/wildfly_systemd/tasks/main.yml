@@ -51,8 +51,6 @@
   ansible.builtin.include_tasks: pid_config.yml
 
 - name: Execute restorecon
-  ansible.builtin.command: "restorecon -R -v {{ eap_install_workdir }}"
+  ansible.builtin.command: "restorecon -R -v {{ wildfly_install_workdir }}"
   register: selinux_output
   changed_when: selinux_output.stdout_lines | length > 0
-  when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists

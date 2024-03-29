@@ -10,7 +10,7 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0755
-    notify: "Restart Wildfly"
+    notify: restart_wildfly
 
   - name: Enable YAML configuration extension
     ansible.builtin.template:
@@ -19,7 +19,7 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
-    notify: "Restart Wildfly"
+    notify: restart_wildfly
 
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
@@ -41,7 +41,7 @@
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
       mode: 0644
-    notify: "Restart Wildfly"
+    notify: restart_wildfly
 
 - name: "Deploy YAML configuration files: {{ wildfly_yml_configs | flatten }}"
   become: yes
@@ -54,4 +54,4 @@
   loop: "{{ wildfly_yml_configs | flatten }}"
   loop_control:
     loop_var: file
-  notify: "Restart Wildfly"
+  notify: "restart_wildfly"

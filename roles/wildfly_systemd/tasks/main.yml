@@ -54,3 +54,4 @@
   ansible.builtin.command: "restorecon -R -v {{ wildfly_install_workdir }}"
   register: selinux_output
   changed_when: selinux_output.stdout_lines | length > 0
+  when: wildfly_selinux_enabled

@@ -86,7 +86,7 @@
         dest: "{{ wildfly_service_systemd_env_file }}"
         group: root
         owner: root
-        mode: '0640'
+        mode: '0644'
         selevel: s0
         serole: object_r
         setype: etc_t
@@ -102,7 +102,7 @@
         dest: "{{ wildfly_service_systemd_file }}"
         group: root
         owner: root
-        mode: '0640'
+        mode: '0644'
         selevel: s0
         serole: object_r
         setype: systemd_unit_file_t

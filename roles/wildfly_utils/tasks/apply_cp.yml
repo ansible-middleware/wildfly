@@ -122,7 +122,11 @@
     dest: "{{ patch_archive }}"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
-    mode: 0640
+    mode: '0640'
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
   register: new_version_downloaded
   when:
     - not patch_info.stat.exists
@@ -169,9 +173,13 @@
             dest: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
             group: "{{ wildfly_group }}"
             owner: "{{ wildfly_user }}"
-            mode: 0640
+            mode: '0640'
             remote_src: true
             force: false
+            selevel: s0
+            serole: object_r
+            setype: usr_t
+            seuser: system_u
           become: yes
         - name: "Start wildfly for patching"
           ansible.builtin.shell: |
@@ -225,7 +233,11 @@
             content: "Patch v{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
-            mode: 0640
+            mode: '0640'
+            selevel: s0
+            serole: object_r
+            setype: usr_t
+            seuser: system_u
           when:
             - not last_patch_status.stat.exists
           become: yes
@@ -236,7 +248,11 @@
             content: "{{ patch_version }}"
             owner: "{{ wildfly_user }}"
             group: "{{ wildfly_group }}"
-            mode: 0640
+            mode: '0640'
+            selevel: s0
+            serole: object_r
+            setype: usr_t
+            seuser: system_u
           when:
             - not last_patch_status.stat.exists
           become: yes

@@ -16,4 +16,8 @@
   ansible.builtin.get_url:
     url: "{{ wildfly_install.download_url }}"
     dest: "{{ local_path_to_archive }}" # noqa risky-file-permissions delegated, uses controller host user
-    mode: 0644
+    mode: '0644'
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u

@@ -7,8 +7,7 @@
     wildfly_service_name: wildfly-1
     wildfly_config_base: standalone-ha.xml
     jboss_cli_controller_port: 9990
-    wildfly_install_workdir: "/opt/wildfly-1"
-    wildfly_home: "{{ wildfly_install_workdir }}/wildfly-{{ wildfly_version }}/"
+    wildfly_install_workdir: "/opt/wildfly-1/"
 
 - name: Verify second server
   import_playbook: ../../playbooks/validate.yml

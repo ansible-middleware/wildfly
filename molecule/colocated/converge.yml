@@ -9,8 +9,6 @@
     wildfly_config_base: standalone-ha.xml
     wildfly_install_workdir: "/opt/wildfly-{{ id }}/"
     wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
-    wildfly_home: "{{ wildfly_install_workdir }}/wildfly-{{ wildfly_version }}/"
-    wildfly_port_range_offset: "{{ 100 * (id -1) | int }}"
     jdbc_drivers: []
 
 - name: Deploy second wildfly

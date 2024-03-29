@@ -1,0 +1,39 @@
+---
+- name: Deploy first eap
+  import_playbook: ../../playbooks/playbook.yml
+  vars:
+    id: 1
+    eap_node_id: "eap-{{ id }}"
+    eap_instance_name: "eap-{{ id }}"
+    eap_service_name: "eap-{{ id }}"
+    eap_config_base: standalone-ha.xml
+    eap_install_workdir: "/opt/eap-{{ id }}/"
+    eap_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 9990
+    skip_db_driver: true
+
+- name: Deploy second eap
+  import_playbook: ../../playbooks/playbook.yml
+  vars:
+    id: 2
+    eap_node_id: "eap-{{ id }}"
+    eap_instance_name: "eap-{{ id }}"
+    eap_service_name: "eap-{{ id }}"
+    eap_config_base: standalone-ha.xml
+    eap_install_workdir: "/opt/eap-{{ id }}/"
+    eap_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 10090
+    skip_db_driver: true
+
+- name: Deploy third eap
+  import_playbook: ../../playbooks/playbook.yml
+  vars:
+    id: 3
+    eap_node_id: "eap-{{ id }}"
+    eap_instance_name: "eap-{{ id }}"
+    eap_service_name: "eap-{{ id }}"
+    eap_config_base: standalone-ha.xml
+    eap_install_workdir: "/opt/eap-{{ id }}/"
+    eap_port_range_offset: "{{ 100 * (id - 1) | int }}"
+    jboss_cli_controller_port: 10190
+    skip_db_driver: true

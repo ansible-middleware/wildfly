@@ -1,7 +1,7 @@
 ---
 - name: "Escalate privileges (if required) and ensure any changes in config file triggers a restart"
   become: "{{ wildfly_systemd_require_privilege_escalation }}"
-  notify: 'Restart Wildfly'
+  notify: restart_wildfly
   block:
 
     - name: "Create basedir {{ basedir }} for instance: {{ wildfly_instance_name }}"

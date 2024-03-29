@@ -11,6 +11,10 @@
         owner: "{{ wildfly_systemd.user }}"
         group: "{{ wildfly_systemd.group }}"
         mode: '0755'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
 
     - name: "Create deployment directories for instance: {{ wildfly_instance_name }}"
       ansible.builtin.file:
@@ -19,6 +23,10 @@
         owner: "{{ wildfly_systemd.user }}"
         group: "{{ wildfly_systemd.group }}"
         mode: '0755'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
 
     - name: "Deploy custom configuration"
       ansible.builtin.template:
@@ -44,7 +52,7 @@
         force: no
         selevel: s0
         serole: object_r
-        setype: etc_t
+        setype: usr_t
         seuser: system_u
 
     - name: Include YAML configuration extension

@@ -65,6 +65,10 @@ argument_specs:
                 default: "wildfly"
                 description: "Name of the wildfly instance"
                 type: "str"
+            wildfly_selinux_enabled:
+                default: False
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"
     downstream:
         options:
             eap_enable:
@@ -119,3 +123,7 @@ argument_specs:
                 default: "appplatform"
                 description: "JBossNetwork API category for EAP"
                 type: "str"
+            eap_selinux_enabled:
+                default: True
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"

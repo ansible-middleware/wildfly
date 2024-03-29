@@ -8,4 +8,5 @@ wildfly_group: "{{ wildfly_user }}"
 wildfly_version: '31.0.1.Final'
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
+wildfly_selinux_enabled: False
 jboss_home: "{{ wildfly_home }}"

@@ -36,6 +36,10 @@
     mode: '0755'
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
+    selevel: s0
+    serole: object_r
+    setype: var_run_t
+    seuser: system_u
   when: not pid_directory.stat.exists
 
 - name: "Ensure server configuration and systemd configuration are set"

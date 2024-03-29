@@ -62,7 +62,7 @@
     dest: "{{ full_path_to_archive }}"
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
-    mode: 0640
+    mode: '0640'
   register: new_version_downloaded
   when:
     - not archive_path.stat.exists
@@ -101,6 +101,10 @@
         group: "{{ wildfly_install.group }}"
         remote_src: yes
         creates: "{{ wildfly_install.home }}/bin"
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
       when:
         - new_version_downloaded.changed or not path_to_workdir.stat.exists
 
@@ -134,7 +138,11 @@
     dest: "{{ wildfly_install.home }}/standalone/configuration/"
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
-    mode: 0640
+    mode: '0640'
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
   become: yes
   when: wildfly_install.config_custom | length > 0
 
@@ -144,9 +152,13 @@
     dest: "{{ wildfly_install.home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
-    mode: 0640
+    mode: '0640'
     remote_src: true
     force: "{{ wildfly_install_force_reinstall_config_base }}"
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
   become: yes
 
 - name: "Apply latest cumulative patch"

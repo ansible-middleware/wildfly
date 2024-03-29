@@ -24,7 +24,11 @@
         recurse: yes
         owner: "{{ wildfly_user }}"
         group: "{{ wildfly_group }}"
-        mode: 0750
+        mode: '0750'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
       when:
         - not dest_path.stat.exists
 
@@ -34,8 +38,12 @@
         dest: "{{ wildfly_driver_jar_installation_path }}"
         group: "{{ wildfly_group }}"
         owner: "{{ wildfly_user }}"
-        mode: 0640
+        mode: '0640'
         creates: "{{ wildfly_driver_jar_installation_path }}"
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
       when:
         - wildfly_driver.jar_url is defined
 
@@ -49,4 +57,8 @@
         dest: "{{ wildfly_driver_module_dir }}/module.xml"
         group: "{{ wildfly_group }}"
         owner: "{{ wildfly_user }}"
-        mode: 0640
+        mode: '0640'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u

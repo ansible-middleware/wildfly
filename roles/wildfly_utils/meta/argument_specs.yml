@@ -45,6 +45,10 @@ argument_specs:
                 default: False
                 description: "When true, skip restarting after applying a cumulative patch"
                 type: "bool"
+            wildfly_selinux_enabled:
+                default: False
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"
     downstream:
         options:
             eap_enable:
@@ -91,6 +95,10 @@ argument_specs:
                 default: "rh-sso-{{ eap_elytron_adapter_version }}-eap7-adapter-dist.zip"
                 description: "SSO (keycloak) adapter install filename"
                 type: "str"
+            eap_selinux_enabled:
+                default: True
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"
     jboss_cli:
         options:
             jboss_cli_controller_host:

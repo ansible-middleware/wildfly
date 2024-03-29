@@ -127,6 +127,10 @@ argument_specs:
                 default: "{{ wildfly_home }}"
                 description: "Install base directory for instance, ie. for colocated installations"
                 type: "str"
+            wildfly_selinux_enabled:
+                default: False
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"
     downstream:
         options:
             eap_enable:
@@ -169,3 +173,7 @@ argument_specs:
                 default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
                 type: "str"
+            eap_selinux_enabled:
+                default: True
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"

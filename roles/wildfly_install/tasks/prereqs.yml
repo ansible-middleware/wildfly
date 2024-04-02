@@ -62,7 +62,7 @@
     - wildfly_install.java.package_name is defined
     - wildfly_install.java.package_name | length > 0
 
-- name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
+- name: "Add selinux package {{ wildfly_install.java.package_name }} to packages list"
   ansible.builtin.set_fact:
     wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ 'policycoreutils' ] }}"
   when:

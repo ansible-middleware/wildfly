@@ -107,6 +107,8 @@
         seuser: system_u
       when:
         - new_version_downloaded.changed or not path_to_workdir.stat.exists
+      notify:
+        - exec_restorecon
 
     - name: "Note: decompression was not executed"
       ansible.builtin.debug:
@@ -145,6 +147,8 @@
     seuser: system_u
   become: yes
   when: wildfly_install.config_custom | length > 0
+  notify:
+    - exec_restorecon
 
 - name: "Deploy configuration"
   ansible.builtin.copy:
@@ -160,6 +164,8 @@
     setype: usr_t
     seuser: system_u
   become: yes
+  notify:
+    - exec_restorecon
 
 - name: "Apply latest cumulative patch"
   when:
@@ -184,12 +190,3 @@
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: keycloak_adapter.yml
-
-- name: Execute restorecon after extraction
-  ansible.builtin.command: "restorecon -F -R -v {{ wildfly_install_workdir }}"
-  register: selinux_output
-  changed_when: selinux_output.stdout_lines | length > 0
-  become: true
-  when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists
-    - wildfly_selinux_enabled

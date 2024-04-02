@@ -43,6 +43,7 @@
     setype: var_run_t
     seuser: system_u
   when: not pid_directory.stat.exists
+  notify: exec_restorecon
 
 - name: "Ensure server configuration and systemd configuration are set"
   ansible.builtin.include_tasks: systemd.yml
@@ -51,10 +52,3 @@
 
 - name: "Check PID file status"
   ansible.builtin.include_tasks: pid_config.yml
-
-- name: Execute restorecon
-  become: true
-  ansible.builtin.command: "restorecon -R -v {{ wildfly_install_workdir }}"
-  register: selinux_output
-  changed_when: selinux_output.stdout_lines | length > 0
-  when: wildfly_selinux_enabled

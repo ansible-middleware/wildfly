@@ -131,6 +131,7 @@
   when:
     - not patch_info.stat.exists
   become: yes
+  notify: exec_restorecon
 
 - name: "Check patch state"
   ansible.builtin.stat:
@@ -181,6 +182,7 @@
             setype: usr_t
             seuser: system_u
           become: yes
+          notify: exec_restorecon
         - name: "Start wildfly for patching"
           ansible.builtin.shell: |
             set -o pipefail
@@ -216,6 +218,7 @@
         jboss_home: "{{ wildfly_home }}"
         jboss_cli_query: "'patch apply {{ apply_options }} {{ patch_archive }}'"
         jboss_cli_timeout: 30
+      notify: exec_restorecon
 
     - name: "Display patching result"
       ansible.builtin.debug:
@@ -241,6 +244,7 @@
           when:
             - not last_patch_status.stat.exists
           become: yes
+          notify: exec_restorecon
 
         - name: Set latest patch file
           ansible.builtin.copy:
@@ -256,6 +260,7 @@
           when:
             - not last_patch_status.stat.exists
           become: yes
+          notify: exec_restorecon
 
     - name: "Restart server to ensure patch content is running"
       block:

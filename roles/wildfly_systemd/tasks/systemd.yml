@@ -15,6 +15,7 @@
         serole: object_r
         setype: usr_t
         seuser: system_u
+      notify: exec_restorecon
 
     - name: "Create deployment directories for instance: {{ wildfly_instance_name }}"
       ansible.builtin.file:
@@ -27,6 +28,7 @@
         serole: object_r
         setype: usr_t
         seuser: system_u
+      notify: exec_restorecon
 
     - name: "Deploy custom configuration"
       ansible.builtin.template:
@@ -40,6 +42,7 @@
         setype: etc_t
         seuser: system_u
       when: wildfly_systemd.config_custom | length > 0
+      notify: exec_restorecon
 
     - name: "Deploy configuration"
       ansible.builtin.copy:
@@ -54,6 +57,7 @@
         serole: object_r
         setype: usr_t
         seuser: system_u
+      notify: exec_restorecon
 
     - name: Include YAML configuration extension
       ansible.builtin.include_tasks: yml_config.yml
@@ -92,6 +96,7 @@
         setype: etc_t
         seuser: system_u
       register: daemon_reload_env
+      notify: exec_restorecon
       vars:
         wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
         wildfly_yml_configs_str: "-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}"
@@ -108,6 +113,7 @@
         setype: systemd_unit_file_t
         seuser: system_u
       register: daemon_reload
+      notify: exec_restorecon
 
     - name: "Perform daemon-reload to ensure the changes are picked up"
       ansible.builtin.systemd:

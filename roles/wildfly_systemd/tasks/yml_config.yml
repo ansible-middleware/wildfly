@@ -2,6 +2,7 @@
 - name: Enable extension in wildfly
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
   become: yes
+  notify: exec_restorecon
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:
@@ -24,6 +25,7 @@
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
   become: yes
+  notify: exec_restorecon
   block:
 
   - name: Create YAML configuration directory
@@ -54,4 +56,6 @@
   loop: "{{ wildfly_yml_configs | flatten }}"
   loop_control:
     loop_var: file
-  notify: "restart_wildfly"
+  notify:
+    - "restart_wildfly"
+    - exec_restorecon

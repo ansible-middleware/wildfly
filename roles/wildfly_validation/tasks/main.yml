@@ -51,6 +51,12 @@
   when:
     - not wildfly_validation_skip_installation_directory_check is defined
 
+- name: "Verify that main logfile exists and confirms server is started."
+  ansible.builtin.include_tasks: logfile.yml
+  vars:
+    search_pattern: "{{ wildfly_validation_logfile_server_start_pattern }}"
+    path_to_logfile: "{{  wildfly_validation_logfile_path_to_logfile}}"
+
 - name: "Wait for HTTP port {{ wildfly_http_port }} to become available."
   ansible.builtin.wait_for:
     port: "{{ wildfly_http_port }}"

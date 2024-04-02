@@ -14,3 +14,6 @@ wildfly_standard_sockets_validation_query: "/socket-binding-group=standard-socke
 wildfly_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
 wildfly_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
 wildfly_validation_queries: []
+wildfly_validation_display_logfile: false
+wildfly_validation_logfile_server_start_pattern: 'WFLYSRV0025'
+wildfly_validation_logfile_path_to_logfile: "{{ wildfly_home }}/standalone/log/server.log"

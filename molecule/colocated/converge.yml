@@ -1,5 +1,5 @@
 ---
-- name: Deploy first wildfly
+- name: Ensure first wildfly is deployed and running
   import_playbook: ../../playbooks/playbook.yml
   vars:
     id: 1
@@ -11,7 +11,7 @@
     wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
     jdbc_drivers: []
 
-- name: Deploy second wildfly
+- name: Ensure second wildfly is deployed and running
   import_playbook: ../../playbooks/playbook.yml
   vars:
     id: 2
@@ -24,7 +24,7 @@
     jboss_cli_controller_port: 10090
     jdbc_drivers: []
 
-- name: Deploy third wildfly
+- name: Ensure third wildfly is deployed and running
   import_playbook: ../../playbooks/playbook.yml
   vars:
     id: 3
@@ -36,3 +36,23 @@
     wildfly_port_range_offset: "{{ 100 * (id - 1) | int }}"
     jboss_cli_controller_port: 10190
     jdbc_drivers: []
+
+- name: Ensure webapp is deployed
+  hosts: all
+  gather_facts: false
+  vars:
+    path_to_app: /tmp/info.war
+    download_app_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq'
+  tasks:
+    - name: "Deploy webapp"
+      ansible.builtin.get_url:
+        url: "{{ download_app_url }}"
+        dest: "{{ path_to_app }}"
+
+    - name: "Check that webapp is available"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        jboss_home: "/opt/wildfly-1/wildfly-31.0.1.Final/"
+        jboss_cli_query: "'deploy --force {{ path_to_app }}'"

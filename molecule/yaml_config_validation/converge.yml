@@ -9,3 +9,4 @@
         - yaml_configuration.yml.j2
         - yaml_socket_bindings.yml.j2
         - yaml_infinispan.yml.j2
+        - yaml_naming.yml.j2

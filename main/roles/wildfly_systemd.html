@@ -261,6 +261,30 @@
 <td class="text-left"><p>To change the PID path</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/run/wildfly</span></code></p></td>
 </tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_wait_port</span></code></p></td>
+<td class="text-left"><p>The port to wait for when starting up wildfly if wildfly_systemd_wait_for_port is true</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9990</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_startup_message_id</span></code></p></td>
+<td class="text-left"><p>WildFly Message id Identifier for the server startup message</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">WFLYSRV0025</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_wait_for_timeout</span></code></p></td>
+<td class="text-left"><p>WildFly instance systemd wait timeout</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">60</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_wait_for_delay</span></code></p></td>
+<td class="text-left"><p>WildFly instance systemd delay timeout</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">10</span></code></p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_wait_for_port</span></code></p></td>
+<td class="text-left"><p>Whether systemd unit should wait for wildfly port before returning</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_systemd_wait_for_log</span></code></p></td>
+<td class="text-left"><p>Whether systemd unit should wait for wildfly service to be up in logs</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
+</tr>
 </tbody>
 </table>
 </section>

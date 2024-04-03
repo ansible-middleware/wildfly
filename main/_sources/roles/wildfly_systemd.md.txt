@@ -47,6 +47,12 @@ Role Defaults
 |`wildfly_instance_name`| When collocating services on the same host, EAP instance name | `wildfly` |
 |`wildfly_node_id`| Name of the node to be passed as jboss.tx.node.id, must be unique in a cluster. Max length 23 characters | `{{ inventory_hostname_short }}` |
 |`wildfly_pidfile_homedir`| To change the PID path | `/run/wildfly`|
+|`wildfly_systemd_wait_port`| The port to wait for when starting up wildfly if wildfly_systemd_wait_for_port is true | `9990`|
+|`wildfly_systemd_startup_message_id`| WildFly Message id Identifier for the server startup message | `WFLYSRV0025` |
+|`wildfly_systemd_wait_for_timeout`| WildFly instance systemd wait timeout | `60` |
+|`wildfly_systemd_wait_for_delay`| WildFly instance systemd delay timeout | `10` |
+|`wildfly_systemd_wait_for_port`| Whether systemd unit should wait for wildfly port before returning | `False` |
+|`wildfly_systemd_wait_for_log`| Whether systemd unit should wait for wildfly service to be up in logs | `False` |
 
 Role Variables
 --------------

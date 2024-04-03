@@ -9,10 +9,16 @@ This changelog describes changes after version 0.0.7.
 v1.5.1-devel
 ============
 
+Major Changes
+-------------
+
+- Set pid file for systemd to /var/run/{{ instance }} or allow for custom pid file location `#190 <https://github.com/ansible-middleware/wildfly/pull/190>`_
+
 Minor Changes
 -------------
 
 - Add selinux attributes `#205 <https://github.com/ansible-middleware/wildfly/pull/205>`_
+- Add wait_for logic in systemd unit `#207 <https://github.com/ansible-middleware/wildfly/pull/207>`_
 - Allow to use different names for nodeId, instance name, systemd unit name `#192 <https://github.com/ansible-middleware/wildfly/pull/192>`_
 - Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
 - Externalize the jdbc drivers list from the main playbook, plus add a missing template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_

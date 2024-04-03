@@ -1,0 +1,28 @@
+---
+- name: "Ensure required parameter(s) are provided."
+  ansible.builtin.assert:
+    that:
+      - path_to_logfile is defined
+      - search_pattern is defined and search_pattern | length > 0
+    quiet: true
+
+- name: "Slurp logfile {{ path_to_file }}"
+  ansible.builtin.slurp:
+    src: "{{ path_to_logfile }}"
+  register: slurped_logfile
+
+- name: "Extract content of logfile {{ path_to_file }}."
+  ansible.builtin.set_fact:
+    logfile_content: "{{ slurped_logfile.content | b64decode }}"
+
+- name: "Printout logfile content"
+  ansible.builtin.debug:
+    msg: "{{ logfile_content }}"
+  when:
+    - wildfly_validation_display_logfile is defined and wildfly_validation_display_logfile
+
+- name: "Ensure requested pattern {{ search_pattern }} is present in logfile {{ path_to_file }}"
+  ansible.builtin.assert:
+    that:
+      - search_pattern in logfile_content
+    quiet: true

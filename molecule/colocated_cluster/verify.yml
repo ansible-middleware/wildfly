@@ -30,3 +30,19 @@
     wildfly_install_workdir: "/opt/wildfly-3/"
     wildfly_port_range_offset: 200
     jboss_cli_controller_port: 10190
+
+- name: "Verify that cluster has properly formed"
+  hosts: instance
+  gather_facts: false
+  tasks:
+    - name: "Check if logfile confims cluster is formed."
+      ansible.builtin.include_role:
+        name: wildfly_validation
+        tasks_from: logfile.yml
+      vars:
+        search_pattern: 'WFLYCLJG0033: Connected'
+        path_to_logfile: "/opt/wildfly-1/wildfly-31.0.1.Final/standalone/log/server.log"
+
+    - name: "Check that webapp is accessible"
+      ansible.builtin.uri:
+        url: http://localhost:8080/info/

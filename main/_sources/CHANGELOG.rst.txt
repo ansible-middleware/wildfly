@@ -31,6 +31,7 @@ Bugfixes
 --------
 
 - Fix uninstall_role to work, out of the box, with the wildfly_install defaults. `#197 <https://github.com/ansible-middleware/wildfly/pull/197>`_
+- Fix wildfly_install changing ownership of system directories `#210 <https://github.com/ansible-middleware/wildfly/pull/210>`_
 - JBoss EAP 7.4.7+ patching fails on openjdk17 if elytron is not enabled `#203 <https://github.com/ansible-middleware/wildfly/pull/203>`_
 - Wildfly user account should be in wildfly_group as primary group `#202 <https://github.com/ansible-middleware/wildfly/pull/202>`_
 

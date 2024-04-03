@@ -6,6 +6,35 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.1
+======
+
+Major Changes
+-------------
+
+- Set pid file for systemd to /var/run/{{ instance }} or allow for custom pid file location `#190 <https://github.com/ansible-middleware/wildfly/pull/190>`_
+
+Minor Changes
+-------------
+
+- Add selinux attributes `#205 <https://github.com/ansible-middleware/wildfly/pull/205>`_
+- Add wait_for logic in systemd unit `#207 <https://github.com/ansible-middleware/wildfly/pull/207>`_
+- Add wildfly_validation logic for colocated cluster `#211 <https://github.com/ansible-middleware/wildfly/pull/211>`_
+- Allow to use different names for nodeId, instance name, systemd unit name `#192 <https://github.com/ansible-middleware/wildfly/pull/192>`_
+- Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
+- Externalize the jdbc drivers list from the main playbook, plus add a missing template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_
+- Implementation of the uninstall role, along with documentation and molecule scenario `#194 <https://github.com/ansible-middleware/wildfly/pull/194>`_
+- Validate ``wildfly_node_id`` length and default to ``inventory_hostname_short`` `#195 <https://github.com/ansible-middleware/wildfly/pull/195>`_
+- prospero: update README and remove duplicated call to wildfly_user `#200 <https://github.com/ansible-middleware/wildfly/pull/200>`_
+
+Bugfixes
+--------
+
+- Fix uninstall_role to work, out of the box, with the wildfly_install defaults. `#197 <https://github.com/ansible-middleware/wildfly/pull/197>`_
+- Fix wildfly_install changing ownership of system directories `#210 <https://github.com/ansible-middleware/wildfly/pull/210>`_
+- JBoss EAP 7.4.7+ patching fails on openjdk17 if elytron is not enabled `#203 <https://github.com/ansible-middleware/wildfly/pull/203>`_
+- Wildfly user account should be in wildfly_group as primary group `#202 <https://github.com/ansible-middleware/wildfly/pull/202>`_
+
 v1.5.0
 ======
 

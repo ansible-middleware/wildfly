@@ -4,6 +4,13 @@ wildfly-configuration:
       spec-descriptor-property-replacement: true
       annotation-property-replacement: true
       jboss-descriptor-property-replacement: true
-      service:
-        default-bindings:
-
+    naming:
+      'java:global/qpid':
+        binding-type: external-context
+        class: javax.naming.InitialContext
+        module: org.jboss.genericjms.provider
+        environment:
+          java.naming.factory.initial: org.apache.qpid.jms.jndi.JmsInitialContextFactory
+          queue.testQueue: testQueue
+          queue.outQueue: outQueue
+          connectionfactory.QpidBroker: "amqp://localhost:5672?jms.username=guest&amp;jms.password=guest"

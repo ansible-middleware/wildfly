@@ -35,4 +35,4 @@
   ansible.builtin.include_role:
     name: wildfly_firewalld
   when:
-    - wildfly_app_firewalld_enabled is defined and wildfly_app_firewalld_enabled
+    - wildfly_firewalld_enabled is defined and wildfly_firewalld_enabled

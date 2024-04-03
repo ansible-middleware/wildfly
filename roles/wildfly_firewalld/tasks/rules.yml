@@ -1,0 +1,29 @@
+---
+- name: "Use defaults ports setup based on server base_config {{ wildfly_config_base }} if wildfly_firewalld_ports is not defined."
+  when:
+    - not wildfly_firewalld_ports is defined and wildfly_config_base is defined and wildfly_config_base | length > 0
+  ansible.builtin.set_fact:
+    wildfly_firewalld_ports: "{{ wildfly_firewalld_config_matrix[wildfly_config_base] }}"
+
+- name: "Ensure firewalld allows communication for required ports."
+  ansible.posix.firewalld:
+    port: "{{ port.number }}/{{ port.protocol }}"
+    permanent: true
+    state: enabled
+    immediate: true
+  when:
+    - wildfly_firewalld_ports is defined and wildfly_firewalld_ports | length > 0
+  loop: "{{ wildfly_firewalld_ports }}"
+  loop_control:
+    loop_var: port
+
+- name: "Ensure firewalls rules allows multicast for cluster communication (if needed)"
+  when:
+    - wildfly_config_base == 'standalone-ha.xml' or wildfly_config_base == 'standalone-full-ha.xml' or wildfly_cluster_enabled
+  ansible.posix.firewalld:
+    rich_rule: "{{ item }}"
+    zone: internal
+    permanent: true
+    immediate: true
+    state: enabled
+  loop: "{{ wildfly_firewalld_multicast_rules }}"

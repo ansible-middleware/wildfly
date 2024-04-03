@@ -134,6 +134,29 @@ argument_specs:
             wildfly_selinux_enabled:
                 default: False
                 description: "Whether to deploy on a selinux enforcing target host"
+            wildfly_systemd_wait_port:
+                default: "9990"
+                description: "The port to wait for when starting up wildfly if wildfly_systemd_wait_for_port is true"
+                type: "int"
+            wildfly_systemd_startup_message_id:
+                default: "WFLYSRV0025"
+                description: "WildFly Message id Identifier for the server startup message"
+                type: "str"
+            wildfly_systemd_wait_for_timeout:
+                default: "60"
+                description: "WildFly instance systemd wait timeout"
+                type: "int"
+            wildfly_systemd_wait_for_delay:
+                default: "10"
+                description: "WildFly instance systemd delay timeout"
+                type: "int"
+            wildfly_systemd_wait_for_port:
+                default: False
+                description: "Whether systemd unit should wait for wildfly port before returning"
+                type: "bool"
+            wildfly_systemd_wait_for_log:
+                default: False
+                description: "Whether systemd unit should wait for wildfly service to be up in logs"
                 type: "bool"
     downstream:
         options:

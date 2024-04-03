@@ -19,6 +19,8 @@ wildfly_offline_install: False
 wildfly_prereqs_packages:
   - unzip
   - tar
+  - iproute
+  - sed
   - sudo
   - tzdata-java
 

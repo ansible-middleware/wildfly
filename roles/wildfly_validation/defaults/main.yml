@@ -17,3 +17,4 @@ wildfly_validation_queries: []
 wildfly_validation_display_logfile: false
 wildfly_validation_logfile_server_start_pattern: 'WFLYSRV0025'
 wildfly_validation_logfile_path_to_logfile: "{{ wildfly_home }}/standalone/log/server.log"
+wildfly_validation_logfile_require_privilege_escalation: true

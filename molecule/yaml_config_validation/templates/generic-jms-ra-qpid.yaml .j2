@@ -1,0 +1,38 @@
+---
+wildfly-configuration:
+  subsystem:
+    ee:
+      spec-descriptor-property-replacement: true
+      annotation-property-replacement: true
+      jboss-descriptor-property-replacement: true
+      service:
+        default-bindings:
+    naming:
+      binding:
+        java:global/qpid:
+          binding-type: external-context
+          class: javax.naming.InitialContext
+          module: org.jboss.genericjms.provider
+          environment:
+            java.naming.factory.initial: org.apache.qpid.jms.jndi.JmsInitialContextFactory
+            queue.testQueue: testQueue
+            queue.outQueue: outQueue
+            connectionfactory.QpidBroker: "amqp://localhost:5672?jms.username=quarkus&amp;jms.password=quarkus"
+        java:/jms/qpid/queue/testQueue:
+          binding-type: lookup
+          lookup: 'java:global/qpid/testQueue'
+        java:/jms/qpid/queue/outQueue:
+          binding-type: lookup
+          lookup: 'java:global/qpid/outQueue'
+    resource-adapters:
+      resource-adapter:
+        apache-qpid:
+          module: org.jboss.genericjms
+          transaction-support: NoTransaction
+          connection-definitions:
+            QPIDCF:
+              jndi-name: "java:/jms/qpid/cf/QpidBroker"
+              class-name: org.jboss.resource.adapter.jms.JmsManagedConnectionFactory
+              config-properties:
+                JndiParameters:
+                  value: "java.naming.factory.initial=org.apache.qpid.jms.jndi.JmsInitialContextFactory;connectionfactory.QpidBroker=amqp://localhost:5672?jms.username=quarkus&jms.password=quarkus"

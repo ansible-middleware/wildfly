@@ -218,7 +218,8 @@
         jboss_home: "{{ wildfly_home }}"
         jboss_cli_query: "'patch apply {{ apply_options }} {{ patch_archive }}'"
         jboss_cli_timeout: 30
-      notify: exec_restorecon
+        jboss_cli_notify: "{{ jboss_cli_notifiy_restorecon }}"
+        jboss_cli_changed_when: true
 
     - name: "Display patching result"
       ansible.builtin.debug:

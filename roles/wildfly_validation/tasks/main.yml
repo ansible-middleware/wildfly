@@ -98,13 +98,6 @@
     - wildfly_service_name
     - not wildfly_validation_skip_systemd_check is defined
 
-- name: "Verify pidfile used by the service."
-  ansible.builtin.include_tasks: pidfile_validate.yml
-  when:
-    - wildfly_systemd_unit_enabled is defined and wildfly_systemd_unit_enabled
-    - wildfly_service_name
-    - not wildfly_validation_skip_systemd_check is defined
-
 - name: "Verify server's internal configuration"
   ansible.builtin.include_tasks: verify_with_cli_queries.yml
   vars:

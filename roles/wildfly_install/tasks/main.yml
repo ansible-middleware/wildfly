@@ -5,63 +5,8 @@
 - name: "Ensure required local user exists."
   ansible.builtin.include_tasks: user.yml
 
-- name: "Check if work directory {{ wildfly_install.workdir }} exists"
-  ansible.builtin.stat:
-    path: "{{ wildfly_install.workdir }}"
-  register: work_dir_stat
-
-- name: "Check if work directory {{ wildfly_install.workdir }} is readable"
-  ansible.builtin.assert:
-    that:
-      - work_dir_stat.stat.exists
-      - work_dir_stat.stat.readable
-    fail_msg: "Archive directory {{ wildfly_install.workdir }} either does not exist or is not readable"
-    success_msg: "Archive directory {{ wildfly_install.workdir }} is readable"
-  when: work_dir_stat.stat.exists
-
-- name: "Create archive_dir {{ wildfly_install.workdir }}, if not exists."
-  ansible.builtin.file:
-    path: "{{ wildfly_install.workdir }}"
-    state: directory
-    owner: "{{ wildfly_install.user }}"
-    group: "{{ wildfly_install.group }}"
-    mode: '0750'
-    selevel: s0
-    serole: object_r
-    setype: usr_t
-    seuser: system_u
-    recurse: false
-  become: yes
-  when: not work_dir_stat.stat.exists
-
-- name: "Check if archive directory {{ wildfly_install.archive_dir }} exists"
-  ansible.builtin.stat:
-    path: "{{ wildfly_install.archive_dir }}"
-  register: archive_dir_stat
-
-- name: "Check if archive directory {{ wildfly_install.archive_dir }} is readable"
-  ansible.builtin.assert:
-    that:
-      - archive_dir_stat.stat.exists
-      - archive_dir_stat.stat.readable
-    fail_msg: "Archive directory {{ wildfly_install.archive_dir }} either does not exist or is not readable"
-    success_msg: "Archive directory {{ wildfly_install.archive_dir }} is readable"
-  when: archive_dir_stat.stat.exists
-
-- name: "Create archive_dir {{ wildfly_install.archive_dir }}, if not exists."
-  ansible.builtin.file:
-    path: "{{ wildfly_install.archive_dir }}"
-    state: directory
-    owner: "{{ wildfly_install.user }}"
-    group: "{{ wildfly_install.group }}"
-    mode: '0750'
-    selevel: s0
-    serole: object_r
-    setype: usr_t
-    seuser: system_u
-    recurse: false
-  become: yes
-  when: not archive_dir_stat.stat.exists
+- name: "Ensure required directories exists."
+  ansible.builtin.include_tasks: prepdirs.yml
 
 - name: "Ensure server is installed"
   ansible.builtin.include_tasks: install.yml
@@ -77,7 +22,7 @@
   ansible.builtin.stat:
     path: "{{ wildfly_install.home }}"
   register: is_wildfly_home
-  become: yes
+  become: "{{ wildfly_install_require_privileges_escalation }}"
 
 - name: Validate conditions
   ansible.builtin.assert:

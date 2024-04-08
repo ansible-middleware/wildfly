@@ -3,6 +3,7 @@ wildfly_version: '31.0.1.Final'
 wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
 wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
 wildfly_install_workdir: '/opt/wildfly/'
+wildfly_install_require_privileges_escalation: true
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
 wildfly_archive_dir: "{{ wildfly_install_workdir }}"

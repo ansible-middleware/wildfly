@@ -15,3 +15,12 @@
     fail_msg: "Systemd service {{ wildfly_service_name }} is not the expected state."
   when:
     - wildfly_service_name is defined
+
+- name: "Verify that PID file has been created."
+  ansible.builtin.assert:
+    that:
+      - wildfly_validation_systemd_pidfile is exists
+    quiet: true
+    fail_msg: "PID file {{ wildfly_validation_systemd_pidfile }} has not been created."
+  when:
+    - wildfly_validation_systemd_pidfile is defined and wildfly_validation_systemd_pidfile | length > 0

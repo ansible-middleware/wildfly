@@ -22,7 +22,7 @@
     path: "{{ patch_archive }}"
   register: patch_archive_path
   when: eap_patch_version is defined
-  become: yes
+  become: true
 
 - name: Check local download archive path
   ansible.builtin.stat:
@@ -53,21 +53,21 @@
       register: rhn_products
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Determine patch versions list
       ansible.builtin.set_fact:
         filtered_versions: "{{ rhn_products.results | map(attribute='file_path') | select('match', '^[^/]*/jboss-eap-.*[0-9]*[.][0-9]*[.][0-9]*.*$') | map('regex_replace','[^/]*/jboss-eap-([0-9]*[.][0-9]*[.][0-9]*)-.*','\\1' ) | list | unique }}"
       when: eap_patch_version is not defined or eap_patch_version | length == 0
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Determine latest version
       ansible.builtin.set_fact:
          eap_latest_version: "{{ filtered_versions | middleware_automation.common.version_sort | last }}"
       when: eap_patch_version is not defined or eap_patch_version | length == 0
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
@@ -76,7 +76,7 @@
         patch_version: "{{ eap_latest_version }}"
       when: eap_patch_version is not defined or eap_patch_version | length == 0
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: "Determine selected patch from supplied version: {{ eap_patch_version }}"
       ansible.builtin.set_fact:
@@ -85,13 +85,13 @@
         patch_version: "{{ eap_patch_version }}"
       when: eap_patch_version is defined
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: "Check remote downloaded archive: {{ patches_repository }}/{{ patch_bundle }}"
       ansible.builtin.stat:
         path: "{{ patches_repository }}/{{ patch_bundle }}"
       register: remote_archive_path
-      become: yes
+      become: true
 
     - name: Download Red Hat EAP patch
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
@@ -101,7 +101,7 @@
         dest: "{{ local_path.stat.path }}/{{ patch_bundle }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
       when:
         - remote_archive_path is defined
         - not remote_archive_path.stat.exists
@@ -114,7 +114,7 @@
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
-  become: yes
+  become: true
 
 - name: Copy patch archive to target nodes
   ansible.builtin.copy:
@@ -130,14 +130,14 @@
   register: new_version_downloaded
   when:
     - not patch_info.stat.exists
-  become: yes
+  become: true
   notify: exec_restorecon
 
 - name: "Check patch state"
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
-  become: yes
+  become: true
 
 - name: "Set checksum file path for patch"
   ansible.builtin.set_fact:
@@ -149,7 +149,7 @@
   ansible.builtin.stat:
     path: "{{ patch_checksum_file }}"
   register: last_patch_status
-  become: yes
+  become: true
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
@@ -181,7 +181,7 @@
             serole: object_r
             setype: usr_t
             seuser: system_u
-          become: yes
+          become: true
           notify: exec_restorecon
         - name: "Start wildfly for patching"
           ansible.builtin.shell: |
@@ -196,7 +196,7 @@
           async: 180
           poll: 0
           register: apply_cp_process
-          become: yes
+          become: true
           become_user: "{{ wildfly_user }}"
         - name: "Wait for management interface is reachable"
           ansible.builtin.wait_for:
@@ -218,7 +218,7 @@
         jboss_home: "{{ wildfly_home }}"
         jboss_cli_query: "'patch apply {{ apply_options }} {{ patch_archive }}'"
         jboss_cli_timeout: 30
-        jboss_cli_notify: "{{ jboss_cli_notifiy_restorecon }}"
+        jboss_cli_notify: exec_restorecon
         jboss_cli_changed_when: true
 
     - name: "Display patching result"
@@ -244,7 +244,7 @@
             seuser: system_u
           when:
             - not last_patch_status.stat.exists
-          become: yes
+          become: true
           notify: exec_restorecon
 
         - name: Set latest patch file
@@ -260,7 +260,7 @@
             seuser: system_u
           when:
             - not last_patch_status.stat.exists
-          become: yes
+          become: true
           notify: exec_restorecon
 
     - name: "Restart server to ensure patch content is running"

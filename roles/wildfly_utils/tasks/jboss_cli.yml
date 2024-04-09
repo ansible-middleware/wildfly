@@ -31,4 +31,4 @@
   register: cli_result
   changed_when: "{{ jboss_cli_changed_when | default(false) }}"
   become: "{{ wildfly_utils_jboss_cli_require_privilege_escalation | default(true) }}"
-  notify: "{{ jboss_cli_notify_restorecon }}"
+  notify: "{{ jboss_cli_notify | default(omit) }}"

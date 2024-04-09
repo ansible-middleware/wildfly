@@ -135,3 +135,11 @@ argument_specs:
                 required: False
                 description: "The value for the extra parameter specified in jboss_cli_extra_param"
                 type: 'str'
+            jboss_cli_notify:
+                required: False
+                description: "The handler to notify if the cli operation returns changes"
+                type: 'str'
+            jboss_cli_changed_when:
+                required: False
+                description: "Whether to always return changed (or not) on changed_when"
+                type: 'bool'

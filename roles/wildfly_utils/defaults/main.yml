@@ -11,4 +11,3 @@ wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_selinux_enabled: False
 jboss_home: "{{ wildfly_home }}"
 wildfly_utils_jboss_cli_require_privilege_escalation: true
-jboss_cli_notify_restorecon: exec_restorecon

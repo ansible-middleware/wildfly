@@ -1,7 +1,7 @@
 ---
 - name: Enable extension in wildfly
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
-  become: yes
+  become: true
   notify: exec_restorecon
   block:
   - name: Create YAML configuration directory
@@ -10,7 +10,7 @@
       state: directory
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
-      mode: 0755
+      mode: '0755'
     notify: restart_wildfly
 
   - name: Enable YAML configuration extension
@@ -19,12 +19,12 @@
       dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
-      mode: 0644
+      mode: '0644'
     notify: restart_wildfly
 
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
-  become: yes
+  become: true
   notify: exec_restorecon
   block:
 
@@ -34,7 +34,7 @@
       state: directory
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
-      mode: 0755
+      mode: '0755'
 
   - name: Enable YAML configuration extension
     ansible.builtin.template:
@@ -42,20 +42,20 @@
       dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ slurped_eap_version.content | b64decode }}.CP{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
       owner: "{{ wildfly_systemd.user }}"
       group: "{{ wildfly_systemd.group }}"
-      mode: 0644
+      mode: '0644'
     notify: restart_wildfly
 
 - name: "Deploy YAML configuration files: {{ wildfly_yml_configs | flatten }}"
-  become: yes
+  become: true
   ansible.builtin.template:
     src: "{{ wildfly_yml_configs_repository }}{{ file }}"
     dest: "{{ basedir }}/{{ file | regex_replace('.j2', '') }}"
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
-    mode: 0644
+    mode: '0644'
   loop: "{{ wildfly_yml_configs | flatten }}"
   loop_control:
     loop_var: file
   notify:
-    - "restart_wildfly"
+    - restart_wildfly
     - exec_restorecon

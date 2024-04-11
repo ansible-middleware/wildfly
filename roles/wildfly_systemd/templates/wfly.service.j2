@@ -10,7 +10,7 @@ Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
 EnvironmentFile=-{{ wildfly_service_systemd_env_file }}
 User={{ wildfly_systemd.user }}
 Group={{ wildfly_systemd.group }}
-RuntimeDirectory=wildfly
+RuntimeDirectory={{ wildfly_instance_name }}
 PIDFile={{ wildfly_systemd.selinux.pid_path }}/{{ wildfly_instance_name }}.pid
 ExecStart={{ wildfly_systemd.home }}/bin/standalone.sh -c $WILDFLY_SERVER_CONFIG -b $WILDFLY_BIND -bmanagement $WILDFLY_BIND_MGMT $WILDFLY_YAML $WILDFLY_OPTS
 SuccessExitStatus = 0 143

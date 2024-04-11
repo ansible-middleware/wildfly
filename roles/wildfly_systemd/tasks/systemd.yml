@@ -99,7 +99,7 @@
       notify: exec_restorecon
       vars:
         wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
-        wildfly_yml_configs_str: "-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}"
+        wildfly_yml_configs_str: "'-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}'"
 
     - name: "Deploy Systemd unit for service: {{ wildfly_service_systemd_file }}"
       ansible.builtin.template:

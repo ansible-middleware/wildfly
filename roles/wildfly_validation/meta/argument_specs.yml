@@ -57,6 +57,10 @@ argument_specs:
                 default: True
                 description: "Whether or not accessing the pidfile created by Systemd will require root privileges"
                 type: "bool"
+            wildfly_basedir_prefix:
+                default: "{{ wildfly_home }}"
+                description: "Install base directory for instance, ie. for colocated installations"
+                type: "str"
     downstream:
         options:
             eap_enable:

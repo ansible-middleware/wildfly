@@ -53,6 +53,10 @@ argument_specs:
                 description: "Directory that will contain the PID file"
                 default: "/run/wildfly"
                 type: "str"
+            wildfly_validation_systemd_pidfile_require_privilege_escalation:
+                default: True
+                description: "Whether or not accessing the pidfile created by Systemd will require root privileges"
+                type: "bool"
     downstream:
         options:
             eap_enable:

@@ -11,7 +11,7 @@
 
 - name: Check local download archive path
   ansible.builtin.stat:
-    path: "{{ lookup('env', 'PWD') }}"
+    path: "{{ wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD')) }}"
   register: local_path
   delegate_to: localhost
 

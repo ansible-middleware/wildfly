@@ -17,6 +17,7 @@
     - wildfly_service_name is defined
 
 - name: "Verify that PID file has been created."
+  become: "{{ wildfly_validation_systemd_pidfile_require_privilege_escalation }}"
   ansible.builtin.assert:
     that:
       - wildfly_validation_systemd_pidfile is exists

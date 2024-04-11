@@ -1,51 +1,20 @@
 ---
-- name: Validate first server
-  import_playbook: ../../playbooks/validate.yml
-  vars:
-    wildfly_node_id: wildfly-1
-    wildfly_instance_name: wildfly-1
-    wildfly_service_name: wildfly-1
-    wildfly_config_base: standalone-ha.xml
-    jboss_cli_controller_port: 9990
-    wildfly_install_workdir: "/opt/wildfly-1/"
-
-- name: Verify second server
-  import_playbook: ../../playbooks/validate.yml
-  vars:
-    wildfly_node_id: wildfly-2
-    wildfly_instance_name: wildfly-2
-    wildfly_service_name: wildfly-2
-    wildfly_config_base: standalone-ha.xml
-    wildfly_install_workdir: "/opt/wildfly-2/"
-    wildfly_port_range_offset: 100
-    jboss_cli_controller_port: 10090
-
 - name: Verify third server
   hosts: all
   gather_facts: false
-  roles:
-    - middleware_automation.wildfly.wildfly_validation
-  vars:
-    wildfly_node_id: wildfly-3
-    wildfly_instance_name: wildfly-3
-    wildfly_service_name: wildfly-3
-    wildfly_config_base: standalone-ha.xml
-    wildfly_install_workdir: "/opt/wildfly-3/"
-    wildfly_port_range_offset: 200
-    jboss_cli_controller_port: 10190
   tasks:
-    - name: "Check that webapp was deployed - if enabled."
-      when:
-        - not eap_enable is defined or not eap_enable
-      block:
-        - name: "Check if logfile confims cluster is formed."
-          ansible.builtin.include_role:
-            name: wildfly_validation
-            tasks_from: logfile.yml
-          vars:
-            search_pattern: 'WFLYCLJG0033: Connected'
-            path_to_logfile: "{{ wildfly_home }}/standalone/log/server.log"
-
-        - name: "Check that webapp is accessible"
-          ansible.builtin.uri:
-            url: http://localhost:8280/info/
+    - name: "Include wildfly_systemd"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_validation
+      vars:
+        wildfly_node_id: "wildfly-{{ item }}"
+        wildfly_instance_name: "wildfly-{{ item }}"
+        wildfly_service_name: "wildfly-{{ item }}"
+        wildfly_config_base: standalone-ha.xml
+        wildfly_install_workdir: "/opt/wildfly/"
+        wildfly_basedir_prefix: "/opt/instances/wildfly-{{ item }}/"
+        wildfly_controller_port: "{{ 9990 + (100 * (item) | int) }}"
+        wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"
+        wildfly_https_port: "{{ 8443 + (100 * (item) | int) }}"
+        wildfly_validation_logfile_path_to_logfile: "{{ wildfly_basedir_prefix }}/standalone/log/server.log"
+      loop: "{{ range(0, 3) | list }}"

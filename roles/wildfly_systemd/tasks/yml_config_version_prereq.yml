@@ -8,7 +8,7 @@
     - eap_enable is not defined or (not eap_enable | bool)
 
 - name: "Check latest applied patch checksum file"
-  become: yes
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   ansible.builtin.stat:
     path: "{{ wildfly_home }}/.latest_applied_patch.txt"
   register: latest_patch_file_stat
@@ -24,13 +24,13 @@
           - latest_patch_file_stat.stat is defined
           - latest_patch_file_stat.stat.exists
         quiet: true
-        fail_msg: "Can only enable YAML configuration with EAP >= 7.4.7 (found: unpatched EAP)"
+        fail_msg: "Can only enable YAML configuration with EAP >= 7.4.7 (found: EAP 7.4.0)"
 
     - name: Check current EAP patch installed
       ansible.builtin.slurp:
         src: "{{ wildfly_home }}/.latest_applied_patch.txt"
       register: slurped_eap_version
-      become: yes
+      become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
       when:
         - eap_apply_cp is defined and (eap_apply_cp | bool)
         - eap_version.split('.')[:1] | join('.') is version('7', '==')

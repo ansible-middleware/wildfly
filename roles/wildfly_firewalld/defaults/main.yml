@@ -1,9 +1,56 @@
 ---
 wildfly_firewalld_package_name: firewalld
-wildfly_app_firewalld_enabled: false
-wildfly_listen_ports:
-  - 8009
-  - 8080
-  - 8443
-  - 4712
-  - 4713
+wildfly_firewalld_enabled: false
+wildfly_firewalld_listen_ports:
+  - { number: '8009', protocol: 'tcp' }
+  - { number: '8080', protocol: 'tcp' }
+  - { number: '8443', protocol: 'tcp' }
+  - { number: '4712', protocol: 'tcp' }
+  - { number: '4713', protocol: 'tcp' }
+  - { number: '9990', protocol: 'tcp' }
+  - { number: '9993', protocol: 'tcp' }
+wildfly_firewalld_listen_full_ports:
+  - { number: '8009', protocol: 'tcp' }
+  - { number: '8080', protocol: 'tcp' }
+  - { number: '8443', protocol: 'tcp' }
+  - { number: '3528', protocol: 'tcp' }
+  - { number: '3529', protocol: 'tcp' }
+  - { number: '9990', protocol: 'tcp' }
+  - { number: '4712', protocol: 'tcp' }
+  - { number: '4713', protocol: 'tcp' }
+  - { number: '9990', protocol: 'tcp' }
+  - { number: '9993', protocol: 'tcp' }
+wildfly_firewalld_ha_listen_ports:
+  - { number: '8009', protocol: 'tcp' }
+  - { number: '8080', protocol: 'tcp' }
+  - { number: '8443', protocol: 'tcp' }
+  - { number: '3528', protocol: 'tcp' }
+  - { number: '3529', protocol: 'tcp' }
+  - { number: '4712', protocol: 'tcp' }
+  - { number: '4713', protocol: 'tcp' }
+  - { number: '9990', protocol: 'tcp' }
+  - { number: '9993', protocol: 'tcp' }
+  - { number: '55200', protocol: 'udp' }
+  - { number: '54200', protocol: 'udp' }
+wildfly_firewalld_full_ha_listen_ports:
+  - { number: '8009', protocol: 'tcp' }
+  - { number: '8080', protocol: 'tcp' }
+  - { number: '8443', protocol: 'tcp' }
+  - { number: '7600', protocol: 'tcp' }
+  - { number: '54200', protocol: 'tcp' }
+  - { number: '57600', protocol: 'tcp' }
+  - { number: '4712', protocol: 'tcp' }
+  - { number: '4713', protocol: 'tcp' }
+  - { number: '9990', protocol: 'tcp' }
+  - { number: '9993', protocol: 'tcp' }
+  - { number: '55200', protocol: 'udp' }
+  - { number: '54200', protocol: 'udp' }
+wildfly_firewalld_config_matrix:
+  standalone.xml: "{{ wildfly_firewalld_listen_ports }}"
+  standalone-full.xml: "{{ wildfly_firewalld_listen_full_ports }}"
+  standalone-ha.xml: "{{ wildfly_firewalld_ha_listen_ports }}"
+  standalone-full-ha.xml: "{{ wildfly_firewalld_full_ha_listen_ports }}"
+wildfly_firewalld_multicast_addr: '230.0.0.4'
+wildfly_firewalld_multicast_rules:
+  - rule family="ipv4" source address="{{ wildfly_multicast_addr }}" protocol value="ip" accept
+  - rule family="ipv4" destination address="{{ wildfly_multicast_addr }}" protocol value="ip" accept

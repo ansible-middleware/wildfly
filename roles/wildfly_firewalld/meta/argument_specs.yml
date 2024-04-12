@@ -6,15 +6,50 @@ argument_specs:
                 default: "firewalld"
                 description: "Package name for firewalld"
                 type: "str"
+            wildfly_cluster_enabled:
+                default: false
+                description: "Specify whether or not server's cluster is enabled."
+                type: "bool"
 
             # line 3 of defaults/main.yml
-            wildfly_app_firewalld_enabled:
-                default: "False"
+            wildfly_firewalld_enabled:
+                default: false
                 description: "Indicate if firewalld is enabled for this collection"
-                type: "str"
+                type: "bool"
+
+            wildfly_firewalld_custom_ports:
+                required: false
+                description: "Override to provided a custom set of ports of open for the server (number, protocol)"
+                type: "list"
 
             # line 4 of defaults/main.yml
-            wildfly_listen_ports:
-                default: "[8009, 8080, 8443, 4712, 4713]"
-                description: "Default ports to open for Wildfly"
+            wildfly_firewalld_listen_ports:
+                description: "Default port set used by the standalone.xml"
+                type: "list"
+
+            # line 12 of defaults/main.yml
+            wildfly_firewalld_listen_full_ports:
+                description: "Default port set used by the standalone-full.xml"
+                type: "list"
+
+            # line 23 of defaults/main.yml
+            wildfly_firewalld_ha_listen_ports:
+                description: "Default port set used by the standalone-ha.xml"
+                type: "list"
+
+            # line 35 of defaults/main.yml
+            wildfly_firewalld_full_ha_listen_ports:
+                description: "Default port set used by the standalone-full-ha.xml"
+                type: "list"
+
+            # line 53 of defaults/main.yml
+            wildfly_firewalld_multicast_addr:
+                default: "230.0.0.4"
+                description: "Multicast address used by JGroups for server clustering"
+                type: "str"
+
+            # line 54 of defaults/main.yml
+            wildfly_firewalld_multicast_rules:
+                required: true
+                description: "Firewalld rules added to allow multicast"
                 type: "str"

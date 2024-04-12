@@ -1,32 +1,6 @@
 ---
-- name: "Ensure required parameters are provided."
-  ansible.builtin.assert:
-    that:
-      - wildfly_firewalld_package_name is defined
-      - wildfly_listen_ports is defined
-    quiet: true
+- name: "Includes tasks required to setup firewalld"
+  ansible.builtin.include_tasks: firewalld.yml
 
-- name: "Ensure firewalld is available."
-  become: true
-  ansible.builtin.package:
-    name: "{{ wildfly_firewalld_package_name }}"
-    state: present
-
-- name: "Ensure firewalld is running."
-  become: true
-  ansible.builtin.service:
-    name: "{{ wildfly_firewalld_service_name | default('firewalld') }}"
-    state: started
-    enabled: true
-
-- name: "Ensure firewalld allows communication over {{ wildfly_listen_ports }}."
-  ansible.posix.firewalld:
-    port: "{{ listen_port }}/tcp"
-    permanent: true
-    state: enabled
-    immediate: yes
-  when:
-    - wildfly_listen_ports is defined
-  loop: "{{ wildfly_listen_ports }}"
-  loop_control:
-    loop_var: listen_port
+- name: "Includes tasks related to firewalld rules"
+  ansible.builtin.include_tasks: rules.yml

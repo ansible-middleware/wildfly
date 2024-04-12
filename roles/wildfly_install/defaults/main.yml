@@ -27,3 +27,4 @@ wildfly_prereqs_packages:
 
 wildfly_instance_name: wildfly
 wildfly_selinux_enabled: False
+wildfly_cluster_enabled: False

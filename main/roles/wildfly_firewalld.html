@@ -130,13 +130,41 @@
 <td class="text-left"><p>Package name for firewalld on target hosts</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">firewalld</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_firewalld_enabled</span></code></p></td>
-<td class="text-left"><p>Indicate if firewalld should be used</p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_enabled</span></code></p></td>
+<td class="text-left"><p>Specify whether or not firewalld should be used</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_listen_ports</span></code></p></td>
-<td class="text-left"><p>Indicate if firewalld should be used</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">['8009',</span> <span class="pre">'8080',</span> <span class="pre">'8443',</span> <span class="pre">'8443',</span> <span class="pre">'4712',</span> <span class="pre">'4713']</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_custom_ports</span></code></p></td>
+<td class="text-left"><p>Override to provided a custom set of ports of open for the server (number, protocol)</p></td>
+<td class="text-left"><p>``</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_listen_ports</span></code></p></td>
+<td class="text-left"><p>Default port set used by the standalone.xml</p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_listen_full_ports</span></code></p></td>
+<td class="text-left"><p>Default port set used by the standalone-full.xml”</p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_ha_listen_ports</span></code></p></td>
+<td class="text-left"><p>Default port set used by the standalone-ha.xml”</p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_full_ha_listen_ports</span></code></p></td>
+<td class="text-left"><p>Default port set used by the standalone-full-ha.xml”</p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_multicast_addr</span></code></p></td>
+<td class="text-left"><p>Multicast address used by JGroups for server clustering</p></td>
+<td class="text-left"><p>230.0.0.4</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_firewalld_multicast_rules</span></code></p></td>
+<td class="text-left"><p>Firewalld rules added to allow multicast</p></td>
+<td class="text-left"><p>N/A</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_cluster_enabled</span></code></p></td>
+<td class="text-left"><p>Specify whether or not the server’s cluster is enabled</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 </tr>
 </tbody>
 </table>

@@ -1,7 +1,7 @@
 ---
 - name: Enable extension in wildfly
   when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
-  become: true
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   notify: exec_restorecon
   block:
   - name: Create YAML configuration directory
@@ -24,7 +24,7 @@
 
 - name: Enable extension in EAP
   when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '==')
-  become: true
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   notify: exec_restorecon
   block:
 
@@ -46,7 +46,7 @@
     notify: restart_wildfly
 
 - name: "Deploy YAML configuration files: {{ wildfly_yml_configs | flatten }}"
-  become: true
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   ansible.builtin.template:
     src: "{{ wildfly_yml_configs_repository }}{{ file }}"
     dest: "{{ basedir }}/{{ file | regex_replace('.j2', '') }}"

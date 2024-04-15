@@ -11,3 +11,14 @@ wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_selinux_enabled: False
 jboss_home: "{{ wildfly_home }}"
 wildfly_utils_jboss_cli_require_privilege_escalation: true
+
+wildfly_prospero_version: 1.2.0.Final
+wildfly_prospero_name: prospero
+wildfly_prospero_install_dir: /opt/prospero
+wildfly_prospero_profile_name: wildfly
+wildfly_prospero_scenario_enable: True
+wildfly_prospero_archive_name: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+wildfly_prospero_home: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}"
+wildfly_prospero_install_manifest_dir: "{{ wildfly_install_workdir }}/manifest"
+wildfly_prospero_download_url: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
+wildfly_prospero_download_check_ssl: False

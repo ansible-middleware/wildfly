@@ -8,4 +8,5 @@
 
 - name: "Install server using Prospero."
   ansible.builtin.include_role:
-    name: wildfly_prospero
+    name: wildfly_utils
+    tasks_from: prospero/main.yml

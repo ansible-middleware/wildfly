@@ -49,6 +49,10 @@ argument_specs:
                 default: False
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
+            wildfly_port_range_offset:
+                default: 0
+                description: "Increment for `jboss.socket.binding.port-offset`"
+                type: "int"
     downstream:
         options:
             eap_enable:

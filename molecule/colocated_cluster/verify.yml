@@ -11,7 +11,6 @@
         wildfly_instance_name: "wildfly-{{ item }}"
         wildfly_service_name: "wildfly-{{ item }}"
         wildfly_config_base: standalone-ha.xml
-        wildfly_install_workdir: "/opt/wildfly/"
         wildfly_basedir_prefix: "/opt/instances/wildfly-{{ item }}/"
         wildfly_controller_port: "{{ 9990 + (100 * (item) | int) }}"
         wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"

@@ -99,6 +99,10 @@ argument_specs:
                 default: True
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
+            eap_prospero_version:
+                default: "1.1.6.Final-redhat-00001"
+                description: "Version of Prospero to use"
+                type: "str"
     jboss_cli:
         options:
             jboss_cli_controller_host:
@@ -143,3 +147,45 @@ argument_specs:
                 required: False
                 description: "Whether to always return changed (or not) on changed_when"
                 type: 'bool'
+    wildfly_prospero:
+        options:
+            wildfly_prospero_version:
+                default: "1.2.0.Final"
+                description: "Version of Prospero to use"
+                type: "str"
+            wildfly_prospero_name:
+                default: "prospero"
+                description: "Constant for the name of the prospero tool"
+                type: "str"
+            wildfly_prospero_install_dir:
+                default: "/opt/prospero"
+                description: "Path to the installation dir for Prospero"
+                type: "str"
+            wildfly_prospero_profile_name:
+                default: "wildfly"
+                description: "Name of the Wildfly profile for the server to install"
+                type: "str"
+            wildfly_prospero_scenario_enable:
+                default: true
+                description: "Specificy to Molecule if it should run the Prospero scenario"
+                type: "bool"
+            wildfly_prospero_archive_name:
+                default: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+                description: "Name of the Prospero archive"
+                type: "str"
+            wildfly_prospero_home:
+                default: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}"
+                description: "Home of the prospero tool"
+                type: "str"
+            wildfly_prospero_install_manifest_dir:
+                default: "{{ wildfly_install_workdir }}/manifest"
+                description: "Path on target to the Prospero manifest"
+                type: "str"
+            wildfly_prospero_download_url:
+                default: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
+                description: "URL to download Prospero"
+                type: "str"
+            wildfly_prospero_download_check_ssl:
+                default: false
+                description: "Should Ansible check SSL when downloading Prospero"
+                type: "bool"

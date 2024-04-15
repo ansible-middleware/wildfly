@@ -30,7 +30,7 @@
     path: "{{ wildfly_systemd.selinux.pid_path }}"
   register: pid_directory
 
-- name: 'Create PID directory directory path if not exists'
+- name: 'Create PID directory path if not exists'
   become: true
   ansible.builtin.file:
     path: "{{ wildfly_systemd.selinux.pid_path }}"
@@ -49,6 +49,3 @@
   ansible.builtin.include_tasks: systemd.yml
   vars:
     basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"
-
-- name: "Check PID file status"
-  ansible.builtin.include_tasks: pid_config.yml

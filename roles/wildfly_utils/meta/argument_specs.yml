@@ -107,6 +107,14 @@ argument_specs:
                 default: "1.1.6.Final-redhat-00001"
                 description: "Version of Prospero to use"
                 type: "str"
+            eap_prospero_name:
+                default: "jboss-eap-installation-manager"
+                description: "Constant for the name of the prospero tool"
+                type: "str"
+            eap_prospero_profile_name:
+                default: "eap-8.0"
+                description: "Name of the Wildfly profile for the server to install"
+                type: "str"
     jboss_cli:
         options:
             jboss_cli_controller_host:
@@ -151,7 +159,7 @@ argument_specs:
                 required: False
                 description: "Whether to always return changed (or not) on changed_when"
                 type: 'bool'
-    wildfly_prospero:
+    prospero/main:
         options:
             wildfly_prospero_version:
                 default: "1.2.0.Final"

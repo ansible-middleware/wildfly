@@ -31,4 +31,5 @@
   register: cli_result
   changed_when: "{{ jboss_cli_changed_when | default(false) }}"
   become: "{{ wildfly_utils_jboss_cli_require_privilege_escalation | default(true) }}"
+  become_user: "{{ jboss_cli_become_user | default(omit) }}"
   notify: "{{ jboss_cli_notify | default(omit) }}"

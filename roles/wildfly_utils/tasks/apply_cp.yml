@@ -271,6 +271,7 @@
             jboss_home: "{{ wildfly_home }}"
             jboss_cli_query: "'shutdown --restart'"
             jboss_cli_timeout: 20
+            jboss_cli_become_user: "{{ wildfly_user }}"
           when:
             - not wildfly_no_restart_after_patch
             - cli_result.rc == 0
@@ -289,6 +290,7 @@
             jboss_home: "{{ wildfly_home }}"
             jboss_cli_query: "'shutdown'"
             jboss_cli_timeout: 30
+            jboss_cli_become_user: "{{ wildfly_user }}"
           when:
             - apply_cp_process is defined
             - not eap_no_restart_after_patch
@@ -304,6 +306,7 @@
             jboss_cli_connect: False
             jboss_cli_extra_param: config
             jboss_cli_extra_param_value: "{{ wildfly_instance_name }}.xml"
+            jboss_cli_become_user: "{{ wildfly_user }}"
           when:
             - wildfly_java_package_name | regex_search('(?<=java-)[0-9]+') == '17'
             - patch_version.split('.')[0:2] | join('.') == '7.4'

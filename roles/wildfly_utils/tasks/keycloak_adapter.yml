@@ -138,7 +138,14 @@
             force: false
           become: yes
         - name: "Start wildfly for adapter installation"
-          ansible.builtin.command: "{{ wildfly_home }}/bin/standalone.sh -c {{ wildfly_instance_name }}.xml -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ -Djboss.server.base.dir={{ wildfly_home }}/standalone"
+          ansible.builtin.shell: |
+            set -o pipefail
+            {{ wildfly_home }}/bin/standalone.sh -c {{ wildfly_instance_name }}.xml \
+                -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ \
+                -Djboss.server.base.dir={{ wildfly_home }}/standalone \
+                -Djboss.socket.binding.port-offset={{ wildfly_port_range_offset }}
+          environment:
+            JAVA_HOME: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
           changed_when: True
           async: 180
           poll: 0

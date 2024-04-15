@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.2-devel
 ============
 
+Major Changes
+-------------
+
+- prospero: rm role and move content to wildfly_utils `#227 <https://github.com/ansible-middleware/wildfly/pull/227>`_
+
 Minor Changes
 -------------
 

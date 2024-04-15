@@ -6,7 +6,6 @@ Role Index
     wildfly_firewalld
     wildfly_install
     wildfly_migration
-    wildfly_prospero
     wildfly_subs
     wildfly_systemd
     wildfly_uninstall

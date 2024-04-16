@@ -2,14 +2,20 @@
 - name: Ensure Wildfly is install and running as a service
   hosts: all
   vars:
+# app deployment can be handled throught the following list
+# warning: using the yaml_config makes its mandatory to deploy
+# through this list
+#    wildfly_apps:
+#      - { path: /path/to/war, unmanaged: true }
+    wildfly_systemd_wait_for_port: true
     postgres_driver_version: 9.4.1212
     mariadb_driver_version: 3.2.0
     jdbc_drivers:
         - { version: "{{ postgres_driver_version }}", name: 'org.postgresql', jar_file: "postgresql-{{ postgres_driver_version }}.jar", url: "https://repo.maven.apache.org/maven2/org/postgresql/postgresql/{{ postgres_driver_version }}/postgresql-{{ postgres_driver_version }}.jar" }
         - { version: "{{ mariadb_driver_version }}", name: 'org.mariadb', jar_file: "mariadb-java-client-{{ mariadb_driver_version }}.jar", url: "https://repo1.maven.org/maven2/org/mariadb/jdbc/mariadb-java-client/{{ mariadb_driver_version }}/mariadb-java-client-{{ mariadb_driver_version }}.jar" }
   roles:
-    - middleware_automation.wildfly.wildfly_install
-    - middleware_automation.wildfly.wildfly_systemd
+    - wildfly_install
+    - wildfly_systemd
   tasks:
     - name: Install second driver with wildfly_driver role
       ansible.builtin.include_role:
@@ -21,3 +27,10 @@
         wildfly_driver_jar_filename: "{{ item.jar_file }}"
         wildfly_driver_jar_url: "{{ item.url }}"
       loop: "{{ jdbc_drivers }}"
+
+    - name: "Ensure server's apps are deployed"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: apps.yml
+      when:
+        - wildfly_apps is defined and wildfly_apps | length > 0

@@ -23,6 +23,11 @@ ExecStartPost=/usr/bin/timeout {{ wildfly_systemd_wait_for_timeout }} sh -c 'whi
 {% elif wildfly_systemd_wait_for_log %}
 ExecStartPost=/usr/bin/timeout {{ wildfly_systemd_wait_for_timeout }} sh -c 'tail -f /opt/{{wildfly_service_name}}/standalone/log/server.log | sed "/{{ wildfly_systemd_startup_message_id }}/ q"'
 {% endif %}
+{% if wildfly_enable_yml_config is defined and wildfly_enable_yml_config and wildfly_apps is defined and wildfly_apps | length > 0 %}
+{% for app in wildfly_apps %}
+ExecStartPost={{ wildfly_apps_jboss_cli_path }} {{ wildfly_apps_jboss_cli_command_prefix}}='deploy {{ wildfly_apps_cli_deploy_force }} {{ app.path }}'
+{% endfor %}
+{% endif %}
 
 [Install]
 WantedBy=multi-user.target

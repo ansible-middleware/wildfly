@@ -1,0 +1,29 @@
+---
+- name: "Ensure required parameters are provided"
+  ansible.builtin.assert:
+    that:
+      - app is defined and app.path is defined and app.path | length > 0
+    quiet: true
+
+- name: "Reset unmanaged option for deployments"
+  ansible.builtin.set_fact:
+    unamaged_option: ""
+  when:
+    - not unamaged_option is defined or unamaged_option | length > 0
+
+- name: "Adapt deploy if app is unmanaged ({{ app.unmanaged | default(false) }})"
+  when:
+    - app.unmanaged is defined and app.unmanaged
+  ansible.builtin.set_fact:
+    unamaged_option: "--unmanaged"
+
+- name: "Check that webapp is available"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    jboss_home: "{{ wildfly_home }}"
+    jboss_cli_query: "'deploy {{ wildfly_apps_cli_deploy_force }} {{ unamaged_option }} {{ app.path }}'"
+  loop: "{{ wildfly_apps }}"
+  loop_control:
+    loop_var: app

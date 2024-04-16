@@ -23,9 +23,16 @@ wildfly_service_config_file_location: '/etc/sysconfig'
 wildfly_service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ wildfly_service_name }}{{ wildfly_systemd_conf_file_suffix }}"
 wildfly_service_systemd_file: "{{ wildfly_systemd_service_config_location}}/{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
 
-wildfly_enable_yml_config: no
+wildfly_enable_yml_config: false
 wildfly_yml_configs: []
 wildfly_yml_configs_repository:
+wildfly_apps_jboss_cli_path: "{{ wildfly_home }}//bin/jboss-cli.sh"
+wildfly_apps_jboss_cli_controller_host: 'localhost'
+wildfly_apps_jboss_cli_controller_port: '9990'
+wildfly_apps_cli_deploy_force: '--force'
+wildfly_apps_jboss_cli_controller: "--controller={{ wildfly_apps_jboss_cli_controller_host }}:{{ wildfly_apps_jboss_cli_controller_port }}"
+wildfly_apps_jboss_cli_timeout: "--timeout={{ jboss_cli_timeout * 1000 if jboss_cli_timeout is defined else 5000 }}"
+wildfly_apps_jboss_cli_command_prefix: "--connect {{ wildfly_apps_jboss_cli_timeout }} {{ wildfly_apps_jboss_cli_controller }} --command"
 
 wildfly_bind_addr: 0.0.0.0
 wildfly_bind_addr_private: 127.0.0.1
@@ -46,5 +53,5 @@ wildfly_systemd_wait_port: 9990
 wildfly_systemd_startup_message_id: 'WFLYSRV0025'
 wildfly_systemd_wait_for_timeout: 60
 wildfly_systemd_wait_for_delay: 10
-wildfly_systemd_wait_for_port: False
+wildfly_systemd_wait_for_port: "{{ wildfly_enable_yml_config }}"
 wildfly_systemd_wait_for_log: False

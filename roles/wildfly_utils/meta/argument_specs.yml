@@ -159,6 +159,10 @@ argument_specs:
                 required: False
                 description: "Whether to always return changed (or not) on changed_when"
                 type: 'bool'
+            jboss_cli_become_user:
+                required: False
+                description: "The user account to execute jboss-cli with"
+                type: 'str'
     prospero/main:
         options:
             wildfly_prospero_version:

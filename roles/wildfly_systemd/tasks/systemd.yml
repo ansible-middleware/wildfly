@@ -95,6 +95,7 @@
         setype: etc_t
         seuser: system_u
       when: wildfly_systemd.config_custom | length > 0
+      notify: "Perform daemon-reload"
 
     - name: Include YAML configuration extension
       ansible.builtin.include_tasks: yml_config.yml

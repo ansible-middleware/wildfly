@@ -23,3 +23,5 @@ wildfly_prospero_home: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_n
 wildfly_prospero_install_manifest_dir: "{{ wildfly_install_workdir }}/manifest"
 wildfly_prospero_download_url: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
 wildfly_prospero_download_check_ssl: False
+
+wildfly_apps_cli_deploy_force: "--force"

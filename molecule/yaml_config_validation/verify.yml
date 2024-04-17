@@ -15,6 +15,7 @@
         status_code: 200
 
     - name: "Restart Server"
+      become: true
       ansible.builtin.service:
         name: "{{ wildfly_service_name | default('wildfly') }}"
         state: restarted

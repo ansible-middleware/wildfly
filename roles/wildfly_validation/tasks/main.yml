@@ -117,3 +117,14 @@
   loop: "{{ wildfly_validation_queries }}"
   when:
     - not wildfly_validation_skip_config_check is defined
+
+- name: "Verify that main logfile contains a specific pattern (if provided)."
+  ansible.builtin.include_tasks: logfile.yml
+  vars:
+    search_pattern: "{{ wildfly_validation_logfile_custom_pattern }}"
+    path_to_logfile: "{{ wildfly_validation_logfile_path_to_logfile}}"
+  when:
+    - wildfly_validation_logfile_custom_patterns is defined and wildfly_validation_logfile_custom_patterns | length > 0
+  loop: "{{ wildfly_validation_logfile_custom_patterns }}"
+  loop_control:
+    loop_var: wildfly_validation_logfile_custom_pattern

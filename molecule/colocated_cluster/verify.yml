@@ -15,10 +15,7 @@
         wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
         wildfly_controller_port: "{{ 9990 + (100 * (item) | int) }}"
         wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"
-        wildfly_validation_logfile_custom_patterns:
-          - "Node wildfly-[{{ wildfly_nb_instances | difference(item | list) | join }}] joined the cluster"
-#          - "^.*INFO *[org.infinispan.CLUSTER].*ISPN100000: Node {{ wildfly_instance_name }} joined the cluster.$"
-      loop: "{{ wildfly_nb_instances }}"
+      loop: "{{ range(0, 3) | list }}"
 
     - name: "Get eap-0 log"
       become: true

@@ -6,4 +6,3 @@ wildfly_enable_yml_config: True
 wildfly_yml_configs:
   - yaml_configuration.yml.j2
   - configure_tcp_ping.yml.j2
-wildfly_nb_instances: ['0', '1', '2']

@@ -8,6 +8,16 @@
 
 - name: Install multiple wildfly services
   hosts: all
+  vars_files:
+    - vars.yml
+  vars:
+    wildfly_remote_destination_outbound_socket_binding:
+        self:
+          host: '127.0.0.1'
+          port: 7600
+        other:
+          host: '127.0.0.1'
+          port: 7700
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:
@@ -16,13 +26,8 @@
         wildfly_node_id: "wildfly-{{ item }}"
         wildfly_instance_name: "wildfly-{{ item }}"
         wildfly_service_name: "wildfly-{{ item }}"
-        wildfly_config_base: standalone-ha.xml
-        wildfly_basedir_prefix: "/opt/instances/wildfly-{{ item }}/"
+        wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
         wildfly_port_range_offset: "{{ 100 * (item) | int }}"
-        wildfly_java_opts: '-Xmx512M -Xms512M'
-        wildfly_enable_yml_config: True
-        wildfly_yml_configs:
-          - yaml_configuration.yml.j2
       loop: "{{ range(0, 3) | list }}"
 
     - name: "Deploy webapp if test enabled"

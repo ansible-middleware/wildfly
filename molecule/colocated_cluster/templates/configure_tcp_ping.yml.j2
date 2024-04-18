@@ -1,0 +1,28 @@
+wildfly-configuration:
+  socket-binding-group:
+    standard-sockets:
+      remote-destination-outbound-socket-binding:
+        self:
+          host: "{{ wildfly_remote_destination_outbound_socket_binding.self.host }}"
+          port: "{{ wildfly_remote_destination_outbound_socket_binding.self.port }}"
+        other:
+          host: "{{ wildfly_remote_destination_outbound_socket_binding.other.host }}"
+          port: "{{ wildfly_remote_destination_outbound_socket_binding.other.port }}"
+  subsystem:
+    jgroups:
+      stack:
+        tcp:
+          transport:
+            TCP:
+              socket-binding: jgroups-tcp
+          protocol:
+            MPING: !remove
+          protocol:
+            TCPPING:
+              add-index: 0
+              socket-bindings:
+                - self
+                - other
+      channel:
+        ee:
+          stack: tcp

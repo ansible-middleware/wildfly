@@ -1,17 +1,44 @@
 ---
 - name: Verify three servers
   hosts: all
+  vars_files:
+    - vars.yml
   gather_facts: false
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:
-        name: middleware_automation.wildfly.wildfly_validation
+        name: wildfly_validation
       vars:
         wildfly_node_id: "wildfly-{{ item }}"
         wildfly_instance_name: "wildfly-{{ item }}"
         wildfly_service_name: "wildfly-{{ item }}"
-        wildfly_config_base: standalone-ha.xml
-        wildfly_basedir_prefix: "/opt/instances/wildfly-{{ item }}/"
+        wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
         wildfly_controller_port: "{{ 9990 + (100 * (item) | int) }}"
         wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"
       loop: "{{ range(0, 3) | list }}"
+
+    - name: "Get eap-0 log"
+      become: true
+      ansible.builtin.shell:
+        cmd: "cat {{ wildfly_instances_home }}/wildfly-0/standalone/log/server.log"
+      changed_when: False
+      register: command_output
+
+    - name: "Fetch joined string for first instance"
+      ansible.builtin.set_fact:
+        eap_1_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-1 joined the cluster.*$', multiline=True) }}"
+
+    - name: "Check that string matches"
+      ansible.builtin.assert:
+        that:
+          - eap_1_joined is defined
+          - eap_1_joined != ''
+
+    - ansible.builtin.set_fact:
+        eap_2_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-2 joined the cluster.*$', multiline=True) }}"
+
+    - name: "Check that string has been found"
+      ansible.builtin.assert:
+        that:
+          - eap_2_joined is defined
+          - eap_2_joined != ''

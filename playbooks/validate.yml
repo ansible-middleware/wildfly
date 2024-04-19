@@ -2,5 +2,7 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  vars_files:
+    - vars/vars.yml
   roles:
     - middleware_automation.wildfly.wildfly_validation

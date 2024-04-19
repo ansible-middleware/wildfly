@@ -117,3 +117,12 @@
   loop: "{{ wildfly_validation_queries }}"
   when:
     - not wildfly_validation_skip_config_check is defined
+
+- name: "Verify JDBC drivers deployment (if any)"
+  ansible.builtin.include_tasks: verify_with_cli_queries.yml
+  vars:
+    validation_query: "/core-service=module-loading:list-resource-loader-paths(module={{ item.name }})"
+  loop: "{{ jdbc_drivers }}"
+  when:
+    - not wildfly_validation_skip_jdbc_drivers_check is defined
+    - jdbc_drivers is defined and jdbc_drivers | length > 0

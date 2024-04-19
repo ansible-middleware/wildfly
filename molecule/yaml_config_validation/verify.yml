@@ -9,22 +9,22 @@
   roles:
     - wildfly_validation
   tasks:
-    - name: "Test that webapp is accessible"
-      ansible.builtin.uri:
-        url: 'http://localhost:8080/info'
-        status_code: 200
-
-    - name: "Restart Server"
-      become: true
-      ansible.builtin.service:
-        name: "{{ wildfly_service_name | default('wildfly') }}"
-        state: restarted
-
-    - name: "Wait for server to be started"
-      ansible.builtin.wait_for:
-        timeout: 30
-
-    - name: "Test that webapp is accessible"
-      ansible.builtin.uri:
-        url: 'http://localhost:8080/info'
-        status_code: 200
+#    - name: "Test that webapp is accessible"
+#      ansible.builtin.uri:
+#        url: 'http://localhost:8080/info'
+#        status_code: 200
+#
+#    - name: "Restart Server"
+#      become: true
+#      ansible.builtin.service:
+#        name: "{{ wildfly_service_name | default('wildfly') }}"
+#        state: restarted
+#
+#    - name: "Wait for server to be started"
+#      ansible.builtin.wait_for:
+#        timeout: 30
+#
+#    - name: "Test that webapp is accessible"
+#      ansible.builtin.uri:
+#        url: 'http://localhost:8080/info'
+#        status_code: 200

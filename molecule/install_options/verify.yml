@@ -5,6 +5,7 @@
     wildfly_user: mware
     wildfly_group: sysgroup
     wildfly_java_package_name: java-17-openjdk-headless
+    wildfly_validation_skip_jdbc_drivers_check: false
 
 - name: Validation
   hosts: all

@@ -1,0 +1,13 @@
+---
+- name: Check arguments
+  ansible.builtin.assert:
+    that:
+      - wildfly_apps is defined and wildfly_apps | length > 0
+    quiet: true
+
+- name: "Ensure server's apps are deployed"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: apps.yml
+  vars:
+    wildfly_basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"

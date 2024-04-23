@@ -9,6 +9,10 @@
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
+- name: "Determine CLI port (if port offset is used: {{ wildfly_port_range_offset }})"
+  ansible.builtin.set_fact:
+    jboss_cli_controller_port: "{{ (jboss_cli_controller_port | default(9990) | int) + (wildfly_port_range_offset | int) }}"
+
 - name: "Ensure server's management interface is reachable"
   when: jboss_cli_connect | default(true)
   ansible.builtin.wait_for:
@@ -33,3 +37,7 @@
   become: "{{ wildfly_utils_jboss_cli_require_privilege_escalation | default(true) }}"
   become_user: "{{ jboss_cli_become_user | default(omit) }}"
   notify: "{{ jboss_cli_notify | default(omit) }}"
+
+- name: "Reset CLI port to default"
+  ansible.builtin.set_fact:
+    jboss_cli_controller_port: 9990

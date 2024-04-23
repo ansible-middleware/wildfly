@@ -9,4 +9,4 @@
   ansible.builtin.include_tasks: app.yml
   loop: "{{ wildfly_apps }}"
   loop_control:
-    loop_var: app
+    loop_var: app_to_deploy

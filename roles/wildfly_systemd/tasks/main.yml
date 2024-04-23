@@ -49,3 +49,10 @@
   ansible.builtin.include_tasks: systemd.yml
   vars:
     basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"
+
+- name: "Ensure server's apps are deployed"
+  ansible.builtin.include_tasks: apps.yml
+  vars:
+    wildfly_basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"
+  when:
+    - wildfly_apps is defined and wildfly_apps | length > 0

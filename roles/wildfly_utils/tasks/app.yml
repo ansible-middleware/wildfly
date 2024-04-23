@@ -2,28 +2,36 @@
 - name: "Ensure required parameters are provided"
   ansible.builtin.assert:
     that:
-      - app is defined and app.path is defined and app.path | length > 0
+      - app_to_deploy is defined and app_to_deploy.path is defined and app_to_deploy.path | length > 0
+      - wildfly_basedir is defined and wildfly_basedir | length > 0
     quiet: true
 
 - name: "Reset unmanaged option for deployments"
   ansible.builtin.set_fact:
-    unamaged_option: ""
+    unmanaged_option: ""
   when:
-    - not unamaged_option is defined or unamaged_option | length > 0
+    - not unmanaged_option is defined or unmanaged_option | length > 0
 
-- name: "Adapt deploy if app is unmanaged ({{ app.unmanaged | default(false) }})"
+- name: "Adapt deploy command if app is unmanaged ({{ app_to_deploy.unmanaged | default(false) }})"
   when:
-    - app.unmanaged is defined and app.unmanaged
+    - app_to_deploy.unmanaged is defined and app_to_deploy.unmanaged
   ansible.builtin.set_fact:
-    unamaged_option: "--unmanaged"
+    unmanaged_option: "--unmanaged"
 
-- name: "Check that webapp is available"
+- name: "Load metadata on deployment file {{ app_to_deploy.path }} in {{ wildfly_home }}/standalone/deployments/."
+  ansible.builtin.stat:
+    path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
+  register: app_to_deploy_marker
+
+- name: "Ensure that app {{ app_to_deploy.name }} is available"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
     jboss_home: "{{ wildfly_home }}"
-    jboss_cli_query: "'deploy {{ wildfly_apps_cli_deploy_force }} {{ unamaged_option }} {{ app.path }}'"
+    jboss_cli_query: "'deploy {{ wildfly_apps_jboss_cli_deploy_force }} {{ unmanaged_option }} {{ app_to_deploy.path }}'"
   loop: "{{ wildfly_apps }}"
   loop_control:
-    loop_var: app
+    loop_var: app_to_deploy
+  when:
+    - app_to_deploy_marker is defined and app_to_deploy_marker.stat is defined and app_to_deploy_marker.stat.exists is defined and not app_to_deploy_marker.stat.exists

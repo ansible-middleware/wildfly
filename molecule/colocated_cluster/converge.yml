@@ -1,16 +1,26 @@
 ---
 - name: Install wildfly
   hosts: all
+  vars:
+    path_to_app: /tmp/info.war
+    download_app_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq'
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:
         name: middleware_automation.wildfly.wildfly_install
+  post_tasks:
+    - name: "Ensure webapp is available on target"
+      ansible.builtin.get_url:
+        url: "{{ download_app_url }}"
+        dest: "{{ path_to_app }}"
 
 - name: Install multiple wildfly services
   hosts: all
   vars_files:
     - vars.yml
   vars:
+    wildfly_apps:
+      - { path: /tmp/info.war }
     wildfly_remote_destination_outbound_socket_binding:
         self:
           host: '127.0.0.1'
@@ -29,23 +39,3 @@
         wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
         wildfly_port_range_offset: "{{ 100 * (item) | int }}"
       loop: "{{ range(0, 3) | list }}"
-
-    - name: "Deploy webapp if test enabled"
-      vars:
-        path_to_app: /tmp/info.war
-        download_app_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq'
-      when:
-        - not eap_enable is defined or not eap_enable
-      block:
-        - name: "Deploy webapp"
-          ansible.builtin.get_url:
-            url: "{{ download_app_url }}"
-            dest: "{{ path_to_app }}"
-
-        - name: "Check that webapp is available"
-          ansible.builtin.include_role:
-            name: wildfly_utils
-            tasks_from: jboss_cli.yml
-          vars:
-            jboss_home: "{{ wildfly_home }}"
-            jboss_cli_query: "'deploy --force {{ path_to_app }}'"

@@ -1,0 +1,14 @@
+---
+- name: Verify
+  hosts: instance
+  vars_files:
+    - vars.yml
+  collections:
+    - middleware_automation.wildfly
+  tasks:
+    - name: "Verify that state is consistent"
+      ansible.builtin.include_role:
+        name: wildfly_validation
+      vars:
+        - eap_validation_queries:
+          - { query: '/system-property=test:read-attribute(name=value)', expected_result: 'testvalue', expected_result_undefined: False}

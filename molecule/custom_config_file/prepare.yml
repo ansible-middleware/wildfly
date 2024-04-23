@@ -1,0 +1,9 @@
+---
+- name: Prepare
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - ansible.builtin.include_role:
+        name: ../../roles/eap_dot
+

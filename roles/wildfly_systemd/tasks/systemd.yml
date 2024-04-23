@@ -151,6 +151,8 @@
         setype: systemd_unit_file_t
         seuser: system_u
       register: daemon_reload
+      vars:
+        jboss_cli_deploy_controller: "{{ wildfly_systemd_jboss_cli_controller_host }}:{{ (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) +(wildfly_port_range_offset | int) }}"
 
     - name: "Perform daemon-reload to ensure the changes are picked up"
       ansible.builtin.systemd:

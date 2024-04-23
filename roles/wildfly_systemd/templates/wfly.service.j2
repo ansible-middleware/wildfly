@@ -25,7 +25,7 @@ ExecStartPost=/usr/bin/timeout {{ wildfly_systemd_wait_for_timeout }} sh -c 'tai
 {% endif %}
 {% if wildfly_enable_yml_config is defined and wildfly_enable_yml_config and wildfly_apps is defined and wildfly_apps | length > 0 %}
 {% for app in wildfly_apps %}
-ExecStartPost={{ wildfly_apps_jboss_cli_path }} {{ wildfly_apps_jboss_cli_command_prefix}}='deploy {{ wildfly_apps_cli_deploy_force }} {{ app.path }}'
+ExecStartPost={{ wildfly_systemd_jboss_cli_path }} --controller={{ jboss_cli_deploy_controller }} {{ wildfly_systemd_jboss_cli_command_prefix }}  --command='deploy {{ wildfly_systemd_jboss_cli_deploy_force }} {{ app.path }}'
 {% endfor %}
 {% endif %}
 

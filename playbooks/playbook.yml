@@ -17,10 +17,3 @@
         wildfly_driver_jar_filename: "{{ item.jar_file }}"
         wildfly_driver_jar_url: "{{ item.url }}"
       loop: "{{ jdbc_drivers }}"
-
-    - name: "Ensure server's apps are deployed"
-      ansible.builtin.include_role:
-        name: wildfly_utils
-        tasks_from: apps.yml
-      when:
-        - wildfly_apps is defined and wildfly_apps | length > 0

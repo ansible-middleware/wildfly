@@ -19,8 +19,8 @@
   vars_files:
     - vars.yml
   vars:
-    wildfly_apps:
-      - { path: /tmp/info.war }
+    wildfly_apps: []
+#      - { path: /tmp/info.war }
     wildfly_remote_destination_outbound_socket_binding:
         self:
           host: '127.0.0.1'

@@ -6,4 +6,3 @@
   tasks:
     - ansible.builtin.include_role:
         name: ../../roles/eap_dot
-

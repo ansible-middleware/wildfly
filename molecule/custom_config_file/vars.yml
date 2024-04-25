@@ -1,1 +1,1 @@
-wildfly_config_custom_file: standalone-custom.xml
+wildfly_config_custom_file: files/wildfly-custom.xml

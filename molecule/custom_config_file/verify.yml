@@ -6,6 +6,11 @@
   collections:
     - middleware_automation.wildfly
   tasks:
+    - name: "Include apps verification"
+      ansible.builtin.include_tasks: ../verify_apps.yml
+      when:
+        - wildfly_apps is defined and wildfly_apps | length > 0
+
     - name: "Verify that state is consistent"
       ansible.builtin.include_role:
         name: wildfly_validation

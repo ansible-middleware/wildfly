@@ -1,19 +1,9 @@
 ---
-#- name: "Retrieve webapp"
-#  hosts: all
-#  vars:
-#    path_to_app: /tmp/info.war
-#    download_app_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq'
-#  tasks:
-#    - name: "Deploy webapp"
-#      ansible.builtin.get_url:
-#        url: "{{ download_app_url }}"
-#        dest: "{{ path_to_app }}"
-
 - import_playbook: ../../playbooks/playbook.yml
   vars:
-#    wildfly_apps:
-#      - { path: '/tmp/info.war' }
+    wildfly_apps:
+      - { path: /tmp/kitchensink.war, download_url: 'https://github.com/rpelisse/wildfly-quickstarts/releases/download/kitchensink_wildfly31_1.0/kitchensink.war', root: '/kitschensink' }
+      #  - { path: /tmp/info.war, download_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq', root: '/info' }
     wildfly_custom_proxy_port: 6666
     wildfly_enable_yml_config: true
     wildfly_config_base: 'standalone-full-ha.xml'

@@ -1,14 +1,12 @@
 ---
-wildfly_custom_proxy_port: 6666
+wildfly_config_base: standalone-full-ha.xml
+wildfly_instances_home: '/opt/instances/'
+wildfly_java_opts: '-Xmx512M -Xms512M'
 wildfly_enable_yml_config: True
-wildfly_config_base: 'standalone-full-ha.xml'
 wildfly_yml_configs:
-    - yaml_configuration.yml.j2
-    - yaml_socket_bindings.yml.j2
-eap_offline_install: True
-eap_apply_cp: True
-eap_patch_version: 7.4.9
-wildfly_validation_queries:
-    - { query: '/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host, resolve-expressions=true)', expected_result:  'localhost', expected_result_undefined: false}
-    - { query: '/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)', expected_result:  'RemoteConnectionFactory', expected_result_undefined: false }
-    - { query: '/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)', expected_result:  'java:jboss/RemoteConnectionFactory', expected_result_undefined: false }
+  - yaml_configuration.yml.j2
+  - configure_tcp_ping.yml.j2
+wildfly_apps:
+  - { path: /tmp/kitchensink.war, download_url: 'https://github.com/rpelisse/wildfly-quickstarts/releases/download/kitchensink_wildfly31_1.0/kitchensink.war', root: '/kitschensink' }
+  #  - { path: /tmp/info.war, download_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq', root: '/info' }
+#  - { path: /tmp/kitchensink.war, download_url: 'https://github.com/rpelisse/wildfly-quickstarts/releases/download/kitchensink_wildfly31_1.0/kitchensink.war', root: '/kitschensink' }

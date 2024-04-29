@@ -1,26 +1,18 @@
 ---
 - name: Install wildfly
   hosts: all
-  vars:
-    path_to_app: /tmp/info.war
-    download_app_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq'
+  vars_files:
+    - vars.yml
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:
-        name: middleware_automation.wildfly.wildfly_install
-  post_tasks:
-    - name: "Ensure webapp is available on target"
-      ansible.builtin.get_url:
-        url: "{{ download_app_url }}"
-        dest: "{{ path_to_app }}"
+        name: wildfly_install
 
 - name: Install multiple wildfly services
   hosts: all
   vars_files:
     - vars.yml
   vars:
-    wildfly_apps: []
-#      - { path: /tmp/info.war }
     wildfly_remote_destination_outbound_socket_binding:
         self:
           host: '127.0.0.1'
@@ -31,7 +23,7 @@
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:
-        name: middleware_automation.wildfly.wildfly_systemd
+        name: wildfly_systemd
       vars:
         wildfly_node_id: "wildfly-{{ item }}"
         wildfly_instance_name: "wildfly-{{ item }}"

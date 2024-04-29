@@ -17,6 +17,19 @@
         wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"
       loop: "{{ range(0, 3) | list }}"
 
+    - name: "Wait for 30s to let apps finish their deployment"
+      ansible.builtin.wait_for:
+        timeout: 30
+
+    - name: "Include apps verification"
+      ansible.builtin.include_tasks: ../verify_apps.yml
+      loop:
+        - 8080
+        - 8180
+        - 8280
+      loop_control:
+        loop_var: app_port
+
     - name: "Get eap-0 log"
       become: true
       ansible.builtin.shell:

@@ -1,0 +1,16 @@
+---
+- name: "test apps"
+  block:
+    - name: "Verify that app is accessible"
+      ansible.builtin.uri:
+        url: "http://localhost:{{ app_port | default('8080') }}/{{ app.root }}/"
+        method: GET
+        status_code: 200
+      loop: "{{ wildfly_apps }}"
+      loop_control:
+        loop_var: app
+      when:
+        - wildfly_apps is defined and wildfly_apps | length > 0
+  rescue:
+    - wait_for:
+        timeout: 60000

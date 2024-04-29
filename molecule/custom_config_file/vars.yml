@@ -1,1 +1,4 @@
 wildfly_config_custom_file: files/wildfly-custom.xml
+wildfly_apps:
+  - { path: /tmp/kitchensink.war, download_url: 'https://github.com/rpelisse/wildfly-quickstarts/releases/download/kitchensink_wildfly31_1.0/kitchensink.war', root: '/kitchensink/' }
+  - { path: /tmp/info.war, download_url: 'https://drive.google.com/uc?export=download&id=13K7RCqccgH4zAU1RfOjYMehNaHB0A3Iq', root: '/info/' }

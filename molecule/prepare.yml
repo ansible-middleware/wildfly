@@ -2,6 +2,8 @@
 - name: Prepare
   hosts: all
   gather_facts: yes
+  vars_files:
+    - apps.yml
   vars:
     sudo_pkg_name: 'sudo'
   tasks:
@@ -29,6 +31,24 @@
           - procps-ng
           - tzdata-java
         state: present
+
+    - name: "Download apps if needed."
+      when:
+        - wildfly_apps is defined and wildfly_apps | length > 0
+      block:
+
+        - name: "Download apps if required"
+          ansible.builtin.get_url:
+            url: "{{ app.download_url }}"
+            dest: "{{ app.path }}"
+          loop: "{{ wildfly_apps }}"
+          loop_control:
+            loop_var: app
+
+        - name: "Set target hostname to instance"
+          become: yes
+          ansible.builtin.hostname:
+            name: instance
 
     - name: Display Ansible version
       ansible.builtin.debug:

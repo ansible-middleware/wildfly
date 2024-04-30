@@ -26,7 +26,7 @@ argument_specs:
                 description: "posix group for wildfly"
                 type: "str"
             wildfly_version:
-                default: "31.0.1.Final"
+                default: "32.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_install_workdir:
@@ -166,7 +166,7 @@ argument_specs:
     prospero/main:
         options:
             wildfly_prospero_version:
-                default: "1.2.0.Final"
+                default: "1.3.0.Beta1"
                 description: "Version of Prospero to use"
                 type: "str"
             wildfly_prospero_name:

@@ -24,3 +24,4 @@ wildfly_prospero_download_url: "https://github.com/wildfly-extras/prospero/relea
 wildfly_prospero_download_check_ssl: False
 
 wildfly_apps_jboss_cli_deploy_force: "--force"
+wildfly_apps_requires_privilege_escalation: true

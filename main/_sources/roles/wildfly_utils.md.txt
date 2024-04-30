@@ -24,7 +24,7 @@ Role Defaults
 |`wildfly_no_restart_after_patch`| When true, skip restarting after applying a cumulative patch | `False` |
 |`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
 |`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
-|`wildfly_prospero_version`| Version of Prospero to use | `1.2.0.Final` |
+|`wildfly_prospero_version`| Version of Prospero to use | `1.3.0.Beta1` |
 |`wildfly_prospero_name`| Constant for the name of the prospero tool | `prospero` |
 |`wildfly_prospero_install_dir`| Path to the installation dir for Prospero | `/opt/prospero` |
 |`wildfly_prospero_profile_name`| Name of the Wildfly profile for the server to install | `wildfly` |

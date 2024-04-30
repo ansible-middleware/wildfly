@@ -19,6 +19,7 @@
     unmanaged_option: "--unmanaged"
 
 - name: "Load metadata on deployment file {{ app_to_deploy.path }} in {{ wildfly_home }}/standalone/deployments/."
+  become: "{{ wildfly_apps_requires_privilege_escalation }}"
   ansible.builtin.stat:
     path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
   register: app_to_deploy_marker

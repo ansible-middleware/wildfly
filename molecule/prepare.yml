@@ -45,11 +45,6 @@
           loop_control:
             loop_var: app
 
-        - name: "Set target hostname to instance"
-          become: yes
-          ansible.builtin.hostname:
-            name: instance
-
     - name: Display Ansible version
       ansible.builtin.debug:
         msg: "Ansible version is {{ ansible_version.full }}, running with Python {{ ansible_python_version }}."

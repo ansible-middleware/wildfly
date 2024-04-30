@@ -4,8 +4,8 @@
   vars:
     wildfly_install_user: 'wildfly'
     wildfly_install_group: "{{ wildfly_install_user }}"
-    wildfly_install_use_prospero: True
-    wildfly_prospero_scenario_enable: True
+    wildfly_install_use_prospero: true
+    wildfly_prospero_scenario_enable: true
   collections:
     - middleware_automation.wildfly
   tasks:

@@ -12,6 +12,8 @@
   ansible.builtin.assert:
     that:
       - wildfly_version is version('32.0.0.Beta1', '>=')
+  when:
+    - not eap_enable is defined or not eap_enable
 
 - name: "Ensure workdir {{ wildfly_prospero_install_dir }} exists."
   ansible.builtin.file:

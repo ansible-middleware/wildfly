@@ -4,27 +4,13 @@
   gather_facts: false
   vars_files:
     - vars.yml
+    - ../apps.yml
   collections:
     - middleware_automation.wildfly
   roles:
     - wildfly_validation
   tasks:
-#    - name: "Test that webapp is accessible"
-#      ansible.builtin.uri:
-#        url: 'http://localhost:8080/info'
-#        status_code: 200
-#
-#    - name: "Restart Server"
-#      become: true
-#      ansible.builtin.service:
-#        name: "{{ wildfly_service_name | default('wildfly') }}"
-#        state: restarted
-#
-#    - name: "Wait for server to be started"
-#      ansible.builtin.wait_for:
-#        timeout: 30
-#
-#    - name: "Test that webapp is accessible"
-#      ansible.builtin.uri:
-#        url: 'http://localhost:8080/info'
-#        status_code: 200
+    - name: "Include apps verification"
+      ansible.builtin.include_tasks: ../verify_apps.yml
+      when:
+        - wildfly_apps is defined and wildfly_apps | length > 0

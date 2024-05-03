@@ -4,13 +4,7 @@
   gather_facts: false
   vars_files:
     - vars.yml
-    - ../apps.yml
   collections:
     - middleware_automation.wildfly
   roles:
     - wildfly_validation
-  tasks:
-    - name: "Include apps verification"
-      ansible.builtin.include_tasks: ../verify_apps.yml
-      when:
-        - wildfly_apps is defined and wildfly_apps | length > 0

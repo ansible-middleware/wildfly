@@ -28,6 +28,7 @@ Bugfixes
 - Add become_user to jboss_cli `#229 <https://github.com/ansible-middleware/wildfly/pull/229>`_
 - Use prospero 1.3.0.Beta1 `#239 <https://github.com/ansible-middleware/wildfly/pull/239>`_
 - use own config directory for colocated instances `#226 <https://github.com/ansible-middleware/wildfly/pull/226>`_
+- wildfly_validation: fixup logic of pidfile verification `#244 <https://github.com/ansible-middleware/wildfly/pull/244>`_
 
 v1.5.1
 ======

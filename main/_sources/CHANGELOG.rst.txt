@@ -20,6 +20,7 @@ Minor Changes
 
 - App deploy to trigger cluster formation and verification (upstream CI only) `#221 <https://github.com/ansible-middleware/wildfly/pull/221>`_
 - Skip pidfile validation `#217 <https://github.com/ansible-middleware/wildfly/pull/217>`_
+- eap: EAP8 should defaults to prospero `#245 <https://github.com/ansible-middleware/wildfly/pull/245>`_
 - install: allow user to change path on controller to store zips `#216 <https://github.com/ansible-middleware/wildfly/pull/216>`_
 
 Bugfixes

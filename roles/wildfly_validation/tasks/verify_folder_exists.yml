@@ -1,0 +1,21 @@
+---
+- name: "Ensure required parameters are provided."
+  ansible.builtin.assert:
+    that:
+      - folder is defined and folder | length > 0
+    quiet: true
+
+- name: "Load metadata on folder {{ folder }}"
+  become: "{{ wildfly_validation_folders_exists_requires_privileges_escalation | default(true) }}"
+  ansible.builtin.stat:
+    path: "{{ folder }}"
+  register: folder_metadata
+
+- name: "Verify that folder {{ folder }} exists on target."
+  ansible.builtin.assert:
+    that:
+      - folder_metadata is defined
+      - folder_metadata.stat is defined
+      - folder_metadata.stat.exists is defined
+      - folder_metadata.stat.exists
+    quiet: true

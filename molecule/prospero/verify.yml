@@ -1,5 +1,21 @@
 ---
-- import_playbook: ../../playbooks/validate.yml
-  when:
-    - not eap_enable is defined or not eap_enable
-    - prospero_scenario_enable is defined and prospero_scenario_enable
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    prospero_scenario_enable: true
+    wildfly_prospero_install_dir: /opt/prospero
+    wildfly_validation_install_use_prospero: true
+    wildfly_validation_check_prospero_install: false
+  tasks:
+    - name: Verify
+      block:
+
+        - ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_validation
+
+        - ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_validation
+            tasks_from: verify_install_mecanism.yml
+      when:
+        - prospero_scenario_enable is defined and prospero_scenario_enable

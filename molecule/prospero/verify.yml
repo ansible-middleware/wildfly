@@ -19,3 +19,4 @@
             tasks_from: verify_install_mecanism.yml
       when:
         - prospero_scenario_enable is defined and prospero_scenario_enable
+        - not eap_enable is defined or not eap_enable

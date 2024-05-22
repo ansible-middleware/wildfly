@@ -6,6 +6,31 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.2
+======
+
+Major Changes
+-------------
+
+- Add app deployments to several Molecule scenarios `#237 <https://github.com/ansible-middleware/wildfly/pull/237>`_
+- prospero: rm role and move content to wildfly_utils `#227 <https://github.com/ansible-middleware/wildfly/pull/227>`_
+
+Minor Changes
+-------------
+
+- App deploy to trigger cluster formation and verification (upstream CI only) `#221 <https://github.com/ansible-middleware/wildfly/pull/221>`_
+- Skip pidfile validation `#217 <https://github.com/ansible-middleware/wildfly/pull/217>`_
+- eap: EAP8 should defaults to prospero `#245 <https://github.com/ansible-middleware/wildfly/pull/245>`_
+- install: allow user to change path on controller to store zips `#216 <https://github.com/ansible-middleware/wildfly/pull/216>`_
+
+Bugfixes
+--------
+
+- Add become_user to jboss_cli `#229 <https://github.com/ansible-middleware/wildfly/pull/229>`_
+- Use prospero 1.3.0.Beta1 `#239 <https://github.com/ansible-middleware/wildfly/pull/239>`_
+- use own config directory for colocated instances `#226 <https://github.com/ansible-middleware/wildfly/pull/226>`_
+- wildfly_validation: fixup logic of pidfile verification `#244 <https://github.com/ansible-middleware/wildfly/pull/244>`_
+
 v1.5.1
 ======
 

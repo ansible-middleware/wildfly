@@ -1,13 +1,9 @@
 ---
-collections:
-  - middleware_automation.common
-  - ansible.posix
-
 galaxy_info:
-  role_name: wildfly_firewalld
+  role_name: wildfly_uninstall
   namespace: middleware_automation
   author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
-  description: Install wildfly application server or JBoss Enterprise Application (EAP)
+  description: Uninstalls wildfly
   company: Red Hat, Inc.
 
   license: Apache License 2.0
@@ -26,3 +22,4 @@ galaxy_info:
     - wildfly
     - cli
     - server
+    - systemd

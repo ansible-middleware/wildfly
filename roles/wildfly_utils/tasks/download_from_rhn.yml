@@ -17,13 +17,13 @@
   register: rhn_products
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
-  run_once: yes
+  run_once: true
 
 - name: "Determine install zipfile {{ eap_archive_filename }} from search results."
   ansible.builtin.set_fact:
     rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + eap_archive_filename + '$') }}"
   delegate_to: localhost
-  run_once: yes
+  run_once: true
 
 - name: Verify that filtered products has been properly populated.
   ansible.builtin.assert:
@@ -42,4 +42,4 @@
     dest: "{{ zipfile_dest }}"
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
-  run_once: yes
+  run_once: true

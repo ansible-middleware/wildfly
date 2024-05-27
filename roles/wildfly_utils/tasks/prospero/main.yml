@@ -21,8 +21,8 @@
     state: directory
     owner: "{{ wildfly_install_user | default(omit) }}"
     group: "{{ wildfly_install_group | default(omit) }}"
-    mode: 0750
-  become: yes
+    mode: '0750'
+  become: true
 
 - name: "Ensure installer is installed."
   ansible.builtin.include_tasks: prospero/install.yml
@@ -30,14 +30,14 @@
 - name: "Read target directory information: {{ wildfly_home }}"
   ansible.builtin.stat:
     path: "{{ wildfly_home }}"
-  become: yes
+  become: true
   register: path_to_workdir
 
 - name: "Verify metadata on {{ wildfly_home }} are available."
   ansible.builtin.assert:
     that:
       - path_to_workdir is defined and path_to_workdir.stat is defined
-    quiet: True
+    quiet: true
 
 - name: Set install command arguments
   block:
@@ -79,7 +79,7 @@
   ansible.builtin.command: |
     echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
   register: updates_available
-  ignore_errors: True
+  ignore_errors: true
   changed_when: False
   when:
     - wildfly_prospero_update is defined
@@ -88,7 +88,7 @@
   ansible.builtin.assert:
     that:
       - updates_available is defined and updates_available.rc is defined
-    quiet: True
+    quiet: true
   when:
     - wildfly_prospero_update is defined
 
@@ -104,9 +104,9 @@
 - name: "Ensure that {{ wildfly_home }} belongs to appropriate user - if defined."
   ansible.builtin.file:
     path: "{{ wildfly_home }}"
-    recurse: yes
+    recurse: true
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group | default(wildfly_install.user) }}"
-  become: yes
+  become: true
   when:
     - wildfly_install.user is defined

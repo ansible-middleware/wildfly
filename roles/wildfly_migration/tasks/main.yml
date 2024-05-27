@@ -37,7 +37,7 @@
         dest: "{{ target_wildfly_home }}/migration/configuration/environment.properties"
         owner: "{{ wildfly_user | default('root') }}"
         group: "{{ wildfly_group | default('root') }}"
-        mode: 0644
+        mode: '0644'
 
     - name: "Run migration tool"
       ansible.builtin.command: "{{ migration_tool }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ target_wildfly_home }}/migration/configuration/environment.properties"

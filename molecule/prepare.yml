@@ -1,7 +1,7 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: yes
+  gather_facts: true
   vars_files:
     - apps.yml
   vars:
@@ -24,7 +24,7 @@
           - sudo_pkg_name in ansible_facts.packages
 
     - name: "Ensure required packages are installed."
-      become: yes
+      become: true
       ansible.builtin.yum:
         name:
           - java-11-openjdk

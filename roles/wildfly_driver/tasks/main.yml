@@ -21,7 +21,7 @@
       ansible.builtin.file:
         path: "{{ wildfly_driver_module_dir }}"
         state: directory
-        recurse: yes
+        recurse: true
         owner: "{{ wildfly_user }}"
         group: "{{ wildfly_group }}"
         mode: '0750'

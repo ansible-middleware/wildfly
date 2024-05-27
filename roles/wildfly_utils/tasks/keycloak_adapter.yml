@@ -47,19 +47,19 @@
       register: rhn_products
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
         rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + patch_filename + '$') }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
 
     - name: "Check remote downloaded archive: {{ path_to_patch }}"
       ansible.builtin.stat:
         path: "{{ path_to_patch }}"
       register: remote_archive_path
-      become: yes
+      become: true
 
     - name: Download Red Hat Single Sign-On Adapter
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
@@ -69,7 +69,7 @@
         dest: "{{ local_path.stat.path }}/{{ patch_filename }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
-      run_once: yes
+      run_once: true
       when:
         - remote_archive_path is defined
         - not remote_archive_path.stat.exists
@@ -99,7 +99,7 @@
     - not patch_archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: yes
+  become: true
   notify: exec_restorecon
 
 - name: Extract Adapter zipfile
@@ -108,13 +108,13 @@
     dest: "{{ wildfly_home }}"
     owner: "{{ wildfly_user }}"
     group: "{{ wildfly_group }}"
-    remote_src: yes
+    remote_src: true
     creates: "{{ wildfly_home }}/modules/system/add-ons/keycloak"
     selevel: s0
     serole: object_r
     setype: usr_t
     seuser: system_u
-  become: yes
+  become: true
   notify: exec_restorecon
 
 - name: Perform installation
@@ -133,10 +133,10 @@
             dest: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
             group: "{{ wildfly_group }}"
             owner: "{{ wildfly_user }}"
-            mode: 0640
+            mode: '0640'
             remote_src: true
             force: false
-          become: yes
+          become: true
         - name: "Start wildfly for adapter installation"
           ansible.builtin.shell: |
             set -o pipefail
@@ -149,7 +149,7 @@
           changed_when: True
           async: 180
           poll: 0
-          become: yes
+          become: true
           become_user: "{{ wildfly_user }}"
           register: adapter_install_process
         - name: "Wait for management interface is reachable"

@@ -59,7 +59,7 @@
             owner: "{{ wildfly_systemd.user }}"
             mode: preserve
             remote_src: true
-            force: no
+            force: false
             selevel: s0
             serole: object_r
             setype: usr_t
@@ -76,7 +76,7 @@
         owner: "{{ wildfly_systemd.user }}"
         mode: '0640'
         remote_src: true
-        force: no
+        force: false
         selevel: s0
         serole: object_r
         setype: usr_t
@@ -156,7 +156,7 @@
 
     - name: "Perform daemon-reload to ensure the changes are picked up"
       ansible.builtin.systemd:
-        daemon_reload: yes
+        daemon_reload: true
       when:
         - daemon_reload is defined or daemon_reload_env is defined
         - daemon_reload.changed or daemon_reload_env.changed

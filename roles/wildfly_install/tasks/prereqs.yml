@@ -4,14 +4,14 @@
     that:
       - (rhn_username is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or wildfly_offline_install or eap_install_use_prospero
       - (rhn_password is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or wildfly_offline_install or eap_install_use_prospero
-    quiet: True
+    quiet: true
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
 
 - name: "Validate existing zipfiles {{ wildfly_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
       - wildfly_version is defined and wildfly_archive_filename is exists
-    quiet: True
+    quiet: true
     fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename }}"
   when:
     - wildfly_offline_install
@@ -20,7 +20,7 @@
   ansible.builtin.assert:
     that:
       - eap_patch_version is defined and eap_patch_version | length > 0
-    quiet: True
+    quiet: true
     fail_msg: "An offline install was requested, but eap_patch_version parameter was not defined"
   when:
     - wildfly_offline_install
@@ -32,7 +32,7 @@
     that:
       - not eap_apply_cp or (eap_patch_version is defined and eap_patch_archive_filename is exists)
       - not eap_elytron_adapter or (eap_elytron_adapter_archive_filename is exists)
-    quiet: True
+    quiet: true
     fail_msg: "An offline install was requested, but files are not present on the controller: {{ eap_patch_archive_filename if eap_apply_cp else '' }} {{ eap_elytron_adapter_archive_filename if eap_elytron_adapter else '' }}"
   when:
     - wildfly_offline_install
@@ -42,7 +42,7 @@
   ansible.builtin.assert:
     that:
       - wildfly_node_id | length <= 23
-    quiet: True
+    quiet: true
     fail_msg: "The node ID in variable wildfly_node_id cannot exceed 23 characters length"
   when:
     - wildfly_node_id is defined
@@ -72,7 +72,7 @@
   ansible.builtin.package:
     name: "{{ wildfly_prereqs_packages }}"
     state: present
-  become: yes
+  become: true
   when:
     - wildfly_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined

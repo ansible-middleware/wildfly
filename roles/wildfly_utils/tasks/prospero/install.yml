@@ -14,13 +14,13 @@
   ansible.builtin.stat:
     path: "{{ full_path_to_prospero_archive }}"
   register: archive_path
-  become: yes
+  become: true
 
 - name: "Download Prospero to {{ local_path_to_archive }}"
   ansible.builtin.get_url:
     url: "{{ wildfly_prospero_download_url }}"
     dest: "{{ local_path_to_archive }}"
-    mode: 0640
+    mode: '0640'
     validate_certs: "{{ wildfly_prospero_download_check_ssl }}"
   delegate_to: localhost
   register: downloaded_archive
@@ -48,18 +48,18 @@
     dest: "{{ full_path_to_prospero_archive }}"
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group }}"
-    mode: 0640
+    mode: '0640'
   register: new_version_downloaded
   when:
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: yes
+  become: true
 
 - name: "Read target directory information: {{ wildfly_prospero_install_dir }}"
   ansible.builtin.stat:
     path: "{{ wildfly_prospero_install_dir }}/bin"
-  become: yes
+  become: true
   register: path_to_prospero_installation
 
 - name: "Ensure Prospero is installed on target."
@@ -69,6 +69,6 @@
     owner: "{{ wildfly_install_user | default(omit) }}"
     group: "{{ wildfly_install_group | default(omit) }}"
     remote_src: True
-  become: yes
+  become: true
   when:
     - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists

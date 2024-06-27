@@ -35,7 +35,7 @@ Role Variables
 ---
 - name: "Uninstall server from target"
   hosts: all
-  gather_facts: no
+  gather_facts: false
   vars:
     wildfly_uninstall_service_name: wildfly
     wildfly_uninstall_home: /opt/wildfly/wildfly-32.0.0.Final

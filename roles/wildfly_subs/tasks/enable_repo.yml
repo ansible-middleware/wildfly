@@ -41,7 +41,7 @@
         access_time: preserve
         owner: "{{ wildfly_user | default('root') }}"
         group: "{{ wildfly_group | default('root') }}"
-        mode: 0644
+        mode: '0644'
 
     - name: "Ensure group package {{ eap_group_install_name }} is installed"
       ansible.builtin.command: "dnf groupinstall -y {{ eap_group_install_name }}"

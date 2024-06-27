@@ -8,7 +8,7 @@
 - name: "Perform daemon-reload"
   become: true
   ansible.builtin.systemd:
-    daemon_reload: yes
+    daemon_reload: true
 
 - name: Execute restorecon
   become: true

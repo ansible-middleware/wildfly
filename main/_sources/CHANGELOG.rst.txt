@@ -6,8 +6,16 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.5.2-devel
+v1.5.3-devel
 ============
+
+Minor Changes
+-------------
+
+- update ansible-core >= 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
+
+v1.5.2
+======
 
 Major Changes
 -------------

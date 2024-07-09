@@ -10,7 +10,7 @@
 - name: "Validate existing zipfiles {{ wildfly_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
-      - wildfly_version is defined and wildfly_archive_filename is exists
+      - wildfly_version is defined and wildfly_archive_filename_local | default(wildfly_archive_filename) is exists
     quiet: true
     fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename }}"
   when:

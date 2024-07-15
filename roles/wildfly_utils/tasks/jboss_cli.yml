@@ -33,7 +33,7 @@
     --timeout={{ jboss_cli_timeout * 1000 if jboss_cli_timeout is defined else 5000 }}
     {{ '' if jboss_cli_output_dmr is defined else '--output-json' }}
   register: cli_result
-  changed_when: "{{ jboss_cli_changed_when | default(false) }}"
+  changed_when: jboss_cli_changed_when | default(false)
   become: "{{ wildfly_utils_jboss_cli_require_privilege_escalation | default(true) }}"
   become_user: "{{ jboss_cli_become_user | default(omit) }}"
   notify: "{{ jboss_cli_notify | default(omit) }}"

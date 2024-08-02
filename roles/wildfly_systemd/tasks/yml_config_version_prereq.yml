@@ -13,9 +13,10 @@
     path: "{{ wildfly_home }}/.latest_applied_patch.txt"
   register: latest_patch_file_stat
 
-- name: "Execute only if eap_enable is true."
+- name: "Execute only on eap 7.x and if eap_enable is true."
   when:
     - eap_enable is defined and (eap_enable | bool)
+    - eap_version.split('.')[:1] | join('.') is version('7', '==')
   block:
     - name: Check latest patch checksum file exists
       ansible.builtin.assert:
@@ -33,7 +34,6 @@
       become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
       when:
         - eap_apply_cp is defined and (eap_apply_cp | bool)
-        - eap_version.split('.')[:1] | join('.') is version('7', '==')
 
     - name: Check arguments for yaml configuration
       ansible.builtin.assert:
@@ -41,11 +41,11 @@
           - (slurped_eap_version.content | b64decode is version('7.4.7', '>='))
         quiet: true
         fail_msg: "Can only enable YAML configuration with EAP >= 7.4.7 (found: {{ slurped_eap_version.content | b64decode }})"
-      when:
-        - eap_version.split('.')[:1] | join('.') is version('7', '==')
 
-    - name: Check if YAML configuration extension is supported in EAP
-      ansible.builtin.assert:
-        that:
-          - (eap_version.split('.')[:1] | join('.') is version('8', '>=')) or (slurped_eap_version is defined and slurped_eap_version.content | b64decode is version('7.4.7', '>='))
-        fail_msg: "YAML configuration extension is not supported in this EAP version"
+- name: Check if YAML configuration extension is supported in EAP
+  ansible.builtin.assert:
+    that:
+      - (eap_version.split('.')[:1] | join('.') is version('8', '>=')) or (slurped_eap_version is defined and slurped_eap_version.content | b64decode is version('7.4.7', '>='))
+    fail_msg: "YAML configuration extension is not supported in this EAP version"
+  when:
+    - eap_enable is defined and (eap_enable | bool)

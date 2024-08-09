@@ -7,10 +7,6 @@ platforms:
     pre_build_image: true
     privileged: true
     command: "/usr/sbin/init"
-    port_bindings:
-      - 8080:8080
-    published_ports:
-      - 0.0.0.0:8080:8080/TCP
 provisioner:
   name: ansible
   config_options:

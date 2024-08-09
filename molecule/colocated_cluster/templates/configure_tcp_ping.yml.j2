@@ -2,12 +2,15 @@ wildfly-configuration:
   socket-binding-group:
     standard-sockets:
       remote-destination-outbound-socket-binding:
-        self:
-          host: "{{ wildfly_remote_destination_outbound_socket_binding.self.host }}"
-          port: "{{ wildfly_remote_destination_outbound_socket_binding.self.port }}"
-        other:
-          host: "{{ wildfly_remote_destination_outbound_socket_binding.other.host }}"
-          port: "{{ wildfly_remote_destination_outbound_socket_binding.other.port }}"
+        wildfly0:
+          host: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly0.host }}"
+          port: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly0.port }}"
+        wildfly1:
+          host: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly1.host }}"
+          port: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly1.port }}"
+        wildfly2:
+          host: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly2.host }}"
+          port: "{{ wildfly_remote_destination_outbound_socket_binding.wildfly2.port }}"
   subsystem:
     jgroups:
       stack:
@@ -21,8 +24,9 @@ wildfly-configuration:
             TCPPING:
               add-index: 0
               socket-bindings:
-                - self
-                - other
+                - wildfly0
+                - wildfly1
+                - wildfly2
       channel:
         ee:
           stack: tcp

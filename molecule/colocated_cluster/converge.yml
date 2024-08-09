@@ -15,12 +15,15 @@
     - vars.yml
   vars:
     wildfly_remote_destination_outbound_socket_binding:
-        self:
+        wildfly0:
           host: '127.0.0.1'
           port: 7600
-        other:
+        wildfly1:
           host: '127.0.0.1'
           port: 7700
+        wildfly2:
+          host: '127.0.0.1'
+          port: 7800
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:

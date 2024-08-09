@@ -2,38 +2,3 @@ wildfly-configuration:
   system-property:
     JBOSS_ID:
       value: {{ wildfly_instance_name }}
-  subsystem:
-    jgroups:
-      stack:
-        tcpping:
-          transport:
-            TCP:
-              socket-binding: jgroups-tcp
-          protocol:
-            TCPPING:
-              socket-bindings:
-                - jgroups-instance
-              properties:
-                initial_hosts: "127.0.0.1[{{ 7600 + wildfly_port_range_offset | int }}]"
-                port_range: 0
-            MERGE3:
-            FD_SOCK:
-            FD_ALL:
-            VERIFY_SUSPECT:
-            pbcast.NAKACK2:
-            UNICAST3:
-            pbcast.STABLE:
-            pbcast.GMS:
-            MFC:
-            FRAG3:
-      channel:
-        ee:
-          stack: tcpping
-    transactions:
-      node-identifier: {{ wildfly_node_id }}
-  socket-binding-group:
-    standard-sockets:
-      remote-destination-outbound-socket-binding:
-        jgroups-instance:
-          host: instance
-          port: {{ 7600 + wildfly_port_range_offset | int }}

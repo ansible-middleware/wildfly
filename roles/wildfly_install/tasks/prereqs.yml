@@ -7,6 +7,13 @@
     quiet: true
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
 
+- name: "Validate that {{ wildlfy_version }} matches expected scheme (X.y.z)"
+  ansible.builtin.assert:
+    that:
+      - wildfly_version | regex_search('[0-9]{1}.[0-9]{1}.[0-9]{1}') | length > 0
+    quiet: true
+    fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_version }}"
+
 - name: "Validate existing zipfiles {{ wildfly_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:

@@ -13,6 +13,7 @@ Minor Changes
 -------------
 
 - AMW-283 EAP8 YAML config is failing when eap_apply_cp is false `#254 <https://github.com/ansible-middleware/wildfly/pull/254>`_
+- Check that the configuration is supported for EAP7 or EAP8 `#261 <https://github.com/ansible-middleware/wildfly/pull/261>`_
 - Ensure that wildfy_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
 - Inside migration role jdbc_driver_module_name will be wildfly_driver_module_name `#253 <https://github.com/ansible-middleware/wildfly/pull/253>`_
 - Update jboss_cli.yml - conditional statements variable adjustment `#251 <https://github.com/ansible-middleware/wildfly/pull/251>`_

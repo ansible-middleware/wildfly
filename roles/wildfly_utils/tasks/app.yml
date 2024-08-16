@@ -24,15 +24,15 @@
     path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
   register: app_to_deploy_marker
 
-- name: "Ensure that app {{ app_to_deploy.name }} is available"
+- name: "Ensure that app {{ app.name }} is available"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
     jboss_home: "{{ wildfly_home }}"
-    jboss_cli_query: "'deploy {{ wildfly_apps_jboss_cli_deploy_force }} {{ unmanaged_option }} {{ app_to_deploy.path }}'"
+    jboss_cli_query: "'deploy {{ wildfly_apps_jboss_cli_deploy_force }} {{ unmanaged_option }} {{ app.path }}'"
   loop: "{{ wildfly_apps }}"
   loop_control:
-    loop_var: app_to_deploy
+    loop_var: app
   when:
-    - app_to_deploy_marker is defined and app_to_deploy_marker.stat is defined and app_to_deploy_marker.stat.exists is defined and not app_to_deploy_marker.stat.exists
+    - app_marker is defined and app_marker.stat is defined and app_marker.stat.exists is defined and not app_marker.stat.exists

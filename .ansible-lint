@@ -29,6 +29,7 @@ warn_list:
   - experimental
   - ignore-errors
   - no-handler
+  - fqcn-builtins
   - no-log-password
   - unnamed-task
   - schema

@@ -130,3 +130,21 @@ argument_specs:
                 default: True
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
+            eap_install_skip_supported_os_check:
+                default: false
+                description: "Specifiy if Ansible should skip the check that the target's RHEL version is supported for the EAP server used."
+                type: bool
+            eap_install_skip_supported_openjdk_check:
+                default: false
+                description: "Specifiy if Ansible should skip the check that the provided OpenJDK version is supported for the EAP server used."
+                type: bool
+            eap_supported_configuration:
+                type: struct
+                description: "Supported OpenJDK and RHEL version for EAP"
+                default:
+                  eap7:
+                    openjdk: ['1.8', '11', '17']
+                    rhel: ['7', '8', '9']
+                  eap8:
+                    openjdk: ['11', '17']
+                    rhel: ['8', '9']

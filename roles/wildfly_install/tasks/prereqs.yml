@@ -54,6 +54,11 @@
   when:
     - wildfly_node_id is defined
 
+- name: "Ensure environement matches EAP supported configuration."
+  ansible.builtin.include_tasks: eap_supported_configuration.yml
+  when:
+    - eap_version is defined
+
 - name: "Check that required packages list has been provided."
   ansible.builtin.assert:
     that:

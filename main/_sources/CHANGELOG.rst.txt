@@ -20,6 +20,11 @@ Minor Changes
 - Using local path variable for offline installation. `#250 <https://github.com/ansible-middleware/wildfly/pull/250>`_
 - update ansible-core >= 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
 
+Bugfixes
+--------
+
+- Issue249 `#262 <https://github.com/ansible-middleware/wildfly/pull/262>`_
+
 v1.5.2
 ======
 

@@ -14,14 +14,14 @@
     quiet: true
     fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_version }}"
 
-- name: "Validate existing zipfiles {{ wildfly_archive_filename }} for offline installs"
+- name: "Validate that archive {{ wildfly_archive_filename }} exists on controller (if install is offline: {{ wildfly_offline_install }})."
   ansible.builtin.assert:
     that:
       - wildfly_version is defined and wildfly_archive_filename_local | default(wildfly_archive_filename) is exists
     quiet: true
     fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename }}"
   when:
-    - wildfly_offline_install
+    - wildfly_offline_install and wildfly_archive_filename_on_controller
 
 - name: "Validate patch version for offline installs"
   ansible.builtin.assert:

@@ -1,6 +1,7 @@
 ---
 wildfly_version: '33.0.0.Final'
 wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
+wildfly_archive_filename_on_controller: true
 wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_install_require_privileges_escalation: true

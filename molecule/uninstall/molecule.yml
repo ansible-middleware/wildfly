@@ -1,6 +1,6 @@
 ---
 driver:
-  name: docker
+  name: ${CI_DRIVER:-docker}
 platforms:
   - name: instance
     image: registry.access.redhat.com/ubi8/ubi-init:latest
@@ -18,6 +18,8 @@ provisioner:
   config_options:
     defaults:
       interpreter_python: auto_silent
+      bin_ansible_callbacks: true
+      callbacks_enabled: junit
     ssh_connection:
       pipelining: false
   playbooks:
@@ -31,6 +33,9 @@ provisioner:
       localhost:
         ansible_python_interpreter: "{{ ansible_playbook_python }}"
   env:
+    JUNIT_OUTPUT_DIR: "$PWD/junit"
+    JUNIT_HIDE_TASK_ARGUMENTS: yes
+    JUNIT_TASK_RELATIVE_PATH: "$PWD/molecule/zip"
     ANSIBLE_FORCE_COLOR: "true"
     ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
     ANSIBLE_ROLES_PATH: "../../roles"

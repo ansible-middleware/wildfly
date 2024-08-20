@@ -1,0 +1,44 @@
+---
+- name: "Retrieve testing eap zip file"
+  block:
+    - name: "Parse version from the link: "
+      set_fact:
+        version_info:
+          major: "{{ eap_pre_ga_zip_url | regex_replace('.*/jboss-eap-([0-9]+)[.]([0-9]+)[.]([0-9]+)[.]?([-_\\w]+)?\\.zip', '\\1') }}"
+          minor: "{{ eap_pre_ga_zip_url | regex_replace('.*/jboss-eap-([0-9]+)[.]([0-9]+)[.]([0-9]+)[.]?([-_\\w]+)?\\.zip', '\\2') }}"
+          micro: "{{ eap_pre_ga_zip_url | regex_replace('.*/jboss-eap-([0-9]+)[.]([0-9]+)[.]([0-9]+)[.]?([-_\\w]+)?\\.zip', '\\3') }}"
+          tag: "{{ eap_pre_ga_zip_url | regex_replace('.*/jboss-eap-([0-9]+)[.]([0-9]+)[.]([0-9]+)[.]?([-_\\w]+)?\\.zip', '\\4') }}"
+    - name: Inform user about the version
+      debug:
+        msg: "EAP version to be downloaded: {{version_info.major}}.{{version_info.minor}}.{{version_info.micro}}.{{version_info.tag}}. It will be downlaoded into molecule scenario root dir as jboss-eap-{{version_info.major}}.{{version_info.minor}}.0.zip"
+    - name: Retrieve PRE GA server
+      ansible.builtin.get_url:
+        url: "{{ eap_pre_ga_zip_url }}"
+        dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ version_info.major }}.{{ version_info.minor }}.0.zip"
+        mode: '0644'
+        force: True
+      delegate_to: localhost
+  when:
+    - eap_pre_ga_zip_url is defined
+    - eap_qe_pre_ga_testing is defined
+    - eap_qe_pre_ga_testing
+
+- name: "Retrieve testing eap patch zip file"
+  block:
+    - name: Retrieve PRE GA server patch
+      ansible.builtin.get_url:
+        url: "{{ eap_pre_ga_patch_url }}"
+        dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ eap_patch_version }}-patch.zip"
+        mode: '0644'
+        force: True
+      delegate_to: localhost
+  when:
+    - eap_pre_ga_patch_url is defined
+    - eap_qe_pre_ga_testing is defined
+    - eap_qe_pre_ga_testing
+
+- name: "Inform user if not asset has been downloaded"
+  ansible.builtin.debug:
+    msg: "No pre ga bits to download for this scenario."
+  when:
+    - not eap_qe_pre_ga_testing is defined or not eap_qe_pre_ga_testing

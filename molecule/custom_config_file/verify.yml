@@ -3,6 +3,7 @@
   hosts: instance
   vars_files:
     - vars.yml
+    - ../vars.yml
   collections:
     - middleware_automation.wildfly
   tasks:

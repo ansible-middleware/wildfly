@@ -1,4 +1,9 @@
 ---
+- name: Include var file for import_playbook
+  hosts: all
+  tasks:
+    - ansible.builtin.include_vars: ../vars.yml
+
 - import_playbook: ../prepare.yml
 
 - import_playbook: ../../playbooks/playbook.yml

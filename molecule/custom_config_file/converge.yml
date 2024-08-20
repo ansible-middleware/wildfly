@@ -4,6 +4,7 @@
   vars_files:
     - vars.yml
     - ../apps.yml
+    - ../vars.yml
   collections:
     - middleware_automation.wildfly
   roles:

@@ -4,6 +4,7 @@
   vars_files:
     - vars.yml
     - ../apps.yml
+    - ../vars.yml
   tasks:
     - name: "Include wildfly_systemd"
       ansible.builtin.include_role:

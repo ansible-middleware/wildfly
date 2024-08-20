@@ -1,4 +1,8 @@
 ---
+- name: Include var file for import_playbook
+  hosts: all
+  tasks:
+    - ansible.builtin.include_vars: ../vars.yml
 - import_playbook: ../../playbooks/validate.yml
   vars:
     wildfly_install_workdir: /apps/

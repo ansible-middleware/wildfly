@@ -5,4 +5,4 @@
   vars_files:
     - vars/vars.yml
   roles:
-    - middleware_automation.wildfly.wildfly_validation
+    - wildfly_validation

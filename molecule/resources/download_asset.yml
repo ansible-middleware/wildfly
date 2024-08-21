@@ -1,0 +1,32 @@
+---
+- name: "Load metadata on target file {{ assets_server }}/{{ asset }}"
+  ansible.builtin.stat:
+    path: "{{ assets_server }}/{{ asset }}"
+  register: assest_state
+
+- name: "Download assets."
+  ansible.builtin.get_url:
+    url: "{{ assets_server }}/{{ asset }}"
+    dest: "{{ lookup('env', 'PWD') }}"
+    mode: 0664
+    validate_certs: no
+  delegate_to: localhost
+  when:
+    - assest_state.stat is defined and assest_state.stat.exists is defined
+    - not assest_state.stat.exists
+
+
+- name: "Download assets"
+  when:
+    - wildfly_assets is defined and wildfly_assets | length > 0
+  block:
+    - name: "Download assets"
+      ansible.builtin.get_url:
+        url: "{{ assets_server }}/{{ asset }}"
+        dest: "{{ lookup('env', 'PWD') }}"
+        mode: 0664
+        validate_certs: no
+      delegate_to: localhost
+      loop: "{{ wildfly_assets }}"
+      loop_control:
+        loop_var: wildfly_asset

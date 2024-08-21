@@ -7,6 +7,17 @@
   vars:
     sudo_pkg_name: 'sudo'
   tasks:
+    - name: "Download dependencies (if eap_dot_offline is set to False)."
+      block:
+        - name: "Download asset (if required)."
+          ansible.builtin.include_tasks: resources/download_assets.yml
+
+    - name: "Download PRE GA bits (if eap_qe_pre_ga_testing is set to True)."
+      block:
+        - name: "Download asset (if required)."
+          ansible.builtin.include_tasks: resources/download_pre_ga_bits.yml
+      when:
+        - eap_qe_pre_ga_testing is defined
 
     - name: "Ensure {{ sudo_pkg_name }} is installed (if user is root)."
       ansible.builtin.yum:
@@ -44,6 +55,7 @@
           loop: "{{ wildfly_apps }}"
           loop_control:
             loop_var: app
+
 
     - name: Display Ansible version
       ansible.builtin.debug:

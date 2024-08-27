@@ -37,6 +37,9 @@ provisioner:
   env:
     JUNIT_OUTPUT_DIR: "$PWD/junit"
     JUNIT_HIDE_TASK_ARGUMENTS: yes
+    JUNIT_TASK_RELATIVE_PATH: "$PWD"
+    JUNIT_TASK_CLASS: "true"
+    JUNIT_REPLACE_OUT_OF_TREE_PATH: ""
     ANSIBLE_FORCE_COLOR: "true"
     ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
     ANSIBLE_ROLES_PATH: "../../roles"

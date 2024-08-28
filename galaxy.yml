@@ -31,8 +31,6 @@ issues: https://github.com/ansible-middleware/wildfly/issues
 build_ignore:
   - .gitignore
   - .github
-  - .ansible-lint
-  - .yamllint
   - '*.tar.gz'
   - '*.zip'
   - molecule

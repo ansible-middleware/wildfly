@@ -477,9 +477,6 @@ releases:
 
         '
       minor_changes:
-      - 'Bump WildFly version to 33.0.0.Final `#252 <https://github.com/ansible-middleware/wildfly/pull/252>`_
-
-        '
       - 'Update minimum ansible-core version to 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
 
         '

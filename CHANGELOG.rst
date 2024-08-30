@@ -6,6 +6,25 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+
+v1.5.3
+======
+
+Minor Changes
+-------------
+
+- Allow arbitrary filename for local download zipfile in offline installation `#250 <https://github.com/ansible-middleware/wildfly/pull/250>`_
+- Check configuration is supported for EAP7 or EAP8 `#261 <https://github.com/ansible-middleware/wildfly/pull/261>`_
+- Ensure that wildfy_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
+- Flag indicates whether download is on controller or target host `#262 <https://github.com/ansible-middleware/wildfly/pull/262>`_
+- Update minimum ansible-core version to 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
+
+Bugfixes
+--------
+
+- Fix YAML config when eap_apply_cp is false on EAP 8.0 `#254 <https://github.com/ansible-middleware/wildfly/pull/254>`_
+- Fix parameter name wildfly_driver_module_name in wildfly_migration role `#253 <https://github.com/ansible-middleware/wildfly/pull/253>`_
+
 v1.5.2
 ======
 

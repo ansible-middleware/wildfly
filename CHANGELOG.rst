@@ -15,7 +15,7 @@ Minor Changes
 
 - Allow arbitrary filename for local download zipfile in offline installation `#250 <https://github.com/ansible-middleware/wildfly/pull/250>`_
 - Check configuration is supported for EAP7 or EAP8 `#261 <https://github.com/ansible-middleware/wildfly/pull/261>`_
-- Ensure that wildfy_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
+- Ensure that wildfly_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
 - Flag indicates whether download is on controller or target host `#262 <https://github.com/ansible-middleware/wildfly/pull/262>`_
 - Update minimum ansible-core version to 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
 

@@ -6,27 +6,6 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.5.3
-======
-
-Minor Changes
--------------
-
-- AMW-283 EAP8 YAML config is failing when eap_apply_cp is false `#254 <https://github.com/ansible-middleware/wildfly/pull/254>`_
-- Bump WildFly version to latest (33.0.0.Final) `#252 <https://github.com/ansible-middleware/wildfly/pull/252>`_
-- Check that the configuration is supported for EAP7 or EAP8 `#261 <https://github.com/ansible-middleware/wildfly/pull/261>`_
-- Ensure that wildfy_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
-- Inside migration role jdbc_driver_module_name will be wildfly_driver_module_name `#253 <https://github.com/ansible-middleware/wildfly/pull/253>`_
-- Update jboss_cli.yml - conditional statements variable adjustment `#251 <https://github.com/ansible-middleware/wildfly/pull/251>`_
-- Using local path variable for offline installation. `#250 <https://github.com/ansible-middleware/wildfly/pull/250>`_
-- [#257] Remove legacy redundant TCPPING configuration & define whole topology in TCPPING `#258 <https://github.com/ansible-middleware/wildfly/pull/258>`_
-- update ansible-core >= 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
-
-Bugfixes
---------
-
-- Issue249 `#262 <https://github.com/ansible-middleware/wildfly/pull/262>`_
-
 v1.5.2
 ======
 

@@ -2,10 +2,11 @@
 - name: Validate credentials
   ansible.builtin.assert:
     that:
-      - (rhn_username is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or wildfly_offline_install or eap_install_use_prospero
-      - (rhn_password is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable or wildfly_offline_install or eap_install_use_prospero
+      - (rhn_username is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable
+      - (rhn_password is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable
     quiet: true
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
+  when: not wildfly_offline_install and not (wildfly_install_use_prospero | default(false))
 
 - name: "Validate that {{ wildlfy_version }} matches expected scheme (X.y.z)"
   ansible.builtin.assert:

@@ -7,15 +7,17 @@
     wildfly_prospero_install_dir: /opt/prospero
     wildfly_validation_install_use_prospero: true
     wildfly_validation_check_prospero_install: false
+  collections:
+    - middleware_automation.wildfly
   tasks:
     - name: Verify
       block:
 
         - ansible.builtin.include_role:
-            name: middleware_automation.wildfly.wildfly_validation
+            name: wildfly_validation
 
         - ansible.builtin.include_role:
-            name: middleware_automation.wildfly.wildfly_validation
+            name: wildfly_validation
             tasks_from: verify_install_mecanism.yml
       when:
         - prospero_scenario_enable is defined and prospero_scenario_enable

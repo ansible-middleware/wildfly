@@ -6,8 +6,16 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.5.4-devel
+v1.5.5-devel
 ============
+
+Minor Changes
+-------------
+
+- Make port binding configurable in molecule scenarios, plus some molecule fixup and ansible-lint fixes. `#270 <https://github.com/ansible-middleware/wildfly/pull/270>`_
+
+v1.5.4
+======
 
 v1.5.3
 ======

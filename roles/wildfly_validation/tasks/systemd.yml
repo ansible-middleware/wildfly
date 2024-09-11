@@ -18,6 +18,8 @@
 
 - name: "Verify that PID file has been created."
   become: "{{ wildfly_validation_systemd_pidfile_require_privilege_escalation }}"
+  when:
+    - wildfly_validation_systemd_pidfile is defined and wildfly_validation_systemd_pidfile | length > 0
   block:
     - name: "Load metadata on PIDFile: {{ wildfly_validation_systemd_pidfile }}"
       ansible.builtin.stat:
@@ -30,5 +32,3 @@
           - pidfile is defined and pidfile.stat is defined and pidfile.stat.exists is defined and pidfile.stat.exists
         quiet: true
         fail_msg: "PID file {{ wildfly_validation_systemd_pidfile }} has not been created."
-  when:
-    - wildfly_validation_systemd_pidfile is defined and wildfly_validation_systemd_pidfile | length > 0

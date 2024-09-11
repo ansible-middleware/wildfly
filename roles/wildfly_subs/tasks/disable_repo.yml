@@ -8,6 +8,10 @@
     fail_msg: "Missing required parameters"
 
 - name: "Uninstall group package"
+  when:
+    - wildfly_subs is defined
+    - wildfly_subs.skip_group_remove is defined
+    - not wildfly_subs.skip_group_remove
   block:
 
     - name: "Ensure group package {{ eap_group_install_name }} is removed"
@@ -24,12 +28,11 @@
         - wildfly_subs.remove_root_dir is defined
         - wildfly_subs.remove_root_dir
 
+- name: "Disable repository"
   when:
     - wildfly_subs is defined
-    - wildfly_subs.skip_group_remove is defined
-    - not wildfly_subs.skip_group_remove
-
-- name: "Disable repository"
+    - wildfly_subs.check_repo_disabled is defined
+    - wildfly_subs.check_repo_disabled
   block:
     - name: "Check that required parameters are provided"
       ansible.builtin.assert:
@@ -50,8 +53,3 @@
     - name: "Ensure JBoss EAP {{ eap_version }} repos are disabled."
       ansible.builtin.command: "subscription-manager repos --disable={{ eap_repos_name }}"
       changed_when: False
-
-  when:
-    - wildfly_subs is defined
-    - wildfly_subs.check_repo_disabled is defined
-    - wildfly_subs.check_repo_disabled

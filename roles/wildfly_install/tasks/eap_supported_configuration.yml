@@ -8,7 +8,7 @@
 
 - name: "Determine supported configurations for EAP {{ eap_version }}"
   ansible.builtin.set_fact:
-    supported_configuration: "{{ eap_supported_configuration['eap' + eap_version[:1] ] }}"
+    supported_configuration: "{{ eap_supported_configuration['eap' + eap_version[:1]] }}"
 
 - name: "Ensure target RHEL version is supported: {{ supported_configuration.rhel }}"
   ansible.builtin.assert:

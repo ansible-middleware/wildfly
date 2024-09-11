@@ -23,6 +23,9 @@
     - not eap_repo_state_file is defined
 
 - name: "Enable repository."
+  when:
+   - installed_eap_source is defined
+   - installed_eap_source
   block:
     - name: "Ensure JBoss repos for {{ eap_version }} are enabled."
       ansible.builtin.command: "subscription-manager repos --enable={{ eap_repo_name }}"
@@ -47,7 +50,3 @@
       ansible.builtin.command: "dnf groupinstall -y {{ eap_group_install_name }}"
       args:
         creates: /opt/rh/eap7/
-
-  when:
-   - installed_eap_source is defined
-   - installed_eap_source

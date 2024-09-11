@@ -36,6 +36,9 @@
   delegate_to: localhost
 
 - name: "Check if JBoss Network API access is needed."
+  when:
+    - local_archive_path is defined and local_archive_path.stat is defined
+    - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists
   block:
     - name: Retrieve product download using JBoss Network API
       middleware_automation.common.product_search:
@@ -73,9 +76,6 @@
       when:
         - remote_archive_path is defined
         - not remote_archive_path.stat.exists
-  when:
-    - local_archive_path is defined and local_archive_path.stat is defined
-    - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists
 
 - name: "Check downloaded archive: {{ patch_filename }}."
   ansible.builtin.stat:

@@ -21,8 +21,7 @@ wildfly_service_config_file_template: 'templates/wfly.conf.j2'
 wildfly_service_config_file_location: '/etc/sysconfig'
 
 wildfly_service_systemd_env_file: "{{ wildfly_service_config_file_location }}/{{ wildfly_service_name }}{{ wildfly_systemd_conf_file_suffix }}"
-wildfly_service_systemd_file: "{{ wildfly_systemd_service_config_location}}/{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
-
+wildfly_service_systemd_file: "{{ wildfly_systemd_service_config_location }}/{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
 wildfly_enable_yml_config: false
 wildfly_yml_configs: []
 wildfly_yml_configs_repository:

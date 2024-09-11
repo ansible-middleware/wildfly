@@ -7,7 +7,7 @@
     quiet: true
 
 - name: "Slurp logfile {{ path_to_file }}"
-  become: "{{ wildfly_validation_logfile_require_privilege_escalation  | default(true) }}"
+  become: "{{ wildfly_validation_logfile_require_privilege_escalation | default(true) }}"
   ansible.builtin.slurp:
     src: "{{ path_to_logfile }}"
   register: slurped_logfile

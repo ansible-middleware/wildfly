@@ -71,6 +71,8 @@
   become: true
 
 - name: Perform installation
+  when:
+    - not wildfly_install.rpm is defined
   block:
     - name: "Check target archive: {{ full_path_to_archive }}"
       ansible.builtin.stat:
@@ -115,8 +117,6 @@
         msg: "{{ wildfly_install.home }} already exists and version unchanged, skipping decompression"
       when:
         - not new_version_downloaded.changed and path_to_workdir.stat.exists
-  when:
-    - not wildfly_install.rpm is defined
 
 - name: "Read information on server home directory: {{ wildfly_install.home }}"
   ansible.builtin.stat:

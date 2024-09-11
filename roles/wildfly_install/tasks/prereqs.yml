@@ -68,7 +68,7 @@
 
 - name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
   ansible.builtin.set_fact:
-    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ wildfly_install.java.package_name ] }}"
+    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [wildfly_install.java.package_name] }}"
   when:
     - wildfly_install.java is defined
     - wildfly_install.java.package_name is defined
@@ -76,7 +76,7 @@
 
 - name: "Add selinux package {{ wildfly_install.java.package_name }} to packages list"
   ansible.builtin.set_fact:
-    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [ 'policycoreutils' ] }}"
+    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + ['policycoreutils'] }}"
   when:
     - wildfly_selinux_enabled
 

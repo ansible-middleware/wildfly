@@ -1,4 +1,4 @@
 ---
 wildfly_uninstall_service_name: wildfly
-wildfly_uninstall_home: /opt/wildfly/wildfly-33.0.0.Final
-wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-33.0.0.Final.zip
+wildfly_uninstall_home: /opt/wildfly/wildfly-33.0.2.Final
+wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-33.0.2.Final.zip

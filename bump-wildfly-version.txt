@@ -1,19 +1,20 @@
-To bump the versin of Wildfly use the script below:
-
+For safety reason, it's not possible to add a script to the repository. Copy the script below and renamed it to .sh to run in order to bump the version of Wildfly use the script below:
     #!/bin/bash
-    readonly CURRENT_VERSION=${1}
-    readonly NEW_VERSION=${2}
+    readonly INSTALL_DEFAULTS_FILE=${INSTALL_DEFAULTS_FILE:-'roles/wildfly_install/defaults/main.yml'}
+    readonly NEW_VERSION=${1}
 
     usage() {
       echo ''
       echo "ex: $(basename ${0}) 29.0. 31.0.1.Final."
     }
 
-    if [ -z "${CURRENT_VERSION}" ]; then
-        echo 'Please provide the 5 first character of the current version.'
-        usage
-        exit 1
-    fi
+    current_wfly_version() {
+      local current_version=$(grep -e 'wildfly_version: ' "${INSTALL_DEFAULTS_FILE}" | sed -e "s;wildfly_version: ;;" -e "s;';;g" -e 's;.Final;;')
+      echo "${current_version//[$'\t\r\n ']}"
+    }
+
+    readonly CURRENT_VERSION=${2:-$(current_wfly_version)}
+    echo "[${CURRENT_VERSION}]"
 
     if [ -z "${NEW_VERSION}" ]; then
         echo 'Please provide the new version, including .Final'
@@ -23,5 +24,6 @@ To bump the versin of Wildfly use the script below:
 
     for file_to_edit in $(grep -e "${CURRENT_VERSION}" -r roles/ molecule/  | cut -f1 -d: | sort -u)
     do
-      sed -e "s;${CURRENT_VERSION}.*.Final;${NEW_VERSION};g" -i "${file_to_edit}"
+      sed -e "s;${CURRENT_VERSION}[0-9\.]*.Final;${NEW_VERSION};g" -i "${file_to_edit}"
     done
+

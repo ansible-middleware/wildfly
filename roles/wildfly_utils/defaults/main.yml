@@ -13,7 +13,7 @@ jboss_home: "{{ wildfly_home }}"
 wildfly_utils_jboss_cli_require_privilege_escalation: true
 wildfly_port_range_offset: 0
 
-wildfly_prospero_version: 1.3.0.Beta1
+wildfly_prospero_version: 1.3.0.Final
 wildfly_prospero_name: prospero
 wildfly_prospero_install_dir: /opt/prospero
 wildfly_prospero_profile_name: wildfly

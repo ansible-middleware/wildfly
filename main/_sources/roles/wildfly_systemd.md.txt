@@ -18,7 +18,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_user`| posix user account for wildfly service | `wildfly` |
 |`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
-|`wildfly_version`| Wildfly version to install | `33.0.0.Final` |
+|`wildfly_version`| Wildfly version to install | `34.0.0.Final` |
 |`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
 |`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |

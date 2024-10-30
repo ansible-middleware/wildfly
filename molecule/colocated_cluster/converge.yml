@@ -13,6 +13,7 @@
   hosts: all
   vars_files:
     - vars.yml
+    - ../apps.yml
   vars:
     wildfly_remote_destination_outbound_socket_binding:
         wildfly0:

@@ -22,7 +22,7 @@
   become: "{{ wildfly_apps_requires_privilege_escalation }}"
   ansible.builtin.stat:
     path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
-  register: app_to_deploy_marker
+  register: app_marker
 
 - name: "Ensure that app {{ app.name }} is available"
   ansible.builtin.include_role:

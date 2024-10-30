@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars_files:
+    - ../apps.yml
   vars:
     wildfly_install_user: 'wildfly'
     wildfly_install_group: "{{ wildfly_install_user }}"

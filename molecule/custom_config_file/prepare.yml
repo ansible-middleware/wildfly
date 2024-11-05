@@ -1,0 +1,20 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: "Download zipfile from {{ wildfly_install_download_url }} into {{ wildfly_install_download_controller_download_dir }}"
+      delegate_to: localhost
+      run_once: true
+      ansible.builtin.get_url:
+        url: "{{ wildfly_install_download_url }}"
+        dest: "{{ wildfly_install_download_controller_download_dir }}" # noqa risky-file-permissions delegated, uses controller host user
+        mode: '0644'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
+
+- import_playbook: ../prepare.yml

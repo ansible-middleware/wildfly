@@ -26,7 +26,7 @@ wildfly_enable_yml_config: false
 wildfly_yml_configs: []
 wildfly_yml_configs_repository:
 wildfly_systemd_jboss_cli_path: "{{ wildfly_home }}//bin/jboss-cli.sh"
-wildfly_systemd_jboss_cli_controller_host: 'localhost'
+wildfly_systemd_jboss_cli_controller_host: "{{ wildfly_bind_addr_management }}"
 wildfly_systemd_jboss_cli_deploy_force: '--force'
 wildfly_systemd_jboss_cli_timeout: "--timeout={{ jboss_cli_timeout * 1000 if jboss_cli_timeout is defined else 5000 }}"
 wildfly_systemd_jboss_cli_command_prefix: "--connect {{ wildfly_systemd_jboss_cli_timeout }}"

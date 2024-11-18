@@ -6,6 +6,22 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.5
+======
+
+Minor Changes
+-------------
+
+- AMW-310 Misleading mention of prospero in EAP 7 ansible collection `#269 <https://github.com/ansible-middleware/wildfly/pull/269>`_
+- Make port binding configurable in molecule scenarios, plus some molecule fixup and ansible-lint fixes. `#270 <https://github.com/ansible-middleware/wildfly/pull/270>`_
+- Upgrade prospero downstream to 1.1.13.Final-redhat-00006 `#275 <https://github.com/ansible-middleware/wildfly/pull/275>`_
+- Upgrade prospero from 1.3.0.Beta1 to 1.3.0.Final `#273 <https://github.com/ansible-middleware/wildfly/pull/273>`_
+
+Bugfixes
+--------
+
+- Fix invalid varname breaking apps deployment `#274 <https://github.com/ansible-middleware/wildfly/pull/274>`_
+
 v1.5.4
 ======
 

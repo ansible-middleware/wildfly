@@ -1,0 +1,24 @@
+---
+- name: "Verify that Server Migration tool can run"
+  ansible.builtin.include_tasks: prerun_checks.yml
+
+- name: "Lookup value of PATH on target"
+  ansible.builtin.set_fact:
+    target_path: "{{ lookup('env', 'PATH') }}"
+
+- name: "Run migration tool"
+  become: yes
+  become_user: wildfly
+  ansible.builtin.command: "{{ wildfly_migration_server_tool_path_to_script }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ wildfly_migration_path_to_env_properties }} --target {{ target_wildfly_home }}"
+  register: migration_results
+  changed_when: False
+  failed_when: False
+  environment:
+    JAVA_HOME: "{{ wildfly_migration_java_home }}"
+    PATH: "{{ wildfly_migration_java_home }}{{ target_path }}"
+
+- name: "Fails if command did not produced any result"
+  ansible.builtin.fail:
+    var: "{{ ansible_failed_task | default('Migration command failed to produce any results') }}"
+  when:
+    - not migration_results is defined

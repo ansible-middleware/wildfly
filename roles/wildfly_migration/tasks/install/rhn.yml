@@ -1,0 +1,45 @@
+---
+- name: "Ensure required parameters are provided."
+  ansible.builtin.assert:
+    that:
+      - eap_migration_server_tool_path_to_archive is defined and eap_migration_server_tool_path_to_archive | length > 0
+      - eap_migration_server_tool_product_id is defined > 0
+    quiet: True
+    fail_msg: "Missing required parameters."
+
+- name: "Esclade privileges if needed"
+  block:
+    - name: "Load metadata on server migration tool archive for EAP8"
+      ansible.builtin.stat:
+        path: "{{ eap_migration_server_tool_path_to_archive }}"
+      register: eap_migration_archive_md
+
+    - name: "Ensure server migration tool for EAP8 has been downloaded"
+      redhat.runtimes_common.product_download:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_id: "{{ eap_migration_server_tool_product_id }}"
+        dest: "{{ eap_migration_server_tool_path_to_archive }}"
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      run_once: true
+      when:
+        - eap_migration_archive_md is defined
+        - eap_migration_archive_md.stat is defined
+        - eap_migration_archive_md.stat.exists is defined
+        - not eap_migration_archive_md.stat.exists
+
+    - name: "Ensure that server migration tool home folder exists"
+      ansible.builtin.file:
+        path: "{{ eap_migration_server_tool_install_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: "Ensure server migration tool for EAP8 has been decompressed"
+      ansible.builtin.unarchive:
+        src: "{{ eap_migration_server_tool_path_to_archive }}"
+        dest: "{{ eap_migration_server_tool_install_dir }}"
+        remote_src: "{{ eap_migration_remote_src | default('yes') }}"
+        creates: "{{ eap_migration_server_tool_path_to_script }}"
+
+  become: "{{ eap_migration_server_tool_install_require_privileges_escalation | default('yes') }}"
+  become_user: "{{ eap_migration_server_tool_install_require_privileges_escalation_user | default('root') }}"

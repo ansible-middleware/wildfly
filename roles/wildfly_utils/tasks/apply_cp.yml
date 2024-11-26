@@ -30,7 +30,7 @@
   register: local_path
   delegate_to: localhost
 
-- name: "Check local downloaded archive: {{ patch_bundle }}"
+- name: "Check local downloaded archive"
   ansible.builtin.stat:
     path: "{{ local_path.stat.path }}/{{ patch_bundle }}"
   register: local_archive_path

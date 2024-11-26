@@ -104,7 +104,7 @@ argument_specs:
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
             eap_prospero_version:
-                default: "1.1.13.Final-redhat-00006"
+                default: "1.1.6.Final-redhat-00001"
                 description: "Version of Prospero to use"
                 type: "str"
             eap_prospero_name:

@@ -1,3 +1,0 @@
----
-wildfly_migration:
-  environment_props: "{{ wildfly_migration_environment_props }}"

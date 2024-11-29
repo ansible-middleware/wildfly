@@ -1,0 +1,35 @@
+---
+- name: "Load metadata on migration tool full path."
+  ansible.builtin.stat:
+    path: "{{ wildfly_migration_server_tool_path_to_script }}"
+  register: migration_tool_state
+
+- name: "Check that path to migration tool is valid."
+  ansible.builtin.assert:
+    that:
+      - migration_tool_state is defined
+      - migration_tool_state.stat is defined
+      - migration_tool_state.stat.exists is defined
+      - migration_tool_state.stat.exists
+      - migration_tool_state.stat.isreg is defined
+      - migration_tool_state.stat.isreg
+    quiet: True
+    fail_msg: "Invalid path to migration tool: {{ wildfly_migration_server_tool_path_to_script }}."
+
+- name: "Ensure all files belong to the appropriate user: {{ wildfly_user }}/{{ wildfly_group }}"
+  ansible.builtin.file:
+    path: "{{ folder }}"
+    recurse: yes
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+  changed_when: False
+  loop:
+    - "{{ previous_wildfly_home }}"
+    - "{{ target_wildfly_home }}"
+    - "{{ wildfly_migration_server_tool_home }}"
+  loop_control:
+    loop_var: folder
+  when:
+    - not wildfly_migration_skip_file_ownership_check is defined
+    - wildfly_user is defined and wildfly_user | length > 0
+    - wildfly_group is defined and wildfly_group | length > 0

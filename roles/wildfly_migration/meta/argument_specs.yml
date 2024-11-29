@@ -1,8 +1,113 @@
 argument_specs:
     main:
         options:
-            # line 2 of defaults/main.yml
+            target_wildfly_home:
+                required: True
+                description: "Path on the target to the server's home to migrate to"
+                type: "str"
+            previous_wildfly_home:
+                required: True
+                description: "Path on the target to the server's home to migrate from"
+                type: "str"
             wildfly_migration_environment_props:
                 default: "templates/environment.properties.j2"
                 description: "Template to configure the migration tool"
+                type: "str"
+            wildfy_migration_require_privileges_escalation:
+                default: True
+                description: "Indicate if the server migration tool requires privileges escalation"
+                type: "str"
+            wildfly_migration_server_tool_home:
+                default: "{{ target_wildfly_home }}"
+                description: "Path to the server migration tool"
+                type: "str"
+            wildfly_migration_tool_bin_folder:
+                default: ""
+                description: "Folder, relatives to wildfly_migration_server_tool_home where the server migration tool script resides"
+                type: "str"
+            wildfly_migration_tool_bin_script_name:
+                default: "jboss-server-migration.sh"
+                description: "Name of the script lauching the server migration tool"
+                type: "str"
+            wildfly_migration_server_tool_path_to_script:
+                default: "{{ wildfly_migration_server_tool_home }}/{{ wildfly_migration_tool_bin_folder }}/       {{ wildfly_migration_tool_bin_script_name }}"
+                description: "Path to the script launching the server migration tool"
+                type: "str"
+            wildfly_migration_server_tool_subfolder_to_configuration:
+                default: "/migration"
+                description: "Subfolder, relatrives to server migration"
+                type: "str"
+            wildfly_migration_server_tool_env_properties_file:
+                default: "configuration/environment.properties"
+                description: "Relative path of the main configuration file of the server migration tool"
+                type: "str"
+            wildfly_migration_path_to_env_properties:
+                description: "Absolute path to the main configuration"
+                default: "{{ wildfly_migration_server_tool_home }}{{                                              wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
+                type: "str"
+            wildfly_migration_config_files:
+                default: 'standalone.xml,standalone-full.xml'
+                description: "Name(s) of the configuration files to migrate to the new server"
+                type: "str"
+            wildfly_migration_tool_configuration_template:
+                default: 'templates/environment.properties.j2'
+                description: "Relative path to the jinja template for the server tool migration main configuration file"
+                type: "str"
+            wildfly_migration_require_privileges_escalation:
+                default: True
+                description: "Indicates whether or the migration server tool requires root privileges to run"
+                type: "str"
+            wildfly_migration_java_home:
+                default: "/usr/lib/jvm/jre"
+                description: "Path to the JAVA HOME to be used by the server migration tool"
+                type: "str"
+            wildfly_migration_jdk_package_name:
+                default: "java-17-openjdk-devel"
+                description: "Name of the RPM package to install for the JVM used by the server migration tool"
+                type: "str"
+            wildfly_migration_jdk_package_skip_install:
+                default: False
+                description: "Indicates if the install check of the RPM package for the JVM of the migration server tool can be skipped"
+                type: "bool"
+            wildfly_migration_jdk_package_install_requires_privileges_escalation:
+                default: True
+                description: "Indicates if the install of the RPM for the JVM on the target executing the migration server tool can be skipped"
+                type: "bool"
+            wildfly_migration_jdk_package_install_requires_privileges_escalation_user:
+               default: "root"
+               description: "Specify the user to become for privileges escalation for JVM install"
+               type: "str"
+    downstream:
+        options:
+            eap_enable:
+                default: True
+                description: "Enable install of Red Hat JBoss EAP"
+                type: "bool"
+            eap_migration_server_tool_path_to_archive:
+                default: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_version | default('8.0.0') }}-server-migration.zip"
+                description: "Path to the Red Hat provided archive for the server migration tool"
+                type: "str"
+            eap_migration_server_tool_product_id:
+                default: 106310
+                description: "Red Hat ID for the server migration tool archive"
+                type: "int"
+            eap_migration_server_tool_download_dir:
+                default: "/opt"
+                description: "Path to the folder where the server migration archive is downloaded"
+                type: "str"
+            eap_migration_server_tool_install_dir:
+                default: "/opt"
+                description: "Directory where to install the server migration tool - if not provided with EAP"
+                type: "str"
+            eap_migration_server_tool_home:
+                default: "{{ (eap_version != '8.0.0') | ternary(target_eap_home,eap_migration_server_tool_install_dir + '/jboss-server-migration') }}"
+                description: "Path to the server migration tool home - if not provided with EAP"
+                type: "str"
+            eap_migration_tool_bin_folder:
+                default: "{{ (eap_version != '8.0.0') | ternary('/bin','') }}"
+                description: "Indicates which subfolder, relative to eap_migration_server_tool_home, the server migration script resides."
+                type: "str"
+            eap_migration_server_tool_subfolder_to_configuration:
+                default: "{{ (eap_version != '8.0.0') | ternary('/migration', '') }}"
+                description: "Subfolder, relatives to eap_migration_server_tool_home, where are located server migration tool configurations files"
                 type: "str"

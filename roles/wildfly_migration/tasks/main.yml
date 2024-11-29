@@ -7,47 +7,28 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
+- name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }}"
+  become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
+  become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
+  ansible.builtin.dnf:
+    name: "{{ wildfly_migration_jdk_package_name }}"
+    state: present
+
+- name: "Ensure Server Migration Tool is installed on target if EAP8 is the target"
+  ansible.builtin.include_tasks: install/rhn.yml
+  when:
+    - eap_enable is defined and eap_enable
+    - eap_version is defined and eap_version == '8.0.0'
+
 - name: "Escalate privileges if required"
-  become: "{{ wildfy_migration_require_privileges_escalation | default('true') }}"
+  become: "{{ wildfly_migration_require_privileges_escalation | default('true') }}"
   block:
-    - name: "Determine path to migration tool."
-      ansible.builtin.set_fact:
-        migration_tool: "{{ target_wildfly_home }}/bin/jboss-server-migration.sh"
 
-    - name: "Load metadata on migration tool full path."
-      ansible.builtin.stat:
-        path: "{{ migration_tool }}"
-      register: migration_tool_state
-
-    - name: "Check that path to migration tool is valid."
-      ansible.builtin.assert:
-        that:
-          - migration_tool_state is defined
-          - migration_tool_state.stat is defined
-          - migration_tool_state.stat.exists is defined
-          - migration_tool_state.stat.exists
-          - migration_tool_state.stat.isreg is defined
-          - migration_tool_state.stat.isreg
-        quiet: True
-        fail_msg: "Invalid path to migration tool: {{ migration_tool }}."
-
-    - name: "Ensure migration configuration is deployed"
+    - name: "Ensure that the Migration Toolkit configuration have been updated to include: {{ wildfly_migration_config_files }}"
       ansible.builtin.template:
-        src: "{{ wildfly_migration.environment_props }}"
-        dest: "{{ target_wildfly_home }}/migration/configuration/environment.properties"
-        owner: "{{ wildfly_user | default('root') }}"
-        group: "{{ wildfly_group | default('root') }}"
-        mode: '0644'
+        src: "{{ wildfly_migration_tool_configuration_template }}"
+        dest: "{{ wildfly_migration_path_to_env_properties }}"
+        mode: "0644"
 
     - name: "Run migration tool"
-      ansible.builtin.command: "{{ migration_tool }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ target_wildfly_home }}/migration/configuration/environment.properties"
-      register: migration_results
-      changed_when:
-        - '"Migration Result: SUCCESS" in migration_results.stdout'
-
-    - name: "Display results of migration"
-      ansible.builtin.debug:
-        msg: "{{ migration_results }}"
-      changed_when: False
-      when:
-        - '"Migration Result: SUCCESS" in migration_results.stdout'
+      ansible.builtin.include_tasks: run_server_migration.yml

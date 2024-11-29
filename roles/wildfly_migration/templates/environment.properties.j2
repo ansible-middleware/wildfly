@@ -16,7 +16,7 @@ report.xml.fileName=migration-report.xml
 
 #server.source.standalone.serverDir=standalone
 #server.source.standalone.configDir=configuration
-server.source.standalone.configFiles=standalone.xml,standalone-full.xml,jboss_eap.xml
+server.source.standalone.configFiles={{ wildfly_migration_config_files }}
 #server.source.standalone.serverDir=standalone
 #server.source.standalone.configDir=configuration
 
@@ -45,7 +45,7 @@ extensions.includes=
 #management.setup-http-upgrade.socket-binding.management-https.update-port.skip=true
 
 # a list with module names to migrate
-modules.includes={{ wildfly_driver_module_name }}
+modules.includes=
 # a list with module names to not migrate
 modules.excludes=
 #modules.migrate-modules-requested-by-configuration.skip=true

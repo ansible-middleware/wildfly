@@ -1,3 +1,14 @@
 ---
-wildfly_migration_environment_props: templates/environment.properties.j2
-wildfy_migration_require_privileges_escalation: true
+wildfly_migration_java_home: '/usr/lib/jvm/jre'
+wildfly_migration_jdk_package_name: 'java-17-openjdk-devel'
+wildfly_migration_jdk_package_skip_install: False
+wildfly_migration_server_tool_home: "{{ target_wildfly_home }}"
+wildfly_migration_tool_bin_folder: 'bin'
+wildfly_migration_tool_bin_script_name: 'jboss-server-migration.sh'
+wildfly_migration_server_tool_path_to_script: "{{ wildfly_migration_server_tool_home }}/{{ wildfly_migration_tool_bin_folder }}/{{ wildfly_migration_tool_bin_script_name }}"
+wildfly_migration_server_tool_subfolder_to_configuration: '/migration'
+wildfly_migration_server_tool_env_properties_file: 'configuration/environment.properties'
+wildfly_migration_path_to_env_properties: "{{ wildfly_migration_server_tool_home }}{{ wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
+wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
+wildfly_migration_tool_configuration_template: 'templates/environment.properties.j2'
+wildfly_migration_require_privileges_escalation: True

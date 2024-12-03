@@ -21,7 +21,7 @@ provisioner:
     ssh_connection:
       pipelining: false
   playbooks:
-    prepare: prepare.yml
+    prepare: ../prepare.yml
     converge: converge.yml
     verify: verify.yml
   inventory:

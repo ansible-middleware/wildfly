@@ -51,7 +51,7 @@
       when:
         - wildfly_uninstall_delete_group is defined and (wildfly_uninstall_delete_group | bool )
 
-    - name: "Delete archive (if path provided)."
+    - name: "Delete archive (if path provided) {{ wildfly_uninstall_path_to_archive }}"
       ansible.builtin.file:
         path: "{{ wildfly_uninstall_path_to_archive }}"
         state: absent

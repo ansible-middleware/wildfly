@@ -1,11 +1,4 @@
 ---
-- name: Converge
-  hosts: all
-  vars_files:
-    - vars.yml
-    - ../apps.yml
-  collections:
-    - middleware_automation.wildfly
-  roles:
-    - role: wildfly_install
-    - role: wildfly_systemd
+- ansible.builtin.import_playbook: playbook.yml
+  when:
+    - not eap_enable is defined

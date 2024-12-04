@@ -6,14 +6,18 @@
   collections:
     - middleware_automation.wildfly
   tasks:
-    - name: "Include apps verification"
-      ansible.builtin.include_tasks: ../verify_apps.yml
-      when:
-        - wildfly_apps is defined and wildfly_apps | length > 0
+    - name: "Verify only if scenario is running upstream"
+      block:
+        - name: "Include apps verification"
+          ansible.builtin.include_tasks: ../verify_apps.yml
+          when:
+            - wildfly_apps is defined and wildfly_apps | length > 0
 
-    - name: "Verify that state is consistent"
-      ansible.builtin.include_role:
-        name: wildfly_validation
-      vars:
-        - eap_validation_queries:
-          - { query: '/system-property=test:read-attribute(name=value)', expected_result: 'testvalue', expected_result_undefined: False}
+        - name: "Verify that state is consistent"
+          ansible.builtin.include_role:
+            name: wildfly_validation
+          vars:
+            - eap_validation_queries:
+              - { query: '/system-property=test:read-attribute(name=value)', expected_result: 'testvalue', expected_result_undefined: False}
+      when:
+        - not eap_enable is defined

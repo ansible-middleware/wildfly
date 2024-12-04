@@ -16,5 +16,7 @@
         serole: object_r
         setype: usr_t
         seuser: system_u
+      when:
+        - not eap_version is defined
 
 - import_playbook: ../prepare.yml

@@ -6,6 +6,14 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.6
+======
+
+Minor Changes
+-------------
+
+- Rework migration role to support (downstream) use of EAP8 `#280 <https://github.com/ansible-middleware/wildfly/pull/280>`_
+
 v1.5.5
 ======
 

@@ -38,7 +38,7 @@
       become: true
       ansible.builtin.yum:
         name:
-          - java-11-openjdk
+          - java-17-openjdk
           - procps-ng
           - tzdata-java
         state: present

@@ -29,7 +29,7 @@ provisioner:
       group_vars: ../group_vars
     host_vars:
       instance:
-        wildfly_java_package_name: java-11-openjdk-headless
+        wildfly_java_package_name: java-17-openjdk-headless
       localhost:
         ansible_python_interpreter: "{{ ansible_playbook_python }}"
   env:
@@ -43,6 +43,8 @@ provisioner:
     ANSIBLE_ROLES_PATH: "../../roles"
 verifier:
   name: ansible
+  options:
+    sudo: true
 scenario:
   test_sequence:
     - cleanup

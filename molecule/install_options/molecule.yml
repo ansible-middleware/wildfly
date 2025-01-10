@@ -41,6 +41,8 @@ provisioner:
     ANSIBLE_ROLES_PATH: "../../roles"
 verifier:
   name: ansible
+  options:
+    sudo: true
 scenario:
   test_sequence:
     - cleanup

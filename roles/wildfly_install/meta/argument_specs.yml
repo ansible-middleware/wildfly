@@ -2,7 +2,7 @@ argument_specs:
     main:
         options:
             wildfly_version:
-                default: "34.0.0.Final"
+                default: "35.0.0.Final"
                 description: "Wildfly version to install"
                 type: "str"
             wildfly_archive_filename:

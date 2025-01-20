@@ -22,7 +22,7 @@
     path: "{{ patch_archive }}"
   register: patch_archive_path
   when: eap_patch_version is defined
-  become: true
+  become: "{{ root_permission | default(true) }}"
 
 - name: Check local download archive path
   ansible.builtin.stat:
@@ -91,7 +91,7 @@
       ansible.builtin.stat:
         path: "{{ patches_repository }}/{{ patch_bundle }}"
       register: remote_archive_path
-      become: true
+      become: "{{ root_permission | default(true) }}"
 
     - name: Download Red Hat EAP patch
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
@@ -114,7 +114,7 @@
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
-  become: true
+  become: "{{ root_permission | default(true) }}"
 
 - name: Copy patch archive to target nodes
   ansible.builtin.copy:
@@ -130,14 +130,14 @@
   register: new_version_downloaded
   when:
     - not patch_info.stat.exists
-  become: true
+  become: "{{ root_permission | default(true) }}"
   notify: exec_restorecon
 
 - name: "Check patch state"
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
-  become: true
+  become: "{{ root_permission | default(true) }}"
 
 - name: "Set checksum file path for patch"
   ansible.builtin.set_fact:
@@ -149,7 +149,7 @@
   ansible.builtin.stat:
     path: "{{ patch_checksum_file }}"
   register: last_patch_status
-  become: true
+  become: "{{ root_permission | default(true) }}"
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
@@ -181,7 +181,7 @@
             serole: object_r
             setype: usr_t
             seuser: system_u
-          become: true
+          become: "{{ root_permission | default(true) }}"
           notify: exec_restorecon
         - name: "Start wildfly for patching"
           ansible.builtin.shell: |
@@ -196,7 +196,7 @@
           async: 180
           poll: 0
           register: apply_cp_process
-          become: true
+          become: "{{ root_permission | default(true) }}"
           become_user: "{{ wildfly_user }}"
         - name: "Wait for management interface is reachable"
           ansible.builtin.wait_for:
@@ -244,7 +244,7 @@
             seuser: system_u
           when:
             - not last_patch_status.stat.exists
-          become: true
+          become: "{{ root_permission | default(true) }}"
           notify: exec_restorecon
 
         - name: Set latest patch file
@@ -260,7 +260,7 @@
             seuser: system_u
           when:
             - not last_patch_status.stat.exists
-          become: true
+          become: "{{ root_permission | default(true) }}"
           notify: exec_restorecon
 
     - name: "Restart server to ensure patch content is running"

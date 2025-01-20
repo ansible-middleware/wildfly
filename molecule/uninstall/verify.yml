@@ -21,7 +21,7 @@
         quiet: True
 
     - name: "Load metadata on server home: {{ wildfly_uninstall_home }}"
-      become: true
+      become: "{{ root_permission | default(true) }}"
       ansible.builtin.stat:
         path: "{{ wildfly_uninstall_home }}"
       register: wfly_home

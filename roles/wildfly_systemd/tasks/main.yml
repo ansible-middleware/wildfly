@@ -25,13 +25,13 @@
     tasks_from: user.yml
 
 - name: 'Check if PID directory exists'
-  become: true
+  become: "{{ root_permission | default(true) }}"
   ansible.builtin.stat:
     path: "{{ wildfly_systemd.selinux.pid_path }}"
   register: pid_directory
 
 - name: 'Create PID directory path if not exists'
-  become: true
+  become: "{{ root_permission | default(true) }}"
   ansible.builtin.file:
     path: "{{ wildfly_systemd.selinux.pid_path }}"
     state: directory

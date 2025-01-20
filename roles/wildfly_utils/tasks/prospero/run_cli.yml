@@ -9,7 +9,7 @@
   ansible.builtin.command: >
     {{ wildfly_prospero_home }}/bin/{{ wildfly_prospero_name }}.sh {{ wildfly_prospero_run_args }}
   register: prospero_run_results
-  become: true
+  become: "{{ root_permission | default(true) }}"
   changed_when: False # TODO: fix idempotency by parsing tool output
 
 - name: "Verify that tool stdout is available"

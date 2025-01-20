@@ -3,6 +3,7 @@
   hosts: all
   gather_facts: true
   vars_files:
+    - group_vars/all/vars.yml
     - apps.yml
   vars:
     sudo_pkg_name: 'sudo'
@@ -35,7 +36,7 @@
           - sudo_pkg_name in ansible_facts.packages
 
     - name: "Ensure required packages are installed."
-      become: true
+      become: "{{ root_permission | default(true) }}"
       ansible.builtin.yum:
         name:
           - java-11-openjdk

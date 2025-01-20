@@ -1,0 +1,11 @@
+---
+root_permission: false
+wildfly_systemd_require_privilege_escalation: false
+wildfly_install_require_privileges_escalation: false
+wildfly_validation_logfile_require_privilege_escalation: false
+wildfly_validation_folders_exists_requires_privileges_escalation: false
+wildfly_migration_jdk_package_install_requires_privileges_escalation: false
+wildfly_uninstall_require_privileges_escalation: false
+wildfly_apps_requires_privilege_escalation: false
+wildfly_utils_jboss_cli_require_privilege_escalation: false
+wildfly_driver_become: false

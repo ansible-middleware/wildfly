@@ -85,7 +85,7 @@
   ansible.builtin.package:
     name: "{{ wildfly_prereqs_packages }}"
     state: present
-  become: true
+  become: "{{ root_permission | default(true) }}"
   when:
     - wildfly_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined

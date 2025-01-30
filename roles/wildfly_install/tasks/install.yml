@@ -24,7 +24,7 @@
   ansible.builtin.stat:
     path: "{{ full_path_to_archive }}"
   register: archive_path
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
@@ -68,7 +68,7 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: Perform installation
   when:
@@ -78,7 +78,7 @@
       ansible.builtin.stat:
         path: "{{ full_path_to_archive }}"
       register: is_archive_file_created
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
 
     - name: "Verify target archive state: {{ full_path_to_archive }}"
       ansible.builtin.assert:
@@ -91,11 +91,11 @@
     - name: "Read target directory information: {{ wildfly_install.home }}"
       ansible.builtin.stat:
         path: "{{ wildfly_install.home }}/bin"
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
       register: path_to_workdir
 
     - name: "Extract files from {{ full_path_to_archive }} into {{ wildfly_install.workdir }}."
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.unarchive:
         src: "{{ full_path_to_archive }}"
         dest: "{{ wildfly_install.workdir }}"
@@ -121,7 +121,7 @@
 - name: "Read information on server home directory: {{ wildfly_install.home }}"
   ansible.builtin.stat:
     path: "{{ wildfly_install.home }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   register: is_wfly_home
 
 - name: "Check state of server home directory: {{ wildfly_install.home }}"
@@ -145,7 +145,7 @@
     serole: object_r
     setype: usr_t
     seuser: system_u
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   when: wildfly_install.config_custom | length > 0
   notify:
     - exec_restorecon
@@ -163,7 +163,7 @@
     serole: object_r
     setype: usr_t
     seuser: system_u
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   notify:
     - exec_restorecon
 

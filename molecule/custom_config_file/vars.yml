@@ -6,4 +6,4 @@ wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version
 wildfly_install_download_controller_download_dir: "/tmp"
 wildfly_offline_install: true
 wildfly_archive_filename_local: "{{ wildfly_install_download_controller_download_dir }}/{{ wildfly_archive_filename }}"
-root_permission: false
+wildfly_install_requires_become: false

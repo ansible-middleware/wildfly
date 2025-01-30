@@ -62,7 +62,7 @@
       ansible.builtin.stat:
         path: "{{ path_to_patch }}"
       register: remote_archive_path
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
 
     - name: Download Red Hat Single Sign-On Adapter
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
@@ -99,7 +99,7 @@
     - not patch_archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   notify: exec_restorecon
 
 - name: Extract Adapter zipfile
@@ -114,7 +114,7 @@
     serole: object_r
     setype: usr_t
     seuser: system_u
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   notify: exec_restorecon
 
 - name: Perform installation
@@ -136,7 +136,7 @@
             mode: '0640'
             remote_src: true
             force: false
-          become: "{{ root_permission | default(true) }}"
+          become: "{{ wildfly_install_requires_become | default(true) }}"
         - name: "Start wildfly for adapter installation"
           ansible.builtin.shell: |
             set -o pipefail
@@ -149,7 +149,7 @@
           changed_when: True
           async: 180
           poll: 0
-          become: "{{ root_permission | default(true) }}"
+          become: "{{ wildfly_install_requires_become | default(true) }}"
           become_user: "{{ wildfly_user }}"
           register: adapter_install_process
         - name: "Wait for management interface is reachable"

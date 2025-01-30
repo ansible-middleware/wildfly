@@ -1,11 +1,11 @@
 - name: "Load metadata on installation directory {{ wildfly_home }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.stat:
     path: "{{ wildfly_home }}"
   register: wildfly_home_status
 
 - name: "Ensure installation directory {{ wildfly_home }} exists and belong to the appropriate user/group {{ wildfly_group }}/{{ wildfly_user }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.assert:
     that:
       - wildfly_home_status.stat.exists
@@ -15,7 +15,7 @@
     fail_msg: wildfly installation folder is in a wrong state
 
 - name: "Ensure user of the installation: {{ wildfly_user }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.shell:
     cmd: |
         set -o pipefail
@@ -37,7 +37,7 @@
     - (wildfly_files_wrong_user is not defined) or (wildfly_files_wrong_user.stdout|length > 0)
 
 - name: "Ensure group of installation: {{ wildfly_group }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.shell:
     cmd: |
         set -o pipefail

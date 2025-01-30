@@ -31,7 +31,7 @@
         loop_var: app_port
 
     - name: "Get eap-0 log"
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.shell:
         cmd: "cat {{ wildfly_instances_home }}/wildfly-0/standalone/log/server.log"
       changed_when: False

@@ -1,5 +1,5 @@
 ---
-root_permission: false
+wildfly_install_requires_become: false
 wildfly_systemd_require_privilege_escalation: false
 wildfly_install_require_privileges_escalation: false
 wildfly_validation_logfile_require_privilege_escalation: false

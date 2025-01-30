@@ -36,7 +36,7 @@
           - sudo_pkg_name in ansible_facts.packages
 
     - name: "Ensure required packages are installed."
-      become: "{{ root_permission | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
           - java-11-openjdk

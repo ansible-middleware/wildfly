@@ -22,7 +22,7 @@
     owner: "{{ wildfly_install_user | default(omit) }}"
     group: "{{ wildfly_install_group | default(omit) }}"
     mode: '0750'
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: "Ensure installer is installed."
   ansible.builtin.include_tasks: prospero/install.yml
@@ -30,7 +30,7 @@
 - name: "Read target directory information: {{ wildfly_home }}"
   ansible.builtin.stat:
     path: "{{ wildfly_home }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   register: path_to_workdir
 
 - name: "Verify metadata on {{ wildfly_home }} are available."
@@ -107,6 +107,6 @@
     recurse: true
     owner: "{{ wildfly_install.user }}"
     group: "{{ wildfly_install.group | default(wildfly_install.user) }}"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
     - wildfly_install.user is defined

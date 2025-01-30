@@ -6,4 +6,4 @@ wildfly_enable_yml_config: True
 wildfly_yml_configs:
   - yaml_configuration.yml.j2
   - configure_tcp_ping.yml.j2
-root_permission: false
+wildfly_install_requires_become: false

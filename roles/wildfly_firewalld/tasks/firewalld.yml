@@ -6,13 +6,13 @@
     quiet: true
 
 - name: "Ensure firewalld is available."
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.package:
     name: "{{ wildfly_firewalld_package_name }}"
     state: present
 
 - name: "Ensure firewalld is running."
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.service:
     name: "{{ wildfly_firewalld_service_name | default('firewalld') }}"
     state: started

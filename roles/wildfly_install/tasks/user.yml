@@ -10,12 +10,12 @@
     group_name: "{{ wildfly_install.group | default(wildfly_install.user) }}"
 
 - name: "Ensure group {{ group_name }} exists."
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.group:
     name: "{{ group_name }}"
 
 - name: "Ensure user {{ wildfly_install.user }} exists."
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.user:
     name: "{{ wildfly_install.user }}"
     group: "{{ group_name }}"

@@ -14,7 +14,7 @@
   ansible.builtin.stat:
     path: "{{ full_path_to_prospero_archive }}"
   register: archive_path
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: "Download Prospero to {{ local_path_to_archive }}"
   ansible.builtin.get_url:
@@ -54,12 +54,12 @@
     - not archive_path.stat.exists
     - local_archive_path.stat is defined
     - local_archive_path.stat.exists
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: "Read target directory information: {{ wildfly_prospero_install_dir }}"
   ansible.builtin.stat:
     path: "{{ wildfly_prospero_install_dir }}/bin"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   register: path_to_prospero_installation
 
 - name: "Ensure Prospero is installed on target."
@@ -69,6 +69,6 @@
     owner: "{{ wildfly_install_user | default(omit) }}"
     group: "{{ wildfly_install_group | default(omit) }}"
     remote_src: True
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
     - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists

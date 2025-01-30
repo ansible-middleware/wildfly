@@ -7,7 +7,7 @@
     target_path: "{{ lookup('env', 'PATH') }}"
 
 - name: "Run migration tool"
-  become: "{{ root_permission | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   become_user: wildfly
   ansible.builtin.command: "{{ wildfly_migration_server_tool_path_to_script }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ wildfly_migration_path_to_env_properties }} --target {{ target_wildfly_home }}"
   register: migration_results

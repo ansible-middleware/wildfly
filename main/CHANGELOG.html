@@ -7,7 +7,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>middleware_automation.wildfly Release Notes &mdash; Wildfly Ansible Collection  documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5707b69d" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=41de9001" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/antsibull-minimal.css" />
       <link rel="stylesheet" type="text/css" href="_static/ansible-basic-sphinx-ext.css" />
@@ -57,7 +57,8 @@
 <p class="caption" role="heading"><span class="caption-text">General</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#v1-5-6-devel">v1.5.6-devel</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#v1-5-7-devel">v1.5.7-devel</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#v1-5-6">v1.5.6</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#minor-changes">Minor Changes</a></li>
 </ul>
 </li>
@@ -220,145 +221,146 @@
 <ul class="simple">
 <li><p><a class="reference internal" href="#middleware-automation-wildfly-release-notes" id="id131">middleware_automation.wildfly Release Notes</a></p>
 <ul>
-<li><p><a class="reference internal" href="#v1-5-6-devel" id="id132">v1.5.6-devel</a></p>
+<li><p><a class="reference internal" href="#v1-5-7-devel" id="id132">v1.5.7-devel</a></p></li>
+<li><p><a class="reference internal" href="#v1-5-6" id="id133">v1.5.6</a></p>
 <ul>
-<li><p><a class="reference internal" href="#minor-changes" id="id133">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#minor-changes" id="id134">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-5-5" id="id134">v1.5.5</a></p>
+<li><p><a class="reference internal" href="#v1-5-5" id="id135">v1.5.5</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id2" id="id135">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#bugfixes" id="id136">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id136">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#bugfixes" id="id137">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-5-4" id="id137">v1.5.4</a></p></li>
-<li><p><a class="reference internal" href="#v1-5-3" id="id138">v1.5.3</a></p>
+<li><p><a class="reference internal" href="#v1-5-4" id="id138">v1.5.4</a></p></li>
+<li><p><a class="reference internal" href="#v1-5-3" id="id139">v1.5.3</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id8" id="id139">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id14" id="id140">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id140">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id141">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-5-2" id="id141">v1.5.2</a></p>
+<li><p><a class="reference internal" href="#v1-5-2" id="id142">v1.5.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#major-changes" id="id142">Major Changes</a></p></li>
-<li><p><a class="reference internal" href="#id19" id="id143">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id24" id="id144">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#major-changes" id="id143">Major Changes</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id144">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id145">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-5-1" id="id145">v1.5.1</a></p>
+<li><p><a class="reference internal" href="#v1-5-1" id="id146">v1.5.1</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id29" id="id146">Major Changes</a></p></li>
-<li><p><a class="reference internal" href="#id31" id="id147">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id41" id="id148">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id29" id="id147">Major Changes</a></p></li>
+<li><p><a class="reference internal" href="#id31" id="id148">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id41" id="id149">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-5-0" id="id149">v1.5.0</a></p>
+<li><p><a class="reference internal" href="#v1-5-0" id="id150">v1.5.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id46" id="id150">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#breaking-changes-porting-guide" id="id151">Breaking Changes / Porting Guide</a></p></li>
-<li><p><a class="reference internal" href="#id55" id="id152">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id46" id="id151">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#breaking-changes-porting-guide" id="id152">Breaking Changes / Porting Guide</a></p></li>
+<li><p><a class="reference internal" href="#id55" id="id153">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-4-3" id="id153">v1.4.3</a></p>
+<li><p><a class="reference internal" href="#v1-4-3" id="id154">v1.4.3</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id57" id="id154">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id57" id="id155">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-4-2" id="id155">v1.4.2</a></p>
+<li><p><a class="reference internal" href="#v1-4-2" id="id156">v1.4.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id59" id="id156">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id59" id="id157">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-4-0" id="id157">v1.4.0</a></p>
+<li><p><a class="reference internal" href="#v1-4-0" id="id158">v1.4.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id61" id="id158">Major Changes</a></p></li>
-<li><p><a class="reference internal" href="#id64" id="id159">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id67" id="id160">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id61" id="id159">Major Changes</a></p></li>
+<li><p><a class="reference internal" href="#id64" id="id160">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id67" id="id161">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-3-4" id="id161">v1.3.4</a></p>
+<li><p><a class="reference internal" href="#v1-3-4" id="id162">v1.3.4</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id73" id="id162">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id75" id="id163">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id73" id="id163">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id75" id="id164">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-3-3" id="id164">v1.3.3</a></p>
+<li><p><a class="reference internal" href="#v1-3-3" id="id165">v1.3.3</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id77" id="id165">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id81" id="id166">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id77" id="id166">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id81" id="id167">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-3-2" id="id167">v1.3.2</a></p>
+<li><p><a class="reference internal" href="#v1-3-2" id="id168">v1.3.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id84" id="id168">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id84" id="id169">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-3-1" id="id169">v1.3.1</a></p>
+<li><p><a class="reference internal" href="#v1-3-1" id="id170">v1.3.1</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id90" id="id170">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id90" id="id171">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-3-0" id="id171">v1.3.0</a></p>
+<li><p><a class="reference internal" href="#v1-3-0" id="id172">v1.3.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id92" id="id172">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id92" id="id173">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-2-2" id="id173">v1.2.2</a></p>
+<li><p><a class="reference internal" href="#v1-2-2" id="id174">v1.2.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id94" id="id174">Major Changes</a></p></li>
-<li><p><a class="reference internal" href="#id96" id="id175">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id99" id="id176">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id94" id="id175">Major Changes</a></p></li>
+<li><p><a class="reference internal" href="#id96" id="id176">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id99" id="id177">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-2-1" id="id177">v1.2.1</a></p>
+<li><p><a class="reference internal" href="#v1-2-1" id="id178">v1.2.1</a></p>
 <ul>
-<li><p><a class="reference internal" href="#release-summary" id="id178">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#release-summary" id="id179">Release Summary</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-2-0" id="id179">v1.2.0</a></p>
+<li><p><a class="reference internal" href="#v1-2-0" id="id180">v1.2.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id101" id="id180">Major Changes</a></p></li>
-<li><p><a class="reference internal" href="#id103" id="id181">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id101" id="id181">Major Changes</a></p></li>
+<li><p><a class="reference internal" href="#id103" id="id182">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-1-0" id="id182">v1.1.0</a></p>
+<li><p><a class="reference internal" href="#v1-1-0" id="id183">v1.1.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id106" id="id183">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id106" id="id184">Minor Changes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-6" id="id184">v1.0.6</a></p></li>
-<li><p><a class="reference internal" href="#v1-0-5" id="id185">v1.0.5</a></p>
+<li><p><a class="reference internal" href="#v1-0-6" id="id185">v1.0.6</a></p></li>
+<li><p><a class="reference internal" href="#v1-0-5" id="id186">v1.0.5</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id108" id="id186">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id114" id="id187">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id108" id="id187">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id114" id="id188">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-4" id="id188">v1.0.4</a></p>
+<li><p><a class="reference internal" href="#v1-0-4" id="id189">v1.0.4</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id116" id="id189">Breaking Changes / Porting Guide</a></p></li>
-<li><p><a class="reference internal" href="#id118" id="id190">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id116" id="id190">Breaking Changes / Porting Guide</a></p></li>
+<li><p><a class="reference internal" href="#id118" id="id191">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-3" id="id191">v1.0.3</a></p>
+<li><p><a class="reference internal" href="#v1-0-3" id="id192">v1.0.3</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id120" id="id192">Minor Changes</a></p></li>
-<li><p><a class="reference internal" href="#id123" id="id193">Breaking Changes / Porting Guide</a></p></li>
-<li><p><a class="reference internal" href="#id125" id="id194">Bugfixes</a></p></li>
+<li><p><a class="reference internal" href="#id120" id="id193">Minor Changes</a></p></li>
+<li><p><a class="reference internal" href="#id123" id="id194">Breaking Changes / Porting Guide</a></p></li>
+<li><p><a class="reference internal" href="#id125" id="id195">Bugfixes</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-2" id="id195">v1.0.2</a></p>
+<li><p><a class="reference internal" href="#v1-0-2" id="id196">v1.0.2</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id128" id="id196">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#id128" id="id197">Release Summary</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-1" id="id197">v1.0.1</a></p>
+<li><p><a class="reference internal" href="#v1-0-1" id="id198">v1.0.1</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id129" id="id198">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#id129" id="id199">Release Summary</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#v1-0-0" id="id199">v1.0.0</a></p>
+<li><p><a class="reference internal" href="#v1-0-0" id="id200">v1.0.0</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id130" id="id200">Release Summary</a></p></li>
+<li><p><a class="reference internal" href="#id130" id="id201">Release Summary</a></p></li>
 </ul>
 </li>
 </ul>
@@ -366,19 +368,22 @@
 </ul>
 </nav>
 <p>This changelog describes changes after version 0.0.7.</p>
-<section id="v1-5-6-devel">
-<h2><a class="toc-backref" href="#id132" role="doc-backlink">v1.5.6-devel</a><a class="headerlink" href="#v1-5-6-devel" title="Link to this heading"></a></h2>
+<section id="v1-5-7-devel">
+<h2><a class="toc-backref" href="#id132" role="doc-backlink">v1.5.7-devel</a><a class="headerlink" href="#v1-5-7-devel" title="Link to this heading"></a></h2>
+</section>
+<section id="v1-5-6">
+<h2><a class="toc-backref" href="#id133" role="doc-backlink">v1.5.6</a><a class="headerlink" href="#v1-5-6" title="Link to this heading"></a></h2>
 <section id="minor-changes">
-<h3><a class="toc-backref" href="#id133" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id134" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#minor-changes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Rework migration role to support (downstream) use of EAP8 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/280">#280</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-5-5">
-<h2><a class="toc-backref" href="#id134" role="doc-backlink">v1.5.5</a><a class="headerlink" href="#v1-5-5" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id135" role="doc-backlink">v1.5.5</a><a class="headerlink" href="#v1-5-5" title="Link to this heading"></a></h2>
 <section id="id2">
-<h3><a class="toc-backref" href="#id135" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id136" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id2" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>AMW-310 Misleading mention of prospero in EAP 7 ansible collection <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/269">#269</a></p></li>
 <li><p>Make port binding configurable in molecule scenarios, plus some molecule fixup and ansible-lint fixes. <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/270">#270</a></p></li>
@@ -387,19 +392,19 @@
 </ul>
 </section>
 <section id="bugfixes">
-<h3><a class="toc-backref" href="#id136" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#bugfixes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id137" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#bugfixes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix invalid varname breaking apps deployment <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/274">#274</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-5-4">
-<h2><a class="toc-backref" href="#id137" role="doc-backlink">v1.5.4</a><a class="headerlink" href="#v1-5-4" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id138" role="doc-backlink">v1.5.4</a><a class="headerlink" href="#v1-5-4" title="Link to this heading"></a></h2>
 </section>
 <section id="v1-5-3">
-<h2><a class="toc-backref" href="#id138" role="doc-backlink">v1.5.3</a><a class="headerlink" href="#v1-5-3" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id139" role="doc-backlink">v1.5.3</a><a class="headerlink" href="#v1-5-3" title="Link to this heading"></a></h2>
 <section id="id8">
-<h3><a class="toc-backref" href="#id139" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id140" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id8" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Allow arbitrary filename for local download zipfile in offline installation <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/250">#250</a></p></li>
 <li><p>Check configuration is supported for EAP7 or EAP8 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/261">#261</a></p></li>
@@ -409,7 +414,7 @@
 </ul>
 </section>
 <section id="id14">
-<h3><a class="toc-backref" href="#id140" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id141" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id14" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix YAML config when eap_apply_cp is false on EAP 8.0 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/254">#254</a></p></li>
 <li><p>Fix parameter name wildfly_driver_module_name in wildfly_migration role <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/253">#253</a></p></li>
@@ -417,16 +422,16 @@
 </section>
 </section>
 <section id="v1-5-2">
-<h2><a class="toc-backref" href="#id141" role="doc-backlink">v1.5.2</a><a class="headerlink" href="#v1-5-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id142" role="doc-backlink">v1.5.2</a><a class="headerlink" href="#v1-5-2" title="Link to this heading"></a></h2>
 <section id="major-changes">
-<h3><a class="toc-backref" href="#id142" role="doc-backlink">Major Changes</a><a class="headerlink" href="#major-changes" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id143" role="doc-backlink">Major Changes</a><a class="headerlink" href="#major-changes" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add app deployments to several Molecule scenarios <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/237">#237</a></p></li>
 <li><p>prospero: rm role and move content to wildfly_utils <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/227">#227</a></p></li>
 </ul>
 </section>
 <section id="id19">
-<h3><a class="toc-backref" href="#id143" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id144" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id19" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>App deploy to trigger cluster formation and verification (upstream CI only) <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/221">#221</a></p></li>
 <li><p>Skip pidfile validation <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/217">#217</a></p></li>
@@ -435,7 +440,7 @@
 </ul>
 </section>
 <section id="id24">
-<h3><a class="toc-backref" href="#id144" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id145" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id24" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add become_user to jboss_cli <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/229">#229</a></p></li>
 <li><p>Use prospero 1.3.0.Beta1 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/239">#239</a></p></li>
@@ -445,15 +450,15 @@
 </section>
 </section>
 <section id="v1-5-1">
-<h2><a class="toc-backref" href="#id145" role="doc-backlink">v1.5.1</a><a class="headerlink" href="#v1-5-1" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id146" role="doc-backlink">v1.5.1</a><a class="headerlink" href="#v1-5-1" title="Link to this heading"></a></h2>
 <section id="id29">
-<h3><a class="toc-backref" href="#id146" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id147" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id29" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Set pid file for systemd to /var/run/{{ instance }} or allow for custom pid file location <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/190">#190</a></p></li>
 </ul>
 </section>
 <section id="id31">
-<h3><a class="toc-backref" href="#id147" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id148" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id31" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add selinux attributes <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/205">#205</a></p></li>
 <li><p>Add wait_for logic in systemd unit <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/207">#207</a></p></li>
@@ -467,7 +472,7 @@
 </ul>
 </section>
 <section id="id41">
-<h3><a class="toc-backref" href="#id148" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id41" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id149" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id41" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix uninstall_role to work, out of the box, with the wildfly_install defaults. <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/197">#197</a></p></li>
 <li><p>Fix wildfly_install changing ownership of system directories <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/210">#210</a></p></li>
@@ -477,9 +482,9 @@
 </section>
 </section>
 <section id="v1-5-0">
-<h2><a class="toc-backref" href="#id149" role="doc-backlink">v1.5.0</a><a class="headerlink" href="#v1-5-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id150" role="doc-backlink">v1.5.0</a><a class="headerlink" href="#v1-5-0" title="Link to this heading"></a></h2>
 <section id="id46">
-<h3><a class="toc-backref" href="#id150" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id46" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id151" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id46" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add check for prospero installed on host <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/175">#175</a></p></li>
 <li><p>Download prospero on controller node and copy it to target servers <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/167">#167</a></p></li>
@@ -491,54 +496,54 @@
 </ul>
 </section>
 <section id="breaking-changes-porting-guide">
-<h3><a class="toc-backref" href="#id151" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#breaking-changes-porting-guide" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id152" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#breaking-changes-porting-guide" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Set minimum ansible version &gt;= 2.14 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/173">#173</a></p></li>
 </ul>
 </section>
 <section id="id55">
-<h3><a class="toc-backref" href="#id152" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id55" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id153" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id55" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix Ansible Hub documentation links <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/161">#161</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-4-3">
-<h2><a class="toc-backref" href="#id153" role="doc-backlink">v1.4.3</a><a class="headerlink" href="#v1-4-3" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id154" role="doc-backlink">v1.4.3</a><a class="headerlink" href="#v1-4-3" title="Link to this heading"></a></h2>
 <section id="id57">
-<h3><a class="toc-backref" href="#id154" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id57" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id155" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id57" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Use alternatives instead of rpm to determine java_home <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/149">#149</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-4-2">
-<h2><a class="toc-backref" href="#id155" role="doc-backlink">v1.4.2</a><a class="headerlink" href="#v1-4-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id156" role="doc-backlink">v1.4.2</a><a class="headerlink" href="#v1-4-2" title="Link to this heading"></a></h2>
 <section id="id59">
-<h3><a class="toc-backref" href="#id156" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id59" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id157" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id59" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Remove unrequired vars from playbooks/playbook.yml <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/144">#144</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-4-0">
-<h2><a class="toc-backref" href="#id157" role="doc-backlink">v1.4.0</a><a class="headerlink" href="#v1-4-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id158" role="doc-backlink">v1.4.0</a><a class="headerlink" href="#v1-4-0" title="Link to this heading"></a></h2>
 <section id="id61">
-<h3><a class="toc-backref" href="#id158" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id61" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id159" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id61" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>wildfly_driver: remove defaults in favor of required parameters <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/138">#138</a></p></li>
 <li><p>wildfly_driver: rename parameters from <code class="docutils literal notranslate"><span class="pre">jdbc_*</span></code> to <code class="docutils literal notranslate"><span class="pre">wildfly_driver_*</span></code> <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/142">#142</a></p></li>
 </ul>
 </section>
 <section id="id64">
-<h3><a class="toc-backref" href="#id159" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id64" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id160" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id64" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Cleanup and reorganize Prospero playbooks <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/136">#136</a></p></li>
 <li><p>Update to Wildfly 29 <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/135">#135</a></p></li>
 </ul>
 </section>
 <section id="id67">
-<h3><a class="toc-backref" href="#id160" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id67" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id161" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id67" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix validation role so it can be used with remote nodes. <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/131">#131</a></p></li>
 <li><p>Set <code class="docutils literal notranslate"><span class="pre">wildfly_offline_install</span></code> default to False, <code class="docutils literal notranslate"><span class="pre">eap_apply_cp</span></code> to True <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/133">#133</a></p></li>
@@ -549,24 +554,24 @@
 </section>
 </section>
 <section id="v1-3-4">
-<h2><a class="toc-backref" href="#id161" role="doc-backlink">v1.3.4</a><a class="headerlink" href="#v1-3-4" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id162" role="doc-backlink">v1.3.4</a><a class="headerlink" href="#v1-3-4" title="Link to this heading"></a></h2>
 <section id="id73">
-<h3><a class="toc-backref" href="#id162" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id73" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id163" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id73" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>wildfly_systemd: detect Java home path on different os_family <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/125">#125</a></p></li>
 </ul>
 </section>
 <section id="id75">
-<h3><a class="toc-backref" href="#id163" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id75" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id164" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id75" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Do not re-download elytron adapter if present <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/124">#124</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-3-3">
-<h2><a class="toc-backref" href="#id164" role="doc-backlink">v1.3.3</a><a class="headerlink" href="#v1-3-3" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id165" role="doc-backlink">v1.3.3</a><a class="headerlink" href="#v1-3-3" title="Link to this heading"></a></h2>
 <section id="id77">
-<h3><a class="toc-backref" href="#id165" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id77" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id166" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id77" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Check that systemd is running and pidfile exists <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/117">#117</a></p></li>
 <li><p>elytron_adapter: skip download if file is already present <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/120">#120</a></p></li>
@@ -574,7 +579,7 @@
 </ul>
 </section>
 <section id="id81">
-<h3><a class="toc-backref" href="#id166" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id81" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id167" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id81" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>‘.Beta’ in version: the dot is only optional <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/119">#119</a></p></li>
 <li><p>ISSUE116 - PID File Creation Failure <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/118">#118</a></p></li>
@@ -582,9 +587,9 @@
 </section>
 </section>
 <section id="v1-3-2">
-<h2><a class="toc-backref" href="#id167" role="doc-backlink">v1.3.2</a><a class="headerlink" href="#v1-3-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id168" role="doc-backlink">v1.3.2</a><a class="headerlink" href="#v1-3-2" title="Link to this heading"></a></h2>
 <section id="id84">
-<h3><a class="toc-backref" href="#id168" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id84" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id169" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id84" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add check for offline installs and allow to specify custom xml config <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/108">#108</a></p></li>
 <li><p>Add support for firewalld <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/106">#106</a></p></li>
@@ -595,62 +600,62 @@
 </section>
 </section>
 <section id="v1-3-1">
-<h2><a class="toc-backref" href="#id169" role="doc-backlink">v1.3.1</a><a class="headerlink" href="#v1-3-1" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id170" role="doc-backlink">v1.3.1</a><a class="headerlink" href="#v1-3-1" title="Link to this heading"></a></h2>
 <section id="id90">
-<h3><a class="toc-backref" href="#id170" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id90" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id171" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id90" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Remove dependency to community.general (not required) <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/100">#100</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-3-0">
-<h2><a class="toc-backref" href="#id171" role="doc-backlink">v1.3.0</a><a class="headerlink" href="#v1-3-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id172" role="doc-backlink">v1.3.0</a><a class="headerlink" href="#v1-3-0" title="Link to this heading"></a></h2>
 <section id="id92">
-<h3><a class="toc-backref" href="#id172" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id92" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id173" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id92" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Apply cp options <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/99">#99</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-2-2">
-<h2><a class="toc-backref" href="#id173" role="doc-backlink">v1.2.2</a><a class="headerlink" href="#v1-2-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id174" role="doc-backlink">v1.2.2</a><a class="headerlink" href="#v1-2-2" title="Link to this heading"></a></h2>
 <section id="id94">
-<h3><a class="toc-backref" href="#id174" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id94" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id175" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id94" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>wildfly_install: (eap) apply_cp does not depend on systemd <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/90">#90</a></p></li>
 </ul>
 </section>
 <section id="id96">
-<h3><a class="toc-backref" href="#id175" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id96" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id176" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id96" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add elytron adapter install (EAP) <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/92">#92</a></p></li>
 <li><p>wildfly-systemd: yaml configuration extension accept templates <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/91">#91</a></p></li>
 </ul>
 </section>
 <section id="id99">
-<h3><a class="toc-backref" href="#id176" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id99" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id177" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id99" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Correctly handle server restarts post apply_cp and keycloak_adapter <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/94">#94</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-2-1">
-<h2><a class="toc-backref" href="#id177" role="doc-backlink">v1.2.1</a><a class="headerlink" href="#v1-2-1" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id178" role="doc-backlink">v1.2.1</a><a class="headerlink" href="#v1-2-1" title="Link to this heading"></a></h2>
 <section id="release-summary">
-<h3><a class="toc-backref" href="#id178" role="doc-backlink">Release Summary</a><a class="headerlink" href="#release-summary" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id179" role="doc-backlink">Release Summary</a><a class="headerlink" href="#release-summary" title="Link to this heading"></a></h3>
 <p>Patch release with internal changes only.</p>
 </section>
 </section>
 <section id="v1-2-0">
-<h2><a class="toc-backref" href="#id179" role="doc-backlink">v1.2.0</a><a class="headerlink" href="#v1-2-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id180" role="doc-backlink">v1.2.0</a><a class="headerlink" href="#v1-2-0" title="Link to this heading"></a></h2>
 <section id="id101">
-<h3><a class="toc-backref" href="#id180" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id101" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id181" role="doc-backlink">Major Changes</a><a class="headerlink" href="#id101" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Propagate wildfly_install defaults to driver, systemd and utils roles <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/80">#80</a></p></li>
 </ul>
 </section>
 <section id="id103">
-<h3><a class="toc-backref" href="#id181" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id103" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id182" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id103" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Become in “Check local download archive path” <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/74">#74</a></p></li>
 <li><p>wildfly_driver: added wildfly_user and wildfly_group to defaults <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/77">#77</a></p></li>
@@ -658,21 +663,21 @@
 </section>
 </section>
 <section id="v1-1-0">
-<h2><a class="toc-backref" href="#id182" role="doc-backlink">v1.1.0</a><a class="headerlink" href="#v1-1-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id183" role="doc-backlink">v1.1.0</a><a class="headerlink" href="#v1-1-0" title="Link to this heading"></a></h2>
 <section id="id106">
-<h3><a class="toc-backref" href="#id183" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id106" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id184" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id106" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Bump version to 1.1.0 to align with downstream (1.1.0 is identical to 1.0.6 upstream) <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/67">#67</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-6">
-<h2><a class="toc-backref" href="#id184" role="doc-backlink">v1.0.6</a><a class="headerlink" href="#v1-0-6" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id185" role="doc-backlink">v1.0.6</a><a class="headerlink" href="#v1-0-6" title="Link to this heading"></a></h2>
 </section>
 <section id="v1-0-5">
-<h2><a class="toc-backref" href="#id185" role="doc-backlink">v1.0.5</a><a class="headerlink" href="#v1-0-5" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id186" role="doc-backlink">v1.0.5</a><a class="headerlink" href="#v1-0-5" title="Link to this heading"></a></h2>
 <section id="id108">
-<h3><a class="toc-backref" href="#id186" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id108" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id187" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id108" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">wildfly_java_opts</span></code> to set parameters for wfly JVM <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/60">#60</a></p></li>
 <li><p>Add <code class="docutils literal notranslate"><span class="pre">wildfly_statistics_enabled</span></code> var to enable statistics <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/58">#58</a></p></li>
@@ -682,44 +687,44 @@
 </ul>
 </section>
 <section id="id114">
-<h3><a class="toc-backref" href="#id187" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id114" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id188" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id114" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Fix EAP patch apply when yaml configuration is enabled <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/59">#59</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-4">
-<h2><a class="toc-backref" href="#id188" role="doc-backlink">v1.0.4</a><a class="headerlink" href="#v1-0-4" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id189" role="doc-backlink">v1.0.4</a><a class="headerlink" href="#v1-0-4" title="Link to this heading"></a></h2>
 <section id="id116">
-<h3><a class="toc-backref" href="#id189" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#id116" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id190" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#id116" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Rename variable <code class="docutils literal notranslate"><span class="pre">instance_id</span></code> to <code class="docutils literal notranslate"><span class="pre">wildfly_instance_id</span></code> and update docs <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/52">#52</a></p></li>
 </ul>
 </section>
 <section id="id118">
-<h3><a class="toc-backref" href="#id190" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id118" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id191" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id118" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Add become parameter to tasks that require it <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/53">#53</a></p></li>
 </ul>
 </section>
 </section>
 <section id="v1-0-3">
-<h2><a class="toc-backref" href="#id191" role="doc-backlink">v1.0.3</a><a class="headerlink" href="#v1-0-3" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id192" role="doc-backlink">v1.0.3</a><a class="headerlink" href="#v1-0-3" title="Link to this heading"></a></h2>
 <section id="id120">
-<h3><a class="toc-backref" href="#id192" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id120" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id193" role="doc-backlink">Minor Changes</a><a class="headerlink" href="#id120" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Rename validation role vars to follow proper convention <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/48">#48</a></p></li>
 <li><p>wildfly_driver: make variables as default <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/39">#39</a></p></li>
 </ul>
 </section>
 <section id="id123">
-<h3><a class="toc-backref" href="#id193" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#id123" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id194" role="doc-backlink">Breaking Changes / Porting Guide</a><a class="headerlink" href="#id123" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>Rename jboss_eap role into wildfly_utils to be consistent with role naming convention <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/45">#45</a></p></li>
 </ul>
 </section>
 <section id="id125">
-<h3><a class="toc-backref" href="#id194" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id125" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id195" role="doc-backlink">Bugfixes</a><a class="headerlink" href="#id125" title="Link to this heading"></a></h3>
 <ul class="simple">
 <li><p>JAVA_HOME should be set according to requested JVM package, or overridden via <code class="docutils literal notranslate"><span class="pre">wildfly_java_home</span></code> <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/46">#46</a></p></li>
 <li><p>Update included role to new name in rhn installation <a class="reference external" href="https://github.com/ansible-middleware/wildfly/pull/51">#51</a></p></li>
@@ -727,23 +732,23 @@
 </section>
 </section>
 <section id="v1-0-2">
-<h2><a class="toc-backref" href="#id195" role="doc-backlink">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id196" role="doc-backlink">v1.0.2</a><a class="headerlink" href="#v1-0-2" title="Link to this heading"></a></h2>
 <section id="id128">
-<h3><a class="toc-backref" href="#id196" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id128" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id197" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id128" title="Link to this heading"></a></h3>
 <p>Minor enhancements, and documentation updates.</p>
 </section>
 </section>
 <section id="v1-0-1">
-<h2><a class="toc-backref" href="#id197" role="doc-backlink">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id198" role="doc-backlink">v1.0.1</a><a class="headerlink" href="#v1-0-1" title="Link to this heading"></a></h2>
 <section id="id129">
-<h3><a class="toc-backref" href="#id198" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id129" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id199" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id129" title="Link to this heading"></a></h3>
 <p>Minor enhancements, and documentation updates.</p>
 </section>
 </section>
 <section id="v1-0-0">
-<h2><a class="toc-backref" href="#id199" role="doc-backlink">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Link to this heading"></a></h2>
+<h2><a class="toc-backref" href="#id200" role="doc-backlink">v1.0.0</a><a class="headerlink" href="#v1-0-0" title="Link to this heading"></a></h2>
 <section id="id130">
-<h3><a class="toc-backref" href="#id200" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id130" title="Link to this heading"></a></h3>
+<h3><a class="toc-backref" href="#id201" role="doc-backlink">Release Summary</a><a class="headerlink" href="#id130" title="Link to this heading"></a></h3>
 <p>This is the first stable release of the <code class="docutils literal notranslate"><span class="pre">middleware_automation.wildfly</span></code> collection.</p>
 </section>
 </section>
@@ -759,7 +764,7 @@
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2024, Red Hat, Inc..</p>
+    <p>&#169; Copyright 2025, Red Hat, Inc..</p>
   </div>
 
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a

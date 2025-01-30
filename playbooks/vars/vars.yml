@@ -4,7 +4,6 @@
 # through this list
 # wildfly_apps:
 #   - { path: /path/to/war, unmanaged: true }
-wildfly_install_requires_become: false
 wildfly_systemd_wait_for_port: true
 postgres_driver_version: 9.4.1212
 mariadb_driver_version: 3.2.0

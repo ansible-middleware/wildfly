@@ -7,7 +7,7 @@
     - wildfly_install
     - wildfly_systemd
   tasks:
-    - name: Install second driver with wildfly_driver role
+    - name: Install two JDBC drivers with wildfly_driver role
       ansible.builtin.include_role:
         name: wildfly_driver
       when: jdbc_drivers is defined and jdbc_drivers | length > 0

@@ -38,8 +38,8 @@ Role Variables
   gather_facts: false
   vars:
     wildfly_uninstall_service_name: wildfly
-    wildfly_uninstall_home: /opt/wildfly/wildfly-35.0.0.Final
-    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-35.0.0.Final.zip
+    wildfly_uninstall_home: /opt/wildfly/wildfly-36.0.0.Final
+    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-36.0.0.Final.zip
   roles:
     - name: wildfly_uninstall
 ```

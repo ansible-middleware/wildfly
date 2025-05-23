@@ -3,7 +3,6 @@
   ansible.builtin.assert:
     that:
       - wildfly_home is defined
-      - wildfly_prospero_home is defined
       - wildfly_prospero_profile_name is defined
       - wildfly_prospero_install_dir is defined
     quiet: True
@@ -64,6 +63,7 @@
   ansible.builtin.include_tasks: prospero/run_cli.yml
   vars:
     wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --accept-license-agreements {{ prospero_command_args }}"
+    wildfly_prospero_version: "{{ prospero_release_info.json.tag_name }}"
   when:
     - not path_to_workdir.stat.exists
 

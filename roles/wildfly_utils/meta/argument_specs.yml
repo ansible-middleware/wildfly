@@ -189,10 +189,6 @@ argument_specs:
                 default: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
                 description: "Name of the Prospero archive"
                 type: "str"
-            wildfly_prospero_home:
-                default: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}"
-                description: "Home of the prospero tool"
-                type: "str"
             wildfly_prospero_install_manifest_dir:
                 default: "{{ wildfly_install_workdir }}/manifest"
                 description: "Path on target to the Prospero manifest"

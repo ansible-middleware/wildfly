@@ -22,7 +22,7 @@ tags:
   - middleware
   - a4mw
 dependencies:
-  middleware_automation.common: '>=1.1.0'
+  middleware_automation.common: '>=1.2.4'
   ansible.posix: '>=1.5.2'
 repository: https://github.com/ansible-middleware/wildfly
 documentation: https://ansible-middleware.github.io/wildfly

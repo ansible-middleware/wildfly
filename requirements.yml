@@ -1,6 +1,6 @@
 ---
 collections:
   - name: middleware_automation.common
-    version: '>=1.1.0'
+    version: '>=1.2.4'
   - name: ansible.posix
     version: '>=1.5.2'

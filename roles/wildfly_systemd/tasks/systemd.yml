@@ -122,44 +122,17 @@
       register: rpm_java_home_other
       when: not ansible_os_family == 'RedHat'
 
-    - name: "Deploy service instance configuration: {{ wildfly_service_systemd_env_file }}"
-      ansible.builtin.template:
-        src: "{{ wildfly_service_config_file_template }}"
-        dest: "{{ wildfly_service_systemd_env_file }}"
-        group: root
-        owner: root
-        mode: '0644'
-        selevel: s0
-        serole: object_r
-        setype: etc_t
-        seuser: system_u
-      register: daemon_reload_env
+    - name: "Ensure instance is properly configured as a systemd service."
+      ansible.builtin.include_role:
+        name: common
+        tasks_from: systemd.yml
       vars:
+        server_name: "{{ wildfly_service_name }}"
+        server_restart_handler_name: 'restart_wildfly'
+        server_service_config_file_template: "{{ wildfly_service_config_file_template }}"
+        server_systemd_path_to_unit: "{{ wildfly_service_systemd_env_file }}"
         wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
         wildfly_yml_configs_str: "'-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}'"
-    - name: "Deploy Systemd unit for service: {{ wildfly_service_systemd_file }}"
-      ansible.builtin.template:
-        src: "{{ wildfly_systemd_service_config_file_template }}"
-        dest: "{{ wildfly_service_systemd_file }}"
-        group: root
-        owner: root
-        mode: '0644'
-        selevel: s0
-        serole: object_r
-        setype: systemd_unit_file_t
-        seuser: system_u
-      register: daemon_reload
-      vars:
+        server_config_template: "{{ wildfly_systemd_service_config_file_template }}"
+        server_config: "{{ wildfly_service_systemd_file }}"
         jboss_cli_deploy_controller: "{{ wildfly_systemd_jboss_cli_controller_host }}:{{ (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) + (wildfly_port_range_offset | int) }}"
-
-    - name: "Perform daemon-reload to ensure the changes are picked up"
-      ansible.builtin.systemd:
-        daemon_reload: true
-      when:
-        - daemon_reload is defined or daemon_reload_env is defined
-        - daemon_reload.changed or daemon_reload_env.changed
-
-    - name: "Ensure service is started"
-      ansible.builtin.include_tasks: service.yml
-      vars:
-        instance_state: "started"

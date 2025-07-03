@@ -1,7 +1,7 @@
 wildfly subs role
 ====================
 
-This role is designed to help set up JBoss EAP (Red Hat product based on Wildfly) using RPM
+This role is designed to help set up JBoss EAP (Red Hat product based on WildFly) using RPM
 delivered by Red Hat to its customer. The playbook provides handy reusable content to enable
 or disable a repo and install EAP using the group install feature.
 

@@ -1,4 +1,4 @@
-For safety reason, it's not possible to add a script to the repository. Copy the script below and renamed it to .sh to run in order to bump the version of Wildfly use the script below:
+For safety reason, it's not possible to add a script to the repository. Copy the script below and renamed it to .sh to run in order to bump the version of WildFly use the script below:
     #!/bin/bash
     readonly INSTALL_DEFAULTS_FILE=${INSTALL_DEFAULTS_FILE:-'roles/wildfly_install/defaults/main.yml'}
     readonly NEW_VERSION=${1}

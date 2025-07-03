@@ -1,7 +1,7 @@
 wildfly migration role
 ======================
 
-This role encapsulate the [Wildfly Migration Tool](https://docs.wildfly.org/28/Migration_Guide.html) to allow using it as part of a Playbook.
+This role encapsulate the [WildFly Migration Tool](https://docs.wildfly.org/28/Migration_Guide.html) to allow using it as part of a Playbook.
 
 Requirements
 ------------

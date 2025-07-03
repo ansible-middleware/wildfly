@@ -1,4 +1,4 @@
-# Wildfly Collection for Ansible - middleware_automation.wildfly
+# WildFly Collection for Ansible - middleware_automation.wildfly
 
 <!--start build_status -->
 [![Build Status](https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml)
@@ -6,11 +6,11 @@
 
 ## About
 
-This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.
+This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver WildFly within the configuration management tool Ansible.
 
-### I know nothing about Ansible, but I want to install Wildfly, can I?
+### I know nothing about Ansible, but I want to install WildFly, can I?
 
-Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install Wildfly on):
+Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install WildFly on):
 
     $ ansible-galaxy collection install middleware_automation.wildfly
     $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
@@ -60,9 +60,9 @@ or via the included requirements file:
     $ ansible-galaxy collection build .
 
 
-## Using the collection to install and run Wildfly on target hosts
+## Using the collection to install and run WildFly on target hosts
 
-The collection comes with a simple playbook that allows to directly install and run Wildfly:
+The collection comes with a simple playbook that allows to directly install and run WildFly:
 
     $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 
@@ -84,7 +84,7 @@ Overrideable variables are documented in the roles wildfly_install, wildfly_syst
 <!--start support -->
 <!--end support -->
 
-## Using the collection to customize Wildfly configuration
+## Using the collection to customize WildFly configuration
 
 Regarding the configuration of the Java app server itself, the Ansible collection has a specific strategy, designed to ensure idempotency of the resulting setup, but also ensure Ansible has the capacity to fine-tune, as much as needed, the server.
 
@@ -96,7 +96,7 @@ A last option is to use JBoss cli queries, within the Ansible, but it requires m
 
 ## A note on domain mode
 
-This collection does not provides any support to use Wildfly's domain mode. The rationale behind this decision is that this Wildfly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of Wildfly JEE servers.
+This collection does not provides any support to use WildFly's domain mode. The rationale behind this decision is that this WildFly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of WildFly JEE servers.
 
 ## License
 

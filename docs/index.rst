@@ -1,6 +1,6 @@
-.. Red Hat middleware_automation Wildfly Ansible Collection documentation main file
+.. Red Hat middleware_automation WildFly Ansible Collection documentation main file
 
-Welcome to Wildfly Collection documentation
+Welcome to WildFly Collection documentation
 ===========================================
 
 .. toctree::
@@ -31,7 +31,7 @@ Welcome to Wildfly Collection documentation
 
    Infinispan / Red Hat Data Grid <https://ansible-middleware.github.io/infinispan/>
    Keycloak / Red Hat Single Sign-On <https://ansible-middleware.github.io/keycloak/>
-   Wildfly / Red Hat JBoss EAP <https://ansible-middleware.github.io/wildfly/>
+   WildFly / Red Hat JBoss EAP <https://ansible-middleware.github.io/wildfly/>
    Tomcat / Red Hat JWS <https://ansible-middleware.github.io/jws/>
    ActiveMQ / Red Hat AMQ Broker <https://ansible-middleware.github.io/amq/>
    Kafka / Red Hat AMQ Streams <https://ansible-middleware.github.io/amq_streams/>

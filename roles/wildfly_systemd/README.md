@@ -1,7 +1,7 @@
 wildfly systemd role
 ====================
 
-Role setting up a systemd service to manage a Wildfly app server instance, using basic information on server installation.
+Role setting up a systemd service to manage a WildFly app server instance, using basic information on server installation.
 
 Note: default values are based on the one of the wildfly_install role.
 
@@ -18,9 +18,9 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_user`| posix user account for wildfly service | `wildfly` |
 |`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
-|`wildfly_version`| Wildfly version to install | `35.0.0.Final` |
-|`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
-|`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
+|`wildfly_version`| WildFly version to install | `35.0.0.Final` |
+|`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
+|`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |
 |`wildfly_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
 |`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `100` |

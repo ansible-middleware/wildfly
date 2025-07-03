@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('../plugins/module_utils/'))
 
 # -- Project information -----------------------------------------------------
 
-project = 'Wildfly Ansible Collection'
+project = 'WildFly Ansible Collection'
 copyright = '{y}, Red Hat, Inc.'.format(y=datetime.date.today().year)
 author = 'Red Hat, Inc.'
 
@@ -109,7 +109,7 @@ html_static_path = []
 # -- Options for HTMLHelp output ---------------------------------------------
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'WildflyCollectionDoc'
+htmlhelp_basename = 'WildFlyCollectionDoc'
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -136,7 +136,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'WildflyCollection.tex', 'Red Hat JBoss EAP Ansible Collection Documentation',
+    (master_doc, 'WildFlyCollection.tex', 'Red Hat JBoss EAP Ansible Collection Documentation',
      'Red Hat, Inc.', 'manual'),
 ]
 
@@ -157,8 +157,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'WildflyCollection', 'Red Hat JBoss EAP Ansible Collection Documentation',
-     author, 'WildflyCollection', 'One line description of project.',
+    (master_doc, 'WildFlyCollection', 'Red Hat JBoss EAP Ansible Collection Documentation',
+     author, 'WildFlyCollection', 'One line description of project.',
      'Miscellaneous'),
 ]
 

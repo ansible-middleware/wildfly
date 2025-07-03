@@ -27,11 +27,11 @@ argument_specs:
                 type: "str"
             wildfly_version:
                 default: "35.0.0.Final"
-                description: "Wildfly version to install"
+                description: "WildFly version to install"
                 type: "str"
             wildfly_home:
                 default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
-                description: "Wildfly installation directory"
+                description: "WildFly installation directory"
                 type: "str"
             wildfly_user:
                 default: "wildfly"

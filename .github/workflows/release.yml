@@ -25,5 +25,5 @@ jobs:
         with:
           token: ${{ secrets.TRIGGERING_PAT }}
           repository: ${{ matrix.repo }}
-          event-type: "Dependency released - Wildfly v${{ needs.release.outputs.tag_version }}"
+          event-type: "Dependency released - WildFly v${{ needs.release.outputs.tag_version }}"
           client-payload: '{ "github": ${{toJson(github)}} }'

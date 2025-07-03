@@ -1,7 +1,7 @@
 wildfly uninstall role
 ======================
 
-Role to uninstall Wildfly and clean the target nodes.
+Role to uninstall WildFly and clean the target nodes.
 
 <!--start argument_specs-->
 Role Defaults

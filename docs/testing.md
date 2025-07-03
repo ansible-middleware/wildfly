@@ -19,7 +19,7 @@ at every collection release to ensure non-breaking changes and consistent behavi
 The repository are:
 
  - [Flange demo](https://github.com/ansible-middleware/flange-demo)
-   A deployment of Wildfly cluster integrated with keycloak and infinispan.
+   A deployment of WildFly cluster integrated with keycloak and infinispan.
  - [CrossDC keycloak demo](https://github.com/ansible-middleware/wildfly-cluster-demo)
    A clustered installation of EAP.
 

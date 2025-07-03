@@ -9,7 +9,7 @@
     - name: Populate service facts
       ansible.builtin.service_facts:
 
-    - name: "Display state of the Wildfly service"
+    - name: "Display state of the WildFly service"
       ansible.builtin.debug:
         msg: "{{ ansible_facts.services['wildfly.service'] }}"
 

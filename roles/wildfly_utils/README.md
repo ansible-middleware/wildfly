@@ -22,12 +22,12 @@ Role Defaults
 |`jboss_cli_controller_host`| Hostname for connecting to cli | `localhost` |
 |`jboss_cli_controller_port`| Port for connecting to cli | `9990` |
 |`wildfly_no_restart_after_patch`| When true, skip restarting after applying a cumulative patch | `False` |
-|`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
-|`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
+|`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
+|`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
 |`wildfly_prospero_version`| Version of Prospero to use | `1.3.0.Beta1` |
 |`wildfly_prospero_name`| Constant for the name of the prospero tool | `prospero` |
 |`wildfly_prospero_install_dir`| Path to the installation dir for Prospero | `/opt/prospero` |
-|`wildfly_prospero_profile_name`| Name of the Wildfly profile for the server to install | `wildfly` |
+|`wildfly_prospero_profile_name`| Name of the WildFly profile for the server to install | `wildfly` |
 |`wildfly_prospero_scenario_enable`| Specificy to Molecule if it should run the Prospero scenario | `True` |
 |`wildfly_prospero_archive_name`| Name of the Prospero archive | `{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip` |
 |`wildfly_prospero_home`| Home of the prospero tool | `{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}` |

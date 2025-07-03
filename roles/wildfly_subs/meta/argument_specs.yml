@@ -27,7 +27,7 @@ argument_specs:
                 type: "str"
             wildfly_rpm_install_root_dir:
                 default: "/opt/rh/eap7/"
-                description: "Wildfly or JBoss EAP install folder"
+                description: "WildFly or JBoss EAP install folder"
                 type: "str"
             eap_group_install_name:
                 default: "jboss-eap7-jdk11"

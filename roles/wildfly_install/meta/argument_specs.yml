@@ -3,11 +3,11 @@ argument_specs:
         options:
             wildfly_version:
                 default: "35.0.0.Final"
-                description: "Wildfly version to install"
+                description: "WildFly version to install"
                 type: "str"
             wildfly_archive_filename:
                 default: "wildfly-{{ wildfly_version }}.zip"
-                description: "Wildfly download archive name"
+                description: "WildFly download archive name"
                 type: "str"
             wildfly_download_baseurl:
                 default: "https://github.com/wildfly/wildfly/releases/download"
@@ -19,11 +19,11 @@ argument_specs:
                 type: "str"
             wildfly_home:
                 default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
-                description: "Wildfly installation directory"
+                description: "WildFly installation directory"
                 type: "str"
             wildfly_install_download_url:
                 default: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
-                description: "Wildfly download URL"
+                description: "WildFly download URL"
                 type: "str"
             wildfly_archive_dir:
                 default: "{{ wildfly_install_workdir }}"

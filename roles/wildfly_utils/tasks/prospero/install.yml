@@ -5,10 +5,26 @@
   register: local_path
   delegate_to: localhost
 
+- name: Fetch latest Prospero release information from GitHub API
+  ansible.builtin.uri:
+    url: "{{ wildfly_propsero_release_url }}"
+    method: GET
+    return_content: true
+  register: prospero_release_info
+  delegate_to: localhost
+  run_once: true
+
+- name: Set fact for the latest Prospero version and download URL
+  ansible.builtin.set_fact:
+    wildfly_prospero_version: "{{ prospero_release_info.json.tag_name }}"
+    wildfly_prospero_download_url: "{{ (prospero_release_info.json.assets | selectattr('name', 'match', 'prospero-build-.*\\.zip') | first).browser_download_url }}"
+  delegate_to: localhost
+  run_once: true
+
 - name: Set download paths
   ansible.builtin.set_fact:
-    full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_archive_name }}"
-    local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_archive_name }}"
+    full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+    local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
 
 - name: "Check target archive: {{ full_path_to_prospero_archive }}"
   ansible.builtin.stat:

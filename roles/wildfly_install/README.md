@@ -15,7 +15,7 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_version`| Wildfly version to install | `35.0.0.Final` |
+|`wildfly_version`| Wildfly version to install | `37.0.0.Final` |
 |`wildfly_archive_filename`| Wildfly download archive name | `wildfly-{{ wildfly_version }}.zip` |
 |`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
 |`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |

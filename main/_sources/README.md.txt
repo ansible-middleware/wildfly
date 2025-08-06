@@ -1,7 +1,7 @@
 # Wildfly Collection for Ansible - middleware_automation.wildfly
 
 <!--start build_status -->
-[![Build Status](https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg?branch=main)](https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml)
+[![Build Status](https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg)](https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml)
 <!--end build_status -->
 
 ## About

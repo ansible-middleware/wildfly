@@ -545,3 +545,5 @@ releases:
     fragments:
     - 280.yaml
     release_date: '2024-12-18'
+  1.5.7:
+    release_date: '2025-08-24'

@@ -4,7 +4,7 @@
     that:
       - validation_query is defined
       - wildfly_home is defined
-      - wildfly_controller_port
+      - wildfly_controller_port is defined
     quiet: true
     fail_msg: "Missing required parameters"
 

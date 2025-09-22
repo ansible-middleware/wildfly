@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wildfly Collection for Ansible - middleware_automation.wildfly &mdash; Wildfly Ansible Collection  documentation</title>
+  <title>WildFly Collection for Ansible - middleware_automation.wildfly &mdash; WildFly Ansible Collection  documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=41de9001" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="_static/antsibull-minimal.css" />
@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Role Index" href="roles/index.html" />
-    <link rel="prev" title="Welcome to Wildfly Collection documentation" href="index.html" /> 
+    <link rel="prev" title="Welcome to WildFly Collection documentation" href="index.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -34,7 +34,7 @@
           
           
           <a href="index.html" class="icon icon-home">
-            Wildfly Ansible Collection
+            WildFly Ansible Collection
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -46,9 +46,9 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Wildfly Collection for Ansible - middleware_automation.wildfly</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">WildFly Collection for Ansible - middleware_automation.wildfly</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#about">About</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">I know nothing about Ansible, but I want to install Wildfly, can I?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">I know nothing about Ansible, but I want to install WildFly, can I?</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#ansible-version-compatibility">Ansible version compatibility</a></li>
@@ -59,11 +59,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#building-the-collection">Building the collection</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts">Using the collection to install and run Wildfly on target hosts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts">Using the collection to install and run WildFly on target hosts</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#dependencies">Dependencies</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-customize-wildfly-configuration">Using the collection to customize Wildfly configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-customize-wildfly-configuration">Using the collection to customize WildFly configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-note-on-domain-mode">A note on domain mode</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
@@ -84,7 +84,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/infinispan/">Infinispan / Red Hat Data Grid</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/keycloak/">Keycloak / Red Hat Single Sign-On</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">Wildfly / Red Hat JBoss EAP</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">WildFly / Red Hat JBoss EAP</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/jws/">Tomcat / Red Hat JWS</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq/">ActiveMQ / Red Hat AMQ Broker</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq_streams/">Kafka / Red Hat AMQ Streams</a></li>
@@ -98,7 +98,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Wildfly Ansible Collection</a>
+          <a href="index.html">WildFly Ansible Collection</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -106,7 +106,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Wildfly Collection for Ansible - middleware_automation.wildfly</li>
+      <li class="breadcrumb-item active">WildFly Collection for Ansible - middleware_automation.wildfly</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
       </li>
@@ -117,16 +117,16 @@
            <div itemprop="articleBody">
              
   <section id="wildfly-collection-for-ansible-middleware-automation-wildfly">
-<h1>Wildfly Collection for Ansible - middleware_automation.wildfly<a class="headerlink" href="#wildfly-collection-for-ansible-middleware-automation-wildfly" title="Link to this heading"></a></h1>
+<h1>WildFly Collection for Ansible - middleware_automation.wildfly<a class="headerlink" href="#wildfly-collection-for-ansible-middleware-automation-wildfly" title="Link to this heading"></a></h1>
 <!--start build_status -->
 <p><a class="reference external" href="https://github.com/ansible-middleware/wildfly/actions/workflows/ci.yml"><img alt="Build Status" src="https://github.com/ansible-middleware/wildfly/workflows/CI/badge.svg" /></a></p>
 <!--end build_status -->
 <section id="about">
 <h2>About<a class="headerlink" href="#about" title="Link to this heading"></a></h2>
-<p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver Wildfly within the configuration management tool Ansible.</p>
+<p>This Ansible Collection provides several roles to help install, setup and maintain Java JEE appserver WildFly within the configuration management tool Ansible.</p>
 <section id="i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i">
-<h3>I know nothing about Ansible, but I want to install Wildfly, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i" title="Link to this heading"></a></h3>
-<p>Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install Wildfly on):</p>
+<h3>I know nothing about Ansible, but I want to install WildFly, can I?<a class="headerlink" href="#i-know-nothing-about-ansible-but-i-want-to-install-wildfly-can-i" title="Link to this heading"></a></h3>
+<p>Yes, once Ansible is installed on your computer, you can simply run the following command (note that the inventory file needs to be populated with the name(s) of the machine(s) you wish to install WildFly on):</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-galaxy collection install middleware_automation.wildfly
 $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </pre></div>
@@ -183,8 +183,8 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </div>
 </section>
 <section id="using-the-collection-to-install-and-run-wildfly-on-target-hosts">
-<h2>Using the collection to install and run Wildfly on target hosts<a class="headerlink" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts" title="Link to this heading"></a></h2>
-<p>The collection comes with a simple playbook that allows to directly install and run Wildfly:</p>
+<h2>Using the collection to install and run WildFly on target hosts<a class="headerlink" href="#using-the-collection-to-install-and-run-wildfly-on-target-hosts" title="Link to this heading"></a></h2>
+<p>The collection comes with a simple playbook that allows to directly install and run WildFly:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </pre></div>
 </div>
@@ -207,7 +207,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </section>
 </section>
 <section id="using-the-collection-to-customize-wildfly-configuration">
-<h2>Using the collection to customize Wildfly configuration<a class="headerlink" href="#using-the-collection-to-customize-wildfly-configuration" title="Link to this heading"></a></h2>
+<h2>Using the collection to customize WildFly configuration<a class="headerlink" href="#using-the-collection-to-customize-wildfly-configuration" title="Link to this heading"></a></h2>
 <p>Regarding the configuration of the Java app server itself, the Ansible collection has a specific strategy, designed to ensure idempotency of the resulting setup, but also ensure Ansible has the capacity to fine-tune, as much as needed, the server.</p>
 <p>First, the collection will use a template configuration file as a base (by default, it’s the standalone.xml provided with the server files). This file is first copy into wildfly.yml (can be renamed and relocated if needed to). Then, the server starts with this copy in read-only. So to apply any change to the configuration after this point, the user will need to use, either the YAML Config or the JBoss CLI. This ensures that the configuration can change can be performed by Ansible in an idempotent fashion.</p>
 <p>Depending on the number of configuration changes and if the server is a new deployment, the user can decide to implement its configuration changes directly in the base template (for instance removing some subsystem from the standalone-full.xml and use this modified file as a base) or perform all the changes using the Yaml Config. The latter is generally the better approach, because it will also work with a running system, while the previous approach requires to deploy again the configuration file.</p>
@@ -215,7 +215,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 </section>
 <section id="a-note-on-domain-mode">
 <h2>A note on domain mode<a class="headerlink" href="#a-note-on-domain-mode" title="Link to this heading"></a></h2>
-<p>This collection does not provides any support to use Wildfly’s domain mode. The rationale behind this decision is that this Wildfly feature overlaps a lot with Ansible and it’s <strong>not recommended</strong> and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of Wildfly JEE servers.</p>
+<p>This collection does not provides any support to use WildFly’s domain mode. The rationale behind this decision is that this WildFly feature overlaps a lot with Ansible and it’s <strong>not recommended</strong> and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of WildFly JEE servers.</p>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
@@ -227,7 +227,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Wildfly Collection documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to WildFly Collection documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="roles/index.html" class="btn btn-neutral float-right" title="Role Index" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

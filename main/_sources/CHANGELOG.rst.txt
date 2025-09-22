@@ -114,7 +114,7 @@ Bugfixes
 - Fix uninstall_role to work, out of the box, with the wildfly_install defaults. `#197 <https://github.com/ansible-middleware/wildfly/pull/197>`_
 - Fix wildfly_install changing ownership of system directories `#210 <https://github.com/ansible-middleware/wildfly/pull/210>`_
 - JBoss EAP 7.4.7+ patching fails on openjdk17 if elytron is not enabled `#203 <https://github.com/ansible-middleware/wildfly/pull/203>`_
-- Wildfly user account should be in wildfly_group as primary group `#202 <https://github.com/ansible-middleware/wildfly/pull/202>`_
+- WildFly user account should be in wildfly_group as primary group `#202 <https://github.com/ansible-middleware/wildfly/pull/202>`_
 
 v1.5.0
 ======
@@ -169,7 +169,7 @@ Minor Changes
 -------------
 
 - Cleanup and reorganize Prospero playbooks `#136 <https://github.com/ansible-middleware/wildfly/pull/136>`_
-- Update to Wildfly 29 `#135 <https://github.com/ansible-middleware/wildfly/pull/135>`_
+- Update to WildFly 29 `#135 <https://github.com/ansible-middleware/wildfly/pull/135>`_
 
 Bugfixes
 --------
@@ -219,7 +219,7 @@ Minor Changes
 - Add support for firewalld `#106 <https://github.com/ansible-middleware/wildfly/pull/106>`_
 - Implement JBossNetwork API client for downloading install archives `#107 <https://github.com/ansible-middleware/wildfly/pull/107>`_
 - Install: add prospero as alternative install mechanism `#102 <https://github.com/ansible-middleware/wildfly/pull/102>`_
-- Update default Wildfly version to 28 `#103 <https://github.com/ansible-middleware/wildfly/pull/103>`_
+- Update default WildFly version to 28 `#103 <https://github.com/ansible-middleware/wildfly/pull/103>`_
 
 v1.3.1
 ======

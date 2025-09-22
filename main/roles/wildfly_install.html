@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wildfly install role &mdash; Wildfly Ansible Collection  documentation</title>
+  <title>wildfly install role &mdash; WildFly Ansible Collection  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=41de9001" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/antsibull-minimal.css" />
@@ -34,7 +34,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Wildfly Ansible Collection
+            WildFly Ansible Collection
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -46,7 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">WildFly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">wildfly driver role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_firewalld.html">wildfly firewalld role</a></li>
@@ -86,7 +86,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/infinispan/">Infinispan / Red Hat Data Grid</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/keycloak/">Keycloak / Red Hat Single Sign-On</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">Wildfly / Red Hat JBoss EAP</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">WildFly / Red Hat JBoss EAP</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/jws/">Tomcat / Red Hat JWS</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq/">ActiveMQ / Red Hat AMQ Broker</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq_streams/">Kafka / Red Hat AMQ Streams</a></li>
@@ -100,7 +100,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Wildfly Ansible Collection</a>
+          <a href="../index.html">WildFly Ansible Collection</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -121,7 +121,7 @@
              
   <section id="wildfly-install-role">
 <h1>wildfly install role<a class="headerlink" href="#wildfly-install-role" title="Link to this heading"></a></h1>
-<p>A role to automate the download and installation of the Wildfly JEE server.</p>
+<p>A role to automate the download and installation of the WildFly JEE server.</p>
 <section id="requirements">
 <h2>Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
 <p>Requirements on the target system are ensured by the role.</p>
@@ -138,11 +138,11 @@
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
-<td class="text-left"><p>Wildfly version to install</p></td>
+<td class="text-left"><p>WildFly version to install</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">37.0.0.Final</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_archive_filename</span></code></p></td>
-<td class="text-left"><p>Wildfly download archive name</p></td>
+<td class="text-left"><p>WildFly download archive name</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}.zip</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_download_baseurl</span></code></p></td>
@@ -150,15 +150,15 @@
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://github.com/wildfly/wildfly/releases/download</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_workdir</span></code></p></td>
-<td class="text-left"><p>Wildfly installation directory (where the server files are unzipped)</p></td>
+<td class="text-left"><p>WildFly installation directory (where the server files are unzipped)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>Wildfly installation directory (WILDFLY_HOME)</p></td>
+<td class="text-left"><p>WildFly installation directory (WILDFLY_HOME)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_download_url</span></code></p></td>
-<td class="text-left"><p>Wildfly download URL</p></td>
+<td class="text-left"><p>WildFly download URL</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_download_baseurl</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_archive_filename</span> <span class="pre">}}</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_archive_dir</span></code></p></td>
@@ -203,7 +203,7 @@
 <h2>Example Playbooks<a class="headerlink" href="#example-playbooks" title="Link to this heading"></a></h2>
 <section id="default-install">
 <h3>Default Install<a class="headerlink" href="#default-install" title="Link to this heading"></a></h3>
-<p>Installs the default version of Wildfly to the default location with the default user.</p>
+<p>Installs the default version of WildFly to the default location with the default user.</p>
 <div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">hosts_group_name</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="s1">&#39;localhost&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
@@ -216,7 +216,7 @@
 </section>
 <section id="explicit-location-and-version">
 <h3>Explicit Location and Version<a class="headerlink" href="#explicit-location-and-version" title="Link to this heading"></a></h3>
-<p>Older Wildfly versions can be download from outside Github.</p>
+<p>Older WildFly versions can be download from outside Github.</p>
 <div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">hosts_group_name</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="s1">&#39;localhost&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>

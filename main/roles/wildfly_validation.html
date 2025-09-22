@@ -6,7 +6,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>wildfly validation role &mdash; Wildfly Ansible Collection  documentation</title>
+  <title>wildfly validation role &mdash; WildFly Ansible Collection  documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=41de9001" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
       <link rel="stylesheet" type="text/css" href="../_static/antsibull-minimal.css" />
@@ -34,7 +34,7 @@
           
           
           <a href="../index.html" class="icon icon-home">
-            Wildfly Ansible Collection
+            WildFly Ansible Collection
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -46,7 +46,7 @@
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">User documentation</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../README.html">Wildfly Collection for Ansible - middleware_automation.wildfly</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../README.html">WildFly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">wildfly driver role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_firewalld.html">wildfly firewalld role</a></li>
@@ -60,7 +60,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#example-playbook">Example playbook</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#wildfly-service-using-an-offset-port">Wildfly service using an offset port</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wildfly-service-using-an-offset-port">WildFly service using an offset port</a></li>
 </ul>
 </li>
 </ul>
@@ -82,7 +82,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/infinispan/">Infinispan / Red Hat Data Grid</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/keycloak/">Keycloak / Red Hat Single Sign-On</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">Wildfly / Red Hat JBoss EAP</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/wildfly/">WildFly / Red Hat JBoss EAP</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/jws/">Tomcat / Red Hat JWS</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq/">ActiveMQ / Red Hat AMQ Broker</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://ansible-middleware.github.io/amq_streams/">Kafka / Red Hat AMQ Streams</a></li>
@@ -96,7 +96,7 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">Wildfly Ansible Collection</a>
+          <a href="../index.html">WildFly Ansible Collection</a>
       </nav>
 
       <div class="wy-nav-content">
@@ -143,19 +143,19 @@ and the associated systemd service is currently running.</p>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_workdir</span></code></p></td>
-<td class="text-left"><p>Wildfly installation directory (where the server files are unzipped)</p></td>
+<td class="text-left"><p>WildFly installation directory (where the server files are unzipped)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>Wildfly installation directory (WILDFLY_HOME)</p></td>
+<td class="text-left"><p>WildFly installation directory (WILDFLY_HOME)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_http_port</span></code></p></td>
-<td class="text-left"><p>Port to verify the Wildfly server is listening to requests</p></td>
+<td class="text-left"><p>Port to verify the WildFly server is listening to requests</p></td>
 <td class="text-left"><p>8080</p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_controller_port</span></code></p></td>
-<td class="text-left"><p>Port to use to verify CLI connection to the Wildfly server</p></td>
+<td class="text-left"><p>Port to use to verify CLI connection to the WildFly server</p></td>
 <td class="text-left"><p>9990</p></td>
 </tr>
 </tbody>
@@ -171,8 +171,8 @@ and the associated systemd service is currently running.</p>
 <section id="example-playbook">
 <h2>Example playbook<a class="headerlink" href="#example-playbook" title="Link to this heading"></a></h2>
 <section id="wildfly-service-using-an-offset-port">
-<h3>Wildfly service using an offset port<a class="headerlink" href="#wildfly-service-using-an-offset-port" title="Link to this heading"></a></h3>
-<p>Validate a Wildfly service that was created using port offset of 100.</p>
+<h3>WildFly service using an offset port<a class="headerlink" href="#wildfly-service-using-an-offset-port" title="Link to this heading"></a></h3>
+<p>Validate a WildFly service that was created using port offset of 100.</p>
 <div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
 <span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Verify</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>

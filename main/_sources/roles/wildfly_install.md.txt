@@ -1,7 +1,7 @@
 wildfly install role
 ====================
 
-A role to automate the download and installation of the Wildfly JEE server.
+A role to automate the download and installation of the WildFly JEE server.
 
 
 Requirements
@@ -15,12 +15,12 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_version`| Wildfly version to install | `37.0.0.Final` |
-|`wildfly_archive_filename`| Wildfly download archive name | `wildfly-{{ wildfly_version }}.zip` |
+|`wildfly_version`| WildFly version to install | `37.0.0.Final` |
+|`wildfly_archive_filename`| WildFly download archive name | `wildfly-{{ wildfly_version }}.zip` |
 |`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
-|`wildfly_install_workdir`| Wildfly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
-|`wildfly_home`| Wildfly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
-|`wildfly_install_download_url`| Wildfly download URL | `{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}` |
+|`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
+|`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
+|`wildfly_install_download_url`| WildFly download URL | `{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}` |
 |`wildfly_archive_dir`| Target download directory | `{{ wildfly_install_workdir }}` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |
 |`wildfly_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
@@ -42,7 +42,7 @@ Role Variables
 
 ### Default Install
 
-Installs the default version of Wildfly to the default location with the default user.
+Installs the default version of WildFly to the default location with the default user.
 
 ```
 ---
@@ -56,7 +56,7 @@ Installs the default version of Wildfly to the default location with the default
 
 ### Explicit Location and Version
 
-Older Wildfly versions can be download from outside Github.
+Older WildFly versions can be download from outside Github.
 
 ```
 ---

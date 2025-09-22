@@ -1,5 +1,5 @@
 ---
-- name: Ensure Wildfly is install and running as a service
+- name: Ensure WildFly is install and running as a service
   hosts: all
   vars_files:
     - vars/vars.yml

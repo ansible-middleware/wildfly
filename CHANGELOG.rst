@@ -6,6 +6,14 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.8
+======
+
+Major Changes
+-------------
+
+- AMW-416 Make wildfly collection compliant with ansible-core 2.19 `#296 <https://github.com/ansible-middleware/wildfly/pull/296>`_
+
 v1.5.7
 ======
 

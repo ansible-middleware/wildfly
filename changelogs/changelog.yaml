@@ -547,3 +547,12 @@ releases:
     release_date: '2024-12-18'
   1.5.7:
     release_date: '2025-08-24'
+  1.5.8:
+    changes:
+      major_changes:
+      - 'AMW-416 Make wildfly collection compliant with ansible-core 2.19 `#296 <https://github.com/ansible-middleware/wildfly/pull/296>`_
+
+        '
+    fragments:
+    - 296.yaml
+    release_date: '2025-09-23'

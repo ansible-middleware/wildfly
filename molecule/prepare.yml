@@ -39,7 +39,7 @@
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
-          - java-17-openjdk
+          - java-17-openjdk-headless
           - procps-ng
           - tzdata-java
         state: present

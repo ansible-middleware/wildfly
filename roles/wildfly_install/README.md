@@ -44,8 +44,8 @@ Role Variables
 
 Installs the default version of WildFly to the default location with the default user.
 
-```
----
+```yaml
+
 - name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
   collections:
@@ -58,8 +58,8 @@ Installs the default version of WildFly to the default location with the default
 
 Older WildFly versions can be download from outside Github.
 
-```
----
+```yaml
+
 - name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
   vars:

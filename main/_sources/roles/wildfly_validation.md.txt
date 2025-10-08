@@ -31,8 +31,7 @@ Role Variables
 
 Validate a WildFly service that was created using port offset of 100.
 
-```
----
+```yaml
 - name: Verify
   hosts: all
   gather_facts: false

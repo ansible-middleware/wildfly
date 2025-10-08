@@ -204,9 +204,8 @@
 <section id="default-install">
 <h3>Default Install<a class="headerlink" href="#default-install" title="Link to this heading"></a></h3>
 <p>Installs the default version of WildFly to the default location with the default user.</p>
-<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
-<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">hosts_group_name</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="s1">&#39;localhost&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hosts_group_name</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(&#39;localhost&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly</span>
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
@@ -217,9 +216,8 @@
 <section id="explicit-location-and-version">
 <h3>Explicit Location and Version<a class="headerlink" href="#explicit-location-and-version" title="Link to this heading"></a></h3>
 <p>Older WildFly versions can be download from outside Github.</p>
-<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
-<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">hosts_group_name</span> <span class="o">|</span> <span class="nf">default</span><span class="o">(</span><span class="s1">&#39;localhost&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
+<span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hosts_group_name</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(&#39;localhost&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">wildfly_version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;24.0.1.Final&#39;</span>
 <span class="w">    </span><span class="nt">wildfly_download_baseurl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://download.jboss.org/wildfly&quot;</span>

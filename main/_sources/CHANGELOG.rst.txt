@@ -6,8 +6,11 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
-v1.5.8-devel
+v1.5.9-devel
 ============
+
+v1.5.8
+======
 
 Major Changes
 -------------

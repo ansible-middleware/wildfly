@@ -46,7 +46,7 @@ argument_specs:
                 description: "posix group for wildfly"
                 type: "str"
             wildfly_java_package_name:
-                default: "java-11-openjdk-headless"
+                default: "java-21-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
             wildfly_offline_install:
@@ -144,8 +144,8 @@ argument_specs:
                 description: "Supported OpenJDK and RHEL version for EAP"
                 default:
                   eap7:
-                    openjdk: ['1.8', '11', '17']
-                    rhel: ['7', '8', '9']
+                    openjdk: ['1.8', '11', '17', '21']
+                    rhel: ['7', '8', '9', '10']
                   eap8:
-                    openjdk: ['11', '17']
-                    rhel: ['8', '9']
+                    openjdk: ['11', '17', '21']
+                    rhel: ['8', '9', '10']

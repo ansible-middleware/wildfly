@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.9-devel
 ============
 
+Major Changes
+-------------
+
+- AMW-431 Ensure wildfly collection is compatible with RHEL 10 `#301 <https://github.com/ansible-middleware/wildfly/pull/301>`_
+
 v1.5.8
 ======
 

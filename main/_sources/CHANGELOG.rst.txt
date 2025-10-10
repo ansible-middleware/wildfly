@@ -25,6 +25,16 @@ Major Changes
 v1.5.7
 ======
 
+Major Changes
+-------------
+
+- Update WildFly version 37.0.0.Final in wildfly collection `#294 <https://github.com/ansible-middleware/wildfly/pull/237>`_
+
+Minor Changes
+-------------
+
+- Compute Prospero version from GitHub release `#290 <https://github.com/ansible-middleware/wildfly/pull/290>`_
+
 v1.5.6
 ======
 
@@ -51,6 +61,11 @@ Bugfixes
 
 v1.5.4
 ======
+
+Minor Changes
+-------------
+
+- Update all molecule scenario to use UBI9 instead of UBI8 `#265 <https://github.com/ansible-middleware/wildfly/pull/265>`_
 
 v1.5.3
 ======

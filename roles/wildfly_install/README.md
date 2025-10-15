@@ -26,7 +26,7 @@ Role Defaults
 |`wildfly_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
 |`wildfly_user`| posix user account for wildfly | `wildfly` |
 |`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
-|`wildfly_java_package_name`| RHEL java rpm package | `java-21-openjdk-headless` |
+|`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk-headless` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 
 

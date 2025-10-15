@@ -42,7 +42,7 @@ argument_specs:
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
             wildfly_java_package_name:
-                default: "java-21-openjdk-headless"
+                default: "java-11-openjdk-headless"
                 description: "RHEL java rpm package"
                 type: "str"
             wildfly_systemd_java_home:

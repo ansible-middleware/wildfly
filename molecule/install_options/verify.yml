@@ -4,7 +4,7 @@
     wildfly_install_workdir: /apps/
     wildfly_user: mware
     wildfly_group: sysgroup
-    wildfly_java_package_name: java-21-openjdk-headless
+    wildfly_java_package_name: java-17-openjdk-headless
     wildfly_validation_skip_jdbc_drivers_check: false
 
 - name: Validation
@@ -12,5 +12,5 @@
   tasks:
     - name: Verify we are running on requested jvm
       ansible.builtin.shell: |
-        ps -ef | grep /etc/alternatives/jre_21/bin/java | grep -v grep
+        ps -ef | grep /etc/alternatives/jre_17/bin/java | grep -v grep
       changed_when: False

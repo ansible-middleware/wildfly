@@ -12,7 +12,7 @@ wildfly_config_base: 'standalone.xml'
 wildfly_config_custom_file: ''
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_java_version: 21
+wildfly_java_version: 17
 wildfly_java_package_name: "java-{{ wildfly_java_version }}-openjdk-headless"
 wildfly_install_force_reinstall_config_base: false
 

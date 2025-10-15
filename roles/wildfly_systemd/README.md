@@ -34,7 +34,7 @@ Role Defaults
 |`wildfly_service_config_file_location`| Path for wildfly systemd unit file | `/etc/sysconfig` |
 |`wildfly_enable_yml_config`| Enable yaml file configuration feature (WFCORE5343) | `False` |
 |`wildfly_yml_configs`| List of filenames for wildfly configuration bootstrap | `[]` |
-|`wildfly_java_package_name`| RHEL 10 java rpm package | `java-21-openjdk-headless` |
+|`wildfly_java_package_name`| RHEL java rpm package | `java-11-openjdk-headless` |
 |`wildfly_java_opts`| Additional settings for the JVM running wildfly | `-Xmx1024M -Xms512M` |
 |`wildfly_bind_addr`| Bind address for listening to public network | `0.0.0.0` |
 |`wildfly_bind_addr_private`| Bind address for listening to private network |`127.0.0.1` |

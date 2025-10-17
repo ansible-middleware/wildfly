@@ -1,7 +1,7 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '37.0.0.Final'
+wildfly_version: '38.0.0.Final'
 wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
 wildfly_driver_module_dir: "{{ wildfly_home }}/modules/{{ wildfly_driver.module_name | replace('.', '/') }}/main"
 wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"

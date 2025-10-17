@@ -1,7 +1,7 @@
 ---
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '37.0.0.Final'
+wildfly_version: '38.0.0.Final'
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}"
 wildfly_config_base: 'standalone.xml'

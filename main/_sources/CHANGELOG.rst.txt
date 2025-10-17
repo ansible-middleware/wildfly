@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.9-devel
 ============
 
+Major Changes
+-------------
+
+- Make wildfly collection compliant with WildFly 38.0.0.Final version `#304 <https://github.com/ansible-middleware/wildfly/pull/304>`_
+
 v1.5.8
 ======
 

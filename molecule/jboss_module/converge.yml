@@ -1,0 +1,117 @@
+---
+- name: Ensure passwordless sudo is configured
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Ensure passwordless sudo for the test user
+      ansible.builtin.lineinfile:
+        path: /etc/sudoers.d/ansible_user
+        state: present
+        regexp: '^{{ ansible_user }}'
+        line: '{{ ansible_user }} ALL=(ALL) NOPASSWD:ALL'
+        validate: 'visudo -cf %s'
+        mode: '0440'
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      when: 
+        - ansible_user is defined
+        - ansible_user != 'root'
+        - ansible_user_id != 'root'
+      changed_when: false
+      ignore_errors: true
+
+- import_playbook: ../../playbooks/playbook.yml
+  vars:
+    wildfly_install_workdir: /apps/
+    wildfly_user: mware
+    wildfly_group: sysgroup
+    wildfly_java_package_name: java-17-openjdk-headless
+
+- name: Test jboss module
+  hosts: all
+  vars_files:
+    - ../../playbooks/vars/vars.yml
+    - ../apps.yml
+  collections:
+    - middleware_automation.wildfly
+  vars:
+    wildfly_install_workdir: /apps/
+    wildfly_user: mware
+    wildfly_group: sysgroup
+    test_app: "{{ wildfly_apps[0] }}"
+    test_app_path: "{{ test_app.path }}"
+    test_deployment: "{{ test_app.path | basename }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  tasks:
+    - name: Set wildfly_home if not already set
+      ansible.builtin.set_fact:
+        wildfly_home: "{{ wildfly_home | default((wildfly_install_workdir | default('/opt/wildfly/')) + 'wildfly-' + (wildfly_version | default('38.0.0.Final'))) }}"
+      when: wildfly_home is not defined
+
+    - name: Wait for WildFly management interface to be ready
+      ansible.builtin.wait_for:
+        host: "{{ wildfly_bind_addr_management | default('127.0.0.1') }}"
+        port: "{{ (jboss_cli_controller_port | default(9990) | int) + (wildfly_port_range_offset | default(0) | int) }}"
+        delay: 10
+        timeout: 300
+
+    - name: Wait for deployment directory to exist
+      ansible.builtin.wait_for:
+        path: "{{ wildfly_home }}/standalone/deployments"
+        state: present
+        timeout: 60
+
+    - name: Ensure deployment directory has correct permissions
+      ansible.builtin.file:
+        path: "{{ wildfly_home }}/standalone/deployments"
+        state: directory
+        mode: '0755'
+        owner: "{{ wildfly_user | default('wildfly') }}"
+        group: "{{ wildfly_group | default('wildfly') }}"
+
+    - name: Check if test application exists
+      ansible.builtin.stat:
+        path: "{{ test_app_path }}"
+      register: test_app_file_stat
+
+    - name: Download test application if not present
+      ansible.builtin.get_url:
+        url: "{{ test_app.download_url }}"
+        dest: "{{ test_app_path }}"
+        mode: '0644'
+      when: not test_app_file_stat.stat.exists
+
+    - name: Ensure test WAR file has correct ownership
+      ansible.builtin.file:
+        path: "{{ test_app_path }}"
+        owner: "{{ wildfly_user | default('wildfly') }}"
+        group: "{{ wildfly_group | default('wildfly') }}"
+
+    - name: Deploy application using jboss module
+      middleware_automation.wildfly.jboss:
+        src: "{{ test_app_path }}"
+        deployment: "{{ test_deployment }}"
+        deploy_path: "{{ wildfly_home }}/standalone/deployments"
+        state: present
+        timeout: 600
+      register: deploy_result
+
+    - name: Verify deployment was successful
+      ansible.builtin.assert:
+        that:
+          - deploy_result.changed is true
+          - deploy_result.deployed is true
+          - deploy_result.deployment == test_deployment
+
+    - name: Undeploy application
+      middleware_automation.wildfly.jboss:
+        deployment: "{{ test_deployment }}"
+        deploy_path: "{{ wildfly_home }}/standalone/deployments"
+        state: absent
+        timeout: 600
+      register: undeploy_result
+
+    - name: Verify undeployment was successful
+      ansible.builtin.assert:
+        that:
+          - undeploy_result.changed is true
+          - undeploy_result.deployed is false

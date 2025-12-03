@@ -1,0 +1,11 @@
+---
+# Cleanup playbook - intentionally empty
+# Molecule will run this playbook during cleanup phase
+# This handles cases where the container may not exist yet (initial cleanup)
+- name: Cleanup
+  hosts: all
+  gather_facts: false
+  ignore_unreachable: true
+  ignore_errors: true
+  tasks: []
+

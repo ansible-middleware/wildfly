@@ -1,0 +1,37 @@
+---
+- name: Verify jboss module functionality
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - ../../playbooks/vars/vars.yml
+    - ../apps.yml
+  collections:
+    - middleware_automation.wildfly
+  vars:
+    wildfly_install_workdir: /apps/
+    wildfly_user: mware
+    wildfly_group: sysgroup
+    test_app: "{{ wildfly_apps[0] }}"
+    test_deployment: "{{ test_app.path | basename }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  tasks:
+    - name: Set wildfly_home if not already set
+      ansible.builtin.set_fact:
+        wildfly_home: "{{ wildfly_home | default((wildfly_install_workdir | default('/opt/wildfly/')) + 'wildfly-' + (wildfly_version | default('38.0.0.Final'))) }}"
+      when: wildfly_home is not defined
+
+    - name: Verify deployment is undeployed
+      ansible.builtin.stat:
+        path: "{{ wildfly_home }}/standalone/deployments/{{ test_deployment }}.undeployed"
+      register: undeployed_marker
+      failed_when: false
+      ignore_errors: true
+
+    - name: Assert deployment is undeployed
+      ansible.builtin.assert:
+        that:
+          - undeployed_marker.stat is defined
+          - undeployed_marker.stat.exists is defined
+          - undeployed_marker.stat.exists
+        fail_msg: "Deployment should be undeployed"
+

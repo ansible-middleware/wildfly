@@ -21,3 +21,6 @@ docs/_build/
 *.retry
 
 changelogs/.plugin-cache.yaml
+
+# Molecule test artifacts
+junit/

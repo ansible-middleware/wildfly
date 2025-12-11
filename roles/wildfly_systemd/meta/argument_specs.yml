@@ -11,11 +11,11 @@ argument_specs:
                 default: "{{ wildfly_systemd_service_config_location}} /{{ wildfly_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
             wildfly_user:
                 default: "wildfly"
-                description: "posix user account for wildfly service"
+                description: "posix user account for Wildfly service"
                 type: "str"
             wildfly_group:
                 default: "{{ wildfly_user }}"
-                description: "posix group for wildfly service"
+                description: "posix group for Wildfly service"
                 type: "str"
             wildfly_version:
                 default: "38.0.0.Final"

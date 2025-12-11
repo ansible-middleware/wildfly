@@ -15,8 +15,8 @@ Role Defaults
 |`wildfly_driver_jar_installation_path`| Path for jdbc driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}` |
 |`wildfly_version`| WildFly version to install | `38.0.0.Final` |
 |`wildfly_home`| WildFly installation directory | `/opt/wildfly/wildfly-{{ wildfly_version }}/` |
-|`wildfly_user`| posix user account for wildfly | `wildfly` |
-|`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
+|`wildfly_user`| posix user account for Wildfly | `wildfly` |
+|`wildfly_group`| posix group for Wildfly | `{{ wildfly_user }}` |
 <!--end argument_specs-->
 
 

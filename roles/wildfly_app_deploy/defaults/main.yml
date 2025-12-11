@@ -1,0 +1,16 @@
+---
+# Path to the application artifact (.war, .ear, .jar) on the Ansible controller
+wildfly_app_deployment_file: "/path/to/your/application.war"
+
+# The name to use for the deployment in WildFly (e.g., app-v1.war)
+wildfly_app_deploy_name: "application.war"
+
+# WildFly installation directory (defaults to wildfly_home from wildfly_install role)
+# This will inherit from wildfly_install role or can be set explicitly
+# jboss_home will inherit from wildfly_utils role defaults (which sets it to wildfly_home)
+
+# JBoss CLI Connection details
+# These will inherit from wildfly_utils role defaults if not set
+jboss_cli_controller_host: "localhost"
+jboss_cli_controller_port: "9990"
+wildfly_port_range_offset: 0

@@ -3,15 +3,15 @@ argument_specs:
         options:
             wildfly_user:
                 default: "wildfly"
-                description: "posix user account for wildfly"
+                description: "posix user account for Wildfly"
                 type: "str"
             wildfly_group:
                 default: "{{ wildfly_user }}"
-                description: "posix group for wildfly"
+                description: "posix group for Wildfly"
                 type: "str"
             wildfly_service_name:
                 default: "wildfly"
-                description: "Systemd service name for wildfly"
+                description: "Systemd service name for Wildfly"
                 type: "str"
             wildfly_http_port:
                 default: "8080"

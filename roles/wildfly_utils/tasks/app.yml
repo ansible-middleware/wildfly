@@ -30,7 +30,7 @@
     tasks_from: jboss_cli.yml
   vars:
     jboss_home: "{{ wildfly_home }}"
-    jboss_cli_query: "'deploy {{ wildfly_apps_jboss_cli_deploy_force }} {{ unmanaged_option }} {{ app.path }}'"
+    jboss_cli_query: "'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }} {{ unmanaged_option }} {{ app.path }}'"
   loop: "{{ wildfly_apps }}"
   loop_control:
     loop_var: app

@@ -1,0 +1,35 @@
+---
+collections:
+  - middleware_automation.common
+
+galaxy_info:
+  role_name: wildfly_app_deploy
+  namespace: middleware_automation
+  author: Harsha Cherukuri
+  description: Deploy applications to WildFly application server
+  company: Red Hat, Inc.
+
+  license: Apache License 2.0
+
+  min_ansible_version: "2.15"
+
+  platforms:
+    - name: EL
+      versions:
+        - "8"
+        - "9"
+        - "10"
+
+  galaxy_tags:
+    - java
+    - jboss
+    - wildfly
+    - cli
+    - server
+    - deployment
+    - application
+    - middleware
+    - a4mw
+
+dependencies:
+  - role: wildfly_utils

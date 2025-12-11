@@ -20,5 +20,6 @@ wildfly_prospero_scenario_enable: true
 wildfly_propsero_release_url: "https://api.github.com/repos/wildfly-extras/prospero/releases/latest"
 wildfly_prospero_download_check_ssl: False
 
-wildfly_apps_jboss_cli_deploy_force: "--force"
+wildfly_apps_jboss_cli_deploy_force: false
 wildfly_apps_requires_privilege_escalation: true
+jboss_cli_force: false

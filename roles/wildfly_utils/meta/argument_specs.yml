@@ -4,12 +4,12 @@ argument_specs:
             jboss_cli_controller_host:
                 # line 2 of jboss_eap/defaults/main.yml
                 default: "localhost"
-                description: "Hostname for connecting to cli"
+                description: "Hostname for connecting to CLI"
                 type: "str"
             jboss_cli_controller_port:
                 # line 3 of jboss_eap/defaults/main.yml
                 default: "9990"
-                description: "Port for connecting to cli"
+                description: "Port for connecting to CLI"
                 type: "str"
             jboss_cli_apply_cp_default_conflict_default:
                 default: '--override-all'
@@ -18,12 +18,12 @@ argument_specs:
             wildfly_user:
                 # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"
-                description: "posix user account for wildfly"
+                description: "posix user account for Wildfly"
                 type: "str"
             wildfly_group:
                 # line 11 of wildfly_install/defaults/main.yml
                 default: "{{ wildfly_user }}"
-                description: "posix group for wildfly"
+                description: "posix group for Wildfly"
                 type: "str"
             wildfly_version:
                 default: "38.0.0.Final"
@@ -120,12 +120,12 @@ argument_specs:
             jboss_cli_controller_host:
                 # line 2 of jboss_eap/defaults/main.yml
                 default: "localhost"
-                description: "Hostname for connecting to cli"
+                description: "Hostname for connecting to CLI"
                 type: "str"
             jboss_cli_controller_port:
                 # line 3 of jboss_eap/defaults/main.yml
                 default: "9990"
-                description: "Port for connecting to cli"
+                description: "Port for connecting to CLI"
                 type: "str"
             jboss_cli_query:
                 required: False
@@ -163,6 +163,10 @@ argument_specs:
                 required: False
                 description: "The user account to execute jboss-cli with"
                 type: 'str'
+            jboss_cli_force:
+                required: False
+                description: "Whether to add --force flag to jboss-cli command"
+                type: 'bool'
     prospero/main:
         options:
             wildfly_prospero_version:

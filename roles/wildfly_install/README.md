@@ -24,8 +24,8 @@ Role Defaults
 |`wildfly_archive_dir`| Target download directory | `{{ wildfly_install_workdir }}` |
 |`wildfly_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_config_custom_file` is used |
 |`wildfly_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
-|`wildfly_user`| posix user account for wildfly | `wildfly` |
-|`wildfly_group`| posix group for wildfly | `{{ wildfly_user }}` |
+|`wildfly_user`| posix user account for Wildfly | `wildfly` |
+|`wildfly_group`| posix group for Wildfly | `{{ wildfly_user }}` |
 |`wildfly_java_package_name`| RHEL java rpm package | `java-21-openjdk-headless` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 

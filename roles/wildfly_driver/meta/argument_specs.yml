@@ -35,7 +35,7 @@ argument_specs:
                 type: "str"
             wildfly_user:
                 default: "wildfly"
-                description: "posix user account for wildfly"
+                description: "posix user account for Wildfly"
                 type: "str"
             wildfly_group:
                 default: "{{ wildfly_user }}"

@@ -42,4 +42,3 @@ warn_list:
   - meta-runtime[unsupported-version]
 
 use_default_rules: true
-parseable: true

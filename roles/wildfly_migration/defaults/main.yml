@@ -1,6 +1,6 @@
 ---
 wildfly_migration_java_home: '/usr/lib/jvm/jre'
-wildfly_migration_jdk_package_name: 'java-17-openjdk-devel'
+wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
 wildfly_migration_jdk_package_skip_install: False
 wildfly_migration_server_tool_home: "{{ target_wildfly_home }}"
 wildfly_migration_tool_bin_folder: 'bin'

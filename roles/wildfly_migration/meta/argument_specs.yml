@@ -62,7 +62,7 @@ argument_specs:
                 description: "Path to the JAVA HOME to be used by the server migration tool"
                 type: "str"
             wildfly_migration_jdk_package_name:
-                default: "java-17-openjdk-devel"
+                default: "java-21-openjdk-devel"
                 description: "Name of the RPM package to install for the JVM used by the server migration tool"
                 type: "str"
             wildfly_migration_jdk_package_skip_install:

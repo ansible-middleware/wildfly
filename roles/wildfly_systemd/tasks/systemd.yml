@@ -110,7 +110,9 @@
     - name: Determine JAVA_HOME for selected JVM
       ansible.builtin.set_fact:
         rpm_java_home: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-      when: ansible_os_family == 'RedHat'
+      when: 
+        - ansible_os_family == 'RedHat'
+        - wildfly_java_package_name is match('^java-.*')
 
     - name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
       ansible.builtin.shell: |
@@ -120,7 +122,8 @@
         executable: /bin/bash
       changed_when: False
       register: rpm_java_home_other
-      when: not ansible_os_family == 'RedHat'
+      when: 
+        - (ansible_os_family != 'RedHat') or (not wildfly_java_package_name is match('^java-.*'))
 
     - name: "Deploy service instance configuration: {{ wildfly_service_systemd_env_file }}"
       ansible.builtin.template:
@@ -135,7 +138,7 @@
         seuser: system_u
       register: daemon_reload_env
       vars:
-        wildfly_rpm_java_home: "{{ rpm_java_home if ansible_os_family == 'RedHat' else rpm_java_home_other.stdout }}"
+        wildfly_rpm_java_home: "{{ rpm_java_home if rpm_java_home is defined else rpm_java_home_other.stdout }}"
         wildfly_yml_configs_str: "'-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}'"
     - name: "Deploy Systemd unit for service: {{ wildfly_service_systemd_file }}"
       ansible.builtin.template:

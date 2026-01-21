@@ -1,0 +1,19 @@
+---
+- import_playbook: ../../playbooks/validate.yml
+  vars:
+    wildfly_install_workdir: /apps/
+    wildfly_java_package_name: temurin-21-jdk
+    wildfly_validation_skip_jdbc_drivers_check: false
+
+- name: Validation
+  hosts: all
+  tasks:
+    - name: Verify we are running on requested jvm
+      ansible.builtin.shell: |
+        ps -u wildfly -o args | grep java
+      changed_when: False
+      register: java_process_cmd
+
+    - name: Display running Java command
+      ansible.builtin.debug:
+        var: java_process_cmd.stdout

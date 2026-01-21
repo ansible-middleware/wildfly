@@ -49,7 +49,7 @@ Deploy a WAR file to a standalone WildFly instance.
   vars:
     wildfly_app_deployment_file: "/path/to/myapp.war"
     wildfly_app_deploy_name: "myapp.war"
-    wildfly_home: "/opt/wildfly/wildfly-38.0.0.Final/"
+    wildfly_home: "/opt/wildfly/wildfly-39.0.0.Final/"
     jboss_cli_controller_host: "localhost"
     jboss_cli_controller_port: "9990"
 ```

@@ -5,7 +5,7 @@ jboss_cli_apply_cp_default_conflict_default: '--override-all'
 wildfly_no_restart_after_patch:  False
 wildfly_user: wildfly
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '38.0.0.Final'
+wildfly_version: '39.0.0.Final'
 wildfly_install_workdir: '/opt/wildfly/'
 wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
 wildfly_selinux_enabled: False

@@ -15,7 +15,7 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_version`| WildFly version to install | `38.0.0.Final` |
+|`wildfly_version`| WildFly version to install | `39.0.0.Final` |
 |`wildfly_archive_filename`| WildFly download archive name | `wildfly-{{ wildfly_version }}.zip` |
 |`wildfly_download_baseurl`| Base URL for wildfly download | `https://github.com/wildfly/wildfly/releases/download` |
 |`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
@@ -63,8 +63,8 @@ Older WildFly versions can be download from outside Github.
 - name: "Installation and configuration"
   hosts: "{{ hosts_group_name | default('localhost') }}"
   vars:
-    wildfly_version: '24.0.1.Final'
-    wildfly_download_baseurl: "https://download.jboss.org/wildfly"
+    wildfly_version: '39.0.0.Final'
+    wildfly_download_baseurl: "https://github.com/wildfly/wildfly/releases/download"
   collections:
     - middleware_automation.wildfly
   roles:

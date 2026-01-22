@@ -35,11 +35,22 @@
         that:
           - sudo_pkg_name in ansible_facts.packages
 
+    - name: Add Adoptium YUM repository
+      ansible.builtin.yum_repository:
+        name: Adoptium
+        description: Adoptium
+        baseurl: https://packages.adoptium.net/artifactory/rpm/rhel/10/$basearch
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+
     - name: "Ensure required packages are installed."
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
           - java-21-openjdk-headless
+          - temurin-21-jdk
           - procps-ng
           - tzdata-java
         state: present

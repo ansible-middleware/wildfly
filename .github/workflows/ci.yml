@@ -16,4 +16,4 @@ jobs:
       fqcn: 'middleware_automation/wildfly'
       root_permission_varname: 'wildfly_install_requires_become'
       molecule_tests: >-
-        [ "default", "prospero", "yaml_config_validation", "install_options", "colocated_cluster", "custom_config_file" ]
+        [ "default", "prospero", "yaml_config_validation", "install_options", "colocated_cluster", "custom_config_file", "temurinjdk_support" ]

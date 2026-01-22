@@ -2,7 +2,7 @@
 - import_playbook: ../../playbooks/validate.yml
   vars:
     wildfly_install_workdir: /apps/
-    wildfly_java_package_name: temurin-21-jdk
+    wildfly_java_package_name: "temurin-{{ wildfly_java_version }}-jdk"
     wildfly_validation_skip_jdbc_drivers_check: false
 
 - name: Validation

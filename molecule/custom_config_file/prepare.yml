@@ -1,7 +1,7 @@
 ---
 - name: Prepare
   hosts: all
-  gather_facts: true
+  gather_facts: false
   vars_files:
     - vars.yml
   tasks:

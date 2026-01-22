@@ -4,7 +4,7 @@
     wildfly_install_workdir: /apps/
     wildfly_user: mware
     wildfly_group: sysgroup
-    wildfly_java_package_name: java-21-openjdk-headless
+    wildfly_java_package_name: "java-{{ wildfly_java_version }}-openjdk-headless"
     wildfly_validation_skip_jdbc_drivers_check: false
 
 - name: Validation

@@ -1,0 +1,11 @@
+
+---
+- name: "Prepare for RHEL 8"
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Enable and install Python 3.9 on RHEL 8"
+      ansible.builtin.raw: "dnf module enable -y python39 && dnf install -y python39"
+      register: _install_python
+      changed_when: "'Installing:' in _install_python.stdout"
+      when: inventory_hostname == 'instance-rhel8'

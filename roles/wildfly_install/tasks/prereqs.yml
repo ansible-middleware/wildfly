@@ -89,3 +89,16 @@
   when:
     - wildfly_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined
+    - ansible_distribution_major_version != '8'
+
+- name: "Install required packages on RHEL 8 (workaround for DNF module)"
+  ansible.builtin.command:
+    cmd: "dnf install -y {{ wildfly_prereqs_packages | join(' ') }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  register: dnf_install_result
+  changed_when: 
+    - "'Installing:' in dnf_install_result.stdout or 'Upgrading:' in dnf_install_result.stdout"
+  when:
+    - wildfly_prereqs_packages | length > 0
+    - not wildfly_install_skip_prereqs is defined
+    - ansible_distribution_major_version == '8'

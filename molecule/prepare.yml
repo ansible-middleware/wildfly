@@ -1,4 +1,7 @@
 ---
+- name: "Import RHEL 8 Python Bootstrap"
+  ansible.builtin.import_playbook: common_bootstrap_rhel8.yml
+
 - name: Prepare
   hosts: all
   gather_facts: true
@@ -20,32 +23,42 @@
       when:
         - eap_qe_pre_ga_testing is defined
 
-    - name: "Ensure {{ sudo_pkg_name }} is installed (if user is root)."
+    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 8 (if user is root)."
+      ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
+      changed_when: false # dnf install is idempotent
+      when:
+        - ansible_user_id == 'root'
+        - ansible_distribution_major_version == '8'
+
+    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
       ansible.builtin.yum:
         name: "{{ sudo_pkg_name }}"
       when:
         - ansible_user_id == 'root'
+        - ansible_distribution_major_version != '8'
 
-    - name: Gather the package facts
+    - name: "Gather the package facts (skipping on RHEL 8)"
       ansible.builtin.package_facts:
         manager: auto
+      when: ansible_distribution_major_version != '8'
 
-    - name: "Check if {{ sudo_pkg_name }} is installed."
+    - name: "Check if {{ sudo_pkg_name }} is installed (skipping on RHEL 8)"
       ansible.builtin.assert:
         that:
           - sudo_pkg_name in ansible_facts.packages
+      when: ansible_distribution_major_version != '8'
 
     - name: Add Adoptium YUM repository
       ansible.builtin.yum_repository:
         name: Adoptium
         description: Adoptium
-        baseurl: https://packages.adoptium.net/artifactory/rpm/rhel/10/$basearch
+        baseurl: "https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_distribution_major_version }}/$basearch"
         enabled: yes
         gpgcheck: yes
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
 
-    - name: "Ensure required packages are installed."
+    - name: "Ensure required packages are installed (RHEL 10)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
@@ -54,12 +67,30 @@
           - procps-ng
           - tzdata-java
         state: present
+      when: ansible_distribution_major_version == '10'
+
+    - name: "Ensure required packages are installed (RHEL 9)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.yum:
+        name:
+          - java-17-openjdk-headless
+          - temurin-17-jdk
+          - procps-ng
+          - tzdata-java
+        state: present
+      when: ansible_distribution_major_version == '9'
+
+    - name: "Ensure required packages are installed (RHEL 8)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.command: 
+        cmd: "dnf install -y java-17-openjdk-headless temurin-17-jdk procps-ng tzdata-java"
+      changed_when: false
+      when: ansible_distribution_major_version == '8'
 
     - name: "Download apps if needed."
       when:
         - wildfly_apps is defined and wildfly_apps | length > 0
       block:
-
         - name: "Download apps if required"
           ansible.builtin.get_url:
             url: "{{ app.download_url }}"
@@ -67,7 +98,6 @@
           loop: "{{ wildfly_apps }}"
           loop_control:
             loop_var: app
-
 
     - name: Display Ansible version
       ansible.builtin.debug:

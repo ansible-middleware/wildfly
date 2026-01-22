@@ -2,4 +2,4 @@
 - import_playbook: ../../playbooks/playbook.yml
   vars:
     wildfly_install_workdir: /apps/
-    wildfly_java_package_name: temurin-21-jdk
+    wildfly_java_package_name: "temurin-{{ wildfly_java_version }}-jdk"

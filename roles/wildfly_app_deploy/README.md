@@ -23,7 +23,8 @@ Role Defaults
 |`jboss_cli_controller_host`| Hostname for connecting to CLI | `localhost` |
 |`jboss_cli_controller_port`| Port for connecting to CLI | `9990` |
 |`wildfly_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `0` |
-|`wildfly_user`| posix user account for Wildfly | `wildfly` |
+|`wildfly_user`| POSIX user account for WildFly | `wildfly` |
+|`wildfly_group`| POSIX group for WildFly | `{{ wildfly_user }}` |
 
 Role Variables
 --------------
@@ -67,7 +68,7 @@ Deploy to a WildFly instance using a port offset.
     wildfly_app_deployment_file: "/path/to/myapp.war"
     wildfly_app_deploy_name: "myapp.war"
     wildfly_port_range_offset: 100
-    jboss_cli_controller_port: "9990"  # 9990 + 100
+    jboss_cli_controller_port: "9990"  # Port will be 9990 + 100 = 10090. See https://docs.wildfly.org/39/ for port offset documentation
 ```
 
 ## Dependencies

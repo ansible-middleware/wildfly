@@ -35,11 +35,11 @@ argument_specs:
                 type: "str"
             wildfly_user:
                 default: "wildfly"
-                description: "posix user account for Wildfly"
+                description: "POSIX user account for WildFly"
                 type: "str"
             wildfly_group:
                 default: "{{ wildfly_user }}"
-                description: "posix group for wildfly"
+                description: "POSIX group for WildFly"
                 type: "str"
             override_module_xml_template:
                 description: "Override path of template used for module configuration"

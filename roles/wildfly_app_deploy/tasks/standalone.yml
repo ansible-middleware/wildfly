@@ -20,7 +20,7 @@
         deployment_exists: "{{ deployment_check.failed | default(true) == false }}"
       when: deployment_exists is not defined
 
-- name: Deploy Application
+- name: Deploy application
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml
@@ -31,7 +31,7 @@
   when: not (deployment_exists | default(false))
   register: deploy_result
 
-- name: Enable Application (if disabled)
+- name: Enable application (if disabled)
   block:
     - name: Check if deployment is disabled
       ansible.builtin.include_role:

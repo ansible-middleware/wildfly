@@ -1,16 +1,4 @@
 ---
-driver:
-  name: ${CI_DRIVER:-docker}
-platforms:
-  - name: instance
-    image: registry.access.redhat.com/ubi9/ubi-init:latest
-    pre_build_image: true
-    privileged: true
-    command: "/usr/sbin/init"
-    port_bindings:
-      - ${PORT_BINDING:-8080}:8080
-    published_ports:
-      - 0.0.0.0:${PORT_BINDING:-8080}:8080/TCP
 provisioner:
   name: ansible
   config_options:
@@ -27,11 +15,9 @@ provisioner:
   inventory:
     links:
       group_vars: ../group_vars
-    host_vars:
-      instance:
-        wildfly_java_package_name: java-17-openjdk-headless
-      localhost:
-        ansible_python_interpreter: "{{ ansible_playbook_python }}"
+    group_vars:
+      all:
+        molecule_scenario_requires_app: true
   env:
     JUNIT_OUTPUT_DIR: "$PWD/junit"
     JUNIT_HIDE_TASK_ARGUMENTS: yes
@@ -41,10 +27,12 @@ provisioner:
     ANSIBLE_FORCE_COLOR: "true"
     ANSIBLE_COLLECTIONS_PATHS: "~/.ansible/collections/"
     ANSIBLE_ROLES_PATH: "../../roles"
+
 verifier:
   name: ansible
   options:
     sudo: true
+
 scenario:
   test_sequence:
     - cleanup
@@ -58,4 +46,3 @@ scenario:
     - verify
     - cleanup
     - destroy
-

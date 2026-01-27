@@ -39,15 +39,15 @@ argument_specs:
                 type: "str"
             wildfly_user:
                 default: "wildfly"
-                description: "posix user account for wildfly"
+                description: "POSIX user account for WildFly"
                 type: "str"
             wildfly_group:
                 default: "{{ wildfly_user }}"
-                description: "posix group for wildfly"
+                description: "POSIX group for WildFly"
                 type: "str"
             wildfly_java_package_name:
                 default: "java-21-openjdk-headless"
-                description: "RHEL java rpm package"
+                description: "RHEL/Fedora Java RPM package"
                 type: "str"
             wildfly_offline_install:
                 default: false

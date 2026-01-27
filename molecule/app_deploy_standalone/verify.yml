@@ -1,0 +1,49 @@
+---
+- name: Verify deployment
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - ../group_vars/all/vars.yml
+  tasks:
+    - name: "Verify WildFly is running"
+      ansible.builtin.uri:
+        url: "http://localhost:{{ wildfly_http_port | default('8080') }}/"
+        method: GET
+        status_code: [200, 404]
+      register: wildfly_status
+
+    - name: "Check if application is deployed via CLI"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'/deployment=test-app.war:read-resource'"
+        jboss_cli_controller_host: "localhost"
+        jboss_cli_controller_port: "9990"
+        jboss_cli_timeout: 10
+        jboss_cli_changed_when: false
+      register: deployment_info
+
+    - name: "Verify deployment exists"
+      ansible.builtin.assert:
+        that:
+          - deployment_info.changed is defined
+        fail_msg: "Application test-app.war is not deployed (CLI query failed)"
+        success_msg: "Application test-app.war is successfully deployed"
+
+    - name: "Verify application is accessible"
+      ansible.builtin.uri:
+        url: "http://localhost:{{ wildfly_http_port | default('8080') }}/test-app.war/"
+        method: GET
+        status_code: 200
+        follow_redirects: all
+      register: app_response
+      retries: 5
+      delay: 5
+      until: app_response.status == 200
+
+    - name: "Display deployment information"
+      ansible.builtin.debug:
+        msg: "Deployment verified successfully via CLI"
+

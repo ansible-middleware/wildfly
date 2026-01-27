@@ -1,0 +1,68 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - ../group_vars/all/vars.yml
+  vars:
+    sudo_pkg_name: 'sudo'
+  tasks:
+    - name: "Ensure {{ sudo_pkg_name }} is installed (if user is root)."
+      ansible.builtin.yum:
+        name: "{{ sudo_pkg_name }}"
+      when:
+        - ansible_user_id == 'root'
+
+    - name: Gather the package facts
+      ansible.builtin.package_facts:
+        manager: auto
+
+    - name: "Check if {{ sudo_pkg_name }} is installed."
+      ansible.builtin.assert:
+        that:
+          - sudo_pkg_name in ansible_facts.packages
+
+    - name: "Ensure required packages are installed."
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.yum:
+        name:
+          - java-17-openjdk
+          - procps-ng
+          - tzdata-java
+        state: present
+
+    - name: "Ensure files directory exists on controller"
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/../files"
+        state: directory
+        mode: '0755'
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Download test application to controller"
+      ansible.builtin.get_url:
+        url: "https://tomcat.apache.org/tomcat-11.0-doc/appdev/sample/sample.war"
+        dest: "{{ playbook_dir }}/../files/test-app.war"
+        mode: '0644'
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Install and start WildFly"
+      ansible.builtin.include_role:
+        name: wildfly_install
+
+    - name: "Setup WildFly as systemd service"
+      ansible.builtin.include_role:
+        name: wildfly_systemd
+
+    - name: "Wait for WildFly to be ready"
+      ansible.builtin.wait_for:
+        host: "{{ jboss_cli_controller_host | default('localhost') }}"
+        port: "{{ jboss_cli_controller_port | default('9990') }}"
+        delay: 10
+        timeout: 120
+
+    - name: Display Ansible version
+      ansible.builtin.debug:
+        msg: "Ansible version is {{ ansible_version.full }}, running with Python {{ ansible_python_version }}."
+

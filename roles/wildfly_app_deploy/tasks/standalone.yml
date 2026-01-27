@@ -1,0 +1,62 @@
+---
+- name: Check if application is already deployed
+  block:
+    - name: Query deployment status
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-resource'"
+        jboss_cli_timeout: 30
+        jboss_cli_changed_when: false
+      register: deployment_check
+  rescue:
+    - name: Deployment does not exist
+      ansible.builtin.set_fact:
+        deployment_exists: false
+  always:
+    - name: Set deployment exists flag based on check result
+      ansible.builtin.set_fact:
+        deployment_exists: "{{ deployment_check.failed | default(true) == false }}"
+      when: deployment_exists is not defined
+
+- name: Deploy application
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    jboss_cli_query: "'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }} /tmp/{{ wildfly_app_deploy_name }}'"
+    jboss_cli_timeout: 300
+    jboss_cli_changed_when: false
+  when: not (deployment_exists | default(false))
+  register: deploy_result
+
+- name: Enable application (if disabled)
+  block:
+    - name: Check if deployment is disabled
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-attribute(name=enabled)'"
+        jboss_cli_timeout: 30
+        jboss_cli_changed_when: false
+      register: deployment_status
+      when: deployment_exists | default(false)
+  rescue:
+    - name: Skip enable check - deployment doesn't exist or check failed
+      ansible.builtin.set_fact:
+        deployment_needs_enable: false
+  always:
+    - name: Enable deployment if it's disabled
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:write-attribute(name=enabled,value=true)'"
+        jboss_cli_timeout: 30
+      when: >
+        deployment_exists | default(false) and
+        deployment_status.failed is not defined and
+        deployment_status.changed is defined and
+        'false' in (deployment_status.stdout | default(''))

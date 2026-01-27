@@ -1,0 +1,15 @@
+---
+- name: Deploy application to WildFly
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - ../group_vars/all/vars.yml
+  tasks:
+    - name: "Deploy application using wildfly_app_deploy role"
+      ansible.builtin.include_role:
+        name: wildfly_app_deploy
+      vars:
+        wildfly_app_deployment_file: "{{ playbook_dir }}/../files/test-app.war"
+        wildfly_app_deploy_name: "test-app.war"
+        jboss_cli_controller_host: "localhost"
+        jboss_cli_controller_port: "9990"

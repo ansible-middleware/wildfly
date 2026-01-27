@@ -16,8 +16,8 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_user`| posix user account for wildfly service | `wildfly` |
-|`wildfly_group`| posix group for wildfly service | `{{ wildfly_user }}` |
+|`wildfly_user`| POSIX user account for WildFly service | `wildfly` |
+|`wildfly_group`| POSIX group for WildFly service | `{{ wildfly_user }}` |
 |`wildfly_version`| WildFly version to install | `38.0.0.Final` |
 |`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
 |`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |

@@ -19,5 +19,6 @@ docs/_build/
 .pytest_cache/
 .mypy_cache/
 *.retry
+junit/
 
 changelogs/.plugin-cache.yaml

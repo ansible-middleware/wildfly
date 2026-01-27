@@ -19,8 +19,8 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`jboss_cli_controller_host`| Hostname for connecting to cli | `localhost` |
-|`jboss_cli_controller_port`| Port for connecting to cli | `9990` |
+|`jboss_cli_controller_host`| Hostname for connecting to CLI | `localhost` |
+|`jboss_cli_controller_port`| Port for connecting to CLI | `9990` |
 |`wildfly_no_restart_after_patch`| When true, skip restarting after applying a cumulative patch | `False` |
 |`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
 |`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |

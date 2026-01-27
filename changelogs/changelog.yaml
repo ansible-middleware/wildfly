@@ -387,7 +387,7 @@ releases:
       - 'Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
 
         '
-      - 'Externalize the jdbc drivers list from the main playbook, plus add a missing
+      - 'Externalize the JDBC drivers list from the main playbook, plus add a missing
         template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_
 
         '

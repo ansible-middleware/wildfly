@@ -63,7 +63,6 @@
       ansible.builtin.yum:
         name:
           - java-21-openjdk-headless
-          - temurin-21-jdk
           - procps-ng
           - tzdata-java
         state: present

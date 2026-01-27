@@ -118,7 +118,7 @@ Minor Changes
 - Add wildfly_validation logic for colocated cluster `#211 <https://github.com/ansible-middleware/wildfly/pull/211>`_
 - Allow to use different names for nodeId, instance name, systemd unit name `#192 <https://github.com/ansible-middleware/wildfly/pull/192>`_
 - Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
-- Externalize the jdbc drivers list from the main playbook, plus add a missing template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_
+- Externalize the JDBC drivers list from the main playbook, plus add a missing template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_
 - Implementation of the uninstall role, along with documentation and molecule scenario `#194 <https://github.com/ansible-middleware/wildfly/pull/194>`_
 - Validate ``wildfly_node_id`` length and default to ``inventory_hostname_short`` `#195 <https://github.com/ansible-middleware/wildfly/pull/195>`_
 - prospero: update README and remove duplicated call to wildfly_user `#200 <https://github.com/ansible-middleware/wildfly/pull/200>`_

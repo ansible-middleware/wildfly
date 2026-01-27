@@ -22,7 +22,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="wildfly firewalld role" href="wildfly_firewalld.html" />
-    <link rel="prev" title="Role Index" href="index.html" /> 
+    <link rel="prev" title="wildfly app deploy role" href="wildfly_app_deploy.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -48,6 +48,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">WildFly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="wildfly_app_deploy.html">wildfly app deploy role</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly driver role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
@@ -134,7 +135,7 @@ the server modules directory tree. It comes with a template for the main.xml
 <td class="text-left"><p>`{{ wildfly_home }}/modules/{{ wildfly_driver_module_name</p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_installation_path</span></code></p></td>
-<td class="text-left"><p>Path for jdbc driver installation</p></td>
+<td class="text-left"><p>Path for JDBC driver installation</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_driver_jar_filename</span> <span class="pre">}}</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
@@ -146,11 +147,11 @@ the server modules directory tree. It comes with a template for the main.xml
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
-<td class="text-left"><p>posix user account for wildfly</p></td>
+<td class="text-left"><p>POSIX user account for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
-<td class="text-left"><p>posix group for wildfly</p></td>
+<td class="text-left"><p>POSIX group for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
 </tbody>
@@ -168,19 +169,19 @@ the server modules directory tree. It comes with a template for the main.xml
 </thead>
 <tbody>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_version</span></code></p></td>
-<td class="text-left"><p>Version of jdbc driver to download</p></td>
+<td class="text-left"><p>Version of JDBC driver to download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_filename</span></code></p></td>
-<td class="text-left"><p>Filename of jdbc driver to download</p></td>
+<td class="text-left"><p>Filename of JDBC driver to download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_url</span></code></p></td>
-<td class="text-left"><p>URL for jdbc driver download</p></td>
+<td class="text-left"><p>URL for JDBC driver download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_module_name</span></code></p></td>
-<td class="text-left"><p>Name for the jdbc driver module</p></td>
+<td class="text-left"><p>Name for the JDBC driver module</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">yes</span></code></p></td>
 </tr>
 </tbody>
@@ -221,7 +222,7 @@ the server modules directory tree. It comes with a template for the main.xml
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Role Index" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="wildfly_app_deploy.html" class="btn btn-neutral float-left" title="wildfly app deploy role" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
         <a href="wildfly_firewalld.html" class="btn btn-neutral float-right" title="wildfly firewalld role" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 

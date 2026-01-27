@@ -2,6 +2,7 @@ Role Index
 ==========
 
 .. toctree::
+    wildfly_app_deploy
     wildfly_driver
     wildfly_firewalld
     wildfly_install

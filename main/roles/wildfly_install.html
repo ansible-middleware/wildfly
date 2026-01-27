@@ -48,6 +48,7 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../README.html">WildFly Collection for Ansible - middleware_automation.wildfly</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Role Index</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="wildfly_app_deploy.html">wildfly app deploy role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_driver.html">wildfly driver role</a></li>
 <li class="toctree-l2"><a class="reference internal" href="wildfly_firewalld.html">wildfly firewalld role</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly install role</a><ul>
@@ -174,15 +175,15 @@
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
-<td class="text-left"><p>posix user account for wildfly</p></td>
+<td class="text-left"><p>POSIX user account for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
-<td class="text-left"><p>posix group for wildfly</p></td>
+<td class="text-left"><p>POSIX group for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
-<td class="text-left"><p>RHEL java rpm package</p></td>
+<td class="text-left"><p>RHEL/Fedora Java RPM package</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-21-openjdk-headless</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_offline_install</span></code></p></td>

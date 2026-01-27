@@ -37,3 +37,29 @@ argument_specs:
                 default: "{{ wildfly_user }}"
                 description: "POSIX group for WildFly service"
                 type: "str"
+    downstream:
+        options:
+            eap_app_deployment_file:
+                required: True
+                description: "Path to the application artifact (.war, .ear, .jar) on the Ansible controller"
+                type: "str"
+            eap_app_deploy_name:
+                default: "application.war"
+                description: "The name to use for the deployment in EAP (e.g., app-v1.war)"
+                type: "str"
+            eap_home:
+                required: False
+                description: "EAP installation directory (inherits from eap_install role)"
+                type: "str"
+            eap_port_range_offset:
+                default: 0
+                description: "Increment for `jboss.socket.binding.port-offset`"
+                type: "int"
+            eap_user:
+                default: "wildfly"
+                description: "POSIX user account for EAP"
+                type: "str"
+            eap_group:
+                default: "{{ wildfly_user }}"
+                description: "POSIX group for EAP service"
+                type: "str"

@@ -7,23 +7,23 @@ argument_specs:
                 type: "str"
             wildfly_driver_version:
                 required: true
-                description: "Version of jdbc driver to download"
+                description: "Version of JDBC driver to download"
                 type: "str"
             wildfly_driver_jar_filename:
                 required: true
-                description: "Filename of jdbc driver to download"
+                description: "Filename of JDBC driver to download"
                 type: "str"
             wildfly_driver_jar_url:
                 required: true
-                description: "URL for jdbc driver download"
+                description: "URL for JDBC driver download"
                 type: "str"
             wildfly_driver_jar_installation_path:
                 default: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
-                description: "Path for jdbc driver installation"
+                description: "Path for JDBC driver installation"
                 type: "str"
             wildfly_driver_module_name:
                 required: true
-                description: "Name for the jdbc driver module"
+                description: "Name for the JDBC driver module"
                 type: "str"
             wildfly_version:
                 default: "38.0.0.Final"

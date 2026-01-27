@@ -12,7 +12,7 @@ Role Defaults
 | Variable | Description | Default |
 |:---------|:------------|:--------|
 |`wildfly_driver_module_dir`| Path for module installation | `{{ wildfly_home }}/modules/{{ wildfly_driver_module_name | replace('.', '/') }}/main` |
-|`wildfly_driver_jar_installation_path`| Path for jdbc driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}` |
+|`wildfly_driver_jar_installation_path`| Path for JDBC driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}` |
 |`wildfly_version`| WildFly version to install | `38.0.0.Final` |
 |`wildfly_home`| WildFly installation directory | `/opt/wildfly/wildfly-{{ wildfly_version }}/` |
 |`wildfly_user`| POSIX user account for WildFly | `wildfly` |
@@ -25,10 +25,10 @@ Role Variables
 
 | Variable | Description | Required |
 |:---------|:------------|:--------|
-|`wildfly_driver_version`| Version of jdbc driver to download | `yes` |
-|`wildfly_driver_jar_filename`| Filename of jdbc driver to download | `yes` |
-|`wildfly_driver_jar_url`| URL for jdbc driver download | `yes` |
-|`wildfly_driver_module_name`| Name for the jdbc driver module | `yes` |
+|`wildfly_driver_version`| Version of JDBC driver to download | `yes` |
+|`wildfly_driver_jar_filename`| Filename of JDBC driver to download | `yes` |
+|`wildfly_driver_jar_url`| URL for JDBC driver download | `yes` |
+|`wildfly_driver_module_name`| Name for the JDBC driver module | `yes` |
 
 
 Example Playbook

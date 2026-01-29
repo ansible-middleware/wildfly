@@ -6,6 +6,24 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.9
+======
+
+Major Changes
+-------------
+
+- AMW-461 Support installing Temurin OpenJDK on RHEL 8 and 9 `#310 <https://github.com/ansible-middleware/wildfly/pull/310>`_
+- AMW-468 WildFly collection upgrade to use WildFly 39.0.0.Final `#309 <https://github.com/ansible-middleware/wildfly/pull/309>`_
+- AMW-469 Parallel execution capability for wildfly collection `#312 <https://github.com/ansible-middleware/wildfly/pull/312>`_
+- Add app_deploy role to deploy applications `#307 <https://github.com/ansible-middleware/wildfly/pull/307>`_
+- Make wildfly collection compliant with WildFly 38.0.0.Final version `#304 <https://github.com/ansible-middleware/wildfly/pull/304>`_
+- Update app_deploy with the parallel execution and update downstream vars `#313 <https://github.com/ansible-middleware/wildfly/pull/313>`_
+
+Minor Changes
+-------------
+
+- Update wildfly readme. `#315 <https://github.com/ansible-middleware/wildfly/pull/315>`_
+
 v1.5.8
 ======
 
@@ -20,7 +38,7 @@ v1.5.7
 Major Changes
 -------------
 
-- Update WildFly version 37.0.0.Final in wildfly collection `#294 <https://github.com/ansible-middleware/wildfly/pull/294>`_
+- Update WildFly version 37.0.0.Final in wildfly collection `#294 <https://github.com/ansible-middleware/wildfly/pull/237>`_
 
 Minor Changes
 -------------

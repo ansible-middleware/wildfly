@@ -419,6 +419,12 @@ releases:
     - 210.yaml
     - 211.yaml
     release_date: '2024-04-03'
+  1.5.10:
+    changes:
+      release_summary: Internal release, documentation or test changes only.
+    fragments:
+    - v1.5.10-devel_summary.yaml
+    release_date: '2026-01-29'
   1.5.2:
     changes:
       bugfixes:

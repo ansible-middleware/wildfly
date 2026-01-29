@@ -19,6 +19,11 @@ Major Changes
 - Make wildfly collection compliant with WildFly 38.0.0.Final version `#304 <https://github.com/ansible-middleware/wildfly/pull/304>`_
 - Update app_deploy with the parallel execution and update downstream vars `#313 <https://github.com/ansible-middleware/wildfly/pull/313>`_
 
+Minor Changes
+-------------
+
+- Update wildfly readme. `#315 <https://github.com/ansible-middleware/wildfly/pull/315>`_
+
 v1.5.8
 ======
 

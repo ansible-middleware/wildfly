@@ -36,6 +36,10 @@ Plugins and modules within a collection may be tested with only specific Ansible
 * [wildfly_utils](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_utils/README.md): utilities related to EAP
 * [wildfly_validation](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_validation/README.md): validate deployed installation
 * [wildfly_uninstall](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_uninstall/README.md): restore status pre wildfly_install
+* [wildfly_app_deploy](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_app_deploy/README.md): deploy applications to WildFly application server in standalone mode
+* [wildfly_firewalld](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_firewalld/README.md): install and configure the firewalld service
+* [wildfly_migration](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_migration/README.md): this role encapsulate the WildFly migration tool to allow using it as part of a playbook
+* [wildfly_subs](https://github.com/ansible-middleware/wildfly/blob/main/roles/wildfly_subs/README.md): set up JBoss EAP (Red Hat product based on WildFly) using RPM
 <!--end roles_paths -->
 
 ### Installing the collection

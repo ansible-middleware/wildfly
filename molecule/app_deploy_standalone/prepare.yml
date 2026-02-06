@@ -1,35 +1,33 @@
 ---
+- import_playbook: ../prepare.yml
+
 - name: Prepare
   hosts: all
   gather_facts: true
   vars_files:
     - ../group_vars/all/vars.yml
-  vars:
-    sudo_pkg_name: 'sudo'
   tasks:
-    - name: "Ensure {{ sudo_pkg_name }} is installed (if user is root)."
-      ansible.builtin.yum:
-        name: "{{ sudo_pkg_name }}"
-      when:
-        - ansible_user_id == 'root'
+    - name: "Set wildfly_java_version default based on RHEL version if not defined"
+      ansible.builtin.set_fact:
+        wildfly_java_version: "{{ wildfly_java_version | default(21 if ansible_facts.distribution_major_version == '10' else 17) }}"
+      when: wildfly_java_version is not defined
 
-    - name: Gather the package facts
-      ansible.builtin.package_facts:
-        manager: auto
-
-    - name: "Check if {{ sudo_pkg_name }} is installed."
-      ansible.builtin.assert:
-        that:
-          - sudo_pkg_name in ansible_facts.packages
-
-    - name: "Ensure required packages are installed."
+    - name: "Ensure required packages are installed using wildfly_java_version variable (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
-          - java-17-openjdk
+          - "java-{{ wildfly_java_version | default(21 if ansible_facts.distribution_major_version == '10' else 17) }}-openjdk-headless"
           - procps-ng
           - tzdata-java
         state: present
+      when: ansible_facts.distribution_major_version != '8'
+
+    - name: "Ensure required packages are installed using wildfly_java_version variable (RHEL 8)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.command:
+        cmd: "dnf install -y java-{{ wildfly_java_version | default(17) }}-openjdk-headless procps-ng tzdata-java"
+      changed_when: false
+      when: ansible_facts.distribution_major_version == '8'
 
     - name: "Ensure files directory exists on controller"
       ansible.builtin.file:
@@ -41,7 +39,7 @@
 
     - name: "Download test application to controller"
       ansible.builtin.get_url:
-        url: "https://tomcat.apache.org/tomcat-11.0-doc/appdev/sample/sample.war"
+        url: "https://github.com/rpelisse/simple-servlet/releases/download/info_wfly31_1.2/info-1.2.war"
         dest: "{{ playbook_dir }}/../files/test-app.war"
         mode: '0644'
       delegate_to: localhost
@@ -54,6 +52,8 @@
     - name: "Setup WildFly as systemd service"
       ansible.builtin.include_role:
         name: wildfly_systemd
+      vars:
+        wildfly_java_package_name: "java-{{ wildfly_java_version | default(21 if ansible_facts.distribution_major_version == '10' else 17) }}-openjdk-headless"
 
     - name: "Wait for WildFly to be ready"
       ansible.builtin.wait_for:

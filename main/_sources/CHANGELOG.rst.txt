@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.11-devel
 =============
 
+Minor Changes
+-------------
+
+- AMW-471 EAP collection is not able to use JBoss Installation Manager `#318 <https://github.com/ansible-middleware/wildfly/pull/318>`_
+
 v1.5.10
 =======
 

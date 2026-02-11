@@ -13,6 +13,8 @@
   register: prospero_release_info
   delegate_to: localhost
   run_once: true
+  when:
+    - not eap_enable is defined or not (eap_enable | bool)
 
 - name: Set fact for the latest Prospero version and download URL
   ansible.builtin.set_fact:
@@ -20,11 +22,20 @@
     wildfly_prospero_download_url: "{{ (prospero_release_info.json.assets | selectattr('name', 'match', 'prospero-build-.*\\.zip') | first).browser_download_url }}"
   delegate_to: localhost
   run_once: true
+  when:
+    - not eap_enable is defined or not (eap_enable | bool)
 
 - name: Set download paths
   ansible.builtin.set_fact:
     full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
     local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+  when:
+    - not eap_enable is defined or not (eap_enable | bool)
+
+- name: Set download paths
+  ansible.builtin.set_fact:
+    full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_archive_name }}"
+    local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_archive_name }}"
 
 - name: "Check target archive: {{ full_path_to_prospero_archive }}"
   ansible.builtin.stat:

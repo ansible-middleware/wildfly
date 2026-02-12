@@ -32,18 +32,7 @@
         fail_msg: "Application test-app.war is not deployed (CLI query failed)"
         success_msg: "Application test-app.war is successfully deployed"
 
-    - name: "Verify application is accessible"
-      ansible.builtin.uri:
-        url: "http://localhost:{{ wildfly_http_port | default('8080') }}/test-app.war/"
-        method: GET
-        status_code: 200
-        follow_redirects: all
-      register: app_response
-      retries: 5
-      delay: 5
-      until: app_response.status == 200
-
-    - name: "Display deployment information"
-      ansible.builtin.debug:
-        msg: "Deployment verified successfully via CLI"
-
+    - name: "Checks that test-app.war is accessible"
+      ansible.builtin.get_url:
+        url: "http://localhost:{{ wildfly_http_port | default('8080') }}/test-app/"
+        dest: '/dev/null'

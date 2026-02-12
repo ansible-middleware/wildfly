@@ -8,7 +8,7 @@
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
   when: not wildfly_offline_install and not (wildfly_install_use_prospero | default(false))
 
-- name: "Validate that {{ wildlfy_version }} matches expected scheme (X.y.z)"
+- name: "Validate that {{ wildfly_version }} matches expected scheme (X.y.z)"
   ansible.builtin.assert:
     that:
       - wildfly_version | regex_search('[0-9]{1}.[0-9]{1}.[0-9]{1}') | length > 0
@@ -35,7 +35,7 @@
     - eap_enable is defined and eap_enable
     - eap_apply_cp is defined and eap_apply_cp
 
-- name: "Validate existing additional zipfiles {{ eap_archive_filename }} for offline installs"
+- name: "Validate existing additional zipfiles {{ wildfly_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
       - not eap_apply_cp or (eap_patch_version is defined and eap_patch_archive_filename is exists)

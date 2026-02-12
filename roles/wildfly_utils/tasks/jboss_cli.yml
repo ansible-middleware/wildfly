@@ -18,7 +18,7 @@
   ansible.builtin.wait_for:
     host: "{{ jboss_cli_controller_host }}"
     port: "{{ jboss_cli_controller_port }}"
-    timeout: 10
+    timeout: 60
     delay: 1
     sleep: 2
 

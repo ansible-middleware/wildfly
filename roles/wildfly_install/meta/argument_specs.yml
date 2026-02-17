@@ -143,9 +143,12 @@ argument_specs:
                 type: json
                 description: "Supported OpenJDK and RHEL version for EAP"
                 default:
-                  eap7:
-                    openjdk: ['1.8', '11', '17', '21']
-                    rhel: ['7', '8', '9', '10']
-                  eap8:
-                    openjdk: ['11', '17', '21']
-                    rhel: ['8', '9', '10']
+                  eap7.4:
+                    openjdk: ['1.8', '11', '17']
+                    rhel: ['7', '8', '9']
+                  eap8.0:
+                    openjdk: ['11', '17', '21'] # OpenJDK 21 support only with EAP 8.0 Update 4 and above
+                    rhel: ['8', '9']
+                  eap8.1:
+                    openjdk: ['17', '21']
+                    rhel: ['8', '9']

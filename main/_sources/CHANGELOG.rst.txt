@@ -13,6 +13,13 @@ Minor Changes
 -------------
 
 - AMW-471 EAP collection is not able to use JBoss Installation Manager `#318 <https://github.com/ansible-middleware/wildfly/pull/318>`_
+- AMW-472 WildFly: Adding and fixing all the molecule scenarios in GH action `#320 <https://github.com/ansible-middleware/wildfly/pull/320>`_
+- Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+
+Bugfixes
+--------
+
+- Add app_deploy_standalone to molecule workflow `#319 <https://github.com/ansible-middleware/wildfly/pull/319>`_
 
 v1.5.10
 =======

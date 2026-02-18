@@ -2,3 +2,4 @@
 - name: "Systemd Daemon Reload"
   ansible.builtin.systemd:
     daemon_reload: true
+  become: "{{ wildfly_uninstall_require_privileges_escalation }}"

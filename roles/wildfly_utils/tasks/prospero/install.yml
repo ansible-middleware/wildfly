@@ -59,7 +59,7 @@
     name: eap_install
     tasks_from: install/rhn.yml
   vars:
-    eap_archive_filename: jboss-eap-{{ eap_version }}-installation-manager.zip
+    eap_archive_filename: jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}-installation-manager.zip
   when:
     - eap_enable is defined and (eap_enable | bool)
 

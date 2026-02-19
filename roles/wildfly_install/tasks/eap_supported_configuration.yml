@@ -8,7 +8,7 @@
 
 - name: "Determine supported configurations for EAP {{ eap_version }}"
   ansible.builtin.set_fact:
-    supported_configuration: "{{ eap_supported_configuration['eap' + eap_version[:1]] }}"
+    supported_configuration: "{{ eap_supported_configuration['eap' + eap_version[:3]] }}"
 
 - name: "Ensure target RHEL version is supported: {{ supported_configuration.rhel }}"
   ansible.builtin.assert:
@@ -16,7 +16,7 @@
       - ansible_os_family == 'RedHat' and ansible_distribution == 'RedHat'
       - ansible_distribution_major_version in supported_configuration.rhel
     quiet: true
-    fail_msg: "This version of RHEL {{ ansible_distribution_major_version }} is not supported for EAP{{ eap_version[:1] }}, supported versions are: {{ supported_configuration.rhel }}"
+    fail_msg: "This version of RHEL {{ ansible_distribution_major_version }} is not supported for EAP{{ eap_version[:3] }}, supported versions are: {{ supported_configuration.rhel }}"
   when:
     - eap_install_skip_supported_os_check is defined and not eap_install_skip_supported_os_check
     - ansible_distribution_major_version is defined and ansible_os_family is defined and ansible_os_family == 'RedHat'
@@ -26,6 +26,6 @@
     that:
       - (eap_java_version | string) in supported_configuration.openjdk
     quiet: true
-    fail_msg: "This version of OpenJDK used ({{ eap_java_version }}) is not supported for EAP{{ eap_version[:1] }}, supported version are: {{ supported_configuration.openjdk }}"
+    fail_msg: "This version of OpenJDK used ({{ eap_java_version }}) is not supported for EAP{{ eap_version[:3] }}, supported version are: {{ supported_configuration.openjdk }}"
   when:
     - eap_install_skip_supported_openjdk_check is defined and not eap_install_skip_supported_openjdk_check

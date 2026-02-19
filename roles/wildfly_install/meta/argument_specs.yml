@@ -91,8 +91,16 @@ argument_specs:
                 required: False
                 description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_apply_cp is True"
                 type: "str"
+            eap_prospero_version:
+                default: "1.1.6.Final-redhat-00001"
+                description: "Version of JBoss Installation Manager to use"
+                type: "str"
+            eap_prospero_name:
+                default: "jboss-eap-installation-manager"
+                description: "Name of the JBoss Installation Manager tool"
+                type: "str"
             eap_archive_filename:
-                default: "jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}.zip"
+                default: "{{ eap_prospero_name }}-{{ eap_prospero_version }}.zip"
                 description: "Red Hat EAP archive name"
                 type: "str"
             eap_patch_archive_filename:

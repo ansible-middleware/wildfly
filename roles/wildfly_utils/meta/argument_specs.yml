@@ -115,6 +115,10 @@ argument_specs:
                 default: "eap-8.0"
                 description: "Name of the WildFly profile for the server to install"
                 type: "str"
+            eap_prospero_override_repos:
+                required: false
+                description: "Override default repositories for JBoss Installation Manager (e.g., 'file:/path/to/repo' or 'https://repo.example.com')"
+                type: "str"
     jboss_cli:
         options:
             jboss_cli_controller_host:
@@ -205,3 +209,11 @@ argument_specs:
                 default: false
                 description: "Should Ansible check SSL when downloading Prospero"
                 type: "bool"
+            wildfly_prospero_override_repos:
+                required: false
+                description: "Override default repositories for Prospero installation (e.g., 'file:/path/to/repo' or 'https://repo.example.com')"
+                type: "str"
+            wildfly_prospero_override_manifest:
+                required: false
+                description: "Override default provisioning manifest for Prospero installation (e.g., 'org.wildfly.channels:wildfly:33.0.0.Final')"
+                type: "str"

@@ -50,9 +50,15 @@
         - eap_prospero_override_repos is defined
     - name: Override provisioning manifest
       ansible.builtin.set_fact:
+        prospero_command_args: "{{ prospero_command_args }} --manifest {{ wildfly_prospero_override_manifest }}" 
+      when:
+        - wildfly_prospero_override_manifest is defined
+    - name: Set default provisioning manifest
+      ansible.builtin.set_fact:
         prospero_command_args: "{{ prospero_command_args }} --manifest org.wildfly.channels:wildfly:{{ wildfly_version }}"
       when:
         - not eap_enable is defined or not eap_enable
+        - wildfly_prospero_override_manifest is not defined
     - name: Display prospero command arguments
       ansible.builtin.debug:
         var: prospero_command_args

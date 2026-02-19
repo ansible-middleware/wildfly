@@ -14,6 +14,8 @@ Minor Changes
 
 - AMW-471 EAP collection is not able to use JBoss Installation Manager `#318 <https://github.com/ansible-middleware/wildfly/pull/318>`_
 - AMW-472 WildFly: Adding and fixing all the molecule scenarios in GH action `#320 <https://github.com/ansible-middleware/wildfly/pull/320>`_
+- AMW-473 Disabling RHEL10 testing from wildfly collection `#322 <https://github.com/ansible-middleware/wildfly/pull/322>`_
+- AMW-475 eap_version argument is misleading in EAP Ansible collections `#324 <https://github.com/ansible-middleware/wildfly/pull/324>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
 
 Bugfixes

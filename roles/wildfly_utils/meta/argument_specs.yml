@@ -112,7 +112,7 @@ argument_specs:
                 description: "Constant for the name of the prospero tool"
                 type: "str"
             eap_prospero_profile_name:
-                default: "eap-8.0"
+                default: "eap-{{ (eap_version.split('.'))[0:2] | join('.') }}" 
                 description: "Name of the WildFly profile for the server to install"
                 type: "str"
             eap_prospero_override_repos:

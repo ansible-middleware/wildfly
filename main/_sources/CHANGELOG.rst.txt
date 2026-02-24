@@ -23,6 +23,7 @@ Minor Changes
 Bugfixes
 --------
 
+- AMW-482 molecule tests fix according to EAP 8.0.0 `#332 <https://github.com/ansible-middleware/wildfly/pull/332>`_
 - Add app_deploy_standalone to molecule workflow `#319 <https://github.com/ansible-middleware/wildfly/pull/319>`_
 
 v1.5.10

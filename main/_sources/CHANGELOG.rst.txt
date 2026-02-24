@@ -18,6 +18,7 @@ Minor Changes
 - AMW-475 eap_version argument is misleading in EAP Ansible collections `#324 <https://github.com/ansible-middleware/wildfly/pull/324>`_
 - AMW-477 For eap collection added JIM compatibilities to use repos & manifest by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
 - AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
+- AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
 
 Bugfixes

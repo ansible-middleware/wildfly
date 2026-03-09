@@ -1,0 +1,10 @@
+---
+# Offline install from local archive (no Prospero)
+wildfly_offline_install: true
+wildfly_archive_filename_on_controller: true
+wildfly_version: '39.0.0.Final'
+wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
+wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
+wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
+wildfly_install_download_controller_download_dir: "/tmp"
+wildfly_archive_filename_local: "{{ wildfly_install_download_controller_download_dir }}/{{ wildfly_archive_filename }}"

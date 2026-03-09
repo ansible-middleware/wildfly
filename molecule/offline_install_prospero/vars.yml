@@ -1,0 +1,6 @@
+---
+# Offline install using Prospero (Prospero path; WildFly provisioned via Prospero channels)
+wildfly_install_user: 'wildfly'
+wildfly_install_group: "{{ wildfly_install_user }}"
+wildfly_install_use_prospero: true
+wildfly_prospero_scenario_enable: true

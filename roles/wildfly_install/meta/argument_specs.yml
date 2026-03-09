@@ -100,7 +100,8 @@ argument_specs:
                 description: "Name of the JBoss Installation Manager tool"
                 type: "str"
             eap_archive_filename:
-                default: "{{ eap_prospero_name }}-{{ eap_prospero_version }}.zip"
+                # Distribution zip for zip-based install (offline or RHN); installation-manager zip only when using Prospero (set by prospero/install.yml).
+                default: "jboss-eap-{{ eap_version }}.zip"
                 description: "Red Hat EAP archive name"
                 type: "str"
             eap_patch_archive_filename:

@@ -37,7 +37,7 @@
   ansible.builtin.set_fact:
     full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
     local_path_to_archive: "{{ local_path.stat.path }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
-    wildfly_prospero_home: "{{ wildfly_prospero_install_dir }}/{{ eap_prospero_name }}-{{ (eap_version.split('.'))[0:2] | join('.') }}"
+    eap_prospero_home: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager"
   when:
     - eap_enable is defined and (eap_enable | bool)
 

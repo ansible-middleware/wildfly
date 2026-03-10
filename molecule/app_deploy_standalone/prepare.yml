@@ -29,22 +29,6 @@
       changed_when: false
       when: ansible_facts.distribution_major_version == '8'
 
-    - name: "Ensure files directory exists on controller"
-      ansible.builtin.file:
-        path: "{{ playbook_dir }}/../files"
-        state: directory
-        mode: '0755'
-      delegate_to: localhost
-      run_once: true
-
-    - name: "Download test application to controller"
-      ansible.builtin.get_url:
-        url: "https://github.com/rpelisse/simple-servlet/releases/download/info_wfly34_1.4.1/info-1.4.1.war"
-        dest: "{{ playbook_dir }}/../files/test-app.war"
-        mode: '0644'
-      delegate_to: localhost
-      run_once: true
-
     - name: "Install and start WildFly"
       ansible.builtin.include_role:
         name: wildfly_install
@@ -65,4 +49,3 @@
     - name: Display Ansible version
       ansible.builtin.debug:
         msg: "Ansible version is {{ ansible_version.full }}, running with Python {{ ansible_python_version }}."
-

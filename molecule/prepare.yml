@@ -85,14 +85,14 @@
         cmd: "dnf install -y java-17-openjdk-headless temurin-17-jdk procps-ng tzdata-java"
       changed_when: false
       when: ansible_distribution_major_version == '8'
-
-    - name: "Download apps if needed."
+  
+    - name: "Copy local test applications to target hosts"
       when:
         - wildfly_apps is defined and wildfly_apps | length > 0
       block:
-        - name: "Download apps if required"
-          ansible.builtin.get_url:
-            url: "{{ app.download_url }}"
+        - name: "Copy apps if required"
+          ansible.builtin.copy:
+            src: "{{ playbook_dir }}/{{ app.src }}" 
             dest: "{{ app.path }}"
           loop: "{{ wildfly_apps }}"
           loop_control:

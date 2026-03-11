@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.11-devel
 =============
 
+Major Changes
+-------------
+
+- Fix eap 7.4.0 and 8.0.0>= installation `#337 <https://github.com/ansible-middleware/wildfly/pull/337>`_
+
 Minor Changes
 -------------
 

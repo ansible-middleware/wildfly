@@ -1,4 +1,3 @@
 ---
 wildfly_apps:
-  - { path: /tmp/kitchensink.war, download_url: 'https://github.com/rpelisse/wildfly-quickstarts/releases/download/kitchensink_wildfly31_1.0/kitchensink.war', root: '/kitchensink' }
-  - { path: /tmp/info.war, download_url: 'https://github.com/rpelisse/simple-servlet/releases/download/info_wfly34_1.4.1/info-1.4.1.war', root: '/info' }
+  - { path: /tmp/test-app.war, src: 'files/test-app.war', root: '/test-app' } 

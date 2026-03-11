@@ -35,7 +35,7 @@
 
 - name: Set download paths for EAP
   ansible.builtin.set_fact:
-    full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
+    full_path_to_prospero_archive: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
     local_path_to_archive: "{{ local_path.stat.path }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
     eap_prospero_home: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager"
   when:
@@ -103,3 +103,39 @@
   become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
     - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists
+  register: prospero_extraction
+
+- name: "Find actual Prospero installation directory after extraction"
+  ansible.builtin.find:
+    paths: "{{ wildfly_prospero_install_dir }}"
+    patterns: "{{ wildfly_prospero_name }}*"
+    file_type: directory
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  register: prospero_dirs
+  when:
+    - prospero_extraction.changed or not path_to_prospero_installation.stat.exists
+
+- name: "Set wildfly_prospero_home based on actual extracted directory"
+  ansible.builtin.set_fact:
+    wildfly_prospero_home: "{{ prospero_dirs.files[0].path }}"
+  when:
+    - prospero_dirs.files is defined
+    - prospero_dirs.files | length > 0
+
+- name: "Find Prospero installation directory if not already set"
+  ansible.builtin.find:
+    paths: "{{ wildfly_prospero_install_dir }}"
+    patterns: "{{ wildfly_prospero_name }}*"
+    file_type: directory
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  register: existing_prospero_dirs
+  when:
+    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
+
+- name: "Set wildfly_prospero_home from existing installation"
+  ansible.builtin.set_fact:
+    wildfly_prospero_home: "{{ existing_prospero_dirs.files[0].path }}"
+  when:
+    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
+    - existing_prospero_dirs.files is defined
+    - existing_prospero_dirs.files | length > 0

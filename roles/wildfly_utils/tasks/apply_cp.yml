@@ -110,7 +110,15 @@
       ansible.builtin.set_fact:
         patch_archive: "{{ patches_repository }}/{{ patch_bundle }}"
 
+- name: Set patch archive path if not already set
+  ansible.builtin.set_fact:
+    patch_archive: "{{ patches_repository }}/{{ patch_bundle }}"
+  when:
+    - patch_archive is not defined
+    - patch_bundle is defined
+
 - name: Check remote download patch archive path
+  when: patch_archive is defined
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
@@ -129,6 +137,7 @@
     seuser: system_u
   register: new_version_downloaded
   when:
+    - patch_info.stat is defined
     - not patch_info.stat.exists
   become: "{{ wildfly_install_requires_become | default(true) }}"
   notify: exec_restorecon
@@ -137,6 +146,7 @@
   ansible.builtin.stat:
     path: "{{ patch_archive }}"
   register: patch_info
+  when: patch_archive is defined
   become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: "Set checksum file path for patch"
@@ -149,16 +159,21 @@
   ansible.builtin.stat:
     path: "{{ patch_checksum_file }}"
   register: last_patch_status
+  when: patch_checksum_file is defined
   become: "{{ wildfly_install_requires_become | default(true) }}"
 
 - name: Print when patch has been applied already
   ansible.builtin.debug:
     msg: "Patch v{{ patch_version }} (checksum {{ patch_info.stat.checksum }}) has already been applied."
   when:
+    - last_patch_status.stat is defined
     - last_patch_status.stat.exists
+    - patch_info.stat is defined
 
 - name: Perform patching
-  when: not last_patch_status.stat.exists
+  when:
+    - last_patch_status.stat is defined
+    - not last_patch_status.stat.exists
   block:
     - name: "Check service status, start for patching if not running"
       block:

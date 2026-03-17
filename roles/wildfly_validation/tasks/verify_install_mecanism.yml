@@ -13,11 +13,14 @@
     - name: "Verify that required Prospero parameters are defined."
       ansible.builtin.assert:
         that:
-          - wildfly_prospero_install_dir is defined and wildfly_prospero_install_dir is exists
+          - wildfly_prospero_install_dir is defined
         quiet: true
-        fail_msg: "Can't verify prospero install on controller without path to install: {{ wildfly_prospero_install_dir }}"
-      when:
-        - wildfly_validation_check_prospero_install is defined and wildfly_validation_check_prospero_install
+        fail_msg: "Can't verify prospero install without path to install: {{ wildfly_prospero_install_dir }}"
+
+    - name: "Verify that Prospero installation folder exists"
+      ansible.builtin.include_tasks: verify_folder_exists.yml
+      vars:
+        folder: "{{ wildfly_prospero_install_dir }}"
 
     - name: "Verify that Prospero hidden folders exists in {{ wildfly_home }}"
       ansible.builtin.include_tasks: verify_folder_exists.yml

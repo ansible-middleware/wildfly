@@ -1,0 +1,2 @@
+wildfly_java_version: 17
+wildfly_validation_debug: True

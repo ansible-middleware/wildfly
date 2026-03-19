@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  vars_files:
+    - vars.yml
+    - ../group_vars/all/vars.yml
+  roles:
+    - role: wildfly_install
+    - role: wildfly_systemd

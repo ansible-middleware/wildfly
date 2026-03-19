@@ -38,10 +38,10 @@
     mode: '0755'
     owner: "{{ wildfly_systemd.user }}"
     group: "{{ wildfly_systemd.group }}"
-    selevel: s0
-    serole: object_r
-    setype: var_run_t
-    seuser: system_u
+    selevel: "{{ 's0' if wildfly_selinux_enabled else omit }}"
+    serole: "{{ 'object_r' if wildfly_selinux_enabled else omit }}"
+    setype: "{{ 'var_run_t' if wildfly_selinux_enabled else omit }}"
+    seuser: "{{ 'system_u' if wildfly_selinux_enabled else omit }}"
   when: not pid_directory.stat.exists
   notify: exec_restorecon
 

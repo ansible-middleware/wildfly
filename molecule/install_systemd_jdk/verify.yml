@@ -1,0 +1,9 @@
+---
+- name: Verify jdk installation
+  hosts: all
+  vars_files:
+    - vars.yml
+    - ../group_vars/all/vars.yml
+  tasks:
+    - name: "Verify that state is consistent"
+      ansible.builtin.include_tasks: ../verify_jdk_scenario.yml

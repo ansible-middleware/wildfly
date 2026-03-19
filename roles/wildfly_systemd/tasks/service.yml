@@ -11,5 +11,4 @@
     name: "{{ wildfly_service_name }}"
     state: "{{ instance_state }}"
     enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
-    daemon_reload: true
   become: "{{ wildfly_install_requires_become | default(true) }}"

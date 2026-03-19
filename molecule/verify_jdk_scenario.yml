@@ -1,0 +1,41 @@
+---
+- name: "Ensure required parameters are provided."
+  ansible.builtin.assert:
+    that:
+      - wildfly_java_version is defined
+    quiet: true
+
+- name: "Verify that state is consistent"
+  ansible.builtin.include_role:
+    name: wildfly_validation
+
+- name: "Verify WildFly log contains correct Java"
+  become: yes
+  block:
+    - ansible.builtin.shell:
+        cmd: cat /opt/wildfly/wildfly-*/standalone/log/server.log
+      become: yes
+      changed_when: False
+      register: command_output
+
+    - ansible.builtin.set_fact:
+        java_from_log: "{{ command_output.stdout | regex_search('^\\s*java.home\\s*=.*$', multiline=True) }}"
+
+    - name: "Compute regex search rule"
+      ansible.builtin.set_fact:
+        regex_pattern: "^\\s*java.home\\s*=\\s*.*/java-{{ wildfly_java_version }}-openjdk.*$"
+
+    - ansible.builtin.set_fact:
+        expected_java_from_log: "{{ java_from_log | regex_search(regex_pattern, multiline=True) }}"
+    - ansible.builtin.debug:
+        var: java_from_log
+      when:
+        - wildfly_validation_debug is defined
+    - ansible.builtin.debug:
+        var: expected_java_from_log
+      when:
+        - wildfly_validation_debug is defined
+    - ansible.builtin.assert:
+        that:
+          - expected_java_from_log is defined
+          - expected_java_from_log != ''

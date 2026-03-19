@@ -1,0 +1,8 @@
+---
+- import_playbook: ../../playbooks/playbook.yml
+  vars:
+    wildfly_java_version: 17
+    wildfly_java_package_name: "java-17-openjdk-headless"
+    wildfly_validation_debug: True
+    wildfly_systemd_wait_for_timeout: 120
+    wildfly_systemd_wait_for_delay: 5

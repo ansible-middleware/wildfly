@@ -1,0 +1,42 @@
+---
+- name: "Escalate privileges if needed"
+  block:
+    - name: "Set migration tool version based on target WildFly version"
+      ansible.builtin.set_fact:
+        wildfly_migration_tool_version: "{{ target_wildfly_home | basename | regex_replace('^wildfly-(.+)$', '\\1') }}"
+
+    - name: "Set migration tool download URL and paths"
+      ansible.builtin.set_fact:
+        wildfly_migration_tool_download_url: "https://github.com/wildfly/wildfly-server-migration/releases/download/{{ wildfly_migration_tool_version }}/jboss-server-migration-{{ wildfly_migration_tool_version }}.zip"
+        wildfly_migration_tool_archive_path: "/tmp/jboss-server-migration-{{ wildfly_migration_tool_version }}.zip"
+        wildfly_migration_tool_install_dir: "/opt"
+        wildfly_migration_server_tool_home: "/opt/jboss-server-migration"
+        wildfly_migration_tool_bin_folder: ""
+        wildfly_migration_server_tool_subfolder_to_configuration: ""
+        wildfly_migration_server_tool_path_to_script: "/opt/jboss-server-migration/jboss-server-migration.sh"
+
+    - name: "Check if migration tool script already exists"
+      ansible.builtin.stat:
+        path: "{{ wildfly_migration_server_tool_path_to_script }}"
+      register: wildfly_migration_script_stat
+
+    - name: "Download WildFly Server Migration Tool from GitHub"
+      ansible.builtin.get_url:
+        url: "{{ wildfly_migration_tool_download_url }}"
+        dest: "{{ wildfly_migration_tool_archive_path }}"
+        mode: '0644'
+      when:
+        - not wildfly_migration_script_stat.stat.exists
+
+    - name: "Extract WildFly Server Migration Tool to {{ wildfly_migration_tool_install_dir }}"
+      ansible.builtin.unarchive:
+        src: "{{ wildfly_migration_tool_archive_path }}"
+        dest: "{{ wildfly_migration_tool_install_dir }}"
+        remote_src: yes
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
+      when:
+        - not wildfly_migration_script_stat.stat.exists
+
+  become: "{{ wildfly_migration_require_privileges_escalation | default('yes') }}"
+  become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"

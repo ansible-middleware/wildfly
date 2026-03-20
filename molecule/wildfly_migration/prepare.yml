@@ -1,0 +1,102 @@
+---
+- name: "Import RHEL 8 Python Bootstrap"
+  ansible.builtin.import_playbook: ../common_bootstrap_rhel8.yml
+
+- name: Prepare
+  hosts: all
+  gather_facts: true
+  vars_files:
+    - ../group_vars/all/vars.yml
+  vars:
+    sudo_pkg_name: 'sudo'
+    wildfly_old_version: '37.0.0.Final'
+    wildfly_new_version: '39.0.0.Final'
+    wildfly_old_workdir: '/opt/wildfly-old/'
+    wildfly_new_workdir: '/opt/wildfly-new/'
+  collections:
+    - middleware_automation.wildfly
+  tasks:
+    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 8 (if user is root)."
+      ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
+      changed_when: false # dnf install is idempotent
+      when:
+        - ansible_user_id == 'root'
+        - ansible_distribution_major_version == '8'
+
+    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
+      ansible.builtin.yum:
+        name: "{{ sudo_pkg_name }}"
+      when:
+        - ansible_user_id == 'root'
+        - ansible_distribution_major_version != '8'
+
+    - name: "Ensure required packages are installed (RHEL 10)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.yum:
+        name:
+          - java-21-openjdk-headless
+          - java-21-openjdk-devel
+          - procps-ng
+          - tzdata-java
+          - unzip
+        state: present
+      when: ansible_distribution_major_version == '10'
+
+    - name: "Ensure required packages are installed (RHEL 9)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.yum:
+        name:
+          - java-17-openjdk-headless
+          - java-21-openjdk-devel
+          - procps-ng
+          - tzdata-java
+          - unzip
+        state: present
+      when: ansible_distribution_major_version == '9'
+
+    - name: "Ensure required packages are installed (RHEL 8)"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.command:
+        cmd: "dnf install -y java-17-openjdk-headless java-21-openjdk-devel procps-ng tzdata-java unzip"
+      changed_when: false
+      when: ansible_distribution_major_version == '8'
+
+    - name: "Create wildfly user and group"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.user:
+        name: wildfly
+        system: yes
+        home: /opt/wildfly
+        shell: /bin/bash
+
+    - name: "Install old WildFly version ({{ wildfly_old_version }})"
+      ansible.builtin.include_role:
+        name: wildfly_install
+      vars:
+        wildfly_version: "{{ wildfly_old_version }}"
+        wildfly_install_workdir: "{{ wildfly_old_workdir }}"
+        wildfly_user: wildfly
+        wildfly_group: wildfly
+
+    - name: "Create standalone configuration for old WildFly"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      ansible.builtin.copy:
+        src: "{{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}/standalone/configuration/standalone.xml"
+        dest: "{{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}/standalone/configuration/standalone.xml.bak"
+        remote_src: yes
+        owner: wildfly
+        group: wildfly
+        mode: '0644'
+
+    - name: "Install new WildFly version ({{ wildfly_new_version }})"
+      ansible.builtin.include_role:
+        name: wildfly_install
+      vars:
+        wildfly_version: "{{ wildfly_new_version }}"
+        wildfly_install_workdir: "{{ wildfly_new_workdir }}"
+        wildfly_user: wildfly
+        wildfly_group: wildfly
+
+    - name: Display preparation complete
+      ansible.builtin.debug:
+        msg: "Preparation complete. Old WildFly: {{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}, New WildFly: {{ wildfly_new_workdir }}wildfly-{{ wildfly_new_version }}"

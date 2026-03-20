@@ -1,0 +1,25 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    wildfly_old_version: '37.0.0.Final'
+    wildfly_new_version: '39.0.0.Final'
+    wildfly_old_workdir: '/opt/wildfly-old/'
+    wildfly_new_workdir: '/opt/wildfly-new/'
+    previous_wildfly_home: "{{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}"
+    target_wildfly_home: "{{ wildfly_new_workdir }}wildfly-{{ wildfly_new_version }}"
+    wildfly_user: wildfly
+    wildfly_group: wildfly
+    wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
+    wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
+    wildfly_migration_jdk_package_skip_install: true
+  collections:
+    - middleware_automation.wildfly
+  tasks:
+    - name: "Run WildFly migration scenario"
+      block:
+        - name: "Run wildfly_migration role"
+          ansible.builtin.include_role:
+            name: wildfly_migration
+      when:
+        - not eap_enable is defined or not eap_enable

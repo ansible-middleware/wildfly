@@ -100,14 +100,14 @@ argument_specs:
                 description: "Directory where to install the server migration tool - if not provided with EAP"
                 type: "str"
             eap_migration_server_tool_home:
-                default: "{{ (eap_version != '8.0.0') | ternary(target_eap_home,eap_migration_server_tool_install_dir + '/jboss-server-migration') }}"
+                default: "{{ (eap_version is version('8.0.0', '<')) | ternary(target_eap_home,eap_migration_server_tool_install_dir + '/jboss-server-migration') }}"
                 description: "Path to the server migration tool home - if not provided with EAP"
                 type: "str"
             eap_migration_tool_bin_folder:
-                default: "{{ (eap_version != '8.0.0') | ternary('/bin','') }}"
+                default: "{{ (eap_version is version('8.0.0', '<')) | ternary('/bin','') }}"
                 description: "Indicates which subfolder, relative to eap_migration_server_tool_home, the server migration script resides."
                 type: "str"
             eap_migration_server_tool_subfolder_to_configuration:
-                default: "{{ (eap_version != '8.0.0') | ternary('/migration', '') }}"
+                default: "{{ (eap_version is version('8.0.0', '<')) | ternary('/migration', '') }}"
                 description: "Subfolder, relatives to eap_migration_server_tool_home, where are located server migration tool configurations files"
                 type: "str"

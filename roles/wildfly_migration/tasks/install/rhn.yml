@@ -9,7 +9,7 @@
 
 - name: "Esclade privileges if needed"
   block:
-    - name: "Load metadata on server migration tool archive for EAP8"
+    - name: "Load metadata on server migration tool archive"
       ansible.builtin.stat:
         path: "{{ eap_migration_server_tool_path_to_archive }}"
       register: eap_migration_archive_md

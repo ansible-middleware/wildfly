@@ -14,7 +14,7 @@
         path: "{{ eap_migration_server_tool_path_to_archive }}"
       register: eap_migration_archive_md
 
-    - name: "Ensure server migration tool for EAP8 has been downloaded"
+    - name: "Ensure server migration tool for EAP8+ has been downloaded"
       redhat.runtimes_common.product_download:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
@@ -34,12 +34,27 @@
         state: directory
         mode: "0755"
 
-    - name: "Ensure server migration tool for EAP8 has been decompressed"
+    - name: "Check if migration tool script already exists"
+      ansible.builtin.stat:
+        path: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
+      register: eap_migration_script_stat
+
+    - name: "Ensure server migration tool for EAP8+ has been decompressed"
       ansible.builtin.unarchive:
         src: "{{ eap_migration_server_tool_path_to_archive }}"
         dest: "{{ eap_migration_server_tool_install_dir }}"
         remote_src: "{{ eap_migration_remote_src | default('yes') }}"
-        creates: "{{ eap_migration_server_tool_path_to_script }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
+      when:
+        - not eap_migration_script_stat.stat.exists
+
+    - name: "Set EAP migration tool paths for EAP 8.0+"
+      ansible.builtin.set_fact:
+        wildfly_migration_server_tool_home: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration"
+        wildfly_migration_tool_bin_folder: ""
+        wildfly_migration_server_tool_subfolder_to_configuration: ""
+        wildfly_migration_server_tool_path_to_script: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
 
   become: "{{ eap_migration_server_tool_install_require_privileges_escalation | default('yes') }}"
   become_user: "{{ eap_migration_server_tool_install_require_privileges_escalation_user | default('root') }}"

@@ -1,0 +1,7 @@
+---
+# Directory naming pattern variables for migration tests
+# WildFly uses: wildfly-<full_version> (e.g., wildfly-37.0.0.Final)
+# EAP uses: jboss-eap-<major.minor> (e.g., jboss-eap-8.0)
+# Set wildfly_enable: true for WildFly, after janus conversion becomes eap_enable: true for EAP
+wildfly_enable: true
+wildfly_install_dir_prefix: "{{ (eap_enable is defined and eap_enable) | ternary('jboss-eap', 'wildfly') }}"

@@ -2,10 +2,13 @@
 - name: Verify
   hosts: all
   gather_facts: false
+  vars_files:
+    - vars.yml
   vars:
     wildfly_new_version: '39.0.0.Final'
     wildfly_new_workdir: '/opt/wildfly-new/'
-    target_wildfly_home: "{{ wildfly_new_workdir }}wildfly-{{ wildfly_new_version }}"
+    wildfly_new_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_new_version.split('.'))[0:2] | join('.'), wildfly_new_version) }}"
+    target_wildfly_home: "{{ wildfly_new_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_new_version_dir }}"
     migration_tool_home: "/opt/jboss-server-migration"
   tasks:
     - name: "Verify migration scenario"

@@ -7,12 +7,17 @@
   gather_facts: true
   vars_files:
     - ../group_vars/all/vars.yml
+    - vars.yml
   vars:
     sudo_pkg_name: 'sudo'
     wildfly_old_version: '37.0.0.Final'
     wildfly_new_version: '39.0.0.Final'
     wildfly_old_workdir: '/opt/wildfly-old/'
     wildfly_new_workdir: '/opt/wildfly-new/'
+    wildfly_old_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_old_version.split('.'))[0:2] | join('.'), wildfly_old_version) }}"
+    wildfly_new_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_new_version.split('.'))[0:2] | join('.'), wildfly_new_version) }}"
+    wildfly_old_home: "{{ wildfly_old_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_old_version_dir }}"
+    wildfly_new_home: "{{ wildfly_new_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_new_version_dir }}"
   collections:
     - middleware_automation.wildfly
   tasks:
@@ -81,8 +86,8 @@
     - name: "Create standalone configuration for old WildFly"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.copy:
-        src: "{{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}/standalone/configuration/standalone.xml"
-        dest: "{{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}/standalone/configuration/standalone.xml.bak"
+        src: "{{ wildfly_old_home }}/standalone/configuration/standalone.xml"
+        dest: "{{ wildfly_old_home }}/standalone/configuration/standalone.xml.bak"
         remote_src: yes
         owner: wildfly
         group: wildfly
@@ -96,7 +101,8 @@
         wildfly_install_workdir: "{{ wildfly_new_workdir }}"
         wildfly_user: wildfly
         wildfly_group: wildfly
+        wildfly_prospero_install_dir: /opt/prospero-new
 
     - name: Display preparation complete
       ansible.builtin.debug:
-        msg: "Preparation complete. Old WildFly: {{ wildfly_old_workdir }}wildfly-{{ wildfly_old_version }}, New WildFly: {{ wildfly_new_workdir }}wildfly-{{ wildfly_new_version }}"
+        msg: "Preparation complete. Old WildFly: {{ wildfly_old_home }}, New WildFly: {{ wildfly_new_home }}"

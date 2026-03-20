@@ -3,7 +3,7 @@ allow_duplicates: true
 galaxy_info:
   role_name: wildfly_install
   namespace: middleware_automation
-  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli, Ranabir Chakraborty
   description: Install a JDBC driver module in wildfly application server or JBoss Enterprise Application (EAP)
   company: Red Hat, Inc.
 

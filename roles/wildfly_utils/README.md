@@ -47,3 +47,7 @@ Role Variables
 |`jboss_cli_file`| The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively | `False` |
 |`jboss_cli_timeout`| Seconds to wait for jboss-cli connection to server | `False` |
 <!--end argument_specs-->
+
+## Author Information
+
+* [Ranabir Chakraborty](https://github.com/RanabirChakraborty)

@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: wildfly_systemd
   namespace: middleware_automation
-  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli, Ranabir Chakraborty
   description: Configure systemd service unit for wildfly or EAP
   company: Red Hat, Inc.
 

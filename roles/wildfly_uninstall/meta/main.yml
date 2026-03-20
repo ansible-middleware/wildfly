@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: wildfly_uninstall
   namespace: middleware_automation
-  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli, Ranabir Chakraborty
   description: Uninstalls wildfly
   company: Red Hat, Inc.
 

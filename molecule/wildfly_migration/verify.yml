@@ -1,0 +1,83 @@
+---
+- name: Verify
+  hosts: all
+  gather_facts: false
+  vars:
+    wildfly_new_version: '39.0.0.Final'
+    wildfly_new_workdir: '/opt/wildfly-new/'
+    target_wildfly_home: "{{ wildfly_new_workdir }}wildfly-{{ wildfly_new_version }}"
+    migration_tool_home: "/opt/jboss-server-migration"
+  tasks:
+    - name: "Verify migration scenario"
+      block:
+        - name: "Check that migration configuration directory was created"
+          ansible.builtin.stat:
+            path: "{{ migration_tool_home }}/configuration"
+          register: migration_config_dir
+
+        - name: "Assert migration configuration directory exists"
+          ansible.builtin.assert:
+            that:
+              - migration_config_dir.stat.exists
+              - migration_config_dir.stat.isdir
+            fail_msg: "Migration configuration directory does not exist"
+            success_msg: "Migration configuration directory exists"
+
+        - name: "Check that migration environment.properties file was created"
+          ansible.builtin.stat:
+            path: "{{ migration_tool_home }}/configuration/environment.properties"
+          register: migration_env_file
+
+        - name: "Assert migration environment.properties file exists"
+          ansible.builtin.assert:
+            that:
+              - migration_env_file.stat.exists
+              - migration_env_file.stat.isreg
+            fail_msg: "Migration environment.properties file does not exist"
+            success_msg: "Migration environment.properties file exists"
+
+        - name: "Check that migration report HTML file was created"
+          ansible.builtin.stat:
+            path: "{{ target_wildfly_home }}/migration-report.html"
+          register: migration_report_html
+
+        - name: "Display migration report status"
+          ansible.builtin.debug:
+            msg: "Migration report HTML exists: {{ migration_report_html.stat.exists }}"
+
+        - name: "Check that migration report XML file was created"
+          ansible.builtin.stat:
+            path: "{{ target_wildfly_home }}/migration-report.xml"
+          register: migration_report_xml
+
+        - name: "Display migration report XML status"
+          ansible.builtin.debug:
+            msg: "Migration report XML exists: {{ migration_report_xml.stat.exists }}"
+
+        - name: "Check that jboss-server-migration.sh script exists"
+          ansible.builtin.stat:
+            path: "{{ migration_tool_home }}/jboss-server-migration.sh"
+          register: migration_script
+
+        - name: "Assert jboss-server-migration.sh script exists"
+          ansible.builtin.assert:
+            that:
+              - migration_script.stat.exists
+              - migration_script.stat.isreg
+              - migration_script.stat.executable
+            fail_msg: "Migration script does not exist or is not executable"
+            success_msg: "Migration script exists and is executable"
+
+        - name: "Verify migration configuration content"
+          ansible.builtin.shell: |
+            grep -q "server.source.standalone.configFiles=standalone.xml,standalone-full.xml" {{ migration_tool_home }}/configuration/environment.properties
+          register: config_content_check
+          failed_when: config_content_check.rc != 0
+          changed_when: false
+
+        - name: "Assert migration configuration has correct content"
+          ansible.builtin.debug:
+            msg: "Migration configuration file contains expected configuration"
+
+      when:
+        - not eap_enable is defined or not eap_enable

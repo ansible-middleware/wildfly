@@ -25,6 +25,14 @@ argument_specs:
                 required: true
                 description: "Name for the JDBC driver module"
                 type: "str"
+            wildfly_driver_download_dir:
+                default: "/tmp"
+                description: "Temporary directory for the driver download"
+                type: "str"
+            wildfly_driver_offline_install:
+                default: false
+                description: "Enable offline install mode (download to control node, then copy to target)"
+                type: "bool"
             wildfly_version:
                 default: "39.0.0.Final"
                 description: "WildFly version to install"

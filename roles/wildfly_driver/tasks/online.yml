@@ -1,0 +1,16 @@
+---
+- name: "Download {{ wildfly_driver.module_name }} driver directly to target"
+  ansible.builtin.uri:
+    url: "{{ wildfly_driver.jar_url }}"
+    dest: "{{ wildfly_driver_jar_installation_path }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: '0640'
+    creates: "{{ wildfly_driver_jar_installation_path }}"
+    selevel: s0
+    serole: object_r
+    setype: usr_t
+    seuser: system_u
+  when:
+    - wildfly_driver.jar_url is defined
+  become: "{{ wildfly_driver_become | default('yes') }}"

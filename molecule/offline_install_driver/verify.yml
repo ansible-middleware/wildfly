@@ -1,0 +1,89 @@
+---
+- name: Verify JDBC driver deployment
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - ../group_vars/all/vars.yml
+    - vars.yml
+  vars:
+    wildfly_version: '39.0.0.Final'
+    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
+    wildfly_user: 'wildfly'
+    wildfly_group: 'wildfly'
+    driver_module_path: "{{ wildfly_home }}/modules/{{ wildfly_driver_module_name | replace('.', '/') }}/main"
+    driver_jar_file: "{{ driver_module_path }}/{{ wildfly_driver_jar_filename }}"
+    module_xml_file: "{{ driver_module_path }}/module.xml"
+  tasks:
+    - name: "Check if driver module directory exists"
+      ansible.builtin.stat:
+        path: "{{ driver_module_path }}"
+      register: module_dir
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+
+    - name: "Verify module directory exists"
+      ansible.builtin.assert:
+        that:
+          - module_dir.stat.exists
+          - module_dir.stat.isdir
+        fail_msg: "Driver module directory does not exist: {{ driver_module_path }}"
+        success_msg: "Driver module directory exists"
+
+    - name: "Check if driver JAR file exists"
+      ansible.builtin.stat:
+        path: "{{ driver_jar_file }}"
+      register: jar_file
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+
+    - name: "Verify JAR file exists"
+      ansible.builtin.assert:
+        that:
+          - jar_file.stat.exists
+          - jar_file.stat.isreg
+        fail_msg: "Driver JAR file does not exist: {{ driver_jar_file }}"
+        success_msg: "Driver JAR file exists"
+
+    - name: "Check if module.xml exists"
+      ansible.builtin.stat:
+        path: "{{ module_xml_file }}"
+      register: module_xml
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+
+    - name: "Verify module.xml exists"
+      ansible.builtin.assert:
+        that:
+          - module_xml.stat.exists
+          - module_xml.stat.isreg
+        fail_msg: "module.xml file does not exist: {{ module_xml_file }}"
+        success_msg: "module.xml file exists"
+
+    - name: "Read module.xml content"
+      ansible.builtin.slurp:
+        src: "{{ module_xml_file }}"
+      register: module_xml_content
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+
+    - name: "Verify module.xml contains correct module name"
+      ansible.builtin.assert:
+        that:
+          - "'{{ wildfly_driver_module_name }}' in (module_xml_content.content | b64decode)"
+          - "'{{ wildfly_driver_jar_filename }}' in (module_xml_content.content | b64decode)"
+        fail_msg: "module.xml does not contain expected module configuration"
+        success_msg: "module.xml contains correct PostgreSQL driver configuration"
+
+    - name: "Verify file ownership"
+      ansible.builtin.assert:
+        that:
+          - jar_file.stat.pw_name == wildfly_user
+          - jar_file.stat.gr_name == wildfly_group
+          - module_xml.stat.pw_name == wildfly_user
+          - module_xml.stat.gr_name == wildfly_group
+        fail_msg: "Driver files have incorrect ownership"
+        success_msg: "Driver files have correct ownership ({{ wildfly_user }}:{{ wildfly_group }})"
+
+    - name: "Verify file permissions"
+      ansible.builtin.assert:
+        that:
+          - jar_file.stat.mode == '0640'
+          - module_xml.stat.mode == '0640'
+        fail_msg: "Driver files have incorrect permissions"
+        success_msg: "Driver files have correct permissions (0640)"

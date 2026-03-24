@@ -7,9 +7,9 @@
       - wildfly_driver.version is defined
       - wildfly_driver.jar_url is defined
     quiet: true
-    fail_msg: 'Required variables not provided.'
+    fail_msg: "Required variables not provided."
 
-- name: "Ensure driver {{ wildfly_driver.module_name }} is deployed."
+- name: "Prepare {{ wildfly_driver.module_name }} driver deployment"
   become: "{{ wildfly_driver_become | default('yes') }}"
   block:
     - name: "Check module directory: {{ wildfly_driver_module_dir }}"
@@ -32,22 +32,20 @@
       when:
         - not dest_path.stat.exists
 
-    - name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
-      ansible.builtin.uri:
-        url: "{{ wildfly_driver.jar_url }}"
-        dest: "{{ wildfly_driver_jar_installation_path }}"
-        group: "{{ wildfly_group }}"
-        owner: "{{ wildfly_user }}"
-        mode: '0640'
-        creates: "{{ wildfly_driver_jar_installation_path }}"
-        selevel: s0
-        serole: object_r
-        setype: usr_t
-        seuser: system_u
-      when:
-        - wildfly_driver.jar_url is defined
+- name: "Deploy driver using offline mode"
+  ansible.builtin.include_tasks: offline.yml
+  when:
+    - wildfly_driver_offline_install
 
-    - name: Set source template path
+- name: "Deploy driver using online mode"
+  ansible.builtin.include_tasks: online.yml
+  when:
+    - not wildfly_driver_offline_install
+
+- name: "Finalize {{ wildfly_driver.module_name }} driver deployment"
+  become: "{{ wildfly_driver_become | default('yes') }}"
+  block:
+    - name: "Set source template path"
       ansible.builtin.set_fact:
         module_xml_template: "{{ override_module_xml_template | default('templates/jdbc_driver_module.xml.j2') }}"
 

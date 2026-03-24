@@ -1,0 +1,44 @@
+---
+- name: "Download {{ wildfly_driver.module_name }} driver to localhost"
+  delegate_to: localhost
+  become: false
+  run_once: true
+  block:
+    - name: "Check local download driver path"
+      ansible.builtin.stat:
+        path: "{{ wildfly_driver_download_dir }}"
+      register: local_path
+
+    - name: "Set download path"
+      ansible.builtin.set_fact:
+        local_path_to_driver: "{{ local_path.stat.path }}/{{ wildfly_driver.jar_filename }}"
+
+    - name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
+      ansible.builtin.uri:
+        url: "{{ wildfly_driver.jar_url }}"
+        dest: "{{ local_path_to_driver }}"
+        mode: '0640'
+        creates: "{{ local_path_to_driver }}"
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
+      when:
+        - wildfly_driver.jar_url is defined
+
+    - name: "Check downloaded driver"
+      ansible.builtin.stat:
+        path: "{{ local_path_to_driver }}"
+      register: local_driver_path
+
+- name: "Copy driver from localhost to target"
+  ansible.builtin.copy:
+    src: "{{ local_path_to_driver }}"
+    dest: "{{ wildfly_driver_jar_installation_path }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
+    mode: '0640'
+  when:
+    - local_driver_path.stat is defined
+    - local_driver_path.stat.exists
+  become: "{{ wildfly_driver_become | default('yes') }}"

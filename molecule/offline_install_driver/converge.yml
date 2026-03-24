@@ -1,0 +1,11 @@
+---
+- name: Deploy JDBC driver to WildFly
+  hosts: all
+  gather_facts: false
+  vars_files:
+    - vars.yml
+    - ../group_vars/all/vars.yml
+  tasks:
+    - name: "Deploy PostgreSQL driver using wildfly_driver role"
+      ansible.builtin.include_role:
+        name: wildfly_driver

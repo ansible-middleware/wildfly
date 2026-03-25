@@ -3,6 +3,8 @@ wildfly uninstall role
 
 Role to uninstall WildFly and clean the target nodes.
 
+NOTE: The migration role will only migrate to the latest version of wildfly
+
 <!--start argument_specs-->
 Role Defaults
 -------------

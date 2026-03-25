@@ -3,12 +3,70 @@
   ansible.builtin.assert:
     that:
       - eap_migration_server_tool_path_to_archive is defined and eap_migration_server_tool_path_to_archive | length > 0
-      - eap_migration_server_tool_product_id is defined > 0
+      - rhn_username is defined
+      - rhn_password is defined
+      - eap_version is defined
     quiet: True
     fail_msg: "Missing required parameters."
 
 - name: "Esclade privileges if needed"
   block:
+    - name: "Query RHN to find migration tool for EAP {{ eap_version }}"
+      redhat.runtimes_common.product_search:
+        client_id: "{{ rhn_username }}"
+        client_secret: "{{ rhn_password }}"
+        product_type: DISTRIBUTION
+        product_version: "{{ eap_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
+        product_category: "appplatform"
+      register: rhn_migration_search
+      no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Determine major.minor version for fallback"
+      ansible.builtin.set_fact:
+        eap_major_minor: "{{ (eap_version.split('.'))[0:2] | join('.') }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Try to find exact version migration tool first"
+      ansible.builtin.set_fact:
+        eap_migration_tool_found: "{{ rhn_migration_search.results | selectattr('file_path', 'match', '.*jboss-eap-' + eap_version + '-server-migration.zip$') | list }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: "If exact version not found, use base version (X.Y.0) migration tool"
+      ansible.builtin.set_fact:
+        eap_migration_tool_found: "{{ rhn_migration_search.results | selectattr('file_path', 'match', '.*jboss-eap-' + eap_major_minor + '.0-server-migration.zip$') | list }}"
+      when:
+        - eap_migration_tool_found | length == 0
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Verify migration tool was found in RHN"
+      ansible.builtin.assert:
+        that:
+          - eap_migration_tool_found | length > 0
+          - (eap_migration_tool_found | first).id is defined
+        quiet: True
+        fail_msg: "Migration tool for EAP {{ eap_version }} (or base {{ eap_major_minor }}.0) not found in RHN. Available migration tools: {{ rhn_migration_search.results | selectattr('file_path', 'match', '.*server-migration.zip$') | map(attribute='file_path') | list }}"
+
+    - name: "Set migration tool product ID from RHN query"
+      ansible.builtin.set_fact:
+        eap_migration_server_tool_product_id: "{{ (eap_migration_tool_found | first).id }}"
+        eap_migration_tool_actual_file: "{{ (eap_migration_tool_found | first).file_path }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: "Display discovered migration tool"
+      ansible.builtin.debug:
+        msg:
+          - "Discovered migration tool from RHN:"
+          - "  Target Version: {{ eap_version }}"
+          - "  Migration Tool: {{ eap_migration_tool_actual_file }}"
+          - "  Product ID: {{ eap_migration_server_tool_product_id }}"
+          - "  Note: {{ 'Using base ' + eap_major_minor + '.0 tool (compatible with all ' + eap_major_minor + '.x versions)' if (eap_migration_tool_actual_file.find(eap_version) == -1) else 'Exact version match' }}"
+
     - name: "Load metadata on server migration tool archive"
       ansible.builtin.stat:
         path: "{{ eap_migration_server_tool_path_to_archive }}"
@@ -48,6 +106,14 @@
         group: "{{ wildfly_group | default(omit) }}"
       when:
         - not eap_migration_script_stat.stat.exists
+
+    - name: "Ensure migration tool logs directory exists"
+      ansible.builtin.file:
+        path: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/logs"
+        state: directory
+        mode: "0755"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
 
     - name: "Set EAP migration tool paths for EAP 8.0+"
       ansible.builtin.set_fact:

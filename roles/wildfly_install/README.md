@@ -29,6 +29,7 @@ Role Defaults
 |`wildfly_java_package_name`| RHEL/Fedora Java RPM package | `java-21-openjdk-headless` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 
+NOTE: for eap_version the micro version must be 0
 
 Role Variables
 --------------

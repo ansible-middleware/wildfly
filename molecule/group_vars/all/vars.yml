@@ -9,3 +9,4 @@ wildfly_uninstall_require_privileges_escalation: "{{ wildfly_install_requires_be
 wildfly_apps_requires_privilege_escalation: "{{ wildfly_install_requires_become | default(true) }}"
 wildfly_utils_jboss_cli_require_privilege_escalation: "{{ wildfly_install_requires_become | default(true) }}"
 wildfly_driver_become: "{{ wildfly_install_requires_become | default(true) }}"
+molecule_scenario_requires_app: true

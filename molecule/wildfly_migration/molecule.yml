@@ -15,6 +15,7 @@ provisioner:
   inventory:
     links:
       group_vars: ../group_vars
+      host_vars: ../host_vars
   env:
     JUNIT_OUTPUT_DIR: "$PWD/junit"
     JUNIT_HIDE_TASK_ARGUMENTS: yes

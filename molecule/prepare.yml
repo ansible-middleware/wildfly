@@ -58,31 +58,21 @@
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
 
-    - name: "Ensure required packages are installed (RHEL 10)"
+    - name: "Ensure required packages are installed (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
-          - java-21-openjdk-headless
+          - "java-{{ wildfly_java_version }}-openjdk-headless"
+          - "temurin-{{ wildfly_java_version }}-jdk"
           - procps-ng
           - tzdata-java
         state: present
-      when: ansible_distribution_major_version == '10'
-
-    - name: "Ensure required packages are installed (RHEL 9)"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.yum:
-        name:
-          - java-17-openjdk-headless
-          - temurin-17-jdk
-          - procps-ng
-          - tzdata-java
-        state: present
-      when: ansible_distribution_major_version == '9'
+      when: ansible_distribution_major_version != '8'
 
     - name: "Ensure required packages are installed (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.command: 
-        cmd: "dnf install -y java-17-openjdk-headless temurin-17-jdk procps-ng tzdata-java"
+      ansible.builtin.command:
+        cmd: "dnf install -y java-{{ wildfly_java_version }}-openjdk-headless temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java"
       changed_when: false
       when: ansible_distribution_major_version == '8'
   

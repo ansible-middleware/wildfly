@@ -36,14 +36,4 @@ provisioner:
       interpreter_python: auto_silent
     ssh_connection:
       pipelining: false
-  inventory:
-    host_vars:
-      localhost:
-        ansible_python_interpreter: "{{ ansible_playbook_python }}"
-      # instance-rhel10:
-      #   wildfly_java_version: 21
-      instance-rhel9:
-        wildfly_java_version: 17
-      instance-rhel8:
-        wildfly_java_version: 17
-        ansible_python_interpreter: /usr/bin/python3.9
+  inventory: {}

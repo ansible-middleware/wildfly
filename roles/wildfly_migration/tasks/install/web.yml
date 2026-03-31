@@ -47,4 +47,4 @@
         group: "{{ wildfly_group | default(omit) }}"
 
   become: "{{ wildfly_migration_require_privileges_escalation | default('yes') }}"
-  become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
+  become_user: "{{ wildfly_migration_require_privileges_escalation | default('root') }}"

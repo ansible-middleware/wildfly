@@ -12,6 +12,10 @@ v1.5.11-devel
 Major Changes
 -------------
 
+- AMW-491 In migration role default value of eap_migration_path_to_env_properties does not exists `#341 <https://github.com/ansible-middleware/wildfly/pull/341>`_
+- AMW-492 migration role doesn't run migration tool `#342 <https://github.com/ansible-middleware/wildfly/pull/342>`_
+- AMW-499 Wrong migration tool is downloaded `#345 <https://github.com/ansible-middleware/wildfly/pull/345>`_
+- Add offline install support for wildfly_driver role `#344 <https://github.com/ansible-middleware/wildfly/pull/344>`_
 - Fix eap 7.4.0 and 8.0.0>= installation `#337 <https://github.com/ansible-middleware/wildfly/pull/337>`_
 
 Minor Changes
@@ -24,6 +28,8 @@ Minor Changes
 - AMW-477 For eap collection added JIM compatibilities to use repos & manifest by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
 - AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
 - AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
+- AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
+- Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
 
 Bugfixes

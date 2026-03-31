@@ -94,3 +94,4 @@ Author Information
 ------------------
 
 * [Romain Pelisse](https://github.com/rpelisse)
+* [Ranabir Chakraborty](https://github.com/RanabirChakraborty)

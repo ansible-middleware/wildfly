@@ -18,3 +18,8 @@ Role Defaults
 |`wildfly_firewalld_multicast_addr`|Multicast address used by JGroups for server clustering|230.0.0.4|
 |`wildfly_firewalld_multicast_rules`|Firewalld rules added to allow multicast|N/A|
 |`wildfly_cluster_enabled`|Specify whether or not the server's cluster is enabled|`false`|
+
+Author Information
+------------------
+
+* [Ranabir Chakraborty](https://github.com/RanabirChakraborty)

@@ -43,3 +43,7 @@ Validate a WildFly service that was created using port offset of 100.
     wildfly_http_port: 8180
     wildfly_controller_port: 10090
 ```
+
+## Author Information
+
+* [Ranabir Chakraborty](https://github.com/RanabirChakraborty)

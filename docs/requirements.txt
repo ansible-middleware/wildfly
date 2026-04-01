@@ -4,6 +4,5 @@ antsibull-changelog
 ansible-core>=2.14.1
 ansible-pygments
 sphinx-rtd-theme
-git+https://github.com/felixfontein/ansible-basic-sphinx-ext
 setuptools<78
 myst-parser

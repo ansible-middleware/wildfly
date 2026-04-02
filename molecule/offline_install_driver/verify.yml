@@ -7,7 +7,8 @@
     - vars.yml
   vars:
     wildfly_version: '39.0.0.Final'
-    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}"
+    wildfly_install_workdir: '/opt/wildfly/'
+    wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
     wildfly_user: 'wildfly'
     wildfly_group: 'wildfly'
     driver_module_path: "{{ wildfly_home }}/modules/{{ wildfly_driver_module_name | replace('.', '/') }}/main"

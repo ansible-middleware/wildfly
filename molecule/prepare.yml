@@ -62,7 +62,7 @@
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.yum:
         name:
-          - "java-{{ wildfly_java_version }}-openjdk-headless"
+          - "{{ 'java-1.8.0-openjdk' if wildfly_java_version|string == '1.8' else 'java-' + wildfly_java_version|string + '-openjdk-headless' }}"
           - "temurin-{{ wildfly_java_version }}-jdk"
           - procps-ng
           - tzdata-java
@@ -72,7 +72,7 @@
     - name: "Ensure required packages are installed (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.command:
-        cmd: "dnf install -y java-{{ wildfly_java_version }}-openjdk-headless temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java"
+        cmd: "dnf install -y {{ 'java-1.8.0-openjdk' if wildfly_java_version|string == '1.8' else 'java-' + wildfly_java_version|string + '-openjdk-headless' }} temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java"
       changed_when: false
       when: ansible_distribution_major_version == '8'
   

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://ansible-middleware.github.io/wildfly/main/_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="https://ansible-middleware.github.io/wildfly/main/_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="https://ansible-middleware.github.io/wildfly/main/_static/ansible-basic-sphinx-ext.css" type="text/css" />
+    <link rel="stylesheet" href="https://ansible-middleware.github.io/wildfly/main/_static/antsibull-minimal.css" type="text/css" />
     <script data-url_root="./" id="documentation_options" src="https://ansible-middleware.github.io/wildfly/main/_static/documentation_options.js"></script>
     <script src="https://ansible-middleware.github.io/wildfly/main/_static/jquery.js"></script>
     <script src="https://ansible-middleware.github.io/wildfly/main/_static/underscore.js"></script>

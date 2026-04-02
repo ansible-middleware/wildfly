@@ -1,3 +1,0 @@
----
-molecule_scenario_requires_app: false
-molecule_scenario_requires_driver: true

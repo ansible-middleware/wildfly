@@ -1,6 +1,0 @@
----
-wildfly_driver_offline_install: true
-wildfly_driver_module_name: "org.postgresql"
-wildfly_driver_version: "42.7.10"
-wildfly_driver_jar_filename: "postgresql-{{ wildfly_driver_version }}.jar"
-wildfly_driver_jar_url: "https://jdbc.postgresql.org/download/{{ wildfly_driver_jar_filename }}"

@@ -46,5 +46,4 @@
         owner: "{{ wildfly_user | default(omit) }}"
         group: "{{ wildfly_group | default(omit) }}"
 
-  become: "{{ wildfly_migration_require_privileges_escalation | default('yes') }}"
-  become_user: "{{ wildfly_migration_require_privileges_escalation | default('root') }}"
+  become: "{{ wildfly_migration_require_privileges_escalation }}"

@@ -73,10 +73,6 @@ argument_specs:
                 default: True
                 description: "Indicates if the install of the RPM for the JVM on the target executing the migration server tool can be skipped"
                 type: "bool"
-            wildfly_migration_jdk_package_install_requires_privileges_escalation_user:
-               default: "root"
-               description: "Specify the user to become for privileges escalation for JVM install"
-               type: "str"
     downstream:
         options:
             eap_enable:

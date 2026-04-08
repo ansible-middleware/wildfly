@@ -122,5 +122,4 @@
         wildfly_migration_server_tool_subfolder_to_configuration: ""
         wildfly_migration_server_tool_path_to_script: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
 
-  become: "{{ eap_migration_require_privileges_escalation | default('yes') }}"
-  become_user: "{{ eap_migration_require_privileges_escalation_user | default('root') }}"
+  become: "{{ wildfly_migration_require_privileges_escalation }}"

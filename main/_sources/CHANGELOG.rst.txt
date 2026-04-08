@@ -29,6 +29,7 @@ Minor Changes
 - AMW-477 For eap collection added JIM compatibilities to use repos & manifest by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
 - AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
 - AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
+- AMW-492 migration molecule naming change & permission fix `#356 <https://github.com/ansible-middleware/wildfly/pull/356>`_
 - AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
 - AMW-507 offline_install_driver molecule test is failing for EAP 8.1 `#354 <https://github.com/ansible-middleware/wildfly/pull/354>`_
 - Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_

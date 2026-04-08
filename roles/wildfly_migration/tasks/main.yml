@@ -28,7 +28,7 @@
     - not eap_enable is defined or not eap_enable
 
 - name: "Escalate privileges if required"
-  become: "{{ wildfly_migration_require_privileges_escalation | default('true') }}"
+  become: "{{ wildfly_migration_require_privileges_escalation }}"
   block:
 
     - name: "Ensure that the Migration Toolkit configuration directory exists"

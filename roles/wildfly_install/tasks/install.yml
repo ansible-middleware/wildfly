@@ -184,7 +184,8 @@
       ansible.builtin.assert:
         that:
           - eap_elytron_adapter_version is defined
-        quiet: "Missing required parameters for elytron adapter"
+        quiet: True
+        fail_msg: "Missing required parameters for elytron adapter"
 
     - name: "Install elytron adapter"
       ansible.builtin.include_role:

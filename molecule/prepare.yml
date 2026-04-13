@@ -48,6 +48,7 @@
           - sudo_pkg_name in ansible_facts.packages
       when: ansible_distribution_major_version != '8'
 
+    # On RHEL 8, dnf's Python bindings are tied to platform-python so added in vars ansible_python_interpreter=/usr/bin/python3.9 cannot load python3-dnf there.
     - name: Add Adoptium YUM repository
       ansible.builtin.yum_repository:
         name: Adoptium
@@ -57,6 +58,11 @@
         gpgcheck: yes
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
+      vars:
+        ansible_python_interpreter: >-
+          {{ '/usr/libexec/platform-python'
+             if ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8
+             else (hostvars[inventory_hostname]['ansible_python_interpreter'] | default(ansible_playbook_python)) }}
 
     - name: "Ensure required packages are installed (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"

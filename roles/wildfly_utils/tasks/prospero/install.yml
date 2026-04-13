@@ -113,14 +113,21 @@
   become: "{{ wildfly_install_requires_become | default(true) }}"
   register: prospero_dirs
   when:
-    - prospero_extraction.changed or not path_to_prospero_installation.stat.exists
+    - new_version_downloaded.changed or prospero_extraction.changed or not path_to_prospero_installation.stat.exists
 
-- name: "Set wildfly_prospero_home based on actual extracted directory"
+- name: "Sort prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:
-    wildfly_prospero_home: "{{ prospero_dirs.files[0].path }}"
+    sorted_prospero_dirs: "{{ prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
   when:
     - prospero_dirs.files is defined
     - prospero_dirs.files | length > 0
+
+- name: "Set wildfly_prospero_home based on most recently modified directory"
+  ansible.builtin.set_fact:
+    wildfly_prospero_home: "{{ sorted_prospero_dirs[0].path }}"
+  when:
+    - sorted_prospero_dirs is defined
+    - sorted_prospero_dirs | length > 0
 
 - name: "Find Prospero installation directory if not already set"
   ansible.builtin.find:
@@ -132,10 +139,18 @@
   when:
     - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
 
-- name: "Set wildfly_prospero_home from existing installation"
+- name: "Sort existing prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:
-    wildfly_prospero_home: "{{ existing_prospero_dirs.files[0].path }}"
+    sorted_existing_prospero_dirs: "{{ existing_prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
   when:
     - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
     - existing_prospero_dirs.files is defined
     - existing_prospero_dirs.files | length > 0
+
+- name: "Set wildfly_prospero_home from most recently modified existing installation"
+  ansible.builtin.set_fact:
+    wildfly_prospero_home: "{{ sorted_existing_prospero_dirs[0].path }}"
+  when:
+    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
+    - sorted_existing_prospero_dirs is defined
+    - sorted_existing_prospero_dirs | length > 0

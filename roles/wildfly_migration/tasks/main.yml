@@ -7,12 +7,18 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
+# On RHEL 8, dnf's Python bindings are tied to platform-python so added in vars ansible_python_interpreter=/usr/bin/python3.9 cannot load python3-dnf there.
 - name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }}"
   become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
   become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
   ansible.builtin.dnf:
     name: "{{ wildfly_migration_jdk_package_name }}"
     state: present
+  vars:
+    ansible_python_interpreter: >-
+      {{ '/usr/libexec/platform-python'
+         if ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8
+         else (hostvars[inventory_hostname]['ansible_python_interpreter'] | default(ansible_playbook_python)) }}
   when:
     - not wildfly_migration_jdk_package_skip_install
 

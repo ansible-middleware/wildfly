@@ -25,5 +25,3 @@
         - name: "Run wildfly_migration role"
           ansible.builtin.include_role:
             name: wildfly_migration
-      when:
-        - not eap_enable is defined or not eap_enable

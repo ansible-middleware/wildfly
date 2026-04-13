@@ -22,3 +22,5 @@ docs/_build/
 junit/
 
 changelogs/.plugin-cache.yaml
+
+.ansible/

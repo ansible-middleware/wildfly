@@ -7,20 +7,30 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
-# On RHEL 8, dnf's Python bindings are tied to platform-python so added in vars ansible_python_interpreter=/usr/bin/python3.9 cannot load python3-dnf there.
+# RHEL 8: dnf Python bindings are not available for python3.9; platform-python is 3.6 and
+# cannot run ansible-core 2.18+ modules. Use the dnf CLI (same pattern as wildfly_install prereqs).
+- name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }} (RHEL 8)"
+  become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
+  become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
+  ansible.builtin.command:
+    cmd: "dnf install -y {{ wildfly_migration_jdk_package_name }}"
+  register: wildfly_migration_dnf_install_jdk
+  changed_when:
+    - "'Installing:' in wildfly_migration_dnf_install_jdk.stdout or 'Upgrading:' in wildfly_migration_dnf_install_jdk.stdout"
+  when:
+    - not wildfly_migration_jdk_package_skip_install
+    - ansible_os_family == 'RedHat'
+    - ansible_distribution_major_version | default('0') | int == 8
+
 - name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }}"
   become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
   become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
   ansible.builtin.dnf:
     name: "{{ wildfly_migration_jdk_package_name }}"
     state: present
-  vars:
-    ansible_python_interpreter: >-
-      {{ '/usr/libexec/platform-python'
-         if ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8
-         else (hostvars[inventory_hostname]['ansible_python_interpreter'] | default(ansible_playbook_python)) }}
   when:
     - not wildfly_migration_jdk_package_skip_install
+    - not (ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8)
 
 - name: "Ensure Server Migration Tool is installed on target if EAP8+ is the target"
   ansible.builtin.include_tasks: install/rhn.yml

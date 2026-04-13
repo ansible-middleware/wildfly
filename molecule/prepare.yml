@@ -48,7 +48,25 @@
           - sudo_pkg_name in ansible_facts.packages
       when: ansible_distribution_major_version != '8'
 
-    # On RHEL 8, dnf's Python bindings are tied to platform-python so added in vars ansible_python_interpreter=/usr/bin/python3.9 cannot load python3-dnf there.
+    # RHEL 8: avoid ansible.builtin.yum_repository with platform-python — UBI 8 uses Python 3.6
+    # there, while ansible-core 2.18+ modules require Python 3.7+ (e.g. __future__ annotations).
+    # Writing the .repo file uses the normal managed-node interpreter (e.g. python3.9).
+    - name: Add Adoptium YUM repository (RHEL 8)
+      ansible.builtin.copy:
+        dest: /etc/yum.repos.d/Adoptium.repo
+        mode: "0644"
+        content: |
+          [Adoptium]
+          name=Adoptium
+          baseurl=https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_distribution_major_version }}/$basearch
+          enabled=1
+          gpgcheck=1
+          gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
+      become: "{{ wildfly_install_requires_become | default(true) }}"
+      when:
+        - ansible_os_family == 'RedHat'
+        - ansible_distribution_major_version | default('0') | int == 8
+
     - name: Add Adoptium YUM repository
       ansible.builtin.yum_repository:
         name: Adoptium
@@ -58,11 +76,8 @@
         gpgcheck: yes
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      vars:
-        ansible_python_interpreter: >-
-          {{ '/usr/libexec/platform-python'
-             if ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8
-             else (hostvars[inventory_hostname]['ansible_python_interpreter'] | default(ansible_playbook_python)) }}
+      when:
+        - not (ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8)
 
     - name: "Ensure required packages are installed (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"

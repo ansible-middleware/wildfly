@@ -91,6 +91,9 @@ argument_specs:
                 default: "/opt"
                 description: "Path to the folder where the server migration archive is downloaded"
                 type: "str"
+            eap_migration_server_tool_controller_download_dir:
+                description: "Directory on the Ansible controller where the migration tool zip is staged before copy to targets (defaults to the playbook working directory, same pattern as Prospero/JBoss Installation Manager)"
+                type: "str"
             eap_migration_server_tool_install_dir:
                 default: "/opt"
                 description: "Directory where to install the server migration tool - if not provided with EAP"

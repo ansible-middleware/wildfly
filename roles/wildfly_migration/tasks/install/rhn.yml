@@ -43,6 +43,20 @@
       delegate_to: localhost
       run_once: true
 
+    - name: "Set migration tool product ID from RHN query"
+      ansible.builtin.set_fact:
+        eap_migration_server_tool_product_id: "{{ (eap_migration_tool_found | first).id }}"
+        eap_migration_tool_actual_file: "{{ (eap_migration_tool_found | first).file_path }}"
+      delegate_to: localhost
+      run_once: true
+
+    - name: Expose RHN migration tool discovery to all targets
+      ansible.builtin.set_fact:
+        eap_major_minor: "{{ hostvars[ansible_play_hosts[0]].eap_major_minor }}"
+        eap_migration_tool_found: "{{ hostvars[ansible_play_hosts[0]].eap_migration_tool_found }}"
+        eap_migration_server_tool_product_id: "{{ hostvars[ansible_play_hosts[0]].eap_migration_server_tool_product_id }}"
+        eap_migration_tool_actual_file: "{{ hostvars[ansible_play_hosts[0]].eap_migration_tool_actual_file }}"
+
     - name: "Verify migration tool was found in RHN"
       ansible.builtin.assert:
         that:
@@ -50,13 +64,6 @@
           - (eap_migration_tool_found | first).id is defined
         quiet: True
         fail_msg: "Migration tool for EAP {{ eap_version }} (or base {{ eap_major_minor }}.0) not found in RHN. Available migration tools: {{ rhn_migration_search.results | selectattr('file_path', 'match', '.*server-migration.zip$') | map(attribute='file_path') | list }}"
-
-    - name: "Set migration tool product ID from RHN query"
-      ansible.builtin.set_fact:
-        eap_migration_server_tool_product_id: "{{ (eap_migration_tool_found | first).id }}"
-        eap_migration_tool_actual_file: "{{ (eap_migration_tool_found | first).file_path }}"
-      delegate_to: localhost
-      run_once: true
 
     - name: "Display discovered migration tool"
       ansible.builtin.debug:
@@ -67,24 +74,66 @@
           - "  Product ID: {{ eap_migration_server_tool_product_id }}"
           - "  Note: {{ 'Using base ' + eap_major_minor + '.0 tool (compatible with all ' + eap_major_minor + '.x versions)' if (eap_migration_tool_actual_file.find(eap_version) == -1) else 'Exact version match' }}"
 
-    - name: "Load metadata on server migration tool archive"
+    - name: Check local path to stage migration tool archive on controller
       ansible.builtin.stat:
-        path: "{{ eap_migration_server_tool_path_to_archive }}"
-      register: eap_migration_archive_md
+        path: "{{ eap_migration_server_tool_controller_download_dir | default(lookup('env', 'PWD')) }}"
+      register: eap_migration_controller_dl_dir
+      delegate_to: localhost
+      run_once: true
 
-    - name: "Ensure server migration tool for EAP8+ has been downloaded"
+    - name: Set path to staged migration tool archive on controller
+      ansible.builtin.set_fact:
+        eap_migration_server_tool_local_archive: "{{ eap_migration_controller_dl_dir.stat.path }}/{{ eap_migration_tool_actual_file | basename }}"
+
+    - name: Check migration tool archive on controller
+      ansible.builtin.stat:
+        path: "{{ eap_migration_server_tool_local_archive }}"
+      register: eap_migration_ctrl_archive_check
+      delegate_to: localhost
+      run_once: true
+
+    - name: Ensure server migration tool archive is downloaded to controller
       redhat.runtimes_common.product_download:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_id: "{{ eap_migration_server_tool_product_id }}"
-        dest: "{{ eap_migration_server_tool_path_to_archive }}"
+        dest: "{{ eap_migration_server_tool_local_archive }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
+      delegate_to: localhost
       run_once: true
       when:
-        - eap_migration_archive_md is defined
+        - eap_migration_ctrl_archive_check.stat is defined
+        - not eap_migration_ctrl_archive_check.stat.exists
+
+    - name: Ensure migration tool archive stat on controller is current
+      ansible.builtin.stat:
+        path: "{{ eap_migration_server_tool_local_archive }}"
+      register: eap_migration_local_archive_stat
+      delegate_to: localhost
+      run_once: true
+
+    - name: Load metadata on server migration tool archive on target
+      ansible.builtin.stat:
+        path: "{{ eap_migration_server_tool_path_to_archive }}"
+      register: eap_migration_archive_md
+
+    - name: Copy server migration tool archive from controller to target hosts
+      ansible.builtin.copy:
+        src: "{{ eap_migration_server_tool_local_archive }}"
+        dest: "{{ eap_migration_server_tool_path_to_archive }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
+        mode: '0640'
+        selevel: s0
+        serole: object_r
+        setype: usr_t
+        seuser: system_u
+      when:
         - eap_migration_archive_md.stat is defined
-        - eap_migration_archive_md.stat.exists is defined
         - not eap_migration_archive_md.stat.exists
+        - eap_migration_local_archive_stat.stat is defined
+        - eap_migration_local_archive_stat.stat.exists
+      become: "{{ wildfly_migration_require_privileges_escalation | default(true) }}"
 
     - name: "Ensure that server migration tool home folder exists"
       ansible.builtin.file:

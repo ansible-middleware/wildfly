@@ -29,7 +29,6 @@
   ansible.builtin.set_fact:
     full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
     local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
-    wildfly_prospero_home: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}"
   when:
     - not eap_enable is defined or not (eap_enable | bool)
 
@@ -37,7 +36,6 @@
   ansible.builtin.set_fact:
     full_path_to_prospero_archive: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
     local_path_to_archive: "{{ local_path.stat.path }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
-    eap_prospero_home: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager"
   when:
     - eap_enable is defined and (eap_enable | bool)
 
@@ -105,6 +103,14 @@
     - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists
   register: prospero_extraction
 
+- name: "Update mtime of extracted directory to ensure proper selection"
+  ansible.builtin.command:
+    cmd: "find {{ wildfly_prospero_install_dir }} -maxdepth 1 -type d -name '{{ wildfly_prospero_name }}*' -exec touch {} \\;"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  when:
+    - new_version_downloaded.changed or prospero_extraction.changed
+  changed_when: false
+
 - name: "Find actual Prospero installation directory after extraction"
   ansible.builtin.find:
     paths: "{{ wildfly_prospero_install_dir }}"
@@ -113,7 +119,7 @@
   become: "{{ wildfly_install_requires_become | default(true) }}"
   register: prospero_dirs
   when:
-    - new_version_downloaded.changed or prospero_extraction.changed or not path_to_prospero_installation.stat.exists
+    - (eap_enable is defined and (eap_enable | bool)) or (new_version_downloaded.changed or prospero_extraction.changed or not path_to_prospero_installation.stat.exists)
 
 - name: "Sort prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:

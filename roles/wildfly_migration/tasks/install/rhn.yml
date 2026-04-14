@@ -1,11 +1,14 @@
 ---
+- name: "Normalize eap_version for RHN migration tool lookup"
+  ansible.builtin.set_fact:
+    eap_version: "{{ eap_version | default('8.0.0') }}"
+
 - name: "Ensure required parameters are provided."
   ansible.builtin.assert:
     that:
       - eap_migration_server_tool_path_to_archive is defined and eap_migration_server_tool_path_to_archive | length > 0
       - rhn_username is defined
       - rhn_password is defined
-      - eap_version is defined
     quiet: True
     fail_msg: "Missing required parameters."
 
@@ -170,3 +173,4 @@
         wildfly_migration_tool_bin_folder: ""
         wildfly_migration_server_tool_subfolder_to_configuration: ""
         wildfly_migration_server_tool_path_to_script: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
+        wildfly_migration_path_to_env_properties: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/{{ wildfly_migration_server_tool_env_properties_file }}"

@@ -7,6 +7,17 @@
     quiet: True
     fail_msg: "Missing required parameters."
 
+- name: Apply EAP 7.x migration tool layout (tool inside server installation directory)
+  when:
+    - eap_enable is defined and eap_enable
+    - (eap_version | default('8.0.0')) is version('8.0.0', '<')
+  ansible.builtin.set_fact:
+    wildfly_migration_server_tool_home: "{{ target_wildfly_home }}"
+    wildfly_migration_tool_bin_folder: "bin"
+    wildfly_migration_server_tool_subfolder_to_configuration: "/migration"
+    wildfly_migration_server_tool_path_to_script: "{{ target_wildfly_home }}/bin/{{ wildfly_migration_tool_bin_script_name }}"
+    wildfly_migration_path_to_env_properties: "{{ target_wildfly_home }}/migration/{{ wildfly_migration_server_tool_env_properties_file }}"
+
 # RHEL 8: dnf Python bindings are not available for python3.9; platform-python is 3.6 and
 # cannot run ansible-core 2.18+ modules. Use the dnf CLI (same pattern as wildfly_install prereqs).
 - name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }} (RHEL 8)"
@@ -36,7 +47,10 @@
   ansible.builtin.include_tasks: install/rhn.yml
   when:
     - eap_enable is defined and eap_enable
-    - eap_version is defined and eap_version is version('8.0.0', '>=')
+    # Match EAP 7.x layout condition: use default so include_tasks runs when callers omit
+    # eap_version (some playbooks only pass eap_enable + homes). Otherwise both RHN and
+    # web installs skip and prerun_checks fails on missing jboss-server-migration.sh.
+    - (eap_version | default('8.0.0')) is version('8.0.0', '>=')
 
 - name: "Ensure Server Migration Tool is installed from web if WildFly is the target"
   ansible.builtin.include_tasks: install/web.yml

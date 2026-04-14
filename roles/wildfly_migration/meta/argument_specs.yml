@@ -9,6 +9,10 @@ argument_specs:
                 required: True
                 description: "Path on the target to the server's home to migrate from"
                 type: "str"
+            eap_version:
+                default: "8.0.0"
+                description: "EAP product version (x.y.z) for EAP migration tooling and RHN. Always defined for arg validation; override for non-8.x targets. Unused for pure WildFly when EAP install is off."
+                type: "str"
             wildfly_migration_environment_props:
                 default: "templates/environment.properties.j2"
                 description: "Template to configure the migration tool"
@@ -30,7 +34,7 @@ argument_specs:
                 description: "Name of the script lauching the server migration tool"
                 type: "str"
             wildfly_migration_server_tool_path_to_script:
-                default: "{{ wildfly_migration_server_tool_home }}/{{ wildfly_migration_tool_bin_folder }}/       {{ wildfly_migration_tool_bin_script_name }}"
+                default: "{{ wildfly_migration_server_tool_home }}/{% if wildfly_migration_tool_bin_folder is defined and wildfly_migration_tool_bin_folder is not none and wildfly_migration_tool_bin_folder | length > 0 %}{{ wildfly_migration_tool_bin_folder }}/{% endif %}{{ wildfly_migration_tool_bin_script_name }}"
                 description: "Path to the script launching the server migration tool"
                 type: "str"
             wildfly_migration_server_tool_subfolder_to_configuration:
@@ -43,7 +47,7 @@ argument_specs:
                 type: "str"
             wildfly_migration_path_to_env_properties:
                 description: "Absolute path to the main configuration"
-                default: "{{ wildfly_migration_server_tool_home }}{{                                              wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
+                default: "{{ wildfly_migration_server_tool_home }}{{ wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
                 type: "str"
             wildfly_migration_config_files:
                 default: 'standalone.xml,standalone-full.xml'
@@ -99,14 +103,14 @@ argument_specs:
                 description: "Directory where to install the server migration tool - if not provided with EAP"
                 type: "str"
             eap_migration_server_tool_home:
-                default: "{{ (eap_version is version('8.0.0', '<')) | ternary(target_eap_home,eap_migration_server_tool_install_dir + '/jboss-server-migration') }}"
-                description: "Path to the server migration tool home - if not provided with EAP"
+                default: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration"
+                description: "Path to the server migration tool home (EAP 8+ default; EAP 7.x overridden in tasks)"
                 type: "str"
             eap_migration_tool_bin_folder:
-                default: "{{ (eap_version is version('8.0.0', '<')) | ternary('/bin','') }}"
-                description: "Indicates which subfolder, relative to eap_migration_server_tool_home, the server migration script resides."
+                default: ""
+                description: "Subfolder under server tool home containing the script (empty for EAP 8+)"
                 type: "str"
             eap_migration_server_tool_subfolder_to_configuration:
-                default: "{{ (eap_version is version('8.0.0', '<')) | ternary('/migration', '') }}"
-                description: "Subfolder, relatives to eap_migration_server_tool_home, where are located server migration tool configurations files"
+                default: ""
+                description: "Subfolder for configuration (empty for EAP 8+)"
                 type: "str"

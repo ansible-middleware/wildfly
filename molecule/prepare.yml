@@ -11,6 +11,11 @@
   vars:
     sudo_pkg_name: 'sudo'
   tasks:
+    - name: "Download files for testing."
+      block:
+        - name: "Download files (if required)."
+          ansible.builtin.include_tasks: resources/download_files.yml
+
     - name: "Download dependencies (if eap_dot_offline is set to False)."
       block:
         - name: "Download asset (if required)."

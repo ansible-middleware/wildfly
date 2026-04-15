@@ -34,6 +34,11 @@ provisioner:
   config_options:
     defaults:
       interpreter_python: auto_silent
+      # eap qe uses podman on Jenkins slaves and molecule-podman 
+      ALLOW_BROKEN_CONDITIONALS: ${ALLOW_BROKEN_CONDITIONALS:-True}
     ssh_connection:
       pipelining: false
+  env:
+    # {{ lookup('env', 'PWD') }}
+    PWD: ${MOLECULE_SCENARIO_DIRECTORY}
   inventory: {}

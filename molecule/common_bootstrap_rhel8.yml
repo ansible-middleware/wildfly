@@ -1,4 +1,3 @@
-
 ---
 - name: "Prepare for RHEL 8"
   hosts: all

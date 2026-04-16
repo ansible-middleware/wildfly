@@ -8,7 +8,7 @@ wildfly_config_base: 'standalone.xml'
 wildfly_config_custom_file: ''
 wildfly_port_range_offset: 0
 
-wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version|default(21)|string == '1.8' else 'java-' + wildfly_java_version|default(21)|string + '-openjdk-headless' }}"
+wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version | default(21) | string == '1.8' else 'java-' + wildfly_java_version | default(21) | string + '-openjdk-headless' }}"
 wildfly_java_opts: '-Xmx1024M -Xms512M'
 
 wildfly_systemd_unit_enabled: true

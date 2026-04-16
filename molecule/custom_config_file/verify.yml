@@ -13,14 +13,7 @@
           when:
             - wildfly_apps is defined and wildfly_apps | length > 0
 
-        - name: "STEP 1: Add the 'test' system property (The Action)"
-          ansible.builtin.include_role:
-            name: wildfly_utils
-            tasks_from: jboss_cli.yml
-          vars:
-            jboss_cli_query: "/system-property=test:add(value=testvalue)"
-
-        - name: "STEP 2: Verify the property using wildfly_validation_queries (The Validation)"
+        - name: "Verify the property using wildfly_validation_queries (The Validation)"
           ansible.builtin.include_role:
             name: wildfly_validation
           vars:

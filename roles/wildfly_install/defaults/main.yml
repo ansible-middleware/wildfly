@@ -13,7 +13,7 @@ wildfly_config_custom_file: ''
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
 wildfly_java_version: 21
-wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version|string == '1.8' else 'java-' + wildfly_java_version|string + '-openjdk-headless' }}"
+wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version | string == '1.8' else 'java-' + wildfly_java_version | string + '-openjdk-headless' }}"
 wildfly_install_force_reinstall_config_base: false
 
 # whether to install from local archive

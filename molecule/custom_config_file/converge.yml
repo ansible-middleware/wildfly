@@ -1,4 +1,2 @@
 ---
 - ansible.builtin.import_playbook: playbook.yml
-  when:
-    - not eap_enable is defined

@@ -421,8 +421,114 @@ releases:
     release_date: '2024-04-03'
   1.5.10:
     changes:
+      bugfixes:
+      - 'AMW-482 molecule tests fix according to EAP 8.0.0 `#332 <https://github.com/ansible-middleware/wildfly/pull/332>`_
+
+        '
+      - 'Add app_deploy_standalone to molecule workflow `#319 <https://github.com/ansible-middleware/wildfly/pull/319>`_
+
+        '
+      major_changes:
+      - 'AMW-491 In migration role default value of eap_migration_path_to_env_properties
+        does not exists `#341 <https://github.com/ansible-middleware/wildfly/pull/341>`_
+
+        '
+      - 'AMW-492 migration role doesn''t run migration tool `#342 <https://github.com/ansible-middleware/wildfly/pull/342>`_
+
+        '
+      - 'AMW-493 Unable to install EAP 7.4 with eap_java_version: 1.8 `#353 <https://github.com/ansible-middleware/wildfly/pull/353>`_
+
+        '
+      - 'AMW-497 Unable to install two different versions `#360 <https://github.com/ansible-middleware/wildfly/pull/360>`_
+
+        '
+      - 'AMW-499 Wrong migration tool is downloaded `#345 <https://github.com/ansible-middleware/wildfly/pull/345>`_
+
+        '
+      - 'Add offline install support for wildfly_driver role `#344 <https://github.com/ansible-middleware/wildfly/pull/344>`_
+
+        '
+      - 'Fix eap 7.4.0 and 8.0.0>= installation `#337 <https://github.com/ansible-middleware/wildfly/pull/337>`_
+
+        '
+      minor_changes:
+      - 'AMW-471 EAP collection is not able to use JBoss Installation Manager `#318
+        <https://github.com/ansible-middleware/wildfly/pull/318>`_
+
+        '
+      - 'AMW-472 WildFly: Adding and fixing all the molecule scenarios in GH action
+        `#320 <https://github.com/ansible-middleware/wildfly/pull/320>`_
+
+        '
+      - 'AMW-473 Disabling RHEL10 testing from wildfly collection `#322 <https://github.com/ansible-middleware/wildfly/pull/322>`_
+
+        '
+      - 'AMW-475 eap_version argument is misleading in EAP Ansible collections `#324
+        <https://github.com/ansible-middleware/wildfly/pull/324>`_
+
+        '
+      - 'AMW-477 For eap collection added JIM compatibilities to use repos & manifest
+        by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
+
+        '
+      - 'AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
+
+        '
+      - 'AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
+
+        '
+      - 'AMW-492 migration molecule naming change & permission fix `#356 <https://github.com/ansible-middleware/wildfly/pull/356>`_
+
+        '
+      - 'AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
+
+        '
+      - 'AMW-507 offline_install_driver molecule test is failing for EAP 8.1 `#354
+        <https://github.com/ansible-middleware/wildfly/pull/354>`_
+
+        '
+      - 'AMW-510 Missing required parameters for elytron adapter is not a valid boolean
+        `#357 <https://github.com/ansible-middleware/wildfly/pull/357>`_
+
+        '
+      - 'Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
+
+        '
+      - 'Fix cannot load python3-dnf for rhel 8 `#359 <https://github.com/ansible-middleware/wildfly/pull/359>`_
+
+        '
+      - 'Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
+
+        '
+      - 'Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+
+        '
       release_summary: Internal release, documentation or test changes only.
     fragments:
+    - 318.yaml
+    - 319.yaml
+    - 320.yaml
+    - 321.yaml
+    - 322.yaml
+    - 324.yaml
+    - 326.yaml
+    - 330.yaml
+    - 331.yaml
+    - 332.yaml
+    - 337.yaml
+    - 341.yaml
+    - 342.yaml
+    - 344.yaml
+    - 345.yaml
+    - 346.yaml
+    - 348.yaml
+    - 352.yaml
+    - 353.yaml
+    - 354.yaml
+    - 356.yaml
+    - 357.yaml
+    - 359.yaml
+    - 360.yaml
     - v1.5.10-devel_summary.yaml
     release_date: '2026-01-29'
   1.5.11:

@@ -33,6 +33,7 @@
         success_msg: "Application test-app.war is successfully deployed"
 
     - name: "Checks that test-app.war is accessible"
-      ansible.builtin.get_url:
+      ansible.builtin.uri:
         url: "http://localhost:{{ wildfly_http_port | default('8080') }}/test-app/"
-        dest: '/dev/null'
+        method: GET
+        status_code: [200, 404]

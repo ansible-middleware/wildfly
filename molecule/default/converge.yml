@@ -1,2 +1,3 @@
 ---
-- import_playbook: ../../playbooks/playbook.yml
+- name: Import collection install playbook
+  ansible.builtin.import_playbook: ../../playbooks/playbook.yml

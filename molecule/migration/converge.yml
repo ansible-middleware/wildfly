@@ -17,11 +17,9 @@
     wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
     wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
     wildfly_migration_jdk_package_skip_install: true
-  collections:
-    - middleware_automation.wildfly
   tasks:
     - name: "Run WildFly migration scenario"
       block:
         - name: "Run wildfly_migration role"
           ansible.builtin.include_role:
-            name: wildfly_migration
+            name: middleware_automation.wildfly.wildfly_migration

@@ -7,7 +7,7 @@
   tasks:
     - name: "Download zipfile from {{ wildfly_install_download_url }} into {{ wildfly_install_download_controller_download_dir }}"
       delegate_to: localhost
-      run_once: true
+      run_once: true  # noqa: run-once[task]
       ansible.builtin.get_url:
         url: "{{ wildfly_install_download_url }}"
         dest: "{{ lookup('env', 'PWD') }}/wildfly-{{ wildfly_version }}.zip" # noqa risky-file-permissions delegated, uses controller host user
@@ -19,4 +19,5 @@
       when:
         - not eap_version is defined
 
-- import_playbook: ../prepare.yml
+- name: Import shared molecule prepare playbook
+  ansible.builtin.import_playbook: ../prepare.yml

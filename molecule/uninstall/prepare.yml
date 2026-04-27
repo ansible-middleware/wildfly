@@ -1,4 +1,6 @@
 ---
-- import_playbook: ../prepare.yml
+- name: Import shared molecule prepare playbook
+  ansible.builtin.import_playbook: ../prepare.yml
 
-- import_playbook: ../../playbooks/playbook.yml
+- name: Import collection install playbook
+  ansible.builtin.import_playbook: ../../playbooks/playbook.yml

@@ -3,7 +3,6 @@ exclude_paths:
   - bump-wildfly-version.sh
   - .cache/
   - .github/
-  - molecule/
   - docs/
   - .ansible-lint
   - .yamllint
@@ -42,3 +41,9 @@ warn_list:
   - meta-runtime[unsupported-version]
 
 use_default_rules: true
+
+# Molecule scenario vars and resource fragments are not playbooks; without this,
+# ansible-lint misclassifies them and raises syntax-check / empty-playbook noise.
+kinds:
+  - vars: "**/molecule/**/vars.yml"
+  - tasks: "**/molecule/resources/*.yml"

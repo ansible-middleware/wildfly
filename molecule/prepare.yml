@@ -22,11 +22,11 @@
           ansible.builtin.include_tasks: resources/download_assets.yml
 
     - name: "Download PRE GA bits (if eap_qe_pre_ga_testing is set to True)."
+      when:
+        - eap_qe_pre_ga_testing is defined
       block:
         - name: "Download asset (if required)."
           ansible.builtin.include_tasks: resources/download_pre_ga_bits.yml
-      when:
-        - eap_qe_pre_ga_testing is defined
 
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 8 (if user is root)."
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
@@ -36,7 +36,7 @@
         - ansible_distribution_major_version == '8'
 
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
         - ansible_user_id == 'root'
@@ -77,8 +77,8 @@
         name: Adoptium
         description: Adoptium
         baseurl: "https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_distribution_major_version }}/$basearch"
-        enabled: yes
-        gpgcheck: yes
+        enabled: true
+        gpgcheck: true
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
       when:
@@ -86,9 +86,11 @@
 
     - name: "Ensure required packages are installed (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name:
-          - "{{ 'java-1.8.0-openjdk' if wildfly_java_version|string == '1.8' else 'java-' + wildfly_java_version|string + '-openjdk-headless' }}"
+          - >-
+            {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')
+            else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
           - "temurin-{{ wildfly_java_version }}-jdk"
           - procps-ng
           - tzdata-java
@@ -98,18 +100,22 @@
     - name: "Ensure required packages are installed (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.command:
-        cmd: "dnf install -y {{ 'java-1.8.0-openjdk' if wildfly_java_version|string == '1.8' else 'java-' + wildfly_java_version|string + '-openjdk-headless' }} temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java"
+        cmd: >-
+          dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')
+          else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
+          temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java
       changed_when: false
       when: ansible_distribution_major_version == '8'
-  
+
     - name: "Copy local test applications to target hosts"
       when:
         - wildfly_apps is defined and wildfly_apps | length > 0
       block:
         - name: "Copy apps if required"
           ansible.builtin.copy:
-            src: "{{ playbook_dir }}/{{ app.src }}" 
+            src: "{{ playbook_dir }}/{{ app.src }}"
             dest: "{{ app.path }}"
+            mode: '0644'
           loop: "{{ wildfly_apps }}"
           loop_control:
             loop_var: app

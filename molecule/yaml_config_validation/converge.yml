@@ -1,11 +1,12 @@
 ---
-- import_playbook: ../../playbooks/playbook.yml
+- name: Import install playbook with YAML configuration validation scenario
+  ansible.builtin.import_playbook: ../../playbooks/playbook.yml
   vars:
     wildfly_custom_proxy_port: 6666
     wildfly_enable_yml_config: true
     wildfly_config_base: 'standalone-full-ha.xml'
     wildfly_yml_configs_repository: ../molecule/yaml_config_validation/templates/
     wildfly_yml_configs:
-        - yaml_configuration.yml.j2
-        - yaml_socket_bindings.yml.j2
-        - yaml_infinispan.yml.j2
+      - yaml_configuration.yml.j2
+      - yaml_socket_bindings.yml.j2
+      - yaml_infinispan.yml.j2

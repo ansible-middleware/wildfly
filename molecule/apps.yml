@@ -1,3 +1,3 @@
 ---
 wildfly_apps:
-  - { path: /tmp/test-app.war, src: 'files/test-app.war', root: '/test-app' } 
+  - { path: /tmp/test-app.war, src: 'files/test-app.war', root: '/test-app' }

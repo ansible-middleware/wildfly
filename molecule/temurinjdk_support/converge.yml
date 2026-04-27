@@ -1,5 +1,6 @@
 ---
-- import_playbook: ../../playbooks/playbook.yml
+- name: Import install playbook with Temurin JDK
+  ansible.builtin.import_playbook: ../../playbooks/playbook.yml
   vars:
     wildfly_install_workdir: /apps/
     wildfly_java_package_name: "temurin-{{ wildfly_java_version }}-jdk"

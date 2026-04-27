@@ -3,8 +3,8 @@
 - name: "Download file"
   ansible.builtin.get_url:
     url: "{{ file.url }}"
-    dest: "{{ lookup('env', 'PWD') }}/{{ file.dest_filename}}"
-    mode: 0664
+    dest: "{{ lookup('env', 'PWD') }}/{{ file.dest_filename }}"
+    mode: "0664"
     validate_certs: "{{ eap_dot_validate_certs }}"
   delegate_to: localhost
   loop: "{{ eap_dot_download_files }}"

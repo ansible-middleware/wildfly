@@ -21,6 +21,7 @@ tags:
   - runtimes
   - middleware
   - a4mw
+  - eap
 dependencies:
   middleware_automation.common: '>=1.1.0'
   ansible.posix: '>=1.5.2'
@@ -33,7 +34,6 @@ build_ignore:
   - .github
   - '*.tar.gz'
   - '*.zip'
-  - molecule
   - changelogs
   - docs/_gh_include
   - docs/conf.py

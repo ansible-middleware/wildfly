@@ -18,7 +18,7 @@
         that:
           - ansible_facts.services[wildfly_uninstall_service_name + '.service'].status == 'disabled'
           - ansible_facts.services[wildfly_uninstall_service_name + '.service'].state == 'inactive'
-        quiet: True
+        quiet: true
       when: (wildfly_uninstall_service_name + '.service') in ansible_facts.services
 
     - name: "Load metadata on server home: {{ wildfly_uninstall_home }}"
@@ -32,7 +32,7 @@
         that:
           - wfly_home is defined and wfly_home.stat is defined
           - wfly_home.stat.exists is defined and not wfly_home.stat.exists
-        quiet: True
+        quiet: true
 
     - name: "Check systemd service file does not exist"
       become: "{{ wildfly_uninstall_require_privileges_escalation }}"
@@ -54,4 +54,4 @@
           - systemd_conf_file is defined and systemd_conf_file.stat is defined
           - not systemd_conf_file.stat.exists
         fail_msg: "Systemd files still exist - handler may not have executed properly"
-        quiet: True
+        quiet: true

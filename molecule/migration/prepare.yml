@@ -18,8 +18,6 @@
     wildfly_new_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_new_version.split('.'))[0:2] | join('.'), wildfly_new_version) }}"
     wildfly_old_home: "{{ wildfly_old_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_old_version_dir }}"
     wildfly_new_home: "{{ wildfly_new_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_new_version_dir }}"
-  collections:
-    - middleware_automation.wildfly
   tasks:
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 8 (if user is root)."
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
@@ -29,7 +27,7 @@
         - ansible_distribution_major_version == '8'
 
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
         - ansible_user_id == 'root'
@@ -37,7 +35,7 @@
 
     - name: "Ensure required packages are installed (RHEL 10)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name:
           - java-21-openjdk-headless
           - java-21-openjdk-devel
@@ -49,7 +47,7 @@
 
     - name: "Ensure required packages are installed (RHEL 9)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name:
           - java-17-openjdk-headless
           - java-21-openjdk-devel
@@ -70,13 +68,13 @@
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.user:
         name: wildfly
-        system: yes
+        system: true
         home: /opt/wildfly
         shell: /bin/bash
 
     - name: "Install old WildFly version ({{ wildfly_old_version }})"
       ansible.builtin.include_role:
-        name: wildfly_install
+        name: middleware_automation.wildfly.wildfly_install
       vars:
         wildfly_version: "{{ wildfly_old_version }}"
         wildfly_install_workdir: "{{ wildfly_old_workdir }}"
@@ -88,14 +86,14 @@
       ansible.builtin.copy:
         src: "{{ wildfly_old_home }}/standalone/configuration/standalone.xml"
         dest: "{{ wildfly_old_home }}/standalone/configuration/standalone.xml.bak"
-        remote_src: yes
+        remote_src: true
         owner: wildfly
         group: wildfly
         mode: '0644'
 
     - name: "Install new WildFly version ({{ wildfly_new_version }})"
       ansible.builtin.include_role:
-        name: wildfly_install
+        name: middleware_automation.wildfly.wildfly_install
       vars:
         wildfly_version: "{{ wildfly_new_version }}"
         wildfly_install_workdir: "{{ wildfly_new_workdir }}"

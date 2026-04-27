@@ -1,5 +1,8 @@
 ---
 - name: "Retrieve tests assets"
+  when:
+    - wildfly_dot_assets is defined
+    - wildfly_dot_assets | length > 0
   block:
     - name: "Retrieve assets server from env"
       ansible.builtin.set_fact:
@@ -11,15 +14,17 @@
         that:
           - assets_server is defined
           - assets_server != ""
-        quiet: True
-        fail_msg: "Missing required environnment variable MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL - e.g. http://download.eng.brq.redhat.com/released/JBoss-middleware."
+        quiet: true
+        fail_msg: >-
+          Missing required environment variable MIDDLEWARE_DOWNLOAD_RELEASE_SERVER_URL
+          (e.g. http://download.eng.brq.redhat.com/released/JBoss-middleware).
 
     - name: "Connect to assets server."
       ansible.builtin.uri:
         url: "{{ assets_server }}"
         method: GET
         timeout: 30
-        return_content: no
+        return_content: false
       register: assests_server_http_get_results
 
     - name: "Verify that assets server is accessible."
@@ -28,16 +33,13 @@
           - assests_server_http_get_results is defined
           - assests_server_http_get_results.status is defined
           - assests_server_http_get_results.status == 200
-        quiet: True
+        quiet: true
 
     - name: "Download assets."
       ansible.builtin.include_tasks: download_asset.yml
       loop: "{{ wildfly_dot_assets }}"
       loop_control:
         loop_var: asset
-  when:
-    - wildfly_dot_assets is defined
-    - wildfly_dot_assets | length > 0
 
 - name: "Inform user if not asset has been downloaded"
   ansible.builtin.debug:

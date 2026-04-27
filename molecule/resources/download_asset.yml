@@ -8,8 +8,8 @@
   ansible.builtin.get_url:
     url: "{{ assets_server }}/{{ asset }}"
     dest: "{{ lookup('env', 'PWD') }}"
-    mode: 0664
-    validate_certs: no
+    mode: "0664"
+    validate_certs: false
   delegate_to: localhost
   when:
     - assest_state.stat is defined and assest_state.stat.exists is defined
@@ -24,8 +24,8 @@
       ansible.builtin.get_url:
         url: "{{ assets_server }}/{{ asset }}"
         dest: "{{ lookup('env', 'PWD') }}"
-        mode: 0664
-        validate_certs: no
+        mode: "0664"
+        validate_certs: false
       delegate_to: localhost
       loop: "{{ wildfly_assets }}"
       loop_control:

@@ -1,1 +1,3 @@
 ---
+# Scenario variables are supplied from converge / validate playbooks.
+install_options_scenario: true

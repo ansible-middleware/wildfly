@@ -12,6 +12,8 @@
     migration_tool_home: "/opt/jboss-server-migration"
   tasks:
     - name: "Verify migration scenario"
+      when:
+        - not eap_enable is defined or not eap_enable
       block:
         - name: "Check that migration configuration directory was created"
           ansible.builtin.stat:
@@ -81,6 +83,3 @@
         - name: "Assert migration configuration has correct content"
           ansible.builtin.debug:
             msg: "Migration configuration file contains expected configuration"
-
-      when:
-        - not eap_enable is defined or not eap_enable

@@ -1,2 +1,3 @@
 ---
-- import_playbook: ../../playbooks/validate.yml
+- name: Import collection validation playbook
+  ansible.builtin.import_playbook: ../../playbooks/validate.yml

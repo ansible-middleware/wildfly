@@ -1,2 +1,3 @@
 ---
-- ansible.builtin.import_playbook: playbook.yml
+- name: Import custom config scenario playbook
+  ansible.builtin.import_playbook: playbook.yml

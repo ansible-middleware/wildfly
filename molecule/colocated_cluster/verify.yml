@@ -32,14 +32,16 @@
 
     - name: "Get eap-0 log"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.shell:
-        cmd: "cat {{ wildfly_instances_home }}/wildfly-0/standalone/log/server.log"
-      changed_when: False
+      ansible.builtin.command:
+        argv:
+          - cat
+          - "{{ wildfly_instances_home }}/wildfly-0/standalone/log/server.log"
+      changed_when: false
       register: command_output
 
     - name: "Fetch joined string for first instance"
       ansible.builtin.set_fact:
-        eap_1_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-1 joined the cluster.*$', multiline=True) }}"
+        eap_1_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-1 joined the cluster.*$', multiline=true) }}"
 
     - name: "Check that string matches"
       ansible.builtin.assert:
@@ -47,8 +49,9 @@
           - eap_1_joined is defined
           - eap_1_joined != ''
 
-    - ansible.builtin.set_fact:
-        eap_2_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-2 joined the cluster.*$', multiline=True) }}"
+    - name: "Fetch joined string for second instance"
+      ansible.builtin.set_fact:
+        eap_2_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-2 joined the cluster.*$', multiline=true) }}"
 
     - name: "Check that string has been found"
       ansible.builtin.assert:

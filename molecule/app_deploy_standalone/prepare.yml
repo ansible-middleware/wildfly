@@ -1,5 +1,6 @@
 ---
-- import_playbook: ../prepare.yml
+- name: Import shared molecule prepare playbook
+  ansible.builtin.import_playbook: ../prepare.yml
 
 - name: Prepare
   hosts: all
@@ -14,9 +15,15 @@
 
     - name: "Ensure required packages are installed using wildfly_java_version variable (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
-      ansible.builtin.yum:
+      ansible.builtin.dnf:
         name:
-          - "{{ 'java-1.8.0-openjdk' if wildfly_java_version|default(21 if ansible_facts.distribution_major_version == '10' else 17)|string == '1.8' else 'java-' + wildfly_java_version|default(21 if ansible_facts.distribution_major_version == '10' else 17)|string + '-openjdk-headless' }}"
+          - >-
+            {{ 'java-1.8.0-openjdk' if (wildfly_java_version
+            | default(21 if ansible_facts.distribution_major_version == '10' else 17)
+            | string == '1.8')
+            else ('java-' + (wildfly_java_version
+            | default(21 if ansible_facts.distribution_major_version == '10' else 17)
+            | string) + '-openjdk-headless') }}
           - procps-ng
           - tzdata-java
         state: present
@@ -25,7 +32,10 @@
     - name: "Ensure required packages are installed using wildfly_java_version variable (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.command:
-        cmd: "dnf install -y {{ 'java-1.8.0-openjdk' if wildfly_java_version|default(17)|string == '1.8' else 'java-' + wildfly_java_version|default(17)|string + '-openjdk-headless' }} procps-ng tzdata-java"
+        cmd: >-
+          dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | default(17) | string == '1.8')
+          else ('java-' + (wildfly_java_version | default(17) | string) + '-openjdk-headless') }}
+          procps-ng tzdata-java
       changed_when: false
       when: ansible_facts.distribution_major_version == '8'
 
@@ -37,7 +47,13 @@
       ansible.builtin.include_role:
         name: wildfly_systemd
       vars:
-        wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version|default(21 if ansible_facts.distribution_major_version == '10' else 17)|string == '1.8' else 'java-' + wildfly_java_version|default(21 if ansible_facts.distribution_major_version == '10' else 17)|string + '-openjdk-headless' }}"
+        wildfly_java_package_name: >-
+          {{ 'java-1.8.0-openjdk' if (wildfly_java_version
+          | default(21 if ansible_facts.distribution_major_version == '10' else 17)
+          | string == '1.8')
+          else ('java-' + (wildfly_java_version
+          | default(21 if ansible_facts.distribution_major_version == '10' else 17)
+          | string) + '-openjdk-headless') }}
 
     - name: "Wait for WildFly to be ready"
       ansible.builtin.wait_for:

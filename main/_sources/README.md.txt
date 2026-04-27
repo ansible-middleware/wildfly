@@ -86,6 +86,9 @@ Overrideable variables are documented in the roles wildfly_install, wildfly_syst
 
 
 <!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/wildfly/issues).
+
 <!--end support -->
 
 ## Using the collection to customize WildFly configuration
@@ -101,6 +104,10 @@ A last option is to use JBoss cli queries, within the Ansible, but it requires m
 ## A note on domain mode
 
 This collection does not provides any support to use WildFly's domain mode. The rationale behind this decision is that this WildFly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of WildFly JEE servers.
+
+## Release and Upgrade Notes
+
+For details on changes between versions, please see [the changelog for this collection](https://github.com/ansible-middleware/wildfly/blob/main/CHANGELOG.rst).
 
 ## License
 

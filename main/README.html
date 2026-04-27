@@ -64,6 +64,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#using-the-collection-to-customize-wildfly-configuration">Using the collection to customize WildFly configuration</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a-note-on-domain-mode">A note on domain mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#release-and-upgrade-notes">Release and Upgrade Notes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#license">License</a></li>
 </ul>
 </li>
@@ -206,6 +207,7 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 <li><p><a class="reference external" href="https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html">ansible-posix</a></p></li>
 </ul>
 <!--start support -->
+<p>For bug reports and feature requests, use <a class="reference external" href="https://github.com/ansible-middleware/wildfly/issues">GitHub Issues</a>.</p>
 <!--end support -->
 </section>
 </section>
@@ -219,6 +221,10 @@ $ ansible-playbook -i inventory middleware_automation.wildfly.playbook
 <section id="a-note-on-domain-mode">
 <h2>A note on domain mode<a class="headerlink" href="#a-note-on-domain-mode" title="Link to this heading"></a></h2>
 <p>This collection does not provides any support to use WildFly’s domain mode. The rationale behind this decision is that this WildFly feature overlaps a lot with Ansible and it’s <strong>not recommended</strong> and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of WildFly JEE servers.</p>
+</section>
+<section id="release-and-upgrade-notes">
+<h2>Release and Upgrade Notes<a class="headerlink" href="#release-and-upgrade-notes" title="Link to this heading"></a></h2>
+<p>For details on changes between versions, please see <a class="reference external" href="https://github.com/ansible-middleware/wildfly/blob/main/CHANGELOG.rst">the changelog for this collection</a>.</p>
 </section>
 <section id="license">
 <h2>License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>

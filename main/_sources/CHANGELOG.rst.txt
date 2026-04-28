@@ -38,6 +38,7 @@ Minor Changes
 - Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
 - Fix cannot load python3-dnf for rhel 8 `#359 <https://github.com/ansible-middleware/wildfly/pull/359>`_
 - Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
+- Fix lint warnings `#368 <https://github.com/ansible-middleware/wildfly/pull/368>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
 
 Bugfixes

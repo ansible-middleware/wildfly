@@ -1,0 +1,23 @@
+---
+- name: Verify
+  hosts: all
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: "Verify only if scenario is running upstream"
+      when:
+        - not eap_enable is defined
+      block:
+        - name: "Include apps verification"
+          ansible.builtin.include_tasks: ../verify_apps.yml
+          when:
+            - wildfly_apps is defined and wildfly_apps | length > 0
+
+        - name: "Verify the property using wildfly_validation_queries (The Validation)"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_validation
+          vars:
+            wildfly_validation_queries:
+              - query: '/system-property=test:read-attribute(name=value)'
+                expected_result: 'testvalue'
+                expected_result_undefined: false

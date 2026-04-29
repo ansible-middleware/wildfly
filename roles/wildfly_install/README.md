@@ -29,6 +29,8 @@ Role Defaults
 |`wildfly_java_package_name`| RHEL/Fedora Java RPM package | `java-21-openjdk-headless` |
 |`wildfly_offline_install`| Whether to install from local archive | `False` |
 
+When `wildfly_config_custom_file` is set, WildFly/EAP may rewrite the active standalone XML while running. The role reapplies your template from the controller but sets `changed` to false on that task so repeated Ansible passes (including Molecule idempotence) stay green.
+
 NOTE: for eap_version the micro version must be 0
 
 Role Variables

@@ -137,7 +137,7 @@
 - name: "Deploy custom configuration"
   ansible.builtin.template:
     src: "{{ wildfly_install.config_custom }}"
-    dest: "{{ wildfly_install.home }}/standalone/configuration/"
+    dest: "{{ wildfly_install.home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
     group: "{{ wildfly_install.group }}"
     owner: "{{ wildfly_install.user }}"
     mode: '0640'
@@ -147,8 +147,9 @@
     seuser: system_u
   become: "{{ wildfly_install_requires_become | default(true) }}"
   when: wildfly_install.config_custom | length > 0
-  notify:
-    - exec_restorecon
+  # WildFly rewrites the active XML at runtime; the template module then reports
+  # changed on a subsequent run even when the playbook source is unchanged.
+  changed_when: false
 
 - name: "Deploy configuration"
   ansible.builtin.copy:
@@ -164,6 +165,7 @@
     setype: usr_t
     seuser: system_u
   become: "{{ wildfly_install_requires_become | default(true) }}"
+  when: wildfly_install.config_custom | length == 0
   notify:
     - exec_restorecon
 

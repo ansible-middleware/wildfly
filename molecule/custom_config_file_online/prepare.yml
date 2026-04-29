@@ -1,0 +1,5 @@
+---
+# Online install: do not pre-fetch the WildFly zip on the controller (unlike
+# molecule/custom_config_file). wildfly_install downloads on the target.
+- name: Import shared molecule prepare playbook
+  ansible.builtin.import_playbook: ../prepare.yml

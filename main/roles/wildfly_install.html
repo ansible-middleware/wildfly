@@ -191,6 +191,7 @@
 </tr>
 </tbody>
 </table>
+<p>When <code class="docutils literal notranslate"><span class="pre">wildfly_config_custom_file</span></code> is set, WildFly/EAP may rewrite the active standalone XML while running. The role reapplies your template from the controller but sets <code class="docutils literal notranslate"><span class="pre">changed</span></code> to false on that task so repeated Ansible passes (including Molecule idempotence) stay green.</p>
 <p>NOTE: for eap_version the micro version must be 0</p>
 </section>
 <section id="role-variables">

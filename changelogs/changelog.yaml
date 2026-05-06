@@ -603,6 +603,9 @@ releases:
         `#357 <https://github.com/ansible-middleware/wildfly/pull/357>`_
 
         '
+      - 'AMW-521: Fix sanity. lint issues and warnings `#367 <https://github.com/ansible-middleware/wildfly/pull/367>`_
+
+        '
       - 'Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
 
         '
@@ -612,7 +615,13 @@ releases:
       - 'Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
 
         '
+      - 'Fix lint warnings `#368 <https://github.com/ansible-middleware/wildfly/pull/368>`_
+
+        '
       - 'Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+
+        '
+      - 'Verify wildfly_yml_configs with wildfly_config_custom_file `#370 <https://github.com/ansible-middleware/wildfly/pull/370>`_
 
         '
     fragments:
@@ -640,6 +649,9 @@ releases:
     - 357.yaml
     - 359.yaml
     - 360.yaml
+    - 367.yaml
+    - 368.yaml
+    - 370.yaml
     release_date: '2026-04-23'
   1.5.2:
     changes:

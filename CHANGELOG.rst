@@ -34,10 +34,13 @@ Minor Changes
 - AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
 - AMW-507 offline_install_driver molecule test is failing for EAP 8.1 `#354 <https://github.com/ansible-middleware/wildfly/pull/354>`_
 - AMW-510 Missing required parameters for elytron adapter is not a valid boolean `#357 <https://github.com/ansible-middleware/wildfly/pull/357>`_
+- AMW-521: Fix sanity. lint issues and warnings `#367 <https://github.com/ansible-middleware/wildfly/pull/367>`_
 - Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
 - Fix cannot load python3-dnf for rhel 8 `#359 <https://github.com/ansible-middleware/wildfly/pull/359>`_
 - Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
+- Fix lint warnings `#368 <https://github.com/ansible-middleware/wildfly/pull/368>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+- Verify wildfly_yml_configs with wildfly_config_custom_file `#370 <https://github.com/ansible-middleware/wildfly/pull/370>`_
 
 Bugfixes
 --------

@@ -85,6 +85,8 @@ Overrideable variables are documented in the roles wildfly_install, wildfly_syst
 * [ansible-posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html)
 
 
+## Support
+
 <!--start support -->
 
 For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/wildfly/issues).

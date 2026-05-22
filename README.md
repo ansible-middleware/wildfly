@@ -85,12 +85,6 @@ Overrideable variables are documented in the roles wildfly_install, wildfly_syst
 * [ansible-posix](https://docs.ansible.com/ansible/latest/collections/ansible/posix/index.html)
 
 
-<!--start support -->
-
-For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/wildfly/issues).
-
-<!--end support -->
-
 ## Using the collection to customize WildFly configuration
 
 Regarding the configuration of the Java app server itself, the Ansible collection has a specific strategy, designed to ensure idempotency of the resulting setup, but also ensure Ansible has the capacity to fine-tune, as much as needed, the server.
@@ -105,10 +99,22 @@ A last option is to use JBoss cli queries, within the Ansible, but it requires m
 
 This collection does not provides any support to use WildFly's domain mode. The rationale behind this decision is that this WildFly feature overlaps a lot with Ansible and it's **not recommended** and cumbersome to combine those. So, for simplicity sake, this collection focus only on standalone deployment of WildFly JEE servers.
 
+
+## Support
+
+<!--start support -->
+
+For bug reports and feature requests, use [GitHub Issues](https://github.com/ansible-middleware/wildfly/issues).
+
+<!--end support -->
+
+
 ## Release and Upgrade Notes
 
-For details on changes between versions, please see [the changelog for this collection](https://github.com/ansible-middleware/wildfly/blob/main/CHANGELOG.rst).
+For details on changes between versions, please see the [CHANGELOG](https://github.com/ansible-middleware/wildfly/blob/main/CHANGELOG.rst) for this collection.
 
 ## License
 
-[GNU General Public License v2.0](https://github.com/ansible-middleware/wildfly/blob/main/LICENSE)
+GNU General Public License v2.0
+
+See [LICENSE](LICENSE) to view the full text.

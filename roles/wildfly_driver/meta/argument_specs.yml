@@ -34,7 +34,7 @@ argument_specs:
                 description: "Enable offline install mode (download to control node, then copy to target)"
                 type: "bool"
             wildfly_version:
-                default: "39.0.0.Final"
+                default: "40.0.0.Final"
                 description: "WildFly version to install"
                 type: "str"
             wildfly_home:

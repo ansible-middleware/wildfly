@@ -5,7 +5,7 @@
     - vars.yml
   vars:
     wildfly_old_version: '37.0.0.Final'
-    wildfly_new_version: '39.0.0.Final'
+    wildfly_new_version: '40.0.0.Final'
     wildfly_old_workdir: '/opt/wildfly-old/'
     wildfly_new_workdir: '/opt/wildfly-new/'
     wildfly_old_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_old_version.split('.'))[0:2] | join('.'), wildfly_old_version) }}"

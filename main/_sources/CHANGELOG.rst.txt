@@ -6,6 +6,9 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.12-devel
+=============
+
 v1.5.11
 =======
 
@@ -40,6 +43,7 @@ Minor Changes
 - Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
 - Fix lint warnings `#368 <https://github.com/ansible-middleware/wildfly/pull/368>`_
 - Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+- Verify wildfly_yml_configs with wildfly_config_custom_file `#370 <https://github.com/ansible-middleware/wildfly/pull/370>`_
 
 Bugfixes
 --------

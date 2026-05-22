@@ -15,7 +15,7 @@ Role Defaults
 |`wildfly_driver_jar_installation_path`| Path for JDBC driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver.jar_filename }}` |
 |`wildfly_driver_download_dir`| Temporary directory for the driver download | `/tmp` |
 |`wildfly_driver_offline_install`| Enable offline install mode (download to control node, then copy to target) | `false` |
-|`wildfly_version`| WildFly version to install | `39.0.0.Final` |
+|`wildfly_version`| WildFly version to install | `40.0.0.Final` |
 |`wildfly_home`| WildFly installation directory | `/opt/wildfly/wildfly-{{ wildfly_version }}/` |
 |`wildfly_user`| POSIX user account for WildFly | `wildfly` |
 |`wildfly_group`| POSIX group for WildFly | `{{ wildfly_user }}` |

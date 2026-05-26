@@ -653,6 +653,21 @@ releases:
     - 368.yaml
     - 370.yaml
     release_date: '2026-04-23'
+  1.5.12:
+    changes:
+      bugfixes:
+      - 'Fix certification requirements for WildFly `#372 <https://github.com/ansible-middleware/wildfly/pull/372>`_
+
+        '
+      major_changes:
+      - 'AMW-540 Fix the upstream collection requirements with common v1.2.4 `#374
+        <https://github.com/ansible-middleware/wildfly/pull/374>`_
+
+        '
+    fragments:
+    - 372.yaml
+    - 374.yaml
+    release_date: '2026-05-26'
   1.5.2:
     changes:
       bugfixes:

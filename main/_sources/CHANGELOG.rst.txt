@@ -9,6 +9,16 @@ This changelog describes changes after version 0.0.7.
 v1.5.12-devel
 =============
 
+Major Changes
+-------------
+
+- AMW-540 Fix the upstream collection requirements with common v1.2.4 `#374 <https://github.com/ansible-middleware/wildfly/pull/374>`_
+
+Bugfixes
+--------
+
+- Fix certification requirements for WildFly `#372 <https://github.com/ansible-middleware/wildfly/pull/372>`_
+
 v1.5.11
 =======
 

@@ -7,7 +7,7 @@
       - rhn_password is defined
     quiet: true
 
-- name: Retrieve product download using JBoss Network API
+- name: Retrieve product download using Unified Downloads API
   middleware_automation.common.product_search:
     client_id: "{{ rhn_username }}"
     client_secret: "{{ rhn_password }}"

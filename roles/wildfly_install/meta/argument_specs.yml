@@ -134,7 +134,7 @@ argument_specs:
                 type: "str"
             eap_product_category:
                 default: "appplatform"
-                description: "JBossNetwork API category for EAP"
+                description: "Unified Downloads API category for EAP"
                 type: "str"
             eap_selinux_enabled:
                 default: True

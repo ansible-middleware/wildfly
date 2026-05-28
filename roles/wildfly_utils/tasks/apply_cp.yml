@@ -37,13 +37,13 @@
   when: eap_patch_version is defined
   delegate_to: localhost
 
-- name: Perform patch download from RHN via JBossNetwork API
+- name: Perform patch download from RHN via Unified Downloads API
   when:
     - eap_enable is defined and eap_enable
     - eap_apply_cp
     - not wildfly_offline_install
   block:
-    - name: Retrieve product download using JBossNetwork API
+    - name: Retrieve product download using Unified Downloads API
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"

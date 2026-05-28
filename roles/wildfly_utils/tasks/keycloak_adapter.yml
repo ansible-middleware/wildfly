@@ -35,12 +35,12 @@
   register: local_archive_path
   delegate_to: localhost
 
-- name: "Check if JBoss Network API access is needed."
+- name: "Check if Unified Downloads API access is needed."
   when:
     - local_archive_path is defined and local_archive_path.stat is defined
     - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists
   block:
-    - name: Retrieve product download using JBoss Network API
+    - name: Retrieve product download using Unified Downloads API
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"

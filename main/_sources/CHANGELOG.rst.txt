@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.13-devel
 =============
 
+Minor Changes
+-------------
+
+- Fixing common module usage `#376 <https://github.com/ansible-middleware/wildfly/pull/376>`_
+
 v1.5.12
 =======
 

@@ -11,9 +11,9 @@
   middleware_automation.common.product_search:
     client_id: "{{ rhn_username }}"
     client_secret: "{{ rhn_password }}"
-    product_type: DISTRIBUTION
+    content_type: DISTRIBUTION
     product_version: "{{ eap_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
-    product_category: "{{ eap_product_category }}"
+    product_code: "{{ eap_product_category }}"
   register: rhn_products
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
@@ -21,7 +21,7 @@
 
 - name: "Determine install zipfile {{ eap_archive_filename }} from search results."
   ansible.builtin.set_fact:
-    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_path', 'match', '[^/]*/' + eap_archive_filename + '$') }}"
+    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + eap_archive_filename + '$') }}"
   delegate_to: localhost
   run_once: true
 

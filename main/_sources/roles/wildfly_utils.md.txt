@@ -8,7 +8,7 @@ feature (such as apply cumulative patches).
 Entrypoints
 -----------
 
-* download_from_rhn: download resources from the Red Hat Customer Portal via the JBossNetwork API
+* download_from_rhn: download resources from the Red Hat Customer Portal via the Unified Downloads API
 * apply_cp: download and patch EAP
 * keycloak_adapter: download and install the keycloak adapter module
 * jboss_cli: execute arbitrary cli commands of command files

@@ -117,4 +117,4 @@ For details on changes between versions, please see the [CHANGELOG](https://gith
 
 GNU General Public License v2.0
 
-See [LICENSE](LICENSE) to view the full text.
+See [LICENSE](https://github.com/ansible-middleware/wildfly/blob/main/LICENSE) to view the full text.

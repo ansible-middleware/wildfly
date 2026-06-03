@@ -668,6 +668,19 @@ releases:
     - 372.yaml
     - 374.yaml
     release_date: '2026-05-26'
+  1.5.13:
+    changes:
+      minor_changes:
+      - 'AMW-550 Fix downstream eap according to runtimes_common release `#377 <https://github.com/ansible-middleware/wildfly/pull/377>`_
+
+        '
+      - 'Fixing common module usage `#376 <https://github.com/ansible-middleware/wildfly/pull/376>`_
+
+        '
+    fragments:
+    - 376.yaml
+    - 377.yaml
+    release_date: '2026-06-03'
   1.5.2:
     changes:
       bugfixes:

@@ -6,6 +6,15 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.13
+=======
+
+Minor Changes
+-------------
+
+- AMW-550 Fix downstream eap according to runtimes_common release `#377 <https://github.com/ansible-middleware/wildfly/pull/377>`_
+- Fixing common module usage `#376 <https://github.com/ansible-middleware/wildfly/pull/376>`_
+
 v1.5.12
 =======
 

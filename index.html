@@ -31,7 +31,6 @@
               <li class="toctree-l1"><a class="reference internal" href="https://ansible-middleware.github.io/amq/">ActiveMQ / Red Hat AMQ</a></li>
               <li class="toctree-l1"><a class="reference internal" href="https://ansible-middleware.github.io/amq_streams/">Kafka / Red Hat AMQ Streams</a></li>
               <li class="toctree-l1"><a class="reference internal" href="https://ansible-middleware.github.io/common/">Ansible Middleware utilities</a></li>
-              <li class="toctree-l1"><a class="reference internal" href="https://ansible-middleware.github.io/redhat-csp-download/">Red Hat CSP Download</a></li>
               <li class="toctree-l1"><a class="reference internal" href="https://ansible-middleware.github.io/ansible_collections_jcliff/">JCliff</a></li>
             </ul>
         </div>

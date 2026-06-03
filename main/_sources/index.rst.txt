@@ -35,5 +35,4 @@ Welcome to WildFly Collection documentation
    Tomcat / Red Hat JWS <https://ansible-middleware.github.io/jws/>
    ActiveMQ / Red Hat AMQ Broker <https://ansible-middleware.github.io/amq/>
    Kafka / Red Hat AMQ Streams <https://ansible-middleware.github.io/amq_streams/>
-   Red Hat CSP Download <https://ansible-middleware.github.io/redhat-csp-download/>
    JCliff <https://ansible-middleware.github.io/ansible_collections_jcliff/>

@@ -10,7 +10,7 @@ authors:
   - Guido Grazioli <ggraziol@redhat.com>
   - Ranabir Chakraborty <rchakrab@redhat.com>
 description: Enable Ansible to provisioning JBoss EAP or WildFly instances.
-license_file: "LICENSE"
+license: ["GPL-2.0-only"]
 tags:
   - java
   - jboss

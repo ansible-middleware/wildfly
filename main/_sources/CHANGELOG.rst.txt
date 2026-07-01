@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.14-devel
 =============
 
+Minor Changes
+-------------
+
+- AMW-529 WildFly collection version update to 40.0.0.Final `#373 <https://github.com/ansible-middleware/wildfly/pull/373>`_
+
 v1.5.13
 =======
 

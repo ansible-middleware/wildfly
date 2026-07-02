@@ -160,4 +160,4 @@ argument_specs:
                     rhel: ['8', '9']
                   eap8.1:
                     openjdk: ['17', '21']
-                    rhel: ['8', '9']
+                    rhel: ['8', '9', '10']

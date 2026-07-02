@@ -32,26 +32,26 @@
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
       changed_when: false # dnf install is idempotent
       when:
-        - ansible_user_id == 'root'
-        - ansible_distribution_major_version == '8'
+        - ansible_facts['user_id'] == 'root'
+        - ansible_facts['distribution_major_version'] == '8'
 
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
       ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
-        - ansible_user_id == 'root'
-        - ansible_distribution_major_version != '8'
+        - ansible_facts['user_id'] == 'root'
+        - ansible_facts['distribution_major_version'] != '8'
 
     - name: "Gather the package facts (skipping on RHEL 8)"
       ansible.builtin.package_facts:
         manager: auto
-      when: ansible_distribution_major_version != '8'
+      when: ansible_facts['distribution_major_version'] != '8'
 
     - name: "Check if {{ sudo_pkg_name }} is installed (skipping on RHEL 8)"
       ansible.builtin.assert:
         that:
           - sudo_pkg_name in ansible_facts.packages
-      when: ansible_distribution_major_version != '8'
+      when: ansible_facts['distribution_major_version'] != '8'
 
     # RHEL 8: avoid ansible.builtin.yum_repository with platform-python — UBI 8 uses Python 3.6
     # there, while ansible-core 2.18+ modules require Python 3.7+ (e.g. __future__ annotations).
@@ -63,26 +63,26 @@
         content: |
           [Adoptium]
           name=Adoptium
-          baseurl=https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_distribution_major_version }}/$basearch
+          baseurl=https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch
           enabled=1
           gpgcheck=1
           gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
       when:
-        - ansible_os_family == 'RedHat'
-        - ansible_distribution_major_version | default('0') | int == 8
+        - ansible_facts['os_family'] == 'RedHat'
+        - ansible_facts['distribution_major_version'] | default('0') | int == 8
 
     - name: Add Adoptium YUM repository
       ansible.builtin.yum_repository:
         name: Adoptium
         description: Adoptium
-        baseurl: "https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_distribution_major_version }}/$basearch"
+        baseurl: "https://packages.adoptium.net/artifactory/rpm/rhel/{{ ansible_facts['distribution_major_version'] }}/$basearch"
         enabled: true
         gpgcheck: true
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
       become: "{{ wildfly_install_requires_become | default(true) }}"
       when:
-        - not (ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8)
+        - not (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] | default('0') | int == 8)
 
     - name: "Ensure required packages are installed (RHEL 9+)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
@@ -95,7 +95,7 @@
           - procps-ng
           - tzdata-java
         state: present
-      when: ansible_distribution_major_version != '8'
+      when: ansible_facts['distribution_major_version'] != '8'
 
     - name: "Ensure required packages are installed (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
@@ -105,7 +105,7 @@
           else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
           temurin-{{ wildfly_java_version }}-jdk procps-ng tzdata-java
       changed_when: false
-      when: ansible_distribution_major_version == '8'
+      when: ansible_facts['distribution_major_version'] == '8'
 
     - name: "Copy local test applications to target hosts"
       when:

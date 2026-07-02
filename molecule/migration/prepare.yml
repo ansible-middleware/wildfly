@@ -23,15 +23,15 @@
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
       changed_when: false # dnf install is idempotent
       when:
-        - ansible_user_id == 'root'
-        - ansible_distribution_major_version == '8'
+        - ansible_facts['user_id'] == 'root'
+        - ansible_facts['distribution_major_version'] == '8'
 
     - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
       ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
-        - ansible_user_id == 'root'
-        - ansible_distribution_major_version != '8'
+        - ansible_facts['user_id'] == 'root'
+        - ansible_facts['distribution_major_version'] != '8'
 
     - name: "Ensure required packages are installed (RHEL 10)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
@@ -43,7 +43,7 @@
           - tzdata-java
           - unzip
         state: present
-      when: ansible_distribution_major_version == '10'
+      when: ansible_facts['distribution_major_version'] == '10'
 
     - name: "Ensure required packages are installed (RHEL 9)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
@@ -55,14 +55,14 @@
           - tzdata-java
           - unzip
         state: present
-      when: ansible_distribution_major_version == '9'
+      when: ansible_facts['distribution_major_version'] == '9'
 
     - name: "Ensure required packages are installed (RHEL 8)"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.command:
         cmd: "dnf install -y java-17-openjdk-headless java-21-openjdk-devel procps-ng tzdata-java unzip"
       changed_when: false
-      when: ansible_distribution_major_version == '8'
+      when: ansible_facts['distribution_major_version'] == '8'
 
     - name: "Create wildfly user and group"
       become: "{{ wildfly_install_requires_become | default(true) }}"

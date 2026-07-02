@@ -1,3 +1,4 @@
 ---
 wildfly_java_version: 21
 eap_dot_validate_certs: true
+ansible_python_interpreter: /usr/bin/python3.12

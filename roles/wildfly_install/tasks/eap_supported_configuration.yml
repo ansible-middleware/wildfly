@@ -13,13 +13,13 @@
 - name: "Ensure target RHEL version is supported: {{ supported_configuration.rhel }}"
   ansible.builtin.assert:
     that:
-      - ansible_os_family == 'RedHat' and ansible_distribution == 'RedHat'
-      - ansible_distribution_major_version in supported_configuration.rhel
+      - ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution'] == 'RedHat'
+      - ansible_facts['distribution_major_version'] in supported_configuration.rhel
     quiet: true
-    fail_msg: "This version of RHEL {{ ansible_distribution_major_version }} is not supported for EAP{{ eap_version[:3] }}, supported versions are: {{ supported_configuration.rhel }}"
+    fail_msg: "This version of RHEL {{ ansible_facts['distribution_major_version'] }} is not supported for EAP{{ eap_version[:3] }}, supported versions are: {{ supported_configuration.rhel }}"
   when:
     - eap_install_skip_supported_os_check is defined and not eap_install_skip_supported_os_check
-    - ansible_distribution_major_version is defined and ansible_os_family is defined and ansible_os_family == 'RedHat'
+    - ansible_facts['distribution_major_version'] is defined and ansible_facts['os_family'] is defined and ansible_facts['os_family'] == 'RedHat'
 
 - name: "Ensure target OpenJDK version is supported: {{ supported_configuration.openjdk }}"
   ansible.builtin.assert:

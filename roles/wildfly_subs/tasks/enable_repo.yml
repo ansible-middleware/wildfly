@@ -12,7 +12,7 @@
 
 - name: "Determine repository name."
   ansible.builtin.set_fact:
-    eap_repo_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_distribution_major_version }}-{{ ansible_architecture }}-rpms"
+    eap_repo_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_facts['distribution_major_version'] }}-{{ ansible_facts['architecture'] }}-rpms"
   when:
     - not eap_repo_name is defined
 

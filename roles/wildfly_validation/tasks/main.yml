@@ -60,27 +60,27 @@
 - name: "Wait for HTTP port {{ wildfly_http_port }} to become available."
   ansible.builtin.wait_for:
     port: "{{ wildfly_http_port }}"
-    host: "{{ ansible_nodename | default('localhost') }}"
+    host: "{{ ansible_facts['nodename'] | default('localhost') }}"
   when:
     - not wildfly_validation_skip_http_port_wait is defined
 
 - name: "Wait for HTTPS port {{ wildfly_https_port }} to become available."
   ansible.builtin.wait_for:
     port: "{{ wildfly_https_port }}"
-    host: "{{ ansible_nodename | default('localhost') }}"
+    host: "{{ ansible_facts['nodename'] | default('localhost') }}"
   when:
     - not wildfly_validation_skip_https_port_wait is defined
 
 - name: "Check if HTTP web connector is accessible"
   ansible.builtin.uri:
-    url: "http://{{ ansible_nodename | default('localhost') }}:{{ wildfly_http_port }}/"
+    url: "http://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_http_port }}/"
     status_code: 200
   when:
     - not wildfly_validation_skip_http_web_connector_check is defined
 
 - name: "Check if HTTPS web connector is accessible"
   ansible.builtin.uri:
-    url: "https://{{ ansible_nodename | default('localhost') }}:{{ wildfly_https_port }}/"
+    url: "https://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_https_port }}/"
     status_code: 200
     validate_certs: false
   when:

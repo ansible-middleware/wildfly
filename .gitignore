@@ -24,3 +24,6 @@ junit/
 changelogs/.plugin-cache.yaml
 
 .ansible/
+
+# Vale downloaded styles and runtime vocabulary
+.github/styles/

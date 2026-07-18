@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         repo: ['ansible-middleware/wildfly-cluster-demo', 'ansible-middleware/ansible-middleware-ee']
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Repository Dispatch
         uses: peter-evans/repository-dispatch@v3

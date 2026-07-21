@@ -8,8 +8,8 @@ platforms:
     command: "/usr/sbin/init"
     pre_build_image: true
     privileged: true
-    port_bindings:
-      - ${PORT_BINDING:-8080}:8080
+    exposed_ports:
+      - "8080/tcp"
     published_ports:
       - 0.0.0.0:${PORT_BINDING:-8080}:8080/TCP
 
@@ -18,16 +18,16 @@ platforms:
     command: "/usr/sbin/init"
     pre_build_image: true
     privileged: true
-    port_bindings:
-      - ${PORT_BINDING:-8081}:8080
+    exposed_ports:
+      - "8080/tcp"
 
   - name: instance-rhel8
     image: registry.access.redhat.com/ubi8/ubi-init:latest
     command: "/usr/sbin/init"
     pre_build_image: true
     privileged: true
-    port_bindings:
-      - ${PORT_BINDING:-8082}:8080
+    exposed_ports:
+      - "8080/tcp"
 
 provisioner:
   name: ansible

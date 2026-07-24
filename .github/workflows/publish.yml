@@ -12,6 +12,7 @@ jobs:
     secrets:
       galaxy_token: ${{ secrets.ANSIBLE_GALAXY_API_KEY }}
       jira_webhook: ${{ secrets.JIRA_WEBHOOK_CREATE_VERSION }}
+      push_token: ${{ secrets.TRIGGERING_PAT }}
 
   dispatch:
     needs: publish

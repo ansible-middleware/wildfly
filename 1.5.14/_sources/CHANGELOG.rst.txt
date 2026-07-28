@@ -1,0 +1,519 @@
+============================================
+middleware\_automation.wildfly Release Notes
+============================================
+
+.. contents:: Topics
+
+This changelog describes changes after version 0.0.7.
+
+v1.5.14
+=======
+
+Major Changes
+-------------
+
+- AMW-575 Support RHEL10 for redhat.eap collection `#381 <https://github.com/ansible-middleware/wildfly/pull/381>`_
+
+Minor Changes
+-------------
+
+- AMW-529 WildFly collection version update to 40.0.0.Final `#373 <https://github.com/ansible-middleware/wildfly/pull/373>`_
+- Fix INJECT_FACTS_AS_VARS deprecation warnings for ansible-core 2.24 `#382 <https://github.com/ansible-middleware/wildfly/pull/382>`_
+
+v1.5.13
+=======
+
+Minor Changes
+-------------
+
+- AMW-550 Fix downstream eap according to runtimes_common release `#377 <https://github.com/ansible-middleware/wildfly/pull/377>`_
+- Fixing common module usage `#376 <https://github.com/ansible-middleware/wildfly/pull/376>`_
+
+v1.5.12
+=======
+
+Major Changes
+-------------
+
+- AMW-540 Fix the upstream collection requirements with common v1.2.4 `#374 <https://github.com/ansible-middleware/wildfly/pull/374>`_
+
+Bugfixes
+--------
+
+- Fix certification requirements for WildFly `#372 <https://github.com/ansible-middleware/wildfly/pull/372>`_
+
+v1.5.11
+=======
+
+Major Changes
+-------------
+
+- AMW-491 In migration role default value of eap_migration_path_to_env_properties does not exists `#341 <https://github.com/ansible-middleware/wildfly/pull/341>`_
+- AMW-492 migration role doesn't run migration tool `#342 <https://github.com/ansible-middleware/wildfly/pull/342>`_
+- AMW-493 Unable to install EAP 7.4 with eap_java_version: 1.8 `#353 <https://github.com/ansible-middleware/wildfly/pull/353>`_
+- AMW-497 Unable to install two different versions `#360 <https://github.com/ansible-middleware/wildfly/pull/360>`_
+- AMW-499 Wrong migration tool is downloaded `#345 <https://github.com/ansible-middleware/wildfly/pull/345>`_
+- Add offline install support for wildfly_driver role `#344 <https://github.com/ansible-middleware/wildfly/pull/344>`_
+- Fix eap 7.4.0 and 8.0.0>= installation `#337 <https://github.com/ansible-middleware/wildfly/pull/337>`_
+
+Minor Changes
+-------------
+
+- AMW-471 EAP collection is not able to use JBoss Installation Manager `#318 <https://github.com/ansible-middleware/wildfly/pull/318>`_
+- AMW-472 WildFly: Adding and fixing all the molecule scenarios in GH action `#320 <https://github.com/ansible-middleware/wildfly/pull/320>`_
+- AMW-473 Disabling RHEL10 testing from wildfly collection `#322 <https://github.com/ansible-middleware/wildfly/pull/322>`_
+- AMW-475 eap_version argument is misleading in EAP Ansible collections `#324 <https://github.com/ansible-middleware/wildfly/pull/324>`_
+- AMW-477 For eap collection added JIM compatibilities to use repos & manifest by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
+- AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
+- AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
+- AMW-492 migration molecule naming change & permission fix `#356 <https://github.com/ansible-middleware/wildfly/pull/356>`_
+- AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
+- AMW-507 offline_install_driver molecule test is failing for EAP 8.1 `#354 <https://github.com/ansible-middleware/wildfly/pull/354>`_
+- AMW-510 Missing required parameters for elytron adapter is not a valid boolean `#357 <https://github.com/ansible-middleware/wildfly/pull/357>`_
+- AMW-521: Fix sanity. lint issues and warnings `#367 <https://github.com/ansible-middleware/wildfly/pull/367>`_
+- Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
+- Fix cannot load python3-dnf for rhel 8 `#359 <https://github.com/ansible-middleware/wildfly/pull/359>`_
+- Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
+- Fix lint warnings `#368 <https://github.com/ansible-middleware/wildfly/pull/368>`_
+- Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+- Verify wildfly_yml_configs with wildfly_config_custom_file `#370 <https://github.com/ansible-middleware/wildfly/pull/370>`_
+
+Bugfixes
+--------
+
+- AMW-482 molecule tests fix according to EAP 8.0.0 `#332 <https://github.com/ansible-middleware/wildfly/pull/332>`_
+- Add app_deploy_standalone to molecule workflow `#319 <https://github.com/ansible-middleware/wildfly/pull/319>`_
+
+v1.5.10
+=======
+
+Release Summary
+---------------
+
+Internal release, documentation or test changes only.
+
+Major Changes
+-------------
+
+- AMW-491 In migration role default value of eap_migration_path_to_env_properties does not exists `#341 <https://github.com/ansible-middleware/wildfly/pull/341>`_
+- AMW-492 migration role doesn't run migration tool `#342 <https://github.com/ansible-middleware/wildfly/pull/342>`_
+- AMW-493 Unable to install EAP 7.4 with eap_java_version: 1.8 `#353 <https://github.com/ansible-middleware/wildfly/pull/353>`_
+- AMW-497 Unable to install two different versions `#360 <https://github.com/ansible-middleware/wildfly/pull/360>`_
+- AMW-499 Wrong migration tool is downloaded `#345 <https://github.com/ansible-middleware/wildfly/pull/345>`_
+- Add offline install support for wildfly_driver role `#344 <https://github.com/ansible-middleware/wildfly/pull/344>`_
+- Fix eap 7.4.0 and 8.0.0>= installation `#337 <https://github.com/ansible-middleware/wildfly/pull/337>`_
+
+Minor Changes
+-------------
+
+- AMW-471 EAP collection is not able to use JBoss Installation Manager `#318 <https://github.com/ansible-middleware/wildfly/pull/318>`_
+- AMW-472 WildFly: Adding and fixing all the molecule scenarios in GH action `#320 <https://github.com/ansible-middleware/wildfly/pull/320>`_
+- AMW-473 Disabling RHEL10 testing from wildfly collection `#322 <https://github.com/ansible-middleware/wildfly/pull/322>`_
+- AMW-475 eap_version argument is misleading in EAP Ansible collections `#324 <https://github.com/ansible-middleware/wildfly/pull/324>`_
+- AMW-477 For eap collection added JIM compatibilities to use repos & manifest by passing arguments `#326 <https://github.com/ansible-middleware/wildfly/pull/326>`_
+- AMW-480 Make eap collection compatible with eap 8.1.0 `#330 <https://github.com/ansible-middleware/wildfly/pull/330>`_
+- AMW-481 Enable YAML config for eap 8>= version `#331 <https://github.com/ansible-middleware/wildfly/pull/331>`_
+- AMW-492 migration molecule naming change & permission fix `#356 <https://github.com/ansible-middleware/wildfly/pull/356>`_
+- AMW-498 Valid values for eap_version are confusing `#346 <https://github.com/ansible-middleware/wildfly/pull/346>`_
+- AMW-507 offline_install_driver molecule test is failing for EAP 8.1 `#354 <https://github.com/ansible-middleware/wildfly/pull/354>`_
+- AMW-510 Missing required parameters for elytron adapter is not a valid boolean `#357 <https://github.com/ansible-middleware/wildfly/pull/357>`_
+- Fix Molecule links in inventory `#348 <https://github.com/ansible-middleware/wildfly/pull/348>`_
+- Fix cannot load python3-dnf for rhel 8 `#359 <https://github.com/ansible-middleware/wildfly/pull/359>`_
+- Fix deprecation dependencies in the docs pipeline `#352 <https://github.com/ansible-middleware/wildfly/pull/352>`_
+- Update support matrix in EAP Ansible collection `#321 <https://github.com/ansible-middleware/wildfly/pull/321>`_
+
+Bugfixes
+--------
+
+- AMW-482 molecule tests fix according to EAP 8.0.0 `#332 <https://github.com/ansible-middleware/wildfly/pull/332>`_
+- Add app_deploy_standalone to molecule workflow `#319 <https://github.com/ansible-middleware/wildfly/pull/319>`_
+
+v1.5.9
+======
+
+Major Changes
+-------------
+
+- AMW-461 Support installing Temurin OpenJDK on RHEL 8 and 9 `#310 <https://github.com/ansible-middleware/wildfly/pull/310>`_
+- AMW-468 WildFly collection upgrade to use WildFly 39.0.0.Final `#309 <https://github.com/ansible-middleware/wildfly/pull/309>`_
+- AMW-469 Parallel execution capability for wildfly collection `#312 <https://github.com/ansible-middleware/wildfly/pull/312>`_
+- Add app_deploy role to deploy applications `#307 <https://github.com/ansible-middleware/wildfly/pull/307>`_
+- Make wildfly collection compliant with WildFly 38.0.0.Final version `#304 <https://github.com/ansible-middleware/wildfly/pull/304>`_
+- Update app_deploy with the parallel execution and update downstream vars `#313 <https://github.com/ansible-middleware/wildfly/pull/313>`_
+
+Minor Changes
+-------------
+
+- Update wildfly readme. `#315 <https://github.com/ansible-middleware/wildfly/pull/315>`_
+
+v1.5.8
+======
+
+Major Changes
+-------------
+
+- AMW-416 Make wildfly collection compliant with ansible-core 2.19 `#296 <https://github.com/ansible-middleware/wildfly/pull/296>`_
+
+v1.5.7
+======
+
+Major Changes
+-------------
+
+- Update WildFly version 37.0.0.Final in wildfly collection `#294 <https://github.com/ansible-middleware/wildfly/pull/237>`_
+
+Minor Changes
+-------------
+
+- Compute Prospero version from GitHub release `#290 <https://github.com/ansible-middleware/wildfly/pull/290>`_
+
+v1.5.6
+======
+
+Minor Changes
+-------------
+
+- Rework migration role to support (downstream) use of EAP8 `#280 <https://github.com/ansible-middleware/wildfly/pull/280>`_
+
+v1.5.5
+======
+
+Minor Changes
+-------------
+
+- AMW-310 Misleading mention of prospero in EAP 7 ansible collection `#269 <https://github.com/ansible-middleware/wildfly/pull/269>`_
+- Make port binding configurable in molecule scenarios, plus some molecule fixup and ansible-lint fixes. `#270 <https://github.com/ansible-middleware/wildfly/pull/270>`_
+- Upgrade prospero downstream to 1.1.13.Final-redhat-00006 `#275 <https://github.com/ansible-middleware/wildfly/pull/275>`_
+- Upgrade prospero from 1.3.0.Beta1 to 1.3.0.Final `#273 <https://github.com/ansible-middleware/wildfly/pull/273>`_
+
+Bugfixes
+--------
+
+- Fix invalid varname breaking apps deployment `#274 <https://github.com/ansible-middleware/wildfly/pull/274>`_
+
+v1.5.4
+======
+
+Minor Changes
+-------------
+
+- Update all molecule scenario to use UBI9 instead of UBI8 `#265 <https://github.com/ansible-middleware/wildfly/pull/265>`_
+
+v1.5.3
+======
+
+Minor Changes
+-------------
+
+- Allow arbitrary filename for local download zipfile in offline installation `#250 <https://github.com/ansible-middleware/wildfly/pull/250>`_
+- Check configuration is supported for EAP7 or EAP8 `#261 <https://github.com/ansible-middleware/wildfly/pull/261>`_
+- Ensure that wildfly_version matches expected scheme (X.y.z) `#260 <https://github.com/ansible-middleware/wildfly/pull/260>`_
+- Flag indicates whether download is on controller or target host `#262 <https://github.com/ansible-middleware/wildfly/pull/262>`_
+- Update minimum ansible-core version to 2.15 `#247 <https://github.com/ansible-middleware/wildfly/pull/247>`_
+
+Bugfixes
+--------
+
+- Fix YAML config when eap_apply_cp is false on EAP 8.0 `#254 <https://github.com/ansible-middleware/wildfly/pull/254>`_
+- Fix parameter name wildfly_driver_module_name in wildfly_migration role `#253 <https://github.com/ansible-middleware/wildfly/pull/253>`_
+
+v1.5.2
+======
+
+Major Changes
+-------------
+
+- Add app deployments to several Molecule scenarios `#237 <https://github.com/ansible-middleware/wildfly/pull/237>`_
+- prospero: rm role and move content to wildfly_utils `#227 <https://github.com/ansible-middleware/wildfly/pull/227>`_
+
+Minor Changes
+-------------
+
+- App deploy to trigger cluster formation and verification (upstream CI only) `#221 <https://github.com/ansible-middleware/wildfly/pull/221>`_
+- Skip pidfile validation `#217 <https://github.com/ansible-middleware/wildfly/pull/217>`_
+- eap: EAP8 should defaults to prospero `#245 <https://github.com/ansible-middleware/wildfly/pull/245>`_
+- install: allow user to change path on controller to store zips `#216 <https://github.com/ansible-middleware/wildfly/pull/216>`_
+
+Bugfixes
+--------
+
+- Add become_user to jboss_cli `#229 <https://github.com/ansible-middleware/wildfly/pull/229>`_
+- Use prospero 1.3.0.Beta1 `#239 <https://github.com/ansible-middleware/wildfly/pull/239>`_
+- use own config directory for colocated instances `#226 <https://github.com/ansible-middleware/wildfly/pull/226>`_
+- wildfly_validation: fixup logic of pidfile verification `#244 <https://github.com/ansible-middleware/wildfly/pull/244>`_
+
+v1.5.1
+======
+
+Major Changes
+-------------
+
+- Set pid file for systemd to /var/run/{{ instance }} or allow for custom pid file location `#190 <https://github.com/ansible-middleware/wildfly/pull/190>`_
+
+Minor Changes
+-------------
+
+- Add selinux attributes `#205 <https://github.com/ansible-middleware/wildfly/pull/205>`_
+- Add wait_for logic in systemd unit `#207 <https://github.com/ansible-middleware/wildfly/pull/207>`_
+- Add wildfly_validation logic for colocated cluster `#211 <https://github.com/ansible-middleware/wildfly/pull/211>`_
+- Allow to use different names for nodeId, instance name, systemd unit name `#192 <https://github.com/ansible-middleware/wildfly/pull/192>`_
+- Enable Prospero molecule scenario to run `#181 <https://github.com/ansible-middleware/wildfly/pull/181>`_
+- Externalize the JDBC drivers list from the main playbook, plus add a missing template for the migration role `#204 <https://github.com/ansible-middleware/wildfly/pull/204>`_
+- Implementation of the uninstall role, along with documentation and molecule scenario `#194 <https://github.com/ansible-middleware/wildfly/pull/194>`_
+- Validate ``wildfly_node_id`` length and default to ``inventory_hostname_short`` `#195 <https://github.com/ansible-middleware/wildfly/pull/195>`_
+- prospero: update README and remove duplicated call to wildfly_user `#200 <https://github.com/ansible-middleware/wildfly/pull/200>`_
+
+Bugfixes
+--------
+
+- Fix uninstall_role to work, out of the box, with the wildfly_install defaults. `#197 <https://github.com/ansible-middleware/wildfly/pull/197>`_
+- Fix wildfly_install changing ownership of system directories `#210 <https://github.com/ansible-middleware/wildfly/pull/210>`_
+- JBoss EAP 7.4.7+ patching fails on openjdk17 if elytron is not enabled `#203 <https://github.com/ansible-middleware/wildfly/pull/203>`_
+- WildFly user account should be in wildfly_group as primary group `#202 <https://github.com/ansible-middleware/wildfly/pull/202>`_
+
+v1.5.0
+======
+
+Minor Changes
+-------------
+
+- Add check for prospero installed on host `#175 <https://github.com/ansible-middleware/wildfly/pull/175>`_
+- Download prospero on controller node and copy it to target servers `#167 <https://github.com/ansible-middleware/wildfly/pull/167>`_
+- Few enhancements around the OpenJDK dependency handling `#168 <https://github.com/ansible-middleware/wildfly/pull/168>`_
+- Generate wildfly manifest to be used with wildfly `#158 <https://github.com/ansible-middleware/wildfly/pull/158>`_
+- New prospero name parameter ``wildfly_prospero_name`` `#165 <https://github.com/ansible-middleware/wildfly/pull/165>`_
+- Validate the service running on an offset port `#162 <https://github.com/ansible-middleware/wildfly/pull/162>`_
+- systemd: handling of privilege escalation and service restart `#179 <https://github.com/ansible-middleware/wildfly/pull/179>`_
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Set minimum ansible version >= 2.14 `#173 <https://github.com/ansible-middleware/wildfly/pull/173>`_
+
+Bugfixes
+--------
+
+- Fix Ansible Hub documentation links `#161 <https://github.com/ansible-middleware/wildfly/pull/161>`_
+
+v1.4.3
+======
+
+Minor Changes
+-------------
+
+- Use alternatives instead of rpm to determine java_home `#149 <https://github.com/ansible-middleware/wildfly/pull/149>`_
+
+v1.4.2
+======
+
+Minor Changes
+-------------
+
+- Remove unrequired vars from playbooks/playbook.yml `#144 <https://github.com/ansible-middleware/wildfly/pull/144>`_
+
+v1.4.0
+======
+
+Major Changes
+-------------
+
+- wildfly_driver: remove defaults in favor of required parameters `#138 <https://github.com/ansible-middleware/wildfly/pull/138>`_
+- wildfly_driver: rename parameters from ``jdbc_*`` to ``wildfly_driver_*`` `#142 <https://github.com/ansible-middleware/wildfly/pull/142>`_
+
+Minor Changes
+-------------
+
+- Cleanup and reorganize Prospero playbooks `#136 <https://github.com/ansible-middleware/wildfly/pull/136>`_
+- Update to WildFly 29 `#135 <https://github.com/ansible-middleware/wildfly/pull/135>`_
+
+Bugfixes
+--------
+
+- Fix validation role so it can be used with remote nodes. `#131 <https://github.com/ansible-middleware/wildfly/pull/131>`_
+- Set ``wildfly_offline_install`` default to False, ``eap_apply_cp`` to True `#133 <https://github.com/ansible-middleware/wildfly/pull/133>`_
+- Update references to ``split`` filter `#140 <https://github.com/ansible-middleware/wildfly/pull/140>`_
+- Update yaml_configuration syntax (became less permissive) `#130 <https://github.com/ansible-middleware/wildfly/pull/130>`_
+- Workaround java-11 bugzilla #2224411 `#127 <https://github.com/ansible-middleware/wildfly/pull/127>`_
+
+v1.3.4
+======
+
+Minor Changes
+-------------
+
+- wildfly_systemd: detect Java home path on different os_family `#125 <https://github.com/ansible-middleware/wildfly/pull/125>`_
+
+Bugfixes
+--------
+
+- Do not re-download elytron adapter if present `#124 <https://github.com/ansible-middleware/wildfly/pull/124>`_
+
+v1.3.3
+======
+
+Minor Changes
+-------------
+
+- Check that systemd is running and pidfile exists `#117 <https://github.com/ansible-middleware/wildfly/pull/117>`_
+- elytron_adapter: skip download if file is already present `#120 <https://github.com/ansible-middleware/wildfly/pull/120>`_
+- wildfly_systemd: accept same default vars as wildfly_install `#111 <https://github.com/ansible-middleware/wildfly/pull/111>`_
+
+Bugfixes
+--------
+
+- '.Beta' in version: the dot is only optional `#119 <https://github.com/ansible-middleware/wildfly/pull/119>`_
+- ISSUE116 - PID File Creation Failure `#118 <https://github.com/ansible-middleware/wildfly/pull/118>`_
+
+v1.3.2
+======
+
+Minor Changes
+-------------
+
+- Add check for offline installs and allow to specify custom xml config `#108 <https://github.com/ansible-middleware/wildfly/pull/108>`_
+- Add support for firewalld `#106 <https://github.com/ansible-middleware/wildfly/pull/106>`_
+- Implement JBossNetwork API client for downloading install archives `#107 <https://github.com/ansible-middleware/wildfly/pull/107>`_
+- Install: add prospero as alternative install mechanism `#102 <https://github.com/ansible-middleware/wildfly/pull/102>`_
+- Update default WildFly version to 28 `#103 <https://github.com/ansible-middleware/wildfly/pull/103>`_
+
+v1.3.1
+======
+
+Minor Changes
+-------------
+
+- Remove dependency to community.general (not required) `#100 <https://github.com/ansible-middleware/wildfly/pull/100>`_
+
+v1.3.0
+======
+
+Minor Changes
+-------------
+
+- Apply cp options `#99 <https://github.com/ansible-middleware/wildfly/pull/99>`_
+
+v1.2.2
+======
+
+Major Changes
+-------------
+
+- wildfly_install: (eap) apply_cp does not depend on systemd `#90 <https://github.com/ansible-middleware/wildfly/pull/90>`_
+
+Minor Changes
+-------------
+
+- Add elytron adapter install (EAP) `#92 <https://github.com/ansible-middleware/wildfly/pull/92>`_
+- wildfly-systemd: yaml configuration extension accept templates `#91 <https://github.com/ansible-middleware/wildfly/pull/91>`_
+
+Bugfixes
+--------
+
+- Correctly handle server restarts post apply_cp and keycloak_adapter `#94 <https://github.com/ansible-middleware/wildfly/pull/94>`_
+
+v1.2.1
+======
+
+Release Summary
+---------------
+
+Patch release with internal changes only.
+
+v1.2.0
+======
+
+Major Changes
+-------------
+
+- Propagate wildfly_install defaults to driver, systemd and utils roles `#80 <https://github.com/ansible-middleware/wildfly/pull/80>`_
+
+Bugfixes
+--------
+
+- Become in "Check local download archive path" `#74 <https://github.com/ansible-middleware/wildfly/pull/74>`_
+- wildfly_driver: added wildfly_user and wildfly_group to defaults `#77 <https://github.com/ansible-middleware/wildfly/pull/77>`_
+
+v1.1.0
+======
+
+Minor Changes
+-------------
+
+- Bump version to 1.1.0 to align with downstream (1.1.0 is identical to 1.0.6 upstream) `#67 <https://github.com/ansible-middleware/wildfly/pull/67>`_
+
+v1.0.6
+======
+
+v1.0.5
+======
+
+Minor Changes
+-------------
+
+- Add ``wildfly_java_opts`` to set parameters for wfly JVM `#60 <https://github.com/ansible-middleware/wildfly/pull/60>`_
+- Add ``wildfly_statistics_enabled`` var to enable statistics `#58 <https://github.com/ansible-middleware/wildfly/pull/58>`_
+- Add variable ``wildfly_bind_addr_private`` to set private iface bind address `#55 <https://github.com/ansible-middleware/wildfly/pull/55>`_
+- Add variable ``wildfly_multicast_addr`` to set tcp/udp mcast address `#56 <https://github.com/ansible-middleware/wildfly/pull/56>`_
+- Added variable for setting management port bind address `#62 <https://github.com/ansible-middleware/wildfly/pull/62>`_
+
+Bugfixes
+--------
+
+- Fix EAP patch apply when yaml configuration is enabled `#59 <https://github.com/ansible-middleware/wildfly/pull/59>`_
+
+v1.0.4
+======
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename variable ``instance_id`` to ``wildfly_instance_id`` and update docs `#52 <https://github.com/ansible-middleware/wildfly/pull/52>`_
+
+Bugfixes
+--------
+
+- Add become parameter to tasks that require it `#53 <https://github.com/ansible-middleware/wildfly/pull/53>`_
+
+v1.0.3
+======
+
+Minor Changes
+-------------
+
+- Rename validation role vars to follow proper convention `#48 <https://github.com/ansible-middleware/wildfly/pull/48>`_
+- wildfly_driver: make variables as default `#39 <https://github.com/ansible-middleware/wildfly/pull/39>`_
+
+Breaking Changes / Porting Guide
+--------------------------------
+
+- Rename jboss_eap role into wildfly_utils to be consistent with role naming convention `#45 <https://github.com/ansible-middleware/wildfly/pull/45>`_
+
+Bugfixes
+--------
+
+- JAVA_HOME should be set according to requested JVM package, or overridden via ``wildfly_java_home`` `#46 <https://github.com/ansible-middleware/wildfly/pull/46>`_
+- Update included role to new name in rhn installation `#51 <https://github.com/ansible-middleware/wildfly/pull/51>`_
+
+v1.0.2
+======
+
+Release Summary
+---------------
+
+Minor enhancements, and documentation updates.
+
+v1.0.1
+======
+
+Release Summary
+---------------
+
+Minor enhancements, and documentation updates.
+
+v1.0.0
+======
+
+Release Summary
+---------------
+
+This is the first stable release of the ``middleware_automation.wildfly`` collection.

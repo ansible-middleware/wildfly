@@ -681,6 +681,25 @@ releases:
     - 376.yaml
     - 377.yaml
     release_date: '2026-06-03'
+  1.5.14:
+    changes:
+      major_changes:
+      - 'AMW-575 Support RHEL10 for redhat.eap collection `#381 <https://github.com/ansible-middleware/wildfly/pull/381>`_
+
+        '
+      minor_changes:
+      - 'AMW-529 WildFly collection version update to 40.0.0.Final `#373 <https://github.com/ansible-middleware/wildfly/pull/373>`_
+
+        '
+      - 'Fix INJECT_FACTS_AS_VARS deprecation warnings for ansible-core 2.24 `#382
+        <https://github.com/ansible-middleware/wildfly/pull/382>`_
+
+        '
+    fragments:
+    - 373.yaml
+    - 381.yaml
+    - 382.yaml
+    release_date: '2026-07-28'
   1.5.2:
     changes:
       bugfixes:

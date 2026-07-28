@@ -6,6 +6,20 @@ middleware\_automation.wildfly Release Notes
 
 This changelog describes changes after version 0.0.7.
 
+v1.5.14
+=======
+
+Major Changes
+-------------
+
+- AMW-575 Support RHEL10 for redhat.eap collection `#381 <https://github.com/ansible-middleware/wildfly/pull/381>`_
+
+Minor Changes
+-------------
+
+- AMW-529 WildFly collection version update to 40.0.0.Final `#373 <https://github.com/ansible-middleware/wildfly/pull/373>`_
+- Fix INJECT_FACTS_AS_VARS deprecation warnings for ansible-core 2.24 `#382 <https://github.com/ansible-middleware/wildfly/pull/382>`_
+
 v1.5.13
 =======
 

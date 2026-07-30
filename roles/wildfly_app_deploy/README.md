@@ -81,4 +81,4 @@ Apache License 2.0
 
 ## Author Information
 
-* [Harsha Cherukuri](https://github.com/hcheruku)
+* [Harsha Cherukuri](https://github.com/hcherukuri)

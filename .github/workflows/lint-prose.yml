@@ -1,0 +1,14 @@
+---
+name: Prose Lint
+
+on:
+  pull_request:
+
+jobs:
+  vale:
+    name: Spelling and Grammar check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: ansible-middleware/github-actions/.github/vale-lint@main

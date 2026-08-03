@@ -1,8 +1,8 @@
 ---
-wildfly_driver_user: 'wildfly'
-wildfly_driver_group: "{{ wildfly_driver_user }}"
-wildfly_driver_version: '40.0.0.Final'
-wildfly_driver_install_workdir: '/opt/wildfly/'
+wildfly_driver_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_driver_group: "{{ wildfly_group | default(wildfly_driver_user) }}"
+wildfly_driver_version: "{{ wildfly_version | default('40.0.0.Final') }}"
+wildfly_driver_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
 wildfly_driver_home: "{{ wildfly_driver_install_workdir }}wildfly-{{ wildfly_driver_version }}/"
 wildfly_driver_module_dir: "{{ wildfly_driver_home }}/modules/{{ wildfly_driver_config.module_name | replace('.', '/') }}/main"
 wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"

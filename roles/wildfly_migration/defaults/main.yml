@@ -1,6 +1,6 @@
 ---
-wildfly_migration_user: 'wildfly'
-wildfly_migration_group: "{{ wildfly_migration_user }}"
+wildfly_migration_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_migration_group: "{{ wildfly_group | default(wildfly_migration_user) }}"
 wildfly_migration_java_home: '/usr/lib/jvm/jre'
 wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
 wildfly_migration_jdk_package_skip_install: False

@@ -1,5 +1,5 @@
 ---
-wildfly_firewalld_config_base: 'standalone.xml'
+wildfly_firewalld_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
 wildfly_firewalld_cluster_enabled: false
 wildfly_firewalld_package_name: firewalld
 wildfly_firewalld_enabled: false

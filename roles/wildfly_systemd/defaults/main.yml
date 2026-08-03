@@ -1,10 +1,10 @@
 ---
-wildfly_systemd_user: 'wildfly'
-wildfly_systemd_group: "{{ wildfly_systemd_user }}"
-wildfly_systemd_version: '40.0.0.Final'
-wildfly_systemd_install_workdir: '/opt/wildfly/'
+wildfly_systemd_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_systemd_group: "{{ wildfly_group | default(wildfly_systemd_user) }}"
+wildfly_systemd_version: "{{ wildfly_version | default('40.0.0.Final') }}"
+wildfly_systemd_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
 wildfly_systemd_home: "{{ wildfly_systemd_install_workdir }}wildfly-{{ wildfly_systemd_version }}/"
-wildfly_systemd_config_base: 'standalone.xml'
+wildfly_systemd_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
 wildfly_systemd_config_custom_file: ''
 
 wildfly_systemd_port_range_offset: 0
@@ -40,7 +40,7 @@ wildfly_systemd_multicast_addr: '230.0.0.4'
 
 wildfly_systemd_statistics_enabled: false
 
-wildfly_systemd_instance_name: 'wildfly'
+wildfly_systemd_instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
 wildfly_systemd_node_id: "{{ inventory_hostname_short }}"
 wildfly_systemd_service_name: "{{ wildfly_systemd_instance_name }}"
 wildfly_systemd_basedir_prefix: "{{ wildfly_systemd_home }}"

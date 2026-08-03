@@ -1,14 +1,14 @@
 ---
-# internal variables
-wildfly_install:
+# Internal variables using role-prefixed names
+wildfly_install_config:
   download_url: "{{ wildfly_install_download_url }}"
   workdir: "{{ wildfly_install_workdir }}"
-  archive_dir: "{{ wildfly_archive_dir }}"
-  archive_name: "{{ wildfly_archive_filename }}"
-  home: "{{ wildfly_home }}"
-  config: "{{ wildfly_config_custom_file | basename if wildfly_config_custom_file | length > 0 else wildfly_config_base }}"
-  config_custom: "{{ wildfly_config_custom_file }}"
-  user: "{{ wildfly_user }}"
-  group: "{{ wildfly_group }}"
+  archive_dir: "{{ wildfly_install_archive_dir }}"
+  archive_name: "{{ wildfly_install_archive_filename }}"
+  home: "{{ wildfly_install_home }}"
+  config: "{{ wildfly_install_config_custom_file | basename if wildfly_install_config_custom_file | length > 0 else wildfly_install_config_base }}"
+  config_custom: "{{ wildfly_install_config_custom_file }}"
+  user: "{{ wildfly_install_user }}"
+  group: "{{ wildfly_install_group }}"
   java:
-    package_name: "{{ wildfly_java_package_name }}"
+    package_name: "{{ wildfly_install_java_package_name }}"

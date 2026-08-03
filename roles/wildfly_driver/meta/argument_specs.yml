@@ -2,10 +2,10 @@ argument_specs:
     main:
         options:
             wildfly_driver_module_dir:
-                default: "{{ wildfly_home }}/modules/{{ wildfly_driver.module_name | replace('.', '/') }}/main"
+                default: "{{ wildfly_driver_home }}/modules/{{ wildfly_driver_config.module_name | replace('.', '/') }}/main"
                 description: "Path for module installation"
                 type: "str"
-            wildfly_driver_version:
+            wildfly_driver_jdbc_version:
                 required: true
                 description: "Version of JDBC driver to download"
                 type: "str"
@@ -33,20 +33,20 @@ argument_specs:
                 default: false
                 description: "Enable offline install mode (download to control node, then copy to target)"
                 type: "bool"
-            wildfly_version:
+            wildfly_driver_version:
                 default: "40.0.0.Final"
                 description: "WildFly version to install"
                 type: "str"
-            wildfly_home:
-                default: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+            wildfly_driver_home:
+                default: "/opt/wildfly/wildfly-{{ wildfly_driver_version }}/"
                 description: "WildFly installation directory"
                 type: "str"
-            wildfly_user:
+            wildfly_driver_user:
                 default: "wildfly"
                 description: "POSIX user account for WildFly"
                 type: "str"
-            wildfly_group:
-                default: "{{ wildfly_user }}"
+            wildfly_driver_group:
+                default: "{{ wildfly_driver_user }}"
                 description: "POSIX group for WildFly"
                 type: "str"
             override_module_xml_template:
@@ -55,15 +55,15 @@ argument_specs:
                 required: False
     downstream:
         options:
-            eap_enable:
+            eap_driver_enable:
                 default: True
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
-            eap_version:
-                default: "7.4.0"
+            eap_driver_version:
+                default: "8.1.0"
                 description: "Red Hat EAP version to install"
                 type: "str"
-            eap_home:
-                default: "/opt/jboss_eap/jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
+            eap_driver_home:
+                default: "/opt/jboss_eap/jboss-eap-{{ (eap_driver_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"

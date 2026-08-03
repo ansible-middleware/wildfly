@@ -1,26 +1,47 @@
 ---
-jboss_cli_controller_host: 'localhost'
-jboss_cli_controller_port: '9990'
-jboss_cli_apply_cp_default_conflict_default: '--override-all'
-wildfly_no_restart_after_patch:  False
-wildfly_user: wildfly
-wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '40.0.0.Final'
-wildfly_install_workdir: '/opt/wildfly/'
-wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
-wildfly_selinux_enabled: False
-jboss_home: "{{ wildfly_home }}"
+wildfly_utils_jboss_cli_controller_host: 'localhost'
+wildfly_utils_jboss_cli_controller_port: '9990'
+wildfly_utils_jboss_cli_apply_cp_default_conflict_default: '--override-all'
+wildfly_utils_no_restart_after_patch: false
+wildfly_utils_user: 'wildfly'
+wildfly_utils_group: "{{ wildfly_utils_user }}"
+wildfly_utils_version: '40.0.0.Final'
+wildfly_utils_install_workdir: '/opt/wildfly/'
+wildfly_utils_home: "{{ wildfly_utils_install_workdir }}wildfly-{{ wildfly_utils_version }}/"
+wildfly_utils_selinux_enabled: false
+wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
 wildfly_utils_jboss_cli_require_privilege_escalation: true
-wildfly_port_range_offset: 0
+wildfly_utils_port_range_offset: 0
+wildfly_utils_instance_name: 'wildfly'
+wildfly_utils_config_base: 'standalone.xml'
+wildfly_utils_java_version: 21
+wildfly_utils_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_utils_java_version | string == '1.8' else 'java-' + wildfly_utils_java_version | string + '-openjdk-headless' }}"
 
-wildfly_prospero_name: prospero
-wildfly_prospero_install_dir: /opt/prospero
-wildfly_prospero_profile_name: wildfly
-wildfly_prospero_archive_name: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
-wildfly_prospero_scenario_enable: true
-wildfly_propsero_release_url: "https://api.github.com/repos/wildfly-extras/prospero/releases/latest"
-wildfly_prospero_download_check_ssl: False
+wildfly_utils_prospero_version: ''
+wildfly_utils_prospero_name: 'prospero'
+wildfly_utils_prospero_install_dir: '/opt/prospero'
+wildfly_utils_prospero_profile_name: 'wildfly'
+wildfly_utils_prospero_archive_name: "{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version }}.zip"
+wildfly_utils_prospero_scenario_enable: true
+wildfly_utils_propsero_release_url: 'https://api.github.com/repos/wildfly-extras/prospero/releases/latest'
+wildfly_utils_prospero_download_check_ssl: false
 
-wildfly_apps_jboss_cli_deploy_force: false
-wildfly_apps_requires_privilege_escalation: true
-jboss_cli_force: false
+wildfly_utils_apps_jboss_cli_deploy_force: false
+wildfly_utils_apps_requires_privilege_escalation: true
+wildfly_utils_jboss_cli_force: false
+wildfly_utils_jboss_cli_query: ''
+wildfly_utils_jboss_cli_file: ''
+wildfly_utils_jboss_cli_timeout: 5
+wildfly_utils_jboss_cli_changed_when: false
+wildfly_utils_jboss_cli_connect: true
+wildfly_utils_jboss_cli_path_to_script: "{{ wildfly_utils_jboss_home }}/bin/jboss-cli.sh"
+wildfly_utils_jboss_cli_extra_param: ''
+wildfly_utils_jboss_cli_extra_param_value: ''
+wildfly_utils_jboss_cli_output_dmr: false
+wildfly_utils_jboss_cli_become_user: "{{ omit }}"
+wildfly_utils_jboss_cli_notify: "{{ omit }}"
+wildfly_utils_zipfile_dest: ''
+wildfly_utils_archive_filename: ''
+wildfly_utils_product_category: ''
+wildfly_utils_offline_install: false
+wildfly_utils_requires_become: true

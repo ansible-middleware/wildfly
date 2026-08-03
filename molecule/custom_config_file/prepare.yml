@@ -10,7 +10,7 @@
       run_once: true  # noqa: run-once[task]
       ansible.builtin.get_url:
         url: "{{ wildfly_install_download_url }}"
-        dest: "{{ lookup('env', 'PWD') }}/wildfly-{{ wildfly_version }}.zip" # noqa risky-file-permissions delegated, uses controller host user
+        dest: "{{ lookup('env', 'PWD') }}/wildfly-{{ wildfly_install_version }}.zip" # noqa risky-file-permissions delegated, uses controller host user
         mode: '0644'
         selevel: s0
         serole: object_r
@@ -32,9 +32,9 @@
             name: wildfly_utils
             tasks_from: download_from_rhn.yml
           vars:
-            eap_archive_filename: "jboss-eap-{{ eap_version }}.zip"
-            zipfile_dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ eap_version }}.zip"
-            eap_product_category: appplatform
+            eap_utils_archive_filename: "jboss-eap-{{ eap_version }}.zip"
+            wildfly_utils_zipfile_dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ eap_version }}.zip"
+            eap_utils_product_category: appplatform
 
 - name: Import shared molecule prepare playbook
   ansible.builtin.import_playbook: ../prepare.yml

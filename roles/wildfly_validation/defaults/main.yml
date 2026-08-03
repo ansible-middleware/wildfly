@@ -1,22 +1,23 @@
 ---
-wildfly_user: wildfly
-wildfly_group: "{{ wildfly_user }}"
-wildfly_service_name: wildfly
-wildfly_http_port: 8080
-wildfly_https_port: 8443
-wildfly_controller_port: 9990
-wildfly_version: '40.0.0.Final'
-wildfly_install_workdir: '/opt/wildfly/'
-wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
-wildfly_pidfile_homedir: '/run/wildfly'
-wildfly_validation_systemd_pidfile: "{{ wildfly_pidfile_homedir }}/{{ wildfly_service_name }}.pid"
+wildfly_validation_user: 'wildfly'
+wildfly_validation_group: "{{ wildfly_validation_user }}"
+wildfly_validation_service_name: 'wildfly'
+wildfly_validation_http_port: 8080
+wildfly_validation_https_port: 8443
+wildfly_validation_controller_port: 9990
+wildfly_validation_version: '40.0.0.Final'
+wildfly_validation_install_workdir: '/opt/wildfly/'
+wildfly_validation_home: "{{ wildfly_validation_install_workdir }}wildfly-{{ wildfly_validation_version }}/"
+wildfly_validation_pidfile_homedir: '/run/wildfly'
+wildfly_validation_systemd_pidfile: "{{ wildfly_validation_pidfile_homedir }}/{{ wildfly_validation_service_name }}.pid"
 wildfly_validation_systemd_pidfile_require_privilege_escalation: true
-wildfly_standard_sockets_validation_query: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
-wildfly_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
-wildfly_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
+wildfly_validation_standard_sockets_validation_query: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
+wildfly_validation_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
+wildfly_validation_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
 wildfly_validation_queries: []
 wildfly_validation_display_logfile: false
 wildfly_validation_logfile_server_start_pattern: 'WFLYSRV0025'
-wildfly_basedir_prefix: "{{ wildfly_home }}"
-wildfly_validation_logfile_path_to_logfile: "{{ wildfly_basedir_prefix }}/standalone/log/server.log"
+wildfly_validation_basedir_prefix: "{{ wildfly_validation_home }}"
+wildfly_validation_logfile_path_to_logfile: "{{ wildfly_validation_basedir_prefix }}/standalone/log/server.log"
 wildfly_validation_logfile_require_privilege_escalation: true
+wildfly_validation_requires_become: true

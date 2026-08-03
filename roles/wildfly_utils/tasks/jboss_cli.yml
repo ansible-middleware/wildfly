@@ -2,43 +2,39 @@
 - name: "Ensure required params for JBoss CLI have been provided"
   ansible.builtin.assert:
     that:
-      - jboss_home is defined
-      - jboss_cli_query is defined or jboss_cli_file is defined
-      - jboss_cli_controller_host is defined
-      - jboss_cli_controller_port is defined
+      - wildfly_utils_jboss_home is defined
+      - wildfly_utils_jboss_cli_query | default('') | length > 0 or wildfly_utils_jboss_cli_file | default('') | length > 0
+      - wildfly_utils_jboss_cli_controller_host is defined
+      - wildfly_utils_jboss_cli_controller_port is defined
     fail_msg: "Missing required parameters to execute JBoss CLI."
     quiet: true
 
-- name: "Determine CLI port (if port offset is used: {{ wildfly_port_range_offset }})"
+- name: "Determine CLI port (if port offset is used: {{ wildfly_utils_port_range_offset }})"
   ansible.builtin.set_fact:
-    jboss_cli_controller_port: "{{ (jboss_cli_controller_port | default(9990) | int) + (wildfly_port_range_offset | int) }}"
+    wildfly_utils_jboss_cli_controller_port_final: "{{ (wildfly_utils_jboss_cli_controller_port | default(9990) | int) + (wildfly_utils_port_range_offset | int) }}"
 
 - name: "Ensure server's management interface is reachable"
-  when: jboss_cli_connect | default(true)
+  when: wildfly_utils_jboss_cli_connect | default(true)
   ansible.builtin.wait_for:
-    host: "{{ jboss_cli_controller_host }}"
-    port: "{{ jboss_cli_controller_port }}"
+    host: "{{ wildfly_utils_jboss_cli_controller_host }}"
+    port: "{{ wildfly_utils_jboss_cli_controller_port_final }}"
     timeout: 60
     delay: 1
     sleep: 2
 
-- name: "Execute CLI query {{ jboss_cli_query | default(jboss_cli_file) }}"
+- name: "Execute CLI query {{ wildfly_utils_jboss_cli_query | default(wildfly_utils_jboss_cli_file) }}"
   ansible.builtin.command: >
-    {{ jboss_cli_path_to_script | default(jboss_home + '/bin/jboss-cli.sh') }}
-    {{ '-c' if jboss_cli_connect | default(true) else '' }}
-    {{ '--command=' + jboss_cli_query if jboss_cli_query is defined else '' }}
-    {{ '--file=' + jboss_cli_file if jboss_cli_file is defined else '' }}
-    {{ ('-D' + jboss_cli_extra_param + '=' + jboss_cli_extra_param_value) if jboss_cli_extra_param is defined else '' }}
-    {{ '--force' if jboss_cli_force | default(false) else '' }}
-    --controller={{ jboss_cli_controller_host }}:{{ jboss_cli_controller_port }}
-    --timeout={{ jboss_cli_timeout * 1000 if jboss_cli_timeout is defined else 5000 }}
-    {{ '' if jboss_cli_output_dmr is defined else '--output-json' }}
-  register: cli_result
-  changed_when: jboss_cli_changed_when | default(false)
+    {{ wildfly_utils_jboss_cli_path_to_script | default(wildfly_utils_jboss_home + '/bin/jboss-cli.sh') }}
+    {{ '-c' if wildfly_utils_jboss_cli_connect | default(true) else '' }}
+    {{ '--command=' + wildfly_utils_jboss_cli_query if wildfly_utils_jboss_cli_query | default('') | length > 0 else '' }}
+    {{ '--file=' + wildfly_utils_jboss_cli_file if wildfly_utils_jboss_cli_file | default('') | length > 0 else '' }}
+    {{ ('-D' + wildfly_utils_jboss_cli_extra_param + '=' + wildfly_utils_jboss_cli_extra_param_value) if wildfly_utils_jboss_cli_extra_param | default('') | length > 0 else '' }}
+    {{ '--force' if wildfly_utils_jboss_cli_force | default(false) else '' }}
+    --controller={{ wildfly_utils_jboss_cli_controller_host }}:{{ wildfly_utils_jboss_cli_controller_port_final }}
+    --timeout={{ (wildfly_utils_jboss_cli_timeout | int) * 1000 if (wildfly_utils_jboss_cli_timeout | default(0) | int) > 0 else 5000 }}
+    {{ '' if wildfly_utils_jboss_cli_output_dmr | default(false) else '--output-json' }}
+  register: wildfly_utils_cli_result
+  changed_when: wildfly_utils_jboss_cli_changed_when | default(false)
   become: "{{ wildfly_utils_jboss_cli_require_privilege_escalation | default(true) }}"
-  become_user: "{{ jboss_cli_become_user | default(omit) }}"
-  notify: "{{ jboss_cli_notify | default(omit) }}"
-
-- name: "Reset CLI port to default"
-  ansible.builtin.set_fact:
-    jboss_cli_controller_port: 9990
+  become_user: "{{ wildfly_utils_jboss_cli_become_user | default(omit) }}"
+  notify: "{{ wildfly_utils_jboss_cli_notify | default(omit) }}"

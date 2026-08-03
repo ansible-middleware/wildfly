@@ -1,59 +1,59 @@
 ---
 - name: Enable extension in wildfly
-  when: (wildfly_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_version.split('.')[:1] | join('.') is version('8', '>='))
+  when: (wildfly_systemd_version.split('.')[:3] | join('.') is version('26.0.1', '>=')) or (wildfly_systemd_version.split('.')[:1] | join('.') is version('8', '>='))
   become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   notify: exec_restorecon
   block:
   - name: Create YAML configuration directory
     ansible.builtin.file:
-      path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}"
+      path: "{{ wildfly_systemd_config.home }}{{ wildfly_systemd_config.yml_config.base_path }}{{ wildfly_systemd_config.yml_config.path }}"
       state: directory
-      owner: "{{ wildfly_systemd.user }}"
-      group: "{{ wildfly_systemd.group }}"
+      owner: "{{ wildfly_systemd_config.user }}"
+      group: "{{ wildfly_systemd_config.group }}"
       mode: '0755'
     notify: restart_wildfly
 
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
-      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.base_path }}{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
-      owner: "{{ wildfly_systemd.user }}"
-      group: "{{ wildfly_systemd.group }}"
+      dest: "{{ wildfly_systemd_config.home }}{{ wildfly_systemd_config.yml_config.base_path }}{{ wildfly_systemd_config.yml_config.path }}/{{ wildfly_systemd_config.yml_config.file }}"
+      owner: "{{ wildfly_systemd_config.user }}"
+      group: "{{ wildfly_systemd_config.group }}"
       mode: '0644'
     notify: restart_wildfly
 
 - name: Enable extension in EAP
-  when: eap_enable is defined and eap_enable and wildfly_version.split('.')[:1] | join('.') is version('7', '>=')
+  when: eap_systemd_enable is defined and eap_systemd_enable and wildfly_systemd_version.split('.')[:1] | join('.') is version('7', '>=')
   become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   notify: exec_restorecon
   block:
 
   - name: Create YAML configuration directory
     ansible.builtin.file:
-      path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ ((slurped_eap_version.content | b64decode) + '.CP') if (slurped_eap_version.content is defined) else '' }}{{ wildfly_systemd.yml_config.path }}"
+      path: "{{ wildfly_systemd_config.home }}{{ wildfly_systemd_config.yml_config.eap_path }}{{ ((slurped_eap_version.content | b64decode) + '.CP') if (slurped_eap_version.content is defined) else '' }}{{ wildfly_systemd_config.yml_config.path }}"
       state: directory
-      owner: "{{ wildfly_systemd.user }}"
-      group: "{{ wildfly_systemd.group }}"
+      owner: "{{ wildfly_systemd_config.user }}"
+      group: "{{ wildfly_systemd_config.group }}"
       mode: '0755'
 
   - name: Enable YAML configuration extension
     ansible.builtin.template:
       src: "wfly.yml.config.j2"
-      dest: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.eap_path }}{{ ((slurped_eap_version.content | b64decode) + '.CP') if (slurped_eap_version.content is defined) else '' }}{{ wildfly_systemd.yml_config.path }}/{{ wildfly_systemd.yml_config.file }}"
-      owner: "{{ wildfly_systemd.user }}"
-      group: "{{ wildfly_systemd.group }}"
+      dest: "{{ wildfly_systemd_config.home }}{{ wildfly_systemd_config.yml_config.eap_path }}{{ ((slurped_eap_version.content | b64decode) + '.CP') if (slurped_eap_version.content is defined) else '' }}{{ wildfly_systemd_config.yml_config.path }}/{{ wildfly_systemd_config.yml_config.file }}"
+      owner: "{{ wildfly_systemd_config.user }}"
+      group: "{{ wildfly_systemd_config.group }}"
       mode: '0644'
     notify: restart_wildfly
 
-- name: "Deploy YAML configuration files: {{ wildfly_yml_configs | flatten }}"
+- name: "Deploy YAML configuration files: {{ wildfly_systemd_yml_configs | flatten }}"
   become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   ansible.builtin.template:
-    src: "{{ wildfly_yml_configs_repository }}{{ file }}"
+    src: "{{ wildfly_systemd_yml_configs_repository }}{{ file }}"
     dest: "{{ basedir }}/{{ file | regex_replace('.j2', '') }}"
-    owner: "{{ wildfly_systemd.user }}"
-    group: "{{ wildfly_systemd.group }}"
+    owner: "{{ wildfly_systemd_config.user }}"
+    group: "{{ wildfly_systemd_config.group }}"
     mode: '0644'
-  loop: "{{ wildfly_yml_configs | flatten }}"
+  loop: "{{ wildfly_systemd_yml_configs | flatten }}"
   loop_control:
     loop_var: file
   notify:

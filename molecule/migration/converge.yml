@@ -12,8 +12,8 @@
     wildfly_new_version_dir: "{{ (eap_enable is defined and eap_enable) | ternary((wildfly_new_version.split('.'))[0:2] | join('.'), wildfly_new_version) }}"
     previous_wildfly_home: "{{ wildfly_old_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_old_version_dir }}"
     target_wildfly_home: "{{ wildfly_new_workdir }}{{ wildfly_install_dir_prefix }}-{{ wildfly_new_version_dir }}"
-    wildfly_user: wildfly
-    wildfly_group: wildfly
+    wildfly_migration_user: wildfly
+    wildfly_migration_group: wildfly
     wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
     wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
     wildfly_migration_jdk_package_skip_install: true

@@ -1,8 +1,9 @@
 ---
-wildfly_config_base: standalone-full-ha.xml
+wildfly_install_config_base: standalone-full-ha.xml
+wildfly_systemd_config_base: standalone-full-ha.xml
 wildfly_instances_home: '/opt/instances/'
-wildfly_java_opts: '-Xmx512M -Xms512M'
-wildfly_enable_yml_config: true
-wildfly_yml_configs:
+wildfly_systemd_java_opts: '-Xmx512M -Xms512M'
+wildfly_systemd_enable_yml_config: true
+wildfly_systemd_yml_configs:
   - yaml_configuration.yml.j2
   - configure_tcp_ping.yml.j2

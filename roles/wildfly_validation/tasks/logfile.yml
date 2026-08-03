@@ -6,24 +6,24 @@
       - search_pattern is defined and search_pattern | length > 0
     quiet: true
 
-- name: "Slurp logfile {{ path_to_file }}"
+- name: "Slurp logfile {{ path_to_logfile }}"
   become: "{{ wildfly_validation_logfile_require_privilege_escalation | default(true) }}"
   ansible.builtin.slurp:
     src: "{{ path_to_logfile }}"
-  register: slurped_logfile
+  register: wildfly_validation_slurped_logfile
 
-- name: "Extract content of logfile {{ path_to_file }}."
+- name: "Extract content of logfile {{ path_to_logfile }}."
   ansible.builtin.set_fact:
-    logfile_content: "{{ slurped_logfile.content | b64decode }}"
+    wildfly_validation_logfile_content: "{{ wildfly_validation_slurped_logfile.content | b64decode }}"
 
 - name: "Printout logfile content"
   ansible.builtin.debug:
-    msg: "{{ logfile_content }}"
+    msg: "{{ wildfly_validation_logfile_content }}"
   when:
     - wildfly_validation_display_logfile is defined and wildfly_validation_display_logfile
 
-- name: "Ensure requested pattern {{ search_pattern }} is present in logfile {{ path_to_file }}"
+- name: "Ensure requested pattern {{ search_pattern }} is present in logfile {{ path_to_logfile }}"
   ansible.builtin.assert:
     that:
-      - search_pattern in logfile_content
+      - search_pattern in wildfly_validation_logfile_content
     quiet: true

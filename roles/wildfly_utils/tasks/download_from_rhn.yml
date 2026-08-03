@@ -2,7 +2,7 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - zipfile_dest is defined
+      - wildfly_utils_zipfile_dest is defined
       - rhn_username is defined
       - rhn_password is defined
     quiet: true
@@ -12,34 +12,34 @@
     client_id: "{{ rhn_username }}"
     client_secret: "{{ rhn_password }}"
     product_type: DISTRIBUTION
-    product_version: "{{ eap_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
-    product_category: "{{ eap_product_category }}"
-  register: rhn_products
+    product_version: "{{ eap_utils_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
+    product_category: "{{ eap_utils_product_category }}"
+  register: wildfly_utils_rhn_products
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
   run_once: true
 
-- name: "Determine install zipfile {{ eap_archive_filename }} from search results."
+- name: "Determine install zipfile {{ eap_utils_archive_filename }} from search results."
   ansible.builtin.set_fact:
-    rhn_filtered_products: "{{ rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + eap_archive_filename + '$') }}"
+    wildfly_utils_rhn_filtered_products: "{{ wildfly_utils_rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + eap_utils_archive_filename + '$') }}"
   delegate_to: localhost
   run_once: true
 
 - name: Verify that filtered products has been properly populated.
   ansible.builtin.assert:
     that:
-      - rhn_filtered_products is defined
-      - (rhn_filtered_products | first) is defined
-      - (rhn_filtered_products | first).id is defined
+      - wildfly_utils_rhn_filtered_products is defined
+      - (wildfly_utils_rhn_filtered_products | first) is defined
+      - (wildfly_utils_rhn_filtered_products | first).id is defined
     quiet: true
-    fail_msg: "No list of products could be found based on {{ eap_archive_filename }}."
+    fail_msg: "No list of products could be found based on {{ eap_utils_archive_filename }}."
 
 - name: Download Red Hat JBoss Enterprise Application Platform
   middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
     client_id: "{{ rhn_username }}"
     client_secret: "{{ rhn_password }}"
-    product_id: "{{ (rhn_filtered_products | first).id }}"
-    dest: "{{ zipfile_dest }}"
+    product_id: "{{ (wildfly_utils_rhn_filtered_products | first).id }}"
+    dest: "{{ wildfly_utils_zipfile_dest }}"
   no_log: "{{ omit_rhn_output | default(true) }}"
   delegate_to: localhost
   run_once: true

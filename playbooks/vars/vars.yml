@@ -1,4 +1,53 @@
 ---
+# Collection-level shared variables
+wildfly_user: 'wildfly'
+wildfly_group: "{{ wildfly_user }}"
+wildfly_version: '40.0.0.Final'
+wildfly_config_base: 'standalone.xml'
+wildfly_instance_name: 'wildfly'
+
+# Map collection vars to wildfly_install role
+wildfly_install_version: "{{ wildfly_version }}"
+wildfly_install_user: "{{ wildfly_user }}"
+wildfly_install_group: "{{ wildfly_group }}"
+wildfly_install_config_base: "{{ wildfly_config_base }}"
+wildfly_install_instance_name: "{{ wildfly_instance_name }}"
+
+# Map collection vars to wildfly_systemd role
+wildfly_systemd_version: "{{ wildfly_version }}"
+wildfly_systemd_user: "{{ wildfly_user }}"
+wildfly_systemd_group: "{{ wildfly_group }}"
+wildfly_systemd_config_base: "{{ wildfly_config_base }}"
+wildfly_systemd_instance_name: "{{ wildfly_instance_name }}"
+wildfly_systemd_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
+
+# Map collection vars to wildfly_utils role
+wildfly_utils_version: "{{ wildfly_version }}"
+wildfly_utils_user: "{{ wildfly_user }}"
+wildfly_utils_group: "{{ wildfly_group }}"
+wildfly_utils_instance_name: "{{ wildfly_instance_name }}"
+wildfly_utils_config_base: "{{ wildfly_config_base }}"
+
+# Map collection vars to wildfly_driver role
+wildfly_driver_version: "{{ wildfly_version }}"
+wildfly_driver_home: "{{ wildfly_install_home }}"
+wildfly_driver_user: "{{ wildfly_user }}"
+wildfly_driver_group: "{{ wildfly_group }}"
+
+# Map collection vars to wildfly_validation role
+wildfly_validation_version: "{{ wildfly_version }}"
+wildfly_validation_user: "{{ wildfly_user }}"
+wildfly_validation_group: "{{ wildfly_group }}"
+wildfly_validation_service_name: "{{ wildfly_instance_name }}"
+wildfly_validation_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
+
+# Map collection vars to wildfly_migration role
+wildfly_migration_user: "{{ wildfly_user }}"
+wildfly_migration_group: "{{ wildfly_group }}"
+
+# Map collection vars to wildfly_firewalld role
+wildfly_firewalld_config_base: "{{ wildfly_config_base }}"
+
 # app deployment can be handled throught the following list
 # warning: using the yaml_config makes its mandatory to deploy
 # through this list

@@ -2,104 +2,104 @@
 - name: Validate credentials
   ansible.builtin.assert:
     that:
-      - (rhn_username is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable
-      - (rhn_password is defined and eap_enable is defined and eap_enable) or not eap_enable is defined or not eap_enable
+      - (rhn_username is defined and eap_install_enable is defined and eap_install_enable) or not eap_install_enable is defined or not eap_install_enable
+      - (rhn_password is defined and eap_install_enable is defined and eap_install_enable) or not eap_install_enable is defined or not eap_install_enable
     quiet: true
-    fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_offline_install"
-  when: not wildfly_offline_install and not (wildfly_install_use_prospero | default(false))
+    fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_install_offline_install"
+  when: not wildfly_install_offline_install and not (wildfly_install_use_prospero | default(false))
 
-- name: "Validate that {{ wildfly_version }} matches expected scheme (X.y.z)"
+- name: "Validate that {{ wildfly_install_version }} matches expected scheme (X.y.z)"
   ansible.builtin.assert:
     that:
-      - wildfly_version | regex_search('[0-9]{1}.[0-9]{1}.[0-9]{1}') | length > 0
+      - wildfly_install_version | regex_search('[0-9]{1}.[0-9]{1}.[0-9]{1}') | length > 0
     quiet: true
-    fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_version }}"
+    fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_install_version }}"
 
-- name: "Validate that archive {{ wildfly_archive_filename }} exists on controller (if install is offline: {{ wildfly_offline_install }})."
+- name: "Validate that archive {{ wildfly_install_archive_filename }} exists on controller (if install is offline: {{ wildfly_install_offline_install }})."
   ansible.builtin.assert:
     that:
-      - wildfly_version is defined
-      - wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_archive_filename) is exists
+      - wildfly_install_version is defined
+      - wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) is exists
     quiet: true
-    fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_archive_filename) }}"
+    fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) }}"
   when:
-    - wildfly_offline_install and wildfly_archive_filename_on_controller
+    - wildfly_install_offline_install and wildfly_install_archive_filename_on_controller
 
 - name: "Validate patch version for offline installs"
   ansible.builtin.assert:
     that:
-      - eap_patch_version is defined and eap_patch_version | length > 0
+      - eap_install_patch_version is defined and eap_install_patch_version | length > 0
     quiet: true
-    fail_msg: "An offline install was requested, but eap_patch_version parameter was not defined"
+    fail_msg: "An offline install was requested, but eap_install_patch_version parameter was not defined"
   when:
-    - wildfly_offline_install
-    - eap_enable is defined and eap_enable
-    - eap_apply_cp is defined and eap_apply_cp
+    - wildfly_install_offline_install
+    - eap_install_enable is defined and eap_install_enable
+    - eap_install_apply_cp is defined and eap_install_apply_cp
 
-- name: "Validate existing additional zipfiles {{ wildfly_archive_filename }} for offline installs"
+- name: "Validate existing additional zipfiles {{ wildfly_install_archive_filename }} for offline installs"
   ansible.builtin.assert:
     that:
-      - not eap_apply_cp or (eap_patch_version is defined and ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_patch_archive_filename) is exists)
-      - not eap_elytron_adapter or (((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_elytron_adapter_archive_filename) is exists)
+      - not eap_install_apply_cp or (eap_install_patch_version is defined and ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_patch_archive_filename) is exists)
+      - not eap_install_elytron_adapter or (((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_elytron_adapter_archive_filename) is exists)
     quiet: true
-    fail_msg: "An offline install was requested, but files are not present on the controller: {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_patch_archive_filename) if eap_apply_cp else '' }} {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_elytron_adapter_archive_filename) if eap_elytron_adapter else '' }}"
+    fail_msg: "An offline install was requested, but files are not present on the controller: {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_patch_archive_filename) if eap_install_apply_cp else '' }} {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_elytron_adapter_archive_filename) if eap_install_elytron_adapter else '' }}"
   when:
-    - wildfly_offline_install
-    - eap_enable is defined and eap_enable
+    - wildfly_install_offline_install
+    - eap_install_enable is defined and eap_install_enable
 
 - name: "Validate node identifier length"
   ansible.builtin.assert:
     that:
-      - wildfly_node_id | length <= 23
+      - wildfly_install_node_id | length <= 23
     quiet: true
-    fail_msg: "The node ID in variable wildfly_node_id cannot exceed 23 characters length"
+    fail_msg: "The node ID in variable wildfly_install_node_id cannot exceed 23 characters length"
   when:
-    - wildfly_node_id is defined
+    - wildfly_install_node_id is defined
 
 - name: "Ensure environement matches EAP supported configuration."
   ansible.builtin.include_tasks: eap_supported_configuration.yml
   when:
-    - eap_version is defined
+    - eap_install_version is defined
 
 - name: "Check that required packages list has been provided."
   ansible.builtin.assert:
     that:
-      - wildfly_prereqs_packages is defined
+      - wildfly_install_prereqs_packages is defined
     quiet: true
     fail_msg: "Required packages list was not defined"
 
-- name: "Add JDK package {{ wildfly_install.java.package_name }} to packages list"
+- name: "Add JDK package {{ wildfly_install_config.java.package_name }} to packages list"
   ansible.builtin.set_fact:
-    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + [wildfly_install.java.package_name] }}"
+    wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages + [wildfly_install_config.java.package_name] }}"
   when:
-    - wildfly_install.java is defined
-    - wildfly_install.java.package_name is defined
-    - wildfly_install.java.package_name | length > 0
+    - wildfly_install_config.java is defined
+    - wildfly_install_config.java.package_name is defined
+    - wildfly_install_config.java.package_name | length > 0
 
-- name: "Add selinux package {{ wildfly_install.java.package_name }} to packages list"
+- name: "Add selinux package {{ wildfly_install_config.java.package_name }} to packages list"
   ansible.builtin.set_fact:
-    wildfly_prereqs_packages: "{{ wildfly_prereqs_packages + ['policycoreutils'] }}"
+    wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages + ['policycoreutils'] }}"
   when:
-    - wildfly_selinux_enabled
+    - wildfly_install_selinux_enabled
 
-- name: "Install required packages ({{ wildfly_prereqs_packages | length }})"
+- name: "Install required packages ({{ wildfly_install_prereqs_packages | length }})"
   ansible.builtin.package:
-    name: "{{ wildfly_prereqs_packages }}"
+    name: "{{ wildfly_install_prereqs_packages }}"
     state: present
   become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
-    - wildfly_prereqs_packages | length > 0
+    - wildfly_install_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined
     - ansible_facts['distribution_major_version'] != '8'
 
 - name: "Install required packages on RHEL 8 (workaround for DNF module)"
   ansible.builtin.command:
-    cmd: "dnf install -y {{ wildfly_prereqs_packages | join(' ') }}"
+    cmd: "dnf install -y {{ wildfly_install_prereqs_packages | join(' ') }}"
   become: "{{ wildfly_install_requires_become | default(true) }}"
-  register: dnf_install_result
-  changed_when: 
-    - "'Installing:' in dnf_install_result.stdout or 'Upgrading:' in dnf_install_result.stdout"
+  register: wildfly_install_dnf_install_result
+  changed_when:
+    - "'Installing:' in wildfly_install_dnf_install_result.stdout or 'Upgrading:' in wildfly_install_dnf_install_result.stdout"
   when:
-    - wildfly_prereqs_packages | length > 0
+    - wildfly_install_prereqs_packages | length > 0
     - not wildfly_install_skip_prereqs is defined
     - ansible_facts['distribution_major_version'] == '8'

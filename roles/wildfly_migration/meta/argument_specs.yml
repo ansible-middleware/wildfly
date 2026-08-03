@@ -9,7 +9,7 @@ argument_specs:
                 required: True
                 description: "Path on the target to the server's home to migrate from"
                 type: "str"
-            eap_version:
+            eap_migration_version:
                 default: "8.0.0"
                 description: "EAP product version (x.y.z) for EAP migration tooling and RHN. Always defined for arg validation; override for non-8.x targets. Unused for pure WildFly when EAP install is off."
                 type: "str"
@@ -79,12 +79,12 @@ argument_specs:
                 type: "bool"
     downstream:
         options:
-            eap_enable:
+            eap_migration_enable:
                 default: True
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_migration_server_tool_path_to_archive:
-                default: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_version | default('8.0.0') }}-server-migration.zip"
+                default: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_migration_version }}-server-migration.zip"
                 description: "Path to the Red Hat provided archive for the server migration tool"
                 type: "str"
             eap_migration_server_tool_product_id:

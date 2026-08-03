@@ -47,7 +47,7 @@
       ansible.builtin.include_role:
         name: wildfly_systemd
       vars:
-        wildfly_java_package_name: >-
+        wildfly_systemd_java_package_name: >-
           {{ 'java-1.8.0-openjdk' if (wildfly_java_version
           | default(21 if ansible_facts.distribution_major_version == '10' else 17)
           | string == '1.8')
@@ -57,8 +57,8 @@
 
     - name: "Wait for WildFly to be ready"
       ansible.builtin.wait_for:
-        host: "{{ jboss_cli_controller_host | default('localhost') }}"
-        port: "{{ jboss_cli_controller_port | default('9990') }}"
+        host: "localhost"
+        port: "9990"
         delay: 10
         timeout: 120
 

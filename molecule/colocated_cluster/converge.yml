@@ -30,9 +30,9 @@
       ansible.builtin.include_role:
         name: wildfly_systemd
       vars:
-        wildfly_node_id: "wildfly-{{ item }}"
-        wildfly_instance_name: "wildfly-{{ item }}"
-        wildfly_service_name: "wildfly-{{ item }}"
-        wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
-        wildfly_port_range_offset: "{{ 100 * (item) | int }}"
+        wildfly_systemd_node_id: "wildfly-{{ item }}"
+        wildfly_systemd_instance_name: "wildfly-{{ item }}"
+        wildfly_systemd_service_name: "wildfly-{{ item }}"
+        wildfly_systemd_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
+        wildfly_systemd_port_range_offset: "{{ 100 * (item) | int }}"
       loop: "{{ range(0, 3) | list }}"

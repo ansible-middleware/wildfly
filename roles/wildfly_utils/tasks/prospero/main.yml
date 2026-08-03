@@ -2,116 +2,116 @@
 - name: "Ensure required parameter(s) are provided."
   ansible.builtin.assert:
     that:
-      - wildfly_home is defined
-      - wildfly_prospero_profile_name is defined
-      - wildfly_prospero_install_dir is defined
+      - wildfly_utils_home is defined
+      - wildfly_utils_prospero_profile_name is defined
+      - wildfly_utils_prospero_install_dir is defined
     quiet: True
 
 - name: "Ensure WildFly version is supported"
   ansible.builtin.assert:
     that:
-      - wildfly_version is version('32.0.0.Beta1', '>=')
+      - wildfly_utils_version is version('32.0.0.Beta1', '>=')
   when:
-    - not eap_enable is defined or not eap_enable
+    - not eap_utils_enable is defined or not eap_utils_enable
 
-- name: "Ensure workdir {{ wildfly_prospero_install_dir }} exists."
+- name: "Ensure workdir {{ wildfly_utils_prospero_install_dir }} exists."
   ansible.builtin.file:
-    path: "{{ wildfly_prospero_install_dir }}"
+    path: "{{ wildfly_utils_prospero_install_dir }}"
     state: directory
-    owner: "{{ wildfly_install_user | default(omit) }}"
-    group: "{{ wildfly_install_group | default(omit) }}"
+    owner: "{{ wildfly_utils_user | default(omit) }}"
+    group: "{{ wildfly_utils_group | default(omit) }}"
     mode: '0750'
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
 
 - name: "Ensure installer is installed."
   ansible.builtin.include_tasks: prospero/install.yml
 
-- name: "Read target directory information: {{ wildfly_home }}"
+- name: "Read target directory information: {{ wildfly_utils_home }}"
   ansible.builtin.stat:
-    path: "{{ wildfly_home }}"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  register: path_to_workdir
+    path: "{{ wildfly_utils_home }}"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  register: wildfly_utils_path_to_workdir
 
-- name: "Verify metadata on {{ wildfly_home }} are available."
+- name: "Verify metadata on {{ wildfly_utils_home }} are available."
   ansible.builtin.assert:
     that:
-      - path_to_workdir is defined and path_to_workdir.stat is defined
+      - wildfly_utils_path_to_workdir is defined and wildfly_utils_path_to_workdir.stat is defined
     quiet: true
 
 - name: Set install command arguments
   block:
     - name: Set default command arguments
       ansible.builtin.set_fact:
-        prospero_command_args: ''
+        wildfly_utils_prospero_command_args: ''
     - name: Override repositories parameter
       ansible.builtin.set_fact:
-        prospero_command_args: "{{ prospero_command_args }} --repositories {{ eap_prospero_override_repos }}"
+        wildfly_utils_prospero_command_args: "{{ wildfly_utils_prospero_command_args }} --repositories {{ eap_utils_prospero_override_repos }}"
       when:
-        - eap_prospero_override_repos is defined
+        - eap_utils_prospero_override_repos is defined
     - name: Override provisioning manifest
       ansible.builtin.set_fact:
-        prospero_command_args: "{{ prospero_command_args }} --manifest {{ wildfly_prospero_override_manifest }}" 
+        wildfly_utils_prospero_command_args: "{{ wildfly_utils_prospero_command_args }} --manifest {{ wildfly_utils_prospero_override_manifest }}" 
       when:
-        - wildfly_prospero_override_manifest is defined
+        - wildfly_utils_prospero_override_manifest is defined
     - name: Set default provisioning manifest
       ansible.builtin.set_fact:
-        prospero_command_args: "{{ prospero_command_args }} --manifest org.wildfly.channels:wildfly:{{ wildfly_version }}"
+        wildfly_utils_prospero_command_args: "{{ wildfly_utils_prospero_command_args }} --manifest org.wildfly.channels:wildfly:{{ wildfly_utils_version }}"
       when:
-        - not eap_enable is defined or not eap_enable
-        - wildfly_prospero_override_manifest is not defined
+        - not eap_utils_enable is defined or not eap_utils_enable
+        - wildfly_utils_prospero_override_manifest is not defined
     - name: Display prospero command arguments
       ansible.builtin.debug:
-        var: prospero_command_args
+        var: wildfly_utils_prospero_command_args
       when:
-        - wildfly_prospero_debug_enabled is defined and wildfly_prospero_debug_enabled
+        - wildfly_utils_prospero_debug_enabled is defined and wildfly_utils_prospero_debug_enabled
 
-- name: "Run Prospero to install server in {{ wildfly_home }}."
+- name: "Run Prospero to install server in {{ wildfly_utils_home }}."
   ansible.builtin.include_tasks: prospero/run_cli.yml
   vars:
-    wildfly_prospero_run_args: "install --dir {{ wildfly_home }} --profile {{ wildfly_prospero_profile_name }} --accept-license-agreements {{ prospero_command_args }}"
+    wildfly_utils_prospero_run_args: "install --dir {{ wildfly_utils_home }} --profile {{ wildfly_utils_prospero_profile_name }} --accept-license-agreements {{ wildfly_utils_prospero_command_args }}"
   when:
-    - not path_to_workdir.stat.exists
+    - not wildfly_utils_path_to_workdir.stat.exists
 
-- name: "Determine available updates for server in {{ wildfly_home }}"
+- name: "Determine available updates for server in {{ wildfly_utils_home }}"
   ansible.builtin.include_tasks: prospero/run_cli.yml
   vars:
-    wildfly_prospero_run_args: "update list --dir {{ wildfly_home }}"
+    wildfly_utils_prospero_run_args: "update list --dir {{ wildfly_utils_home }}"
   when:
-    - wildfly_prospero_update is defined
-    - path_to_workdir.stat.exists
+    - wildfly_utils_prospero_update is defined
+    - wildfly_utils_path_to_workdir.stat.exists
 
 - name: "Check if any updates are available"
   ansible.builtin.command: |
-    echo "{{ prospero_run_results.stdout }}" | grep 'No updates found.'
-  register: updates_available
+    echo "{{ wildfly_utils_prospero_run_results.stdout }}" | grep 'No updates found.'
+  register: wildfly_utils_updates_available
   ignore_errors: true
   changed_when: False
   when:
-    - wildfly_prospero_update is defined
+    - wildfly_utils_prospero_update is defined
 
 - name: "Verify results from update query."
   ansible.builtin.assert:
     that:
-      - updates_available is defined and updates_available.rc is defined
+      - wildfly_utils_updates_available is defined and wildfly_utils_updates_available.rc is defined
     quiet: true
   when:
-    - wildfly_prospero_update is defined
+    - wildfly_utils_prospero_update is defined
 
-- name: "Run prospero to update server in {{ wildfly_home }}."
+- name: "Run prospero to update server in {{ wildfly_utils_home }}."
   ansible.builtin.include_tasks: prospero/run_cli.yml
   vars:
-    wildfly_prospero_run_args: "update perform --dir {{ wildfly_home }} -y"
+    wildfly_utils_prospero_run_args: "update perform --dir {{ wildfly_utils_home }} -y"
   when:
-    - path_to_workdir.stat.exists
-    - wildfly_prospero_update is defined and wildfly_prospero_update
-    - updates_available.rc == 1
+    - wildfly_utils_path_to_workdir.stat.exists
+    - wildfly_utils_prospero_update is defined and wildfly_utils_prospero_update
+    - wildfly_utils_updates_available.rc == 1
 
-- name: "Ensure that {{ wildfly_home }} belongs to appropriate user - if defined."
+- name: "Ensure that {{ wildfly_utils_home }} belongs to appropriate user - if defined."
   ansible.builtin.file:
-    path: "{{ wildfly_home }}"
+    path: "{{ wildfly_utils_home }}"
     recurse: true
-    owner: "{{ wildfly_install.user }}"
-    group: "{{ wildfly_install.group | default(wildfly_install.user) }}"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+    owner: "{{ wildfly_install_config.user }}"
+    group: "{{ wildfly_install_config.group | default(wildfly_install_config.user) }}"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
   when:
-    - wildfly_install.user is defined
+    - wildfly_install_config.user is defined

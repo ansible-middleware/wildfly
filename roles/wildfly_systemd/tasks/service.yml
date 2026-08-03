@@ -5,11 +5,11 @@
       - instance_state is defined
     quiet: true
 
-- name: "Set instance {{ wildfly_instance_name }} state to {{ instance_state }}"
+- name: "Set instance {{ wildfly_systemd_instance_name }} state to {{ instance_state }}"
   throttle: 1
   ansible.builtin.systemd:
-    name: "{{ wildfly_service_name }}"
+    name: "{{ wildfly_systemd_service_name }}"
     state: "{{ instance_state }}"
-    enabled: "{{ wildfly_systemd.enabled | default(omit) }}"
+    enabled: "{{ wildfly_systemd_config.enabled | default(omit) }}"
     daemon_reload: true
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"

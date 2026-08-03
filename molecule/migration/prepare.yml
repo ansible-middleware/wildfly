@@ -76,10 +76,10 @@
       ansible.builtin.include_role:
         name: middleware_automation.wildfly.wildfly_install
       vars:
-        wildfly_version: "{{ wildfly_old_version }}"
+        wildfly_install_version: "{{ wildfly_old_version }}"
         wildfly_install_workdir: "{{ wildfly_old_workdir }}"
-        wildfly_user: wildfly
-        wildfly_group: wildfly
+        wildfly_install_user: wildfly
+        wildfly_install_group: wildfly
 
     - name: "Create standalone configuration for old WildFly"
       become: "{{ wildfly_install_requires_become | default(true) }}"
@@ -95,11 +95,11 @@
       ansible.builtin.include_role:
         name: middleware_automation.wildfly.wildfly_install
       vars:
-        wildfly_version: "{{ wildfly_new_version }}"
+        wildfly_install_version: "{{ wildfly_new_version }}"
         wildfly_install_workdir: "{{ wildfly_new_workdir }}"
-        wildfly_user: wildfly
-        wildfly_group: wildfly
-        wildfly_prospero_install_dir: /opt/prospero-new
+        wildfly_install_user: wildfly
+        wildfly_install_group: wildfly
+        wildfly_install_prospero_install_dir: /opt/prospero-new
 
     - name: Display preparation complete
       ansible.builtin.debug:

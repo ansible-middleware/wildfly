@@ -1,59 +1,59 @@
 argument_specs:
     main:
         options:
-            wildfly_version:
-                default: "40.0.0.Final"
+            wildfly_install_version:
+                default: '40.0.0.Final'
                 description: "WildFly version to install"
                 type: "str"
-            wildfly_archive_filename:
-                default: "wildfly-{{ wildfly_version }}.zip"
+            wildfly_install_archive_filename:
+                default: "wildfly-{{ wildfly_install_version }}.zip"
                 description: "WildFly download archive name"
                 type: "str"
-            wildfly_download_baseurl:
+            wildfly_install_download_baseurl:
                 default: "https://github.com/wildfly/wildfly/releases/download"
                 description: "Base URL for wildfly download"
                 type: "str"
             wildfly_install_workdir:
-                default: "/opt/wildfly/"
+                default: '/opt/wildfly/'
                 description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
-            wildfly_home:
-                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
+            wildfly_install_home:
+                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_install_version }}/"
                 description: "WildFly installation directory"
                 type: "str"
             wildfly_install_download_url:
-                default: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
+                default: "{{ wildfly_install_download_baseurl }}/{{ wildfly_install_version }}/{{ wildfly_install_archive_filename }}"
                 description: "WildFly download URL"
                 type: "str"
-            wildfly_archive_dir:
+            wildfly_install_archive_dir:
                 default: "{{ wildfly_install_workdir }}"
                 description: "Target download directory"
                 type: "str"
-            wildfly_config_base:
-                default: "standalone.xml"
+            wildfly_install_config_base:
+                default: 'standalone.xml'
                 description: "wildfly standalone.xml filename override"
                 type: "str"
-            wildfly_config_custom_file:
-                default: ""
+            wildfly_install_config_custom_file:
+                default: ''
                 description: "Custom standalone.xml config to be copied to target instance and used as base"
                 type: "str"
-            wildfly_user:
-                default: "wildfly"
+            wildfly_install_user:
+                default: 'wildfly'
                 description: "POSIX user account for WildFly"
                 type: "str"
-            wildfly_group:
-                default: "{{ wildfly_user }}"
+            wildfly_install_group:
+                default: "{{ wildfly_install_user }}"
                 description: "POSIX group for WildFly"
                 type: "str"
-            wildfly_java_package_name:
-                default: "java-21-openjdk-headless"
+            wildfly_install_java_package_name:
+                default: 'java-21-openjdk-headless'
                 description: "RHEL/Fedora Java RPM package"
                 type: "str"
-            wildfly_offline_install:
+            wildfly_install_offline_install:
                 default: false
                 description: "Whether to install from local archive"
                 type: "bool"
-            wildfly_prereqs_packages:
+            wildfly_install_prereqs_packages:
                 default:
                   - unzip
                   - tar
@@ -61,82 +61,82 @@ argument_specs:
                   - tzdata-java
                 description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
                 type: "list"
-            wildfly_instance_name:
-                default: "wildfly"
+            wildfly_install_instance_name:
+                default: 'wildfly'
                 description: "Name of the wildfly instance"
                 type: "str"
-            wildfly_selinux_enabled:
+            wildfly_install_selinux_enabled:
                 default: False
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
     downstream:
         options:
-            eap_enable:
+            eap_install_enable:
                 default: True
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_install_use_prospero:
-                default: "{{ (eap_version is version('8.0.0', '>=', strict=true)) | ternary(true, false) }}"
+                default: "{{ (eap_install_version is version('8.0.0', '>=', strict=true)) | ternary(true, false) }}"
                 description: "Whether or not installation should use JBoss Installation Manager"
                 type: "str"
-            eap_apply_cp:
-                default: "{{ (eap_version is version('8.0.0', '>=', strict=true)) | ternary(false, true) }}"
+            eap_install_apply_cp:
+                default: "{{ (eap_install_version is version('8.0.0', '>=', strict=true)) | ternary(false, true) }}"
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
-            eap_version:
-                default: "7.4.0"
+            eap_install_version:
+                default: '8.1.0'
                 description: "Red Hat EAP version to install"
                 type: "str"
-            eap_patch_version:
+            eap_install_patch_version:
                 required: False
-                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_apply_cp is True"
+                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_install_apply_cp is True"
                 type: "str"
-            eap_prospero_version:
+            eap_install_prospero_version:
                 default: "1.1.6.Final-redhat-00001"
                 description: "Version of JBoss Installation Manager to use"
                 type: "str"
-            eap_prospero_name:
+            eap_install_prospero_name:
                 default: "jboss-eap-installation-manager"
                 description: "Name of the JBoss Installation Manager tool"
                 type: "str"
-            eap_archive_filename:
+            eap_install_archive_filename:
                 # Distribution zip for zip-based install (offline or RHN); installation-manager zip only when using Prospero (set by prospero/install.yml).
-                default: "jboss-eap-{{ eap_version }}.zip"
+                default: "jboss-eap-{{ eap_install_version }}.zip"
                 description: "Red Hat EAP archive name"
                 type: "str"
-            eap_patch_archive_filename:
-                default: "jboss-eap-{{ eap_patch_version | default('[0-9]+[.][0-9]+[.][0-9]+') }}-patch.zip"
+            eap_install_patch_archive_filename:
+                default: "jboss-eap-{{ eap_install_patch_version | default('[0-9]+[.][0-9]+[.][0-9]+') }}-patch.zip"
                 description: "Red Hat SSO patch archive filename"
                 type: "str"
             eap_install_workdir:
-                default: "/opt/jboss_eap/"
+                default: '/opt/jboss_eap/'
                 description: "Root directory for installation, where the install zipfile is extracted"
                 type: "str"
-            eap_home:
-                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
+            eap_install_home:
+                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_install_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"
-            eap_offline_install:
+            eap_install_offline_install:
                 default: False
                 description: "Whether to install from local archive"
                 type: "bool"
-            eap_elytron_adapter:
+            eap_install_elytron_adapter:
                 default: False
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
-            eap_elytron_adapter_version:
+            eap_install_elytron_adapter_version:
                 default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
                 type: "str"
-            eap_elytron_adapter_archive_filename:
-                default: "rh-sso-{{ eap_elytron_adapter_version }}-eap7-adapter-dist.zip"
+            eap_install_elytron_adapter_archive_filename:
+                default: "rh-sso-{{ eap_install_elytron_adapter_version }}-eap7-adapter-dist.zip"
                 description: "SSO (keycloak) adapter install filename"
                 type: "str"
-            eap_product_category:
+            eap_install_product_category:
                 default: "appplatform"
                 description: "Unified Downloads API category for EAP"
                 type: "str"
-            eap_selinux_enabled:
+            eap_install_selinux_enabled:
                 default: True
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
@@ -148,7 +148,7 @@ argument_specs:
                 default: false
                 description: "Specifiy if Ansible should skip the check that the provided OpenJDK version is supported for the EAP server used."
                 type: bool
-            eap_supported_configuration:
+            eap_install_supported_configuration:
                 type: json
                 description: "Supported OpenJDK and RHEL version for EAP"
                 default:

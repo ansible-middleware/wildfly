@@ -6,14 +6,14 @@
   listen: "restart_wildfly"
 
 - name: "Perform daemon-reload"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
   ansible.builtin.systemd:
     daemon_reload: true
 
 - name: Execute restorecon
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  ansible.builtin.command: "restorecon -R -v {{ wildfly_install_workdir }}"
-  register: selinux_output
-  changed_when: selinux_output.stdout_lines | length > 0
-  when: wildfly_selinux_enabled
+  become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"
+  ansible.builtin.command: "restorecon -R -v {{ wildfly_systemd_install_workdir }}"
+  register: wildfly_systemd_selinux_output
+  changed_when: wildfly_systemd_selinux_output.stdout_lines | length > 0
+  when: wildfly_systemd_selinux_enabled
   listen: exec_restorecon

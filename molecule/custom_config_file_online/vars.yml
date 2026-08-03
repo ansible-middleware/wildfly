@@ -1,6 +1,7 @@
 ---
-wildfly_version: '40.0.0.Final'
-wildfly_config_custom_file: "files/wildfly-{{ (wildfly_version.split('.'))[0:2] | join('.') }}-custom.xml"
-wildfly_enable_yml_config: true
-wildfly_yml_configs:
+wildfly_install_version: '40.0.0.Final'
+wildfly_install_config_custom_file: "files/wildfly-{{ (wildfly_install_version.split('.'))[0:2] | join('.') }}-custom.xml"
+wildfly_systemd_config_custom_file: "{{ wildfly_install_config_custom_file }}"
+wildfly_systemd_enable_yml_config: true
+wildfly_systemd_yml_configs:
   - yaml_configuration.yml.j2

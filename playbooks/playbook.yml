@@ -13,7 +13,7 @@
       when: jdbc_drivers is defined and jdbc_drivers | length > 0
       vars:
         wildfly_driver_module_name: "{{ item.name }}"
-        wildfly_driver_version: "{{ item.version }}"
+        wildfly_driver_jdbc_version: "{{ item.version }}"
         wildfly_driver_jar_filename: "{{ item.jar_file }}"
         wildfly_driver_jar_url: "{{ item.url }}"
       loop: "{{ jdbc_drivers }}"

@@ -9,10 +9,15 @@
 - name: "Run migration tool"
   become: "{{ wildfly_migration_require_privileges_escalation }}"
   become_user: "{{ wildfly_migration_user }}"
-  ansible.builtin.command: "{{ wildfly_migration_server_tool_path_to_script }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ wildfly_migration_path_to_env_properties }} --target {{ target_wildfly_home }}"
+  ansible.builtin.command: >-
+    {{ wildfly_migration_server_tool_path_to_script }}
+    --non-interactive
+    --source {{ previous_wildfly_home }}
+    --environment {{ wildfly_migration_path_to_env_properties }}
+    --target {{ target_wildfly_home }}
   register: wildfly_migration_migration_results
-  changed_when: False
-  failed_when: False
+  changed_when: false
+  failed_when: false
   environment:
     JAVA_HOME: "{{ wildfly_migration_java_home }}"
     PATH: "{{ wildfly_migration_java_home }}{{ wildfly_migration_target_path }}"

@@ -21,7 +21,10 @@
 
 - name: "Determine install zipfile from search results: {{ eap_utils_archive_filename }}"
   ansible.builtin.set_fact:
-    wildfly_utils_rhn_filtered_products: "{{ wildfly_utils_rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + eap_utils_archive_filename + '$') }}"
+    wildfly_utils_rhn_filtered_products: >-
+      {{ wildfly_utils_rhn_products.results |
+      selectattr('file_name', 'match',
+      '[^/]*/' + eap_utils_archive_filename + '$') }}
   delegate_to: localhost
   run_once: true
 

@@ -41,14 +41,20 @@
     - name: Check arguments for yaml configuration
       ansible.builtin.assert:
         that:
-          - (eap_systemd_version.split('.')[:1] | join('.') is version('8', '>=')) or (wildfly_systemd_slurped_eap_systemd_version is defined and wildfly_systemd_slurped_eap_systemd_version.content | b64decode is version('7.4.7', '>='))
+          - >-
+            (eap_systemd_version.split('.')[:1] | join('.') is version('8', '>=')) or
+            (wildfly_systemd_slurped_eap_systemd_version is defined and
+            wildfly_systemd_slurped_eap_systemd_version.content | b64decode is version('7.4.7', '>='))
         quiet: true
         fail_msg: "Can only enable YAML configuration with EAP >= 7.4.7 or EAP 8+"
 
 - name: Check if YAML configuration extension is supported in EAP
   ansible.builtin.assert:
     that:
-      - (eap_systemd_version.split('.')[:1] | join('.') is version('8', '>=')) or (wildfly_systemd_slurped_eap_systemd_version is defined and wildfly_systemd_slurped_eap_systemd_version.content | b64decode is version('7.4.7', '>='))
+      - >-
+        (eap_systemd_version.split('.')[:1] | join('.') is version('8', '>=')) or
+        (wildfly_systemd_slurped_eap_systemd_version is defined and
+        wildfly_systemd_slurped_eap_systemd_version.content | b64decode is version('7.4.7', '>='))
     fail_msg: "YAML configuration extension is not supported in this EAP version"
   when:
     - eap_systemd_enable is defined and (eap_systemd_enable | bool)

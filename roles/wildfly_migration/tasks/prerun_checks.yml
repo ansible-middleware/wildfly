@@ -13,16 +13,16 @@
       - wildfly_migration_migration_tool_state.stat.exists
       - wildfly_migration_migration_tool_state.stat.isreg is defined
       - wildfly_migration_migration_tool_state.stat.isreg
-    quiet: True
+    quiet: true
     fail_msg: "Invalid path to migration tool: {{ wildfly_migration_server_tool_path_to_script }}."
 
 - name: "Ensure all files belong to the appropriate owner"
   ansible.builtin.file:
     path: "{{ folder }}"
-    recurse: yes
+    recurse: true
     owner: "{{ wildfly_migration_user }}"
     group: "{{ wildfly_migration_group }}"
-  changed_when: False
+  changed_when: false
   loop:
     - "{{ previous_wildfly_home }}"
     - "{{ target_wildfly_home }}"

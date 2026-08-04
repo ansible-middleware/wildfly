@@ -4,7 +4,7 @@
     that:
       - target_wildfly_home is defined
       - previous_wildfly_home is defined
-    quiet: True
+    quiet: true
     fail_msg: "Missing required parameters."
 
 - name: Apply EAP 7.x migration tool layout (tool inside server installation directory)

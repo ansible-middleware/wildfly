@@ -54,7 +54,10 @@
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        wildfly_utils_rhn_filtered_products: "{{ wildfly_utils_rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + wildfly_utils_patch_filename + '$') }}"
+        wildfly_utils_rhn_filtered_products: >-
+          {{ wildfly_utils_rhn_products.results |
+          selectattr('file_name', 'match',
+          '[^/]*/' + wildfly_utils_patch_filename + '$') }}
       delegate_to: localhost
       run_once: true
 
@@ -146,7 +149,7 @@
                 -Djboss.socket.binding.port-offset={{ wildfly_utils_port_range_offset }}
           environment:
             JAVA_HOME: "/etc/alternatives/jre_{{ wildfly_utils_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-          changed_when: True
+          changed_when: true
           async: 180
           poll: 0
           become: "{{ wildfly_utils_requires_become | default(true) }}"

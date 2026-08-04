@@ -20,4 +20,4 @@
     name: "{{ wildfly_install_config.user }}"
     group: "{{ wildfly_install_group_name }}"
     state: present
-    system: True
+    system: true

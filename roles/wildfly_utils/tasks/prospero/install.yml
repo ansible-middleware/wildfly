@@ -19,7 +19,10 @@
 - name: Set fact for the latest Prospero version and download URL
   ansible.builtin.set_fact:
     wildfly_utils_prospero_version_final: "{{ wildfly_utils_prospero_release_info.json.tag_name }}"
-    wildfly_utils_prospero_download_url: "{{ (wildfly_utils_prospero_release_info.json.assets | selectattr('name', 'match', 'prospero-build-.*\\.zip') | first).browser_download_url }}"
+    wildfly_utils_prospero_download_url: >-
+      {{ (wildfly_utils_prospero_release_info.json.assets |
+      selectattr('name', 'match', 'prospero-build-.*\.zip') |
+      first).browser_download_url }}
   delegate_to: localhost
   run_once: true
   when:
@@ -27,8 +30,10 @@
 
 - name: Set download paths for GitHub
   ansible.builtin.set_fact:
-    wildfly_utils_full_path_to_prospero_archive: "{{ wildfly_utils_prospero_install_dir }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip"
-    wildfly_utils_local_path_to_archive: "{{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip"
+    wildfly_utils_full_path_to_prospero_archive: >-
+      {{ wildfly_utils_prospero_install_dir }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip
+    wildfly_utils_local_path_to_archive: >-
+      {{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip
   when:
     - not eap_utils_enable is defined or not (eap_utils_enable | bool)
 
@@ -98,7 +103,7 @@
     dest: "{{ wildfly_utils_prospero_install_dir }}"
     owner: "{{ wildfly_utils_user | default(omit) }}"
     group: "{{ wildfly_utils_group | default(omit) }}"
-    remote_src: True
+    remote_src: true
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   when:
     - wildfly_utils_new_version_downloaded.changed or not wildfly_utils_path_to_prospero_installation.stat.exists
@@ -120,7 +125,11 @@
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   register: wildfly_utils_prospero_dirs
   when:
-    - (eap_utils_enable is defined and (eap_utils_enable | bool)) or (wildfly_utils_new_version_downloaded.changed or wildfly_utils_prospero_extraction.changed or not wildfly_utils_path_to_prospero_installation.stat.exists)
+    - >-
+      (eap_utils_enable is defined and (eap_utils_enable | bool)) or
+      (wildfly_utils_new_version_downloaded.changed or
+      wildfly_utils_prospero_extraction.changed or
+      not wildfly_utils_path_to_prospero_installation.stat.exists)
 
 - name: "Sort prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:

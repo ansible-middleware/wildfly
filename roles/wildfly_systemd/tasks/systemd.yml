@@ -91,7 +91,9 @@
     - name: "Compute normalized paths for custom configuration deploy decision"
       ansible.builtin.set_fact:
         wildfly_systemd_dest_cfg_norm: "{{ (basedir ~ '/configuration/' ~ wildfly_systemd_instance_name ~ '.xml') | regex_replace('/+', '/') }}"
-        wildfly_systemd_default_standalone_cfg_norm: "{{ (wildfly_systemd_config.home ~ '/standalone/configuration/' ~ wildfly_systemd_instance_name ~ '.xml') | regex_replace('/+', '/') }}"
+        wildfly_systemd_default_standalone_cfg_norm: >-
+          {{ (wildfly_systemd_config.home ~ '/standalone/configuration/' ~
+          wildfly_systemd_instance_name ~ '.xml') | regex_replace('/+', '/') }}
       when: wildfly_systemd_config.config_custom | length > 0
 
     - name: "Check whether custom instance configuration is already present"
@@ -130,7 +132,7 @@
     - name: Determine JAVA_HOME for selected JVM
       ansible.builtin.set_fact:
         wildfly_systemd_rpm_java_home: "/etc/alternatives/jre_{{ wildfly_systemd_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-      when: 
+      when:
         - ansible_facts['os_family'] == 'RedHat'
         - wildfly_systemd_java_package_name is match('^java-.*')
 
@@ -140,9 +142,9 @@
         {{ wildfly_systemd_config.jvm_version_command[ansible_facts['os_family']] }}
       args:
         executable: /bin/bash
-      changed_when: False
+      changed_when: false
       register: wildfly_systemd_rpm_java_home_other
-      when: 
+      when:
         - (ansible_facts['os_family'] != 'RedHat') or (not wildfly_systemd_java_package_name is match('^java-.*'))
 
     - name: "Deploy service instance configuration: {{ wildfly_systemd_service_systemd_env_file }}"
@@ -159,7 +161,11 @@
       register: wildfly_systemd_daemon_reload_env
       vars:
         wildfly_rpm_java_home: "{{ wildfly_systemd_rpm_java_home if wildfly_systemd_rpm_java_home is defined else wildfly_systemd_rpm_java_home_other.stdout }}"
-        wildfly_yml_configs_str: "'-y={{ wildfly_systemd_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}'"
+        wildfly_yml_configs_str: >-
+          '-y={{ wildfly_systemd_yml_configs | flatten
+          | map('regex_replace', '.j2$', '')
+          | map('regex_replace', '^', basedir + '/')
+          | list | join(':') }}'
     - name: "Deploy Systemd unit for service: {{ wildfly_systemd_service_systemd_file }}"
       ansible.builtin.template:
         src: "{{ wildfly_systemd_service_config_file_template }}"
@@ -173,7 +179,10 @@
         seuser: system_u
       register: wildfly_systemd_daemon_reload
       vars:
-        jboss_cli_deploy_controller: "{{ wildfly_systemd_jboss_cli_controller_host }}:{{ (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) + (wildfly_systemd_port_range_offset | int) }}"
+        jboss_cli_deploy_controller: >-
+          {{ wildfly_systemd_jboss_cli_controller_host }}:{{
+          (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) +
+          (wildfly_systemd_port_range_offset | int) }}
 
     - name: "Perform daemon-reload to ensure the changes are picked up"
       ansible.builtin.systemd:

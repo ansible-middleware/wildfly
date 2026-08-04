@@ -5,7 +5,9 @@
       - (rhn_username is defined and eap_install_enable is defined and eap_install_enable) or not eap_install_enable is defined or not eap_install_enable
       - (rhn_password is defined and eap_install_enable is defined and eap_install_enable) or not eap_install_enable is defined or not eap_install_enable
     quiet: true
-    fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_install_offline_install"
+    fail_msg: >-
+      Cannot install Red Hat Enterprise Application Platform without RHN credentials.
+      Define rhn_username and rhn_password are defined or set eap_install_offline_install
   when: not wildfly_install_offline_install and not (wildfly_install_use_prospero | default(false))
 
 - name: "Validate version matches expected scheme (X.y.z): {{ wildfly_install_version }}"
@@ -19,9 +21,17 @@
   ansible.builtin.assert:
     that:
       - wildfly_install_version is defined
-      - wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) is exists
+      - >-
+        wildfly_archive_filename_local |
+        default((wildfly_install_download_controller_download_dir |
+        default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename)
+        is exists
     quiet: true
-    fail_msg: "An offline install was requested, but files are not present on the controller: {{ wildfly_archive_filename_local | default((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) }}"
+    fail_msg: >-
+      An offline install was requested, but files are not present on the controller:
+      {{ wildfly_archive_filename_local |
+      default((wildfly_install_download_controller_download_dir |
+      default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) }}
   when:
     - wildfly_install_offline_install and wildfly_install_archive_filename_on_controller
 
@@ -39,10 +49,24 @@
 - name: "Validate additional zipfiles for offline install: {{ wildfly_install_archive_filename }}"
   ansible.builtin.assert:
     that:
-      - not eap_install_apply_cp or (eap_install_patch_version is defined and ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_patch_archive_filename) is exists)
-      - not eap_install_elytron_adapter or (((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_elytron_adapter_archive_filename) is exists)
+      - >-
+        not eap_install_apply_cp or (eap_install_patch_version is defined and
+        ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD')))
+        + '/' + eap_install_patch_archive_filename) is exists)
+      - >-
+        not eap_install_elytron_adapter or
+        (((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD')))
+        + '/' + eap_install_elytron_adapter_archive_filename) is exists)
     quiet: true
-    fail_msg: "An offline install was requested, but files are not present on the controller: {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_patch_archive_filename) if eap_install_apply_cp else '' }} {{ ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_elytron_adapter_archive_filename) if eap_install_elytron_adapter else '' }}"
+    fail_msg: >-
+      An offline install was requested, but files are not present on the controller:
+      {{ ((wildfly_install_download_controller_download_dir |
+      default(lookup('env', 'PWD'))) + '/' +
+      eap_install_patch_archive_filename) if eap_install_apply_cp else '' }}
+      {{ ((wildfly_install_download_controller_download_dir |
+      default(lookup('env', 'PWD'))) + '/' +
+      eap_install_elytron_adapter_archive_filename)
+      if eap_install_elytron_adapter else '' }}
   when:
     - wildfly_install_offline_install
     - eap_install_enable is defined and eap_install_enable

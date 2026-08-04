@@ -55,10 +55,10 @@ argument_specs:
                 type: "bool"
             wildfly_install_prereqs_packages:
                 default:
-                  - unzip
-                  - tar
-                  - sudo
-                  - tzdata-java
+                    - unzip
+                    - tar
+                    - sudo
+                    - tzdata-java
                 description: "List of packages that needs to be installed on the target system (not including the Java Virtual Machine)"
                 type: "list"
             wildfly_install_instance_name:
@@ -66,13 +66,13 @@ argument_specs:
                 description: "Name of the wildfly instance"
                 type: "str"
             wildfly_install_selinux_enabled:
-                default: False
+                default: false
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
     downstream:
         options:
             eap_install_enable:
-                default: True
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_install_use_prospero:
@@ -88,7 +88,7 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_install_patch_version:
-                required: False
+                required: false
                 description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_install_apply_cp is True"
                 type: "str"
             eap_install_prospero_version:
@@ -117,11 +117,11 @@ argument_specs:
                 description: "Red Hat EAP installation path"
                 type: "str"
             eap_install_offline_install:
-                default: False
+                default: false
                 description: "Whether to install from local archive"
                 type: "bool"
             eap_install_elytron_adapter:
-                default: False
+                default: false
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
             eap_install_elytron_adapter_version:
@@ -137,7 +137,7 @@ argument_specs:
                 description: "Unified Downloads API category for EAP"
                 type: "str"
             eap_install_selinux_enabled:
-                default: True
+                default: true
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
             eap_install_skip_supported_os_check:
@@ -152,12 +152,12 @@ argument_specs:
                 type: json
                 description: "Supported OpenJDK and RHEL version for EAP"
                 default:
-                  eap7.4:
-                    openjdk: ['1.8', '11', '17']
-                    rhel: ['7', '8', '9']
-                  eap8.0:
-                    openjdk: ['11', '17', '21'] # OpenJDK 21 support only with EAP 8.0 Update 4 and above
-                    rhel: ['8', '9', '10']
-                  eap8.1:
-                    openjdk: ['17', '21']
-                    rhel: ['8', '9', '10']
+                    eap7.4:
+                        openjdk: ['1.8', '11', '17']
+                        rhel: ['7', '8', '9']
+                    eap8.0:
+                        openjdk: ['11', '17', '21'] # OpenJDK 21 support only with EAP 8.0 Update 4 and above
+                        rhel: ['8', '9', '10']
+                    eap8.1:
+                        openjdk: ['17', '21']
+                        rhel: ['8', '9', '10']

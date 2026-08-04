@@ -108,7 +108,11 @@
         setype: usr_t
         seuser: system_u
       when:
-        - (wildfly_install_new_version_downloaded is defined and wildfly_install_new_version_downloaded.changed) or (wildfly_install_path_to_workdir is defined and not wildfly_install_path_to_workdir.stat.exists)
+        - >-
+          (wildfly_install_new_version_downloaded is defined and
+          wildfly_install_new_version_downloaded.changed) or
+          (wildfly_install_path_to_workdir is defined and
+          not wildfly_install_path_to_workdir.stat.exists)
       notify:
         - exec_restorecon
 
@@ -116,7 +120,8 @@
       ansible.builtin.debug:
         msg: "{{ wildfly_install_config.home }} already exists and version unchanged, skipping decompression"
       when:
-        - (wildfly_install_new_version_downloaded is not defined or not wildfly_install_new_version_downloaded.changed) and (wildfly_install_path_to_workdir is defined and wildfly_install_path_to_workdir.stat.exists)
+        - wildfly_install_new_version_downloaded is not defined or not wildfly_install_new_version_downloaded.changed
+        - wildfly_install_path_to_workdir is defined and wildfly_install_path_to_workdir.stat.exists
 
 - name: "Read information on server home directory: {{ wildfly_install_config.home }}"
   ansible.builtin.stat:
@@ -193,7 +198,7 @@
       ansible.builtin.assert:
         that:
           - eap_install_elytron_adapter_version is defined
-        quiet: True
+        quiet: true
         fail_msg: "Missing required parameters for elytron adapter"
 
     - name: "Install elytron adapter"

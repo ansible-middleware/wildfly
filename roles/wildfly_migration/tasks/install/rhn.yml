@@ -9,7 +9,7 @@
       - eap_migration_server_tool_path_to_archive is defined and eap_migration_server_tool_path_to_archive | length > 0
       - rhn_username is defined
       - rhn_password is defined
-    quiet: True
+    quiet: true
     fail_msg: "Missing required parameters."
 
 - name: "Esclade privileges if needed"
@@ -34,13 +34,21 @@
 
     - name: "Try to find exact version migration tool first"
       ansible.builtin.set_fact:
-        eap_migration_tool_found: "{{ wildfly_migration_rhn_migration_search.results | selectattr('file_name', 'match', '.*jboss-eap-' + eap_migration_version + '-server-migration.zip$') | list }}"
+        eap_migration_tool_found: >-
+          {{ wildfly_migration_rhn_migration_search.results
+          | selectattr('file_name', 'match',
+          '.*jboss-eap-' + eap_migration_version + '-server-migration.zip$')
+          | list }}
       delegate_to: localhost
       run_once: true
 
     - name: "If exact version not found, use base version (X.Y.0) migration tool"
       ansible.builtin.set_fact:
-        eap_migration_tool_found: "{{ wildfly_migration_rhn_migration_search.results | selectattr('file_name', 'match', '.*jboss-eap-' + eap_migration_major_minor + '.0-server-migration.zip$') | list }}"
+        eap_migration_tool_found: >-
+          {{ wildfly_migration_rhn_migration_search.results
+          | selectattr('file_name', 'match',
+          '.*jboss-eap-' + eap_migration_major_minor + '.0-server-migration.zip$')
+          | list }}
       when:
         - eap_migration_tool_found | length == 0
       delegate_to: localhost
@@ -65,8 +73,14 @@
         that:
           - eap_migration_tool_found | length > 0
           - (eap_migration_tool_found | first).id is defined
-        quiet: True
-        fail_msg: "Migration tool for EAP {{ eap_migration_version }} (or base {{ eap_migration_major_minor }}.0) not found in RHN. Available migration tools: {{ wildfly_migration_rhn_migration_search.results | selectattr('file_name', 'match', '.*server-migration.zip$') | map(attribute='file_name') | list }}"
+        quiet: true
+        fail_msg: >-
+          Migration tool for EAP {{ eap_migration_version }}
+          (or base {{ eap_migration_major_minor }}.0) not found in RHN.
+          Available migration tools:
+          {{ wildfly_migration_rhn_migration_search.results
+          | selectattr('file_name', 'match', '.*server-migration.zip$')
+          | map(attribute='file_name') | list }}
 
     - name: "Display discovered migration tool"
       ansible.builtin.debug:
@@ -75,7 +89,12 @@
           - "  Target Version: {{ eap_migration_version }}"
           - "  Migration Tool: {{ eap_migration_tool_actual_file }}"
           - "  Product ID: {{ eap_migration_server_tool_product_id }}"
-          - "  Note: {{ 'Using base ' + eap_migration_major_minor + '.0 tool (compatible with all ' + eap_migration_major_minor + '.x versions)' if (eap_migration_tool_actual_file.find(eap_migration_version) == -1) else 'Exact version match' }}"
+          - >-
+            Note: {{ 'Using base ' + eap_migration_major_minor +
+            '.0 tool (compatible with all ' + eap_migration_major_minor +
+            '.x versions)' if
+            (eap_migration_tool_actual_file.find(eap_migration_version) == -1)
+            else 'Exact version match' }}
 
     - name: Check local path to stage migration tool archive on controller
       ansible.builtin.stat:
@@ -173,4 +192,6 @@
         wildfly_migration_tool_bin_folder: ""
         wildfly_migration_server_tool_subfolder_to_configuration: ""
         wildfly_migration_server_tool_path_to_script: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
-        wildfly_migration_path_to_env_properties: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/{{ wildfly_migration_server_tool_env_properties_file }}"
+        wildfly_migration_path_to_env_properties: >-
+          {{ eap_migration_server_tool_install_dir }}/jboss-server-migration/{{
+          wildfly_migration_server_tool_env_properties_file }}

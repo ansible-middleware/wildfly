@@ -29,6 +29,9 @@
     - name: "Verify metadatas"
       ansible.builtin.assert:
         that:
-          - wildfly_validation_pidfile is defined and wildfly_validation_pidfile.stat is defined and wildfly_validation_pidfile.stat.exists is defined and wildfly_validation_pidfile.stat.exists
+          - wildfly_validation_pidfile is defined
+          - wildfly_validation_pidfile.stat is defined
+          - wildfly_validation_pidfile.stat.exists is defined
+          - wildfly_validation_pidfile.stat.exists
         quiet: true
         fail_msg: "PID file {{ wildfly_validation_systemd_pidfile }} has not been created."

@@ -48,13 +48,18 @@ argument_specs:
             wildfly_validation_queries:
                 default: []
                 type: "list"
-                description: "CLI queries used to validate configuration. List of dicts [{query => <jboss cli command>, expected_result => <expected string result of the cli op>, expected_result_undefined => <if defined, then check if the result is 'undefined'> }]"
+                description: >-
+                  CLI queries used to validate configuration. List of dicts
+                  [{query => <jboss cli command>, expected_result =>
+                  <expected string result of the cli op>,
+                  expected_result_undefined => <if defined, then check
+                  if the result is 'undefined'> }]
             wildfly_validation_pidfile_homedir:
                 description: "Directory that will contain the PID file"
                 default: "/run/wildfly"
                 type: "str"
             wildfly_validation_systemd_pidfile_require_privilege_escalation:
-                default: True
+                default: true
                 description: "Whether or not accessing the pidfile created by Systemd will require root privileges"
                 type: "bool"
             wildfly_validation_basedir_prefix:
@@ -64,11 +69,11 @@ argument_specs:
     downstream:
         options:
             eap_validation_enable:
-                default: True
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_validation_apply_cp:
-                default: True
+                default: true
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
             eap_validation_version:
@@ -76,7 +81,7 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_validation_patch_version:
-                required: False
+                required: false
                 description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_validation_apply_cp is True"
                 type: "str"
             eap_validation_archive_filename:

@@ -27,7 +27,7 @@
    - installed_eap_source is defined
    - installed_eap_source
   block:
-    - name: "Ensure JBoss repos for {{ eap_version }} are enabled."
+    - name: "Ensure JBoss EAP repos are enabled: {{ eap_version }}"
       ansible.builtin.command: "subscription-manager repos --enable={{ eap_repo_name }}"
       args:
         creates: "{{ eap_repo_state_file }}"
@@ -46,7 +46,7 @@
         group: "{{ wildfly_subs_group }}"
         mode: '0644'
 
-    - name: "Ensure group package {{ eap_group_install_name }} is installed"
+    - name: "Ensure EAP group package is installed: {{ eap_group_install_name }}"
       ansible.builtin.command: "dnf groupinstall -y {{ eap_group_install_name }}"
       args:
         creates: /opt/rh/eap7/

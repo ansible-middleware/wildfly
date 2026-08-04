@@ -6,7 +6,7 @@
     - exec_restorecon
   block:
 
-    - name: "Create basedir {{ basedir }} for instance: {{ wildfly_systemd_instance_name }}"
+    - name: "Create basedir for instance: {{ wildfly_systemd_instance_name }}"
       ansible.builtin.file:
         path: "{{ basedir }}"
         state: directory

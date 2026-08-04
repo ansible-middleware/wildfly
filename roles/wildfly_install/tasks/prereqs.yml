@@ -8,14 +8,14 @@
     fail_msg: "Cannot install Red Hat Enterprise Application Platform without RHN credentials. Define rhn_username and rhn_password are defined or set eap_install_offline_install"
   when: not wildfly_install_offline_install and not (wildfly_install_use_prospero | default(false))
 
-- name: "Validate that {{ wildfly_install_version }} matches expected scheme (X.y.z)"
+- name: "Validate version matches expected scheme (X.y.z): {{ wildfly_install_version }}"
   ansible.builtin.assert:
     that:
       - wildfly_install_version | regex_search('[0-9]{1}.[0-9]{1}.[0-9]{1}') | length > 0
     quiet: true
     fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_install_version }}"
 
-- name: "Validate that archive {{ wildfly_install_archive_filename }} exists on controller (if install is offline: {{ wildfly_install_offline_install }})."
+- name: "Validate archive exists on controller for offline install: {{ wildfly_install_archive_filename }}"
   ansible.builtin.assert:
     that:
       - wildfly_install_version is defined
@@ -36,7 +36,7 @@
     - eap_install_enable is defined and eap_install_enable
     - eap_install_apply_cp is defined and eap_install_apply_cp
 
-- name: "Validate existing additional zipfiles {{ wildfly_install_archive_filename }} for offline installs"
+- name: "Validate additional zipfiles for offline install: {{ wildfly_install_archive_filename }}"
   ansible.builtin.assert:
     that:
       - not eap_install_apply_cp or (eap_install_patch_version is defined and ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD'))) + '/' + eap_install_patch_archive_filename) is exists)
@@ -68,7 +68,7 @@
     quiet: true
     fail_msg: "Required packages list was not defined"
 
-- name: "Add JDK package {{ wildfly_install_config.java.package_name }} to packages list"
+- name: "Add JDK package to prerequisites list: {{ wildfly_install_config.java.package_name }}"
   ansible.builtin.set_fact:
     wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages + [wildfly_install_config.java.package_name] }}"
   when:
@@ -76,7 +76,7 @@
     - wildfly_install_config.java.package_name is defined
     - wildfly_install_config.java.package_name | length > 0
 
-- name: "Add selinux package {{ wildfly_install_config.java.package_name }} to packages list"
+- name: "Add selinux package to prerequisites list"
   ansible.builtin.set_fact:
     wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages + ['policycoreutils'] }}"
   when:

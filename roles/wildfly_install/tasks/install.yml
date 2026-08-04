@@ -94,7 +94,7 @@
       become: "{{ wildfly_install_requires_become | default(true) }}"
       register: wildfly_install_path_to_workdir
 
-    - name: "Extract files from {{ wildfly_install_full_path_to_archive }} into {{ wildfly_install_config.workdir }}."
+    - name: "Extract files into {{ wildfly_install_config.workdir }}"
       become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.unarchive:
         src: "{{ wildfly_install_full_path_to_archive }}"

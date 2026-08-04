@@ -9,7 +9,7 @@
     quiet: true
     fail_msg: "Required variables not provided."
 
-- name: "Prepare {{ wildfly_driver_config.module_name }} driver deployment"
+- name: "Prepare driver deployment: {{ wildfly_driver_config.module_name }}"
   become: "{{ wildfly_driver_become | default('yes') }}"
   block:
     - name: "Check module directory: {{ wildfly_driver_module_dir }}"
@@ -42,7 +42,7 @@
   when:
     - not wildfly_driver_offline_install
 
-- name: "Finalize {{ wildfly_driver_config.module_name }} driver deployment"
+- name: "Finalize driver deployment: {{ wildfly_driver_config.module_name }}"
   become: "{{ wildfly_driver_become | default('yes') }}"
   block:
     - name: "Set source template path"

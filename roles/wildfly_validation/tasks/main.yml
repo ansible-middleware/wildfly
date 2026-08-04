@@ -6,7 +6,7 @@
       - wildfly_validation_group is defined
     quiet: true
 
-- name: "Ensure user {{ wildfly_validation_user }} were created."
+- name: "Ensure user was created: {{ wildfly_validation_user }}"
   ansible.builtin.user:
     name: "{{ wildfly_validation_user }}"
     state: present
@@ -26,7 +26,7 @@
     quiet: true
     fail_msg: "User {{ wildfly_validation_user }} was NOT created."
 
-- name: "Ensure group {{ wildfly_validation_group }} were created."
+- name: "Ensure group was created: {{ wildfly_validation_group }}"
   ansible.builtin.group:
     name: "{{ wildfly_validation_group }}"
     state: present
@@ -57,14 +57,14 @@
     search_pattern: "{{ wildfly_validation_logfile_server_start_pattern }}"
     path_to_logfile: "{{  wildfly_validation_logfile_path_to_logfile }}"
 
-- name: "Wait for HTTP port {{ wildfly_validation_http_port }} to become available."
+- name: "Wait for HTTP port to become available: {{ wildfly_validation_http_port }}"
   ansible.builtin.wait_for:
     port: "{{ wildfly_validation_http_port }}"
     host: "{{ ansible_facts['nodename'] | default('localhost') }}"
   when:
     - not wildfly_validation_skip_http_port_wait is defined
 
-- name: "Wait for HTTPS port {{ wildfly_validation_https_port }} to become available."
+- name: "Wait for HTTPS port to become available: {{ wildfly_validation_https_port }}"
   ansible.builtin.wait_for:
     port: "{{ wildfly_validation_https_port }}"
     host: "{{ ansible_facts['nodename'] | default('localhost') }}"

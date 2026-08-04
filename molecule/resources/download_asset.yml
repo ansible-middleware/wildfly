@@ -1,5 +1,5 @@
 ---
-- name: "Load metadata on target file {{ assets_server }}/{{ asset }}"
+- name: "Load metadata on target asset file"
   ansible.builtin.stat:
     path: "{{ assets_server }}/{{ asset }}"
   register: assest_state

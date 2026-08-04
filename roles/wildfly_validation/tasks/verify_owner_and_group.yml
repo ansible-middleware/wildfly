@@ -4,7 +4,7 @@
     path: "{{ wildfly_validation_home }}"
   register: wildfly_validation_home_status
 
-- name: "Ensure installation directory {{ wildfly_validation_home }} exists and belong to the appropriate user/group {{ wildfly_validation_group }}/{{ wildfly_validation_user }}"
+- name: "Ensure installation directory exists with correct ownership: {{ wildfly_validation_home }}"
   become: "{{ wildfly_validation_requires_become | default(true) }}"
   ansible.builtin.assert:
     that:

@@ -14,7 +14,7 @@
   when:
     - not eap_utils_enable is defined or not eap_utils_enable
 
-- name: "Ensure workdir {{ wildfly_utils_prospero_install_dir }} exists."
+- name: "Ensure prospero workdir exists: {{ wildfly_utils_prospero_install_dir }}"
   ansible.builtin.file:
     path: "{{ wildfly_utils_prospero_install_dir }}"
     state: directory
@@ -32,7 +32,7 @@
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   register: wildfly_utils_path_to_workdir
 
-- name: "Verify metadata on {{ wildfly_utils_home }} are available."
+- name: "Verify metadata on server home are available: {{ wildfly_utils_home }}"
   ansible.builtin.assert:
     that:
       - wildfly_utils_path_to_workdir is defined and wildfly_utils_path_to_workdir.stat is defined
@@ -106,7 +106,7 @@
     - wildfly_utils_prospero_update is defined and wildfly_utils_prospero_update
     - wildfly_utils_updates_available.rc == 1
 
-- name: "Ensure that {{ wildfly_utils_home }} belongs to appropriate user - if defined."
+- name: "Ensure server home belongs to appropriate user: {{ wildfly_utils_home }}"
   ansible.builtin.file:
     path: "{{ wildfly_utils_home }}"
     recurse: true

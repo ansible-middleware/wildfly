@@ -22,7 +22,7 @@
   when:
     - wildfly_validation_display_logfile is defined and wildfly_validation_display_logfile
 
-- name: "Ensure requested pattern {{ search_pattern }} is present in logfile {{ path_to_logfile }}"
+- name: "Ensure requested pattern is present in logfile: {{ search_pattern }}"
   ansible.builtin.assert:
     that:
       - search_pattern in wildfly_validation_logfile_content

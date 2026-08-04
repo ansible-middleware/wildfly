@@ -5,7 +5,7 @@
       - instance_state is defined
     quiet: true
 
-- name: "Set instance {{ wildfly_systemd_instance_name }} state to {{ instance_state }}"
+- name: "Set instance state to {{ instance_state }}"
   throttle: 1
   ansible.builtin.systemd:
     name: "{{ wildfly_systemd_service_name }}"

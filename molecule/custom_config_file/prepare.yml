@@ -5,7 +5,7 @@
   vars_files:
     - vars.yml
   tasks:
-    - name: "Download zipfile from {{ wildfly_install_download_url }} into {{ wildfly_install_download_controller_download_dir }}"
+    - name: "Download zipfile to controller: {{ wildfly_install_download_controller_download_dir }}"
       delegate_to: localhost
       run_once: true  # noqa: run-once[task]
       ansible.builtin.get_url:
@@ -19,7 +19,7 @@
       when:
         - not eap_version is defined
 
-    - name: "Download EAP {{ eap_version }} from Red Hat Network using Unified Downloads API"
+    - name: "Download EAP from Red Hat Network using Unified Downloads API"
       delegate_to: localhost
       run_once: true  # noqa: run-once[task]
       when:

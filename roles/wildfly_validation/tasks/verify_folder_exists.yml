@@ -11,7 +11,7 @@
     path: "{{ folder }}"
   register: wildfly_validation_folder_metadata
 
-- name: "Verify that folder {{ folder }} exists on target."
+- name: "Verify that folder exists on target: {{ folder }}"
   ansible.builtin.assert:
     that:
       - wildfly_validation_folder_metadata is defined

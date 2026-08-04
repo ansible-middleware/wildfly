@@ -87,7 +87,7 @@
       delegate_to: localhost
       run_once: true
 
-    - name: "Check remote downloaded archive: {{ wildfly_utils_patches_repository }}/{{ wildfly_utils_patch_bundle }}"
+    - name: "Check remote downloaded patch archive"
       ansible.builtin.stat:
         path: "{{ wildfly_utils_patches_repository }}/{{ wildfly_utils_patch_bundle }}"
       register: wildfly_utils_remote_archive_path
@@ -155,7 +155,7 @@
   when:
     - wildfly_utils_patch_info.stat is defined
 
-- name: "Check {{ wildfly_utils_patch_checksum_file }} state"
+- name: "Check patch checksum file state: {{ wildfly_utils_patch_checksum_file }}"
   ansible.builtin.stat:
     path: "{{ wildfly_utils_patch_checksum_file }}"
   register: wildfly_utils_last_patch_status
@@ -227,7 +227,7 @@
       when:
         - not wildfly_utils_apply_options is defined
 
-    - name: "Apply patch {{ wildfly_utils_patch_archive }} to server installed in {{ wildfly_utils_home }}"
+    - name: "Apply patch to server: {{ wildfly_utils_patch_archive }}"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:
         wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"

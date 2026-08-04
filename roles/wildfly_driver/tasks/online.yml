@@ -1,5 +1,5 @@
 ---
-- name: "Download {{ wildfly_driver_config.module_name }} driver directly to target"
+- name: "Download driver directly to target: {{ wildfly_driver_config.module_name }}"
   ansible.builtin.uri:
     url: "{{ wildfly_driver_config.jar_url }}"
     dest: "{{ wildfly_driver_jar_installation_path }}"

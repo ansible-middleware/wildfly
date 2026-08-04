@@ -9,12 +9,12 @@
   ansible.builtin.set_fact:
     wildfly_install_group_name: "{{ wildfly_install_config.group | default(wildfly_install_config.user) }}"
 
-- name: "Ensure group {{ wildfly_install_group_name }} exists."
+- name: "Ensure group exists: {{ wildfly_install_group_name }}"
   become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.group:
     name: "{{ wildfly_install_group_name }}"
 
-- name: "Ensure user {{ wildfly_install_config.user }} exists."
+- name: "Ensure user exists: {{ wildfly_install_config.user }}"
   become: "{{ wildfly_install_requires_become | default(true) }}"
   ansible.builtin.user:
     name: "{{ wildfly_install_config.user }}"

@@ -16,7 +16,7 @@
     quiet: True
     fail_msg: "Invalid path to migration tool: {{ wildfly_migration_server_tool_path_to_script }}."
 
-- name: "Ensure all files belong to the appropriate user: {{ wildfly_migration_user }}/{{ wildfly_migration_group }}"
+- name: "Ensure all files belong to the appropriate owner"
   ansible.builtin.file:
     path: "{{ folder }}"
     recurse: yes

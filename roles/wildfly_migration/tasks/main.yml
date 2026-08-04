@@ -20,7 +20,7 @@
 
 # RHEL 8: dnf Python bindings are not available for python3.9; platform-python is 3.6 and
 # cannot run ansible-core 2.18+ modules. Use the dnf CLI (same pattern as wildfly_install prereqs).
-- name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }} (RHEL 8)"
+- name: "Ensure required JVM is installed on target (RHEL 8): {{ wildfly_migration_jdk_package_name }}"
   become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
   become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
   ansible.builtin.command:

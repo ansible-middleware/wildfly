@@ -14,13 +14,13 @@
     - not wildfly_subs_config.skip_group_remove
   block:
 
-    - name: "Ensure group package {{ eap_subs_group_install_name }} is removed"
+    - name: "Ensure EAP group package is removed: {{ eap_subs_group_install_name }}"
       ansible.builtin.command: "dnf group remove -y {{ eap_subs_group_install_name }}"
       register: wildfly_subs_dnf_group_res
       changed_when:
         - 'not "Nothing to do." in wildfly_subs_dnf_group_res.stdout'
 
-    - name: "Ensure JBoss EAP Home has been removed {{ eap_home }}."
+    - name: "Ensure JBoss EAP Home has been removed"
       ansible.builtin.file:
         path: "{{ wildfly_subs_rpm_install_root_dir }}"
         state: absent
@@ -50,6 +50,6 @@
       when:
         - not eap_repos_name is defined
 
-    - name: "Ensure JBoss EAP {{ eap_version }} repos are disabled."
+    - name: "Ensure JBoss EAP repos are disabled: {{ eap_version }}"
       ansible.builtin.command: "subscription-manager repos --disable={{ eap_repos_name }}"
       changed_when: False

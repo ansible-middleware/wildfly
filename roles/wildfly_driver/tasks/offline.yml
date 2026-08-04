@@ -1,5 +1,5 @@
 ---
-- name: "Download {{ wildfly_driver_config.module_name }} driver to localhost"
+- name: "Download driver to localhost: {{ wildfly_driver_config.module_name }}"
   delegate_to: localhost
   become: false
   run_once: true

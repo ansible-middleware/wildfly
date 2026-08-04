@@ -18,13 +18,13 @@
   ansible.builtin.set_fact:
     wildfly_utils_unmanaged_option: "--unmanaged"
 
-- name: "Load metadata on deployment file {{ app_to_deploy.path }} in {{ wildfly_utils_home }}/standalone/deployments/."
+- name: "Load metadata on deployment file: {{ app_to_deploy.path }}"
   become: "{{ wildfly_utils_apps_requires_privilege_escalation }}"
   ansible.builtin.stat:
     path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
   register: wildfly_utils_app_marker
 
-- name: "Ensure that app {{ app_to_deploy.name | default(app_to_deploy.path | basename) }} is available"
+- name: "Ensure app is deployed: {{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml

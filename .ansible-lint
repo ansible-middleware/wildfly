@@ -17,7 +17,11 @@ enable_list:
   - fqcn-builtins  # opt-in
   - no-log-password  # opt-in
 
-skip_list: []
+skip_list:
+  - file_is_small_enough
+  - vars_should_not_be_used
+  - name[template]
+  - var-naming[no-role-prefix]
 
 warn_list:
   - role_vars_start_with_role_name

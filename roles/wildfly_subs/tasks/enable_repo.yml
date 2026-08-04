@@ -7,7 +7,7 @@
       - ansible_facts['architecture'] is defined
       - ansible_facts['os_family'] is defined
       - ansible_facts['os_family'] == "RedHat"
-    quiet: True
+    quiet: true
     fail_msg: "Required parameters are missing and/or system is NOT RHEL."
 
 - name: "Determine repository name."
@@ -18,14 +18,18 @@
 
 - name: "Determine state file."
   ansible.builtin.set_fact:
-    wildfly_subs_eap_repo_state_file: "{{ wildfly_subs_config.repos_state_file.homedir }}/{{ wildfly_subs_config.repos_state_file.prefix }}-{{ eap_version }}.{{ wildfly_subs_config.repos_state_file.suffix }}.enabled"
+    wildfly_subs_eap_repo_state_file: >-
+      {{ wildfly_subs_config.repos_state_file.homedir }}/{{
+      wildfly_subs_config.repos_state_file.prefix }}-{{
+      eap_version }}.{{
+      wildfly_subs_config.repos_state_file.suffix }}.enabled
   when:
     - not eap_repo_state_file is defined
 
 - name: "Enable repository."
   when:
-   - installed_eap_source is defined
-   - installed_eap_source
+    - installed_eap_source is defined
+    - installed_eap_source
   block:
     - name: "Ensure JBoss EAP repos are enabled: {{ eap_version }}"
       ansible.builtin.command: "subscription-manager repos --enable={{ eap_repo_name }}"

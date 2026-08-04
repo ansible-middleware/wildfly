@@ -42,11 +42,11 @@ argument_specs:
                 description: "WildFly installation directory, for backwards compatibility"
                 type: "str"
             wildfly_utils_no_restart_after_patch:
-                default: False
+                default: false
                 description: "When true, skip restarting after applying a cumulative patch"
                 type: "bool"
             wildfly_utils_selinux_enabled:
-                default: False
+                default: false
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
             wildfly_utils_port_range_offset:
@@ -56,11 +56,11 @@ argument_specs:
     downstream:
         options:
             eap_utils_enable:
-                default: True
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_utils_apply_cp:
-                default: True
+                default: true
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
             eap_utils_version:
@@ -68,7 +68,7 @@ argument_specs:
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_utils_patch_version:
-                required: False
+                required: false
                 description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_utils_apply_cp is True"
                 type: "str"
             eap_utils_install_workdir:
@@ -80,15 +80,15 @@ argument_specs:
                 description: "Red Hat EAP installation path"
                 type: "str"
             eap_utils_offline_install:
-                default: False
+                default: false
                 description: "Whether to install from local archive"
                 type: "bool"
             eap_utils_apply_cp_verbose:
-                default: False
+                default: false
                 description: "Whether to output verbose patch output"
                 type: "bool"
             eap_utils_elytron_adapter:
-                default: False
+                default: false
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
             eap_utils_elytron_adapter_version:
@@ -100,7 +100,7 @@ argument_specs:
                 description: "SSO (keycloak) adapter install filename"
                 type: "str"
             eap_utils_selinux_enabled:
-                default: True
+                default: true
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
             eap_utils_prospero_version:
@@ -132,43 +132,43 @@ argument_specs:
                 description: "Port for connecting to CLI"
                 type: "str"
             wildfly_utils_jboss_cli_query:
-                required: False
+                required: false
                 description: "The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
                 type: "str"
             wildfly_utils_jboss_cli_file:
-                required: False
+                required: false
                 description: "The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
                 type: "str"
             wildfly_utils_jboss_cli_timeout:
-                required: False
+                required: false
                 description: "Seconds to wait for jboss-cli connection to server"
                 type: "int"
             wildfly_utils_jboss_cli_connect:
-                required: False
+                required: false
                 description: "Whether to pass -c to jboss-cli.sh"
                 type: 'bool'
             wildfly_utils_jboss_cli_extra_param:
-                required: False
+                required: false
                 description: "An extra parameter name passed with -D to jboss-cli.sh"
                 type: 'str'
             wildfly_utils_jboss_cli_extra_param_value:
-                required: False
+                required: false
                 description: "The value for the extra parameter specified in jboss_cli_extra_param"
                 type: 'str'
             wildfly_utils_jboss_cli_notify:
-                required: False
+                required: false
                 description: "The handler to notify if the cli operation returns changes"
                 type: 'str'
             wildfly_utils_jboss_cli_changed_when:
-                required: False
+                required: false
                 description: "Whether to always return changed (or not) on changed_when"
                 type: 'bool'
             wildfly_utils_jboss_cli_become_user:
-                required: False
+                required: false
                 description: "The user account to execute jboss-cli with"
                 type: 'str'
             wildfly_utils_jboss_cli_force:
-                required: False
+                required: false
                 description: "Whether to add --force flag to jboss-cli command"
                 type: 'bool'
     prospero/main:
@@ -202,7 +202,9 @@ argument_specs:
                 description: "Path on target to the Prospero manifest"
                 type: "str"
             wildfly_utils_wildfly_prospero_download_url:
-                default: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
+                default: >-
+                  https://github.com/wildfly-extras/prospero/releases/download/{{
+                  wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip
                 description: "URL to download Prospero"
                 type: "str"
             wildfly_utils_wildfly_prospero_download_check_ssl:

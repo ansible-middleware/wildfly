@@ -11,7 +11,8 @@ wildfly_validation_home: "{{ wildfly_validation_install_workdir }}wildfly-{{ wil
 wildfly_validation_pidfile_homedir: '/run/wildfly'
 wildfly_validation_systemd_pidfile: "{{ wildfly_validation_pidfile_homedir }}/{{ wildfly_validation_service_name }}.pid"
 wildfly_validation_systemd_pidfile_require_privilege_escalation: true
-wildfly_validation_standard_sockets_validation_query: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
+wildfly_validation_standard_sockets_validation_query:
+  "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
 wildfly_validation_ejb_validation_query: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
 wildfly_validation_ee_validation_query: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
 wildfly_validation_queries: []

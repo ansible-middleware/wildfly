@@ -7,4 +7,4 @@ wildfly_subs_config:
     homedir: "{{ wildfly_subs_repos_state_file_homedir }}"
     prefix: "{{ wildfly_subs_repos_state_file_prefix }}"
     suffix: "{{ wildfly_subs_repos_state_file_suffix }}"
-  remove_root_dir: True
+  remove_root_dir: true

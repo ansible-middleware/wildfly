@@ -27,7 +27,9 @@
     tasks_from: jboss_cli.yml
   vars:
     wildfly_utils_jboss_home: "{{ wildfly_app_deploy_home }}"
-    wildfly_utils_jboss_cli_query: "'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }} /tmp/{{ wildfly_app_deploy_name }}'"
+    wildfly_utils_jboss_cli_query: >-
+      'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }}
+      /tmp/{{ wildfly_app_deploy_name }}'
     wildfly_utils_jboss_cli_timeout: 300
     wildfly_utils_jboss_cli_changed_when: false
   when: >

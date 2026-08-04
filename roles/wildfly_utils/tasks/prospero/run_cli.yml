@@ -10,11 +10,11 @@
     {{ wildfly_utils_prospero_home }}/bin/{{ wildfly_utils_prospero_name }}.sh {{ wildfly_utils_prospero_run_args }}
   register: wildfly_utils_prospero_run_results
   become: "{{ wildfly_utils_requires_become | default(true) }}"
-  changed_when: False # TODO: fix idempotency by parsing tool output
+  changed_when: false # TODO: fix idempotency by parsing tool output
 
 - name: "Verify that tool stdout is available"
   ansible.builtin.assert:
     that:
       - wildfly_utils_prospero_run_results is defined
       - wildfly_utils_prospero_run_results.stdout is defined
-    quiet: True
+    quiet: true

@@ -4,7 +4,7 @@
     that:
       - eap_subs_group_install_name is defined
       - eap_version is defined
-    quiet: True
+    quiet: true
     fail_msg: "Missing required parameters"
 
 - name: "Uninstall group package"
@@ -39,17 +39,20 @@
         that:
           - ansible_facts['distribution_major_version'] is defined
           - ansible_facts['architecture'] is defined
-        quiet: True
+        quiet: true
         fail_msg: "Missing required parameters"
       when:
         - not eap_repos_name is defined
 
     - name: "Determine EAP repo name."
       ansible.builtin.set_fact:
-        wildfly_subs_eap_repos_name: "jb-eap-{{ eap_version }}-for-rhel-{{ ansible_facts['distribution_major_version'] }}-{{ ansible_facts['architecture'] }}-rpms"
+        wildfly_subs_eap_repos_name: >-
+          jb-eap-{{ eap_version }}-for-rhel-{{
+          ansible_facts['distribution_major_version'] }}-{{
+          ansible_facts['architecture'] }}-rpms
       when:
         - not eap_repos_name is defined
 
     - name: "Ensure JBoss EAP repos are disabled: {{ eap_version }}"
       ansible.builtin.command: "subscription-manager repos --disable={{ eap_repos_name }}"
-      changed_when: False
+      changed_when: false

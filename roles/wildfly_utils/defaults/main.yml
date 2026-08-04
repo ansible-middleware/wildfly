@@ -15,7 +15,9 @@ wildfly_utils_port_range_offset: 0
 wildfly_utils_instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
 wildfly_utils_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
 wildfly_utils_java_version: 21
-wildfly_utils_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_utils_java_version | string == '1.8' else 'java-' + wildfly_utils_java_version | string + '-openjdk-headless' }}"
+wildfly_utils_java_package_name: >-
+  {{ 'java-1.8.0-openjdk' if wildfly_utils_java_version | string == '1.8'
+  else 'java-' + wildfly_utils_java_version | string + '-openjdk-headless' }}
 
 wildfly_utils_prospero_version: ''
 wildfly_utils_prospero_name: 'prospero'

@@ -11,7 +11,9 @@
 
 - name: "Determine CLI port (if port offset is used: {{ wildfly_utils_port_range_offset }})"
   ansible.builtin.set_fact:
-    wildfly_utils_jboss_cli_controller_port_final: "{{ (wildfly_utils_jboss_cli_controller_port | default(9990) | int) + (wildfly_utils_port_range_offset | int) }}"
+    wildfly_utils_jboss_cli_controller_port_final: >-
+      {{ (wildfly_utils_jboss_cli_controller_port | default(9990) | int) +
+      (wildfly_utils_port_range_offset | int) }}
 
 - name: "Ensure server's management interface is reachable"
   when: wildfly_utils_jboss_cli_connect | default(true)
@@ -28,7 +30,8 @@
     {{ '-c' if wildfly_utils_jboss_cli_connect | default(true) else '' }}
     {{ '--command=' + wildfly_utils_jboss_cli_query if wildfly_utils_jboss_cli_query | default('') | length > 0 else '' }}
     {{ '--file=' + wildfly_utils_jboss_cli_file if wildfly_utils_jboss_cli_file | default('') | length > 0 else '' }}
-    {{ ('-D' + wildfly_utils_jboss_cli_extra_param + '=' + wildfly_utils_jboss_cli_extra_param_value) if wildfly_utils_jboss_cli_extra_param | default('') | length > 0 else '' }}
+    {{ ('-D' + wildfly_utils_jboss_cli_extra_param + '=' + wildfly_utils_jboss_cli_extra_param_value)
+    if wildfly_utils_jboss_cli_extra_param | default('') | length > 0 else '' }}
     {{ '--force' if wildfly_utils_jboss_cli_force | default(false) else '' }}
     --controller={{ wildfly_utils_jboss_cli_controller_host }}:{{ wildfly_utils_jboss_cli_controller_port_final }}
     --timeout={{ (wildfly_utils_jboss_cli_timeout | int) * 1000 if (wildfly_utils_jboss_cli_timeout | default(0) | int) > 0 else 5000 }}

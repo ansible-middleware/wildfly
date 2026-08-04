@@ -13,7 +13,9 @@ wildfly_install_config_custom_file: ''
 wildfly_install_user: "{{ wildfly_user | default('wildfly') }}"
 wildfly_install_group: "{{ wildfly_group | default(wildfly_install_user) }}"
 wildfly_install_java_version: 21
-wildfly_install_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_install_java_version | string == '1.8' else 'java-' + wildfly_install_java_version | string + '-openjdk-headless' }}"
+wildfly_install_java_package_name: >-
+  {{ 'java-1.8.0-openjdk' if wildfly_install_java_version | string == '1.8'
+  else 'java-' + wildfly_install_java_version | string + '-openjdk-headless' }}
 wildfly_install_force_reinstall_config_base: false
 
 wildfly_install_offline_install: false

@@ -30,6 +30,11 @@
     tasks_from: jboss_cli.yml
   vars:
     wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-    wildfly_utils_jboss_cli_query: "'deploy {{ ('--force' if wildfly_utils_apps_jboss_cli_deploy_force | default(false) else '') }} {{ wildfly_utils_unmanaged_option }} {{ app_to_deploy.path }}'"
+    wildfly_utils_jboss_cli_query: >-
+      'deploy {{ ('--force' if wildfly_utils_apps_jboss_cli_deploy_force | default(false) else '') }}
+      {{ wildfly_utils_unmanaged_option }} {{ app_to_deploy.path }}'
   when:
-    - wildfly_utils_app_marker is defined and wildfly_utils_app_marker.stat is defined and wildfly_utils_app_marker.stat.exists is defined and not wildfly_utils_app_marker.stat.exists
+    - wildfly_utils_app_marker is defined
+    - wildfly_utils_app_marker.stat is defined
+    - wildfly_utils_app_marker.stat.exists is defined
+    - not wildfly_utils_app_marker.stat.exists

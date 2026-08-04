@@ -52,11 +52,11 @@ argument_specs:
             override_module_xml_template:
                 description: "Override path of template used for module configuration"
                 type: "str"
-                required: False
+                required: false
     downstream:
         options:
             eap_driver_enable:
-                default: True
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_driver_version:

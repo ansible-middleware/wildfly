@@ -12,7 +12,7 @@
   ansible.builtin.assert:
     that:
       - wildfly_systemd_node_id | length <= 23
-    quiet: True
+    quiet: true
     fail_msg: "The node ID in variable wildfly_systemd_node_id cannot exceed 23 characters length"
 
 - name: "Ensure that version is correct for yaml config extension"

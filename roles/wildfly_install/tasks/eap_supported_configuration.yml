@@ -16,7 +16,10 @@
       - ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution'] == 'RedHat'
       - ansible_facts['distribution_major_version'] in wildfly_install_supported_configuration.rhel
     quiet: true
-    fail_msg: "This version of RHEL {{ ansible_facts['distribution_major_version'] }} is not supported for EAP{{ eap_install_version[:3] }}, supported versions are: {{ wildfly_install_supported_configuration.rhel }}"
+    fail_msg: >-
+      This version of RHEL {{ ansible_facts['distribution_major_version'] }}
+      is not supported for EAP{{ eap_install_version[:3] }},
+      supported versions are: {{ wildfly_install_supported_configuration.rhel }}
   when:
     - eap_install_skip_supported_os_check is defined and not eap_install_skip_supported_os_check
     - ansible_facts['distribution_major_version'] is defined and ansible_facts['os_family'] is defined and ansible_facts['os_family'] == 'RedHat'
@@ -26,6 +29,9 @@
     that:
       - (eap_install_java_version | string) in wildfly_install_supported_configuration.openjdk
     quiet: true
-    fail_msg: "This version of OpenJDK used ({{ eap_install_java_version }}) is not supported for EAP{{ eap_install_version[:3] }}, supported version are: {{ wildfly_install_supported_configuration.openjdk }}"
+    fail_msg: >-
+      This version of OpenJDK used ({{ eap_install_java_version }})
+      is not supported for EAP{{ eap_install_version[:3] }},
+      supported version are: {{ wildfly_install_supported_configuration.openjdk }}
   when:
     - eap_install_skip_supported_openjdk_check is defined and not eap_install_skip_supported_openjdk_check

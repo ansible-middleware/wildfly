@@ -41,7 +41,9 @@
 
     - name: "Fetch joined string for first instance"
       ansible.builtin.set_fact:
-        eap_1_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-1 joined the cluster.*$', multiline=true) }}"
+        eap_1_joined: >-
+          {{ command_output.stdout | regex_search('^.*INFO  \[org.infinispan.CLUSTER\].*ISPN100000:
+          Node wildfly-1 joined the cluster.*$', multiline=true) }}
 
     - name: "Check that string matches"
       ansible.builtin.assert:
@@ -51,7 +53,9 @@
 
     - name: "Fetch joined string for second instance"
       ansible.builtin.set_fact:
-        eap_2_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-2 joined the cluster.*$', multiline=true) }}"
+        eap_2_joined: >-
+          {{ command_output.stdout | regex_search('^.*INFO  \[org.infinispan.CLUSTER\].*ISPN100000:
+          Node wildfly-2 joined the cluster.*$', multiline=true) }}
 
     - name: "Check that string has been found"
       ansible.builtin.assert:

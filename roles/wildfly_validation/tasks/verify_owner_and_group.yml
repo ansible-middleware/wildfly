@@ -21,7 +21,7 @@
         set -o pipefail
         find ./ -printf '%u %p\n' | { grep -v ^{{ wildfly_validation_user | quote }} || true; }
     chdir: "{{ wildfly_validation_home }}"
-  changed_when: False
+  changed_when: false
   register: wildfly_validation_files_wrong_user
 
 - name: "Print files or directories owned by wrong user"
@@ -43,7 +43,7 @@
         set -o pipefail
         find ./ -printf '%g %p\n' | { grep -v ^{{ wildfly_validation_group | quote }} || true; }
     chdir: "{{ wildfly_validation_home }}"
-  changed_when: False
+  changed_when: false
   register: wildfly_validation_files_wrong_group
 
 - name: "Print files or directories added to wrong group"

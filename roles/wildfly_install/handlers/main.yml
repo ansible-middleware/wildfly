@@ -5,6 +5,10 @@
   changed_when: wildfly_install_selinux_output.stdout_lines | length > 0
   become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
-    - (wildfly_install_new_version_downloaded is defined and wildfly_install_new_version_downloaded.changed) or (wildfly_install_path_to_workdir is defined and not wildfly_install_path_to_workdir.stat.exists)
+    - >-
+      (wildfly_install_new_version_downloaded is defined and
+      wildfly_install_new_version_downloaded.changed) or
+      (wildfly_install_path_to_workdir is defined and
+      not wildfly_install_path_to_workdir.stat.exists)
     - wildfly_install_selinux_enabled
   listen: exec_restorecon

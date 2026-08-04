@@ -27,7 +27,9 @@
 - name: Validate conditions
   ansible.builtin.assert:
     that:
-      - wildfly_install_is_wildfly_home is defined and wildfly_install_is_wildfly_home.stat is defined and wildfly_install_is_wildfly_home.stat.exists is defined
+      - wildfly_install_is_wildfly_home is defined
+      - wildfly_install_is_wildfly_home.stat is defined
+      - wildfly_install_is_wildfly_home.stat.exists is defined
       - wildfly_install_is_wildfly_home.stat.exists
     quiet: true
 

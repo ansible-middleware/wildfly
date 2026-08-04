@@ -9,7 +9,9 @@ wildfly_systemd_config_custom_file: ''
 
 wildfly_systemd_port_range_offset: 0
 wildfly_systemd_java_version: 21
-wildfly_systemd_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_systemd_java_version | string == '1.8' else 'java-' + wildfly_systemd_java_version | string + '-openjdk-headless' }}"
+wildfly_systemd_java_package_name: >-
+  {{ 'java-1.8.0-openjdk' if wildfly_systemd_java_version | string == '1.8'
+  else 'java-' + wildfly_systemd_java_version | string + '-openjdk-headless' }}
 wildfly_systemd_java_opts: '-Xmx1024M -Xms512M'
 
 wildfly_systemd_unit_enabled: true
@@ -21,8 +23,12 @@ wildfly_systemd_service_config_file_template: 'templates/wfly.service.j2'
 wildfly_systemd_service_config_file_template_conf: 'templates/wfly.conf.j2'
 wildfly_systemd_service_config_file_location: '/etc/sysconfig'
 
-wildfly_systemd_service_systemd_env_file: "{{ wildfly_systemd_service_config_file_location }}/{{ wildfly_systemd_service_name }}{{ wildfly_systemd_conf_file_suffix }}"
-wildfly_systemd_service_systemd_file: "{{ wildfly_systemd_service_config_location }}/{{ wildfly_systemd_service_name }}{{ wildfly_systemd_service_config_file_suffix }}"
+wildfly_systemd_service_systemd_env_file: >-
+  {{ wildfly_systemd_service_config_file_location }}/{{
+  wildfly_systemd_service_name }}{{ wildfly_systemd_conf_file_suffix }}
+wildfly_systemd_service_systemd_file: >-
+  {{ wildfly_systemd_service_config_location }}/{{
+  wildfly_systemd_service_name }}{{ wildfly_systemd_service_config_file_suffix }}
 wildfly_systemd_enable_yml_config: false
 wildfly_systemd_yml_configs: []
 wildfly_systemd_yml_configs_repository: ''

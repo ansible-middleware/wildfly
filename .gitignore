@@ -22,5 +22,7 @@ docs/_build/
 junit/
 
 changelogs/.plugin-cache.yaml
+changelogs/fragments/*.yaml
+changelogs/fragments/*.yml
 
 .ansible/

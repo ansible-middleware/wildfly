@@ -1,5 +1,5 @@
 ---
-wildfly_uninstall_require_privileges_escalation: true
+wildfly_uninstall_require_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
 wildfly_uninstall_service_name: "{{ wildfly_instance_name | default('wildfly') }}"
 wildfly_uninstall_home: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}wildfly-{{ wildfly_version | default('40.0.0.Final') }}/"
 wildfly_uninstall_systemd_service_file: "/usr/lib/systemd/system/{{ wildfly_uninstall_service_name }}.service"

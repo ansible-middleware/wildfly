@@ -7,4 +7,5 @@ wildfly_driver_home: "{{ wildfly_driver_install_workdir }}wildfly-{{ wildfly_dri
 wildfly_driver_module_dir: "{{ wildfly_driver_home }}/modules/{{ wildfly_driver_config.module_name | replace('.', '/') }}/main"
 wildfly_driver_jar_installation_path: "{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}"
 wildfly_driver_download_dir: "/tmp"
+wildfly_driver_become: "{{ wildfly_requires_become | default(true) }}"
 wildfly_driver_offline_install: false

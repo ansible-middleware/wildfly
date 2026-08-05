@@ -31,7 +31,7 @@
         loop_var: app_port
 
     - name: "Get eap-0 log"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.command:
         argv:
           - cat

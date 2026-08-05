@@ -4,7 +4,7 @@ wildfly_install_archive_filename: "wildfly-{{ wildfly_install_version }}.zip"
 wildfly_install_archive_filename_on_controller: true
 wildfly_install_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
 wildfly_install_workdir: '/opt/wildfly/'
-wildfly_install_require_privileges_escalation: true
+wildfly_install_require_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
 wildfly_install_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_install_version }}/"
 wildfly_install_download_url: "{{ wildfly_install_download_baseurl }}/{{ wildfly_install_version }}/{{ wildfly_install_archive_filename }}"
 wildfly_install_archive_dir: "{{ wildfly_install_workdir }}"
@@ -12,7 +12,7 @@ wildfly_install_config_base: "{{ wildfly_config_base | default('standalone.xml')
 wildfly_install_config_custom_file: ''
 wildfly_install_user: "{{ wildfly_user | default('wildfly') }}"
 wildfly_install_group: "{{ wildfly_group | default(wildfly_install_user) }}"
-wildfly_install_java_version: 21
+wildfly_install_java_version: "{{ wildfly_java_version | default(21) }}"
 wildfly_install_java_package_name: >-
   {{ 'java-1.8.0-openjdk' if wildfly_install_java_version | string == '1.8'
   else 'java-' + wildfly_install_java_version | string + '-openjdk-headless' }}

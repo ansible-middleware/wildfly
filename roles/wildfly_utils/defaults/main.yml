@@ -10,11 +10,11 @@ wildfly_utils_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildf
 wildfly_utils_home: "{{ wildfly_utils_install_workdir }}wildfly-{{ wildfly_utils_version }}/"
 wildfly_utils_selinux_enabled: false
 wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-wildfly_utils_jboss_cli_require_privilege_escalation: true
+wildfly_utils_jboss_cli_require_privilege_escalation: "{{ wildfly_requires_become | default(true) }}"
 wildfly_utils_port_range_offset: 0
 wildfly_utils_instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
 wildfly_utils_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
-wildfly_utils_java_version: 21
+wildfly_utils_java_version: "{{ wildfly_java_version | default(21) }}"
 wildfly_utils_java_package_name: >-
   {{ 'java-1.8.0-openjdk' if wildfly_utils_java_version | string == '1.8'
   else 'java-' + wildfly_utils_java_version | string + '-openjdk-headless' }}
@@ -29,7 +29,7 @@ wildfly_utils_propsero_release_url: 'https://api.github.com/repos/wildfly-extras
 wildfly_utils_prospero_download_check_ssl: false
 
 wildfly_utils_apps_jboss_cli_deploy_force: false
-wildfly_utils_apps_requires_privilege_escalation: true
+wildfly_utils_apps_requires_privilege_escalation: "{{ wildfly_requires_become | default(true) }}"
 wildfly_utils_jboss_cli_force: false
 wildfly_utils_jboss_cli_query: ''
 wildfly_utils_jboss_cli_file: ''
@@ -46,4 +46,4 @@ wildfly_utils_zipfile_dest: ''
 wildfly_utils_archive_filename: ''
 wildfly_utils_product_category: ''
 wildfly_utils_offline_install: false
-wildfly_utils_requires_become: true
+wildfly_utils_requires_become: "{{ wildfly_requires_become | default(true) }}"

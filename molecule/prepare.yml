@@ -67,7 +67,7 @@
           enabled=1
           gpgcheck=1
           gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       when:
         - ansible_facts['os_family'] == 'RedHat'
         - ansible_facts['distribution_major_version'] | default('0') | int == 8
@@ -80,12 +80,12 @@
         enabled: true
         gpgcheck: true
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       when:
         - not (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] | default('0') | int == 8)
 
     - name: "Ensure required packages are installed (RHEL 9+)"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.dnf:
         name:
           - >-
@@ -98,7 +98,7 @@
       when: ansible_facts['distribution_major_version'] != '8'
 
     - name: "Ensure required packages are installed (RHEL 8)"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.command:
         cmd: >-
           dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')

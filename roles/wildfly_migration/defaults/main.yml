@@ -23,6 +23,7 @@ wildfly_migration_path_to_env_properties: >-
 wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
 wildfly_migration_tool_configuration_template: 'templates/environment.properties.j2'
 wildfly_migration_require_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
+wildfly_migration_jdk_package_install_requires_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
 
 # EAP / redhat.eap.eap_migration: keep only keys not covered by argument_specs main (avoids templating
 # eap_version before validate_argument_spec). Paths like eap_migration_server_tool_home live in meta/argument_specs.yml.

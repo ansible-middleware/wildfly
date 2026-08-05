@@ -28,14 +28,14 @@
         - name: "Download asset (if required)."
           ansible.builtin.include_tasks: resources/download_pre_ga_bits.yml
 
-    - name: "Ensure sudo is installed on RHEL 8 (if user is root)"
+    - name: "Ensure sudo is installed on RHEL 8 (if user is root): {{ sudo_pkg_name }}"
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
       changed_when: false # dnf install is idempotent
       when:
         - ansible_facts['user_id'] == 'root'
         - ansible_facts['distribution_major_version'] == '8'
 
-    - name: "Ensure sudo is installed on RHEL 9+ (if user is root)"
+    - name: "Ensure sudo is installed on RHEL 9+ (if user is root): {{ sudo_pkg_name }}"
       ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
@@ -47,7 +47,7 @@
         manager: auto
       when: ansible_facts['distribution_major_version'] != '8'
 
-    - name: "Check if sudo is installed (skipping on RHEL 8)"
+    - name: "Check if sudo is installed (skipping on RHEL 8): {{ sudo_pkg_name }}"
       ansible.builtin.assert:
         that:
           - sudo_pkg_name in ansible_facts.packages

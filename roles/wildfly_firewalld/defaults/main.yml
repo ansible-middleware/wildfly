@@ -1,5 +1,6 @@
 ---
 wildfly_firewalld_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
+wildfly_install_requires_become: "{{ wildfly_requires_become | default(true) }}"
 wildfly_firewalld_cluster_enabled: false
 wildfly_firewalld_package_name: firewalld
 wildfly_firewalld_enabled: false

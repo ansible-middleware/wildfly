@@ -6,24 +6,24 @@
     - exec_restorecon
   block:
 
-    - name: "Create basedir {{ basedir }} for instance: {{ wildfly_instance_name }}"
+    - name: "Create basedir for instance: {{ wildfly_systemd_instance_name }}"
       ansible.builtin.file:
         path: "{{ basedir }}"
         state: directory
-        owner: "{{ wildfly_systemd.user }}"
-        group: "{{ wildfly_systemd.group }}"
+        owner: "{{ wildfly_systemd_config.user }}"
+        group: "{{ wildfly_systemd_config.group }}"
         mode: '0755'
         selevel: s0
         serole: object_r
         setype: usr_t
         seuser: system_u
 
-    - name: "Create deployment directories for instance: {{ wildfly_instance_name }}"
+    - name: "Create deployment directories for instance: {{ wildfly_systemd_instance_name }}"
       ansible.builtin.file:
         path: "{{ basedir }}/deployments"
         state: directory
-        owner: "{{ wildfly_systemd.user }}"
-        group: "{{ wildfly_systemd.group }}"
+        owner: "{{ wildfly_systemd_config.user }}"
+        group: "{{ wildfly_systemd_config.group }}"
         mode: '0755'
         selevel: s0
         serole: object_r
@@ -31,14 +31,14 @@
         seuser: system_u
 
     - name: "Configure colocated instance"
-      when: basedir != wildfly_systemd.home + '/standalone'
+      when: basedir != wildfly_systemd_config.home + '/standalone'
       block:
         - name: "Ensure configuration directory exists"
           ansible.builtin.file:
             state: directory
             dest: "{{ basedir }}/configuration/"
-            group: "{{ wildfly_systemd.group }}"
-            owner: "{{ wildfly_systemd.user }}"
+            group: "{{ wildfly_systemd_config.group }}"
+            owner: "{{ wildfly_systemd_config.user }}"
             mode: '0755'
             selevel: s0
             serole: object_r
@@ -47,16 +47,16 @@
 
         - name: "Find properties for colocated instance"
           ansible.builtin.find:
-            paths: "{{ wildfly_systemd.home }}/standalone/configuration/"
+            paths: "{{ wildfly_systemd_config.home }}/standalone/configuration/"
             patterns: '*.properties'
-          register: found_properties
+          register: wildfly_systemd_found_properties
 
         - name: "Deploy properties for colocated instance"
           ansible.builtin.copy:
             src: "{{ conf_file.path }}"
             dest: "{{ basedir }}/configuration/"
-            group: "{{ wildfly_systemd.group }}"
-            owner: "{{ wildfly_systemd.user }}"
+            group: "{{ wildfly_systemd_config.group }}"
+            owner: "{{ wildfly_systemd_config.user }}"
             mode: preserve
             remote_src: true
             force: false
@@ -64,16 +64,16 @@
             serole: object_r
             setype: usr_t
             seuser: system_u
-          loop: "{{ found_properties.files }}"
+          loop: "{{ wildfly_systemd_found_properties.files }}"
           loop_control:
             loop_var: conf_file
 
     - name: "Deploy configuration"
       ansible.builtin.copy:
-        src: "{{ wildfly_systemd.home }}/standalone/configuration/{{ wildfly_systemd.config }}"
-        dest: "{{ basedir }}/configuration/{{ wildfly_instance_name }}.xml"
-        group: "{{ wildfly_systemd.group }}"
-        owner: "{{ wildfly_systemd.user }}"
+        src: "{{ wildfly_systemd_config.home }}/standalone/configuration/{{ wildfly_systemd_config.config }}"
+        dest: "{{ basedir }}/configuration/{{ wildfly_systemd_instance_name }}.xml"
+        group: "{{ wildfly_systemd_config.group }}"
+        owner: "{{ wildfly_systemd_config.user }}"
         mode: '0640'
         remote_src: true
         force: false
@@ -81,74 +81,76 @@
         serole: object_r
         setype: usr_t
         seuser: system_u
-      when: wildfly_systemd.config_custom | length == 0
+      when: wildfly_systemd_config.config_custom | length == 0
 
     # wildfly_install already deploys custom config for the default standalone
-    # layout; re-templating the same path breaks idempotence on wildfly_install.
-    # Compare normalized paths: wildfly_basedir_prefix may omit a trailing slash
-    # while wildfly_home includes one, so basedir vs home+'/standalone' can differ
+    # layout; re-templating the same path breaks idempotence.
+    # Compare normalized paths: wildfly_systemd_basedir_prefix may omit a trailing
+    # slash while wildfly_home includes one, so basedir vs home can differ
     # only by duplicate slashes and still point at the same instance config file.
     - name: "Compute normalized paths for custom configuration deploy decision"
       ansible.builtin.set_fact:
-        wildfly_systemd_dest_cfg_norm: "{{ (basedir ~ '/configuration/' ~ wildfly_instance_name ~ '.xml') | regex_replace('/+', '/') }}"
-        wildfly_systemd_default_standalone_cfg_norm: "{{ (wildfly_systemd.home ~ '/standalone/configuration/' ~ wildfly_instance_name ~ '.xml') | regex_replace('/+', '/') }}"
-      when: wildfly_systemd.config_custom | length > 0
+        wildfly_systemd_dest_cfg_norm: "{{ (basedir ~ '/configuration/' ~ wildfly_systemd_instance_name ~ '.xml') | regex_replace('/+', '/') }}"
+        wildfly_systemd_default_standalone_cfg_norm: >-
+          {{ (wildfly_systemd_config.home ~ '/standalone/configuration/' ~
+          wildfly_systemd_instance_name ~ '.xml') | regex_replace('/+', '/') }}
+      when: wildfly_systemd_config.config_custom | length > 0
 
     - name: "Check whether custom instance configuration is already present"
       ansible.builtin.stat:
-        path: "{{ basedir }}/configuration/{{ wildfly_instance_name }}.xml"
+        path: "{{ basedir }}/configuration/{{ wildfly_systemd_instance_name }}.xml"
       register: wildfly_systemd_custom_cfg_dest_stat
-      when: wildfly_systemd.config_custom | length > 0
+      when: wildfly_systemd_config.config_custom | length > 0
 
     - name: "Deploy custom configuration"
       ansible.builtin.template:
-        src: "{{ wildfly_systemd.config_custom }}"
-        dest: "{{ basedir }}/configuration/{{ wildfly_instance_name }}.xml"
-        group: "{{ wildfly_systemd.group }}"
-        owner: "{{ wildfly_systemd.user }}"
+        src: "{{ wildfly_systemd_config.config_custom }}"
+        dest: "{{ basedir }}/configuration/{{ wildfly_systemd_instance_name }}.xml"
+        group: "{{ wildfly_systemd_config.group }}"
+        owner: "{{ wildfly_systemd_config.user }}"
         mode: '0640'
         selevel: s0
         serole: object_r
         setype: usr_t
         seuser: system_u
       when: >
-        wildfly_systemd.config_custom | length > 0 and
+        wildfly_systemd_config.config_custom | length > 0 and
         ((wildfly_systemd_dest_cfg_norm != wildfly_systemd_default_standalone_cfg_norm) or
         not wildfly_systemd_custom_cfg_dest_stat.stat.exists)
       notify: "Perform daemon-reload"
 
     - name: Include YAML configuration extension
       ansible.builtin.include_tasks: yml_config.yml
-      when: wildfly_enable_yml_config
+      when: wildfly_systemd_enable_yml_config
 
     - name: Check YAML configuration is disabled
       ansible.builtin.file:
-        path: "{{ wildfly_systemd.home }}{{ wildfly_systemd.yml_config.path }}{{ wildfly_systemd.yml_config.file }}"
+        path: "{{ wildfly_systemd_config.home }}{{ wildfly_systemd_config.yml_config.path }}{{ wildfly_systemd_config.yml_config.file }}"
         state: absent
-      when: not wildfly_enable_yml_config
+      when: not wildfly_systemd_enable_yml_config
 
     - name: Determine JAVA_HOME for selected JVM
       ansible.builtin.set_fact:
-        rpm_java_home: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-      when: 
+        wildfly_systemd_rpm_java_home: "/etc/alternatives/jre_{{ wildfly_systemd_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
+      when:
         - ansible_facts['os_family'] == 'RedHat'
-        - wildfly_java_package_name is match('^java-.*')
+        - wildfly_systemd_java_package_name is match('^java-.*')
 
     - name: Determine JAVA_HOME for selected JVM # noqa blocked_modules
       ansible.builtin.shell: |
         set -o pipefail
-        {{ wildfly_systemd.jvm_version_command[ansible_facts['os_family']] }}
+        {{ wildfly_systemd_config.jvm_version_command[ansible_facts['os_family']] }}
       args:
         executable: /bin/bash
-      changed_when: False
-      register: rpm_java_home_other
-      when: 
-        - (ansible_facts['os_family'] != 'RedHat') or (not wildfly_java_package_name is match('^java-.*'))
+      changed_when: false
+      register: wildfly_systemd_rpm_java_home_other
+      when:
+        - (ansible_facts['os_family'] != 'RedHat') or (not wildfly_systemd_java_package_name is match('^java-.*'))
 
-    - name: "Deploy service instance configuration: {{ wildfly_service_systemd_env_file }}"
+    - name: "Deploy service instance configuration: {{ wildfly_systemd_service_systemd_env_file }}"
       ansible.builtin.template:
-        src: "{{ wildfly_service_config_file_template }}"
-        dest: "{{ wildfly_service_systemd_env_file }}"
+        src: "{{ wildfly_systemd_service_config_file_template_conf }}"
+        dest: "{{ wildfly_systemd_service_systemd_env_file }}"
         group: root
         owner: root
         mode: '0644'
@@ -156,14 +158,18 @@
         serole: object_r
         setype: etc_t
         seuser: system_u
-      register: daemon_reload_env
+      register: wildfly_systemd_daemon_reload_env
       vars:
-        wildfly_rpm_java_home: "{{ rpm_java_home if rpm_java_home is defined else rpm_java_home_other.stdout }}"
-        wildfly_yml_configs_str: "'-y={{ wildfly_yml_configs | flatten | map('regex_replace', '.j2$', '') | map('regex_replace', '^', basedir + '/') | list | join(':') }}'"
-    - name: "Deploy Systemd unit for service: {{ wildfly_service_systemd_file }}"
+        wildfly_rpm_java_home: "{{ wildfly_systemd_rpm_java_home if wildfly_systemd_rpm_java_home is defined else wildfly_systemd_rpm_java_home_other.stdout }}"
+        wildfly_yml_configs_str: >-
+          '-y={{ wildfly_systemd_yml_configs | flatten
+          | map('regex_replace', '.j2$', '')
+          | map('regex_replace', '^', basedir + '/')
+          | list | join(':') }}'
+    - name: "Deploy Systemd unit for service: {{ wildfly_systemd_service_systemd_file }}"
       ansible.builtin.template:
         src: "{{ wildfly_systemd_service_config_file_template }}"
-        dest: "{{ wildfly_service_systemd_file }}"
+        dest: "{{ wildfly_systemd_service_systemd_file }}"
         group: root
         owner: root
         mode: '0644'
@@ -171,16 +177,19 @@
         serole: object_r
         setype: systemd_unit_file_t
         seuser: system_u
-      register: daemon_reload
+      register: wildfly_systemd_daemon_reload
       vars:
-        jboss_cli_deploy_controller: "{{ wildfly_systemd_jboss_cli_controller_host }}:{{ (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) + (wildfly_port_range_offset | int) }}"
+        jboss_cli_deploy_controller: >-
+          {{ wildfly_systemd_jboss_cli_controller_host }}:{{
+          (wildfly_systemd_jboss_cli_controller_port | default(9990) | int) +
+          (wildfly_systemd_port_range_offset | int) }}
 
     - name: "Perform daemon-reload to ensure the changes are picked up"
       ansible.builtin.systemd:
         daemon_reload: true
       when:
-        - daemon_reload is defined or daemon_reload_env is defined
-        - daemon_reload.changed or daemon_reload_env.changed
+        - wildfly_systemd_daemon_reload is defined or wildfly_systemd_daemon_reload_env is defined
+        - wildfly_systemd_daemon_reload.changed or wildfly_systemd_daemon_reload_env.changed
 
     - name: "Ensure service is started"
       ansible.builtin.include_tasks: service.yml

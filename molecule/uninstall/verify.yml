@@ -22,7 +22,7 @@
       when: (wildfly_uninstall_service_name + '.service') in ansible_facts.services
 
     - name: "Load metadata on server home: {{ wildfly_uninstall_home }}"
-      become: "{{ wildfly_uninstall_require_privileges_escalation }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.stat:
         path: "{{ wildfly_uninstall_home }}"
       register: wfly_home
@@ -35,13 +35,13 @@
         quiet: true
 
     - name: "Check systemd service file does not exist"
-      become: "{{ wildfly_uninstall_require_privileges_escalation }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.stat:
         path: "/usr/lib/systemd/system/{{ wildfly_uninstall_service_name }}.service"
       register: systemd_service_file
 
     - name: "Check systemd conf file does not exist"
-      become: "{{ wildfly_uninstall_require_privileges_escalation }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.stat:
         path: "/etc/{{ wildfly_uninstall_service_name }}.conf"
       register: systemd_conf_file

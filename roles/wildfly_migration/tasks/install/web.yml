@@ -7,7 +7,10 @@
 
     - name: "Set migration tool download URL and paths"
       ansible.builtin.set_fact:
-        wildfly_migration_tool_download_url: "https://github.com/wildfly/wildfly-server-migration/releases/download/{{ wildfly_migration_tool_version }}/jboss-server-migration-{{ wildfly_migration_tool_version }}.zip"
+        wildfly_migration_tool_download_url: >-
+          https://github.com/wildfly/wildfly-server-migration/releases/download/{{
+          wildfly_migration_tool_version }}/jboss-server-migration-{{
+          wildfly_migration_tool_version }}.zip
         wildfly_migration_tool_archive_path: "/tmp/jboss-server-migration-{{ wildfly_migration_tool_version }}.zip"
         wildfly_migration_tool_install_dir: "/opt"
         wildfly_migration_server_tool_home: "/opt/jboss-server-migration"
@@ -32,9 +35,9 @@
       ansible.builtin.unarchive:
         src: "{{ wildfly_migration_tool_archive_path }}"
         dest: "{{ wildfly_migration_tool_install_dir }}"
-        remote_src: yes
-        owner: "{{ wildfly_user | default(omit) }}"
-        group: "{{ wildfly_group | default(omit) }}"
+        remote_src: true
+        owner: "{{ wildfly_migration_user }}"
+        group: "{{ wildfly_migration_group }}"
       when:
         - not wildfly_migration_script_stat.stat.exists
 
@@ -43,5 +46,5 @@
         path: "{{ wildfly_migration_server_tool_home }}/logs"
         state: directory
         mode: "0755"
-        owner: "{{ wildfly_user | default(omit) }}"
-        group: "{{ wildfly_group | default(omit) }}"
+        owner: "{{ wildfly_migration_user }}"
+        group: "{{ wildfly_migration_group }}"

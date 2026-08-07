@@ -5,7 +5,7 @@
   vars_files:
     - vars.yml
   tasks:
-    - name: "Download zipfile from {{ wildfly_install_download_url }} into {{ wildfly_install_download_controller_download_dir }}"
+    - name: "Download zipfile to controller: {{ wildfly_install_download_controller_download_dir }}"
       delegate_to: localhost
       run_once: true  # noqa: run-once[task]
       ansible.builtin.get_url:
@@ -19,7 +19,7 @@
       when:
         - not eap_version is defined
 
-    - name: "Download EAP {{ eap_version }} from Red Hat Network using Unified Downloads API"
+    - name: "Download EAP from Red Hat Network using Unified Downloads API"
       delegate_to: localhost
       run_once: true  # noqa: run-once[task]
       when:
@@ -32,9 +32,9 @@
             name: wildfly_utils
             tasks_from: download_from_rhn.yml
           vars:
-            eap_archive_filename: "jboss-eap-{{ eap_version }}.zip"
-            zipfile_dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ eap_version }}.zip"
-            eap_product_category: appplatform
+            eap_utils_archive_filename: "jboss-eap-{{ eap_version }}.zip"
+            wildfly_utils_zipfile_dest: "{{ lookup('env', 'PWD') }}/jboss-eap-{{ eap_version }}.zip"
+            eap_utils_product_category: appplatform
 
 - name: Import shared molecule prepare playbook
   ansible.builtin.import_playbook: ../prepare.yml

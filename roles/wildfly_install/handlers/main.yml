@@ -1,10 +1,14 @@
 ---
 - name: Execute restorecon
   ansible.builtin.command: "restorecon -F -R -v {{ wildfly_install_workdir }}"
-  register: selinux_output
-  changed_when: selinux_output.stdout_lines | length > 0
+  register: wildfly_install_selinux_output
+  changed_when: wildfly_install_selinux_output.stdout_lines | length > 0
   become: "{{ wildfly_install_requires_become | default(true) }}"
   when:
-    - new_version_downloaded.changed or not path_to_workdir.stat.exists
-    - wildfly_selinux_enabled
+    - >-
+      (wildfly_install_new_version_downloaded is defined and
+      wildfly_install_new_version_downloaded.changed) or
+      (wildfly_install_path_to_workdir is defined and
+      not wildfly_install_path_to_workdir.stat.exists)
+    - wildfly_install_selinux_enabled
   listen: exec_restorecon

@@ -1,21 +1,35 @@
 ---
+wildfly_migration_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_migration_group: "{{ wildfly_group | default(wildfly_migration_user) }}"
 wildfly_migration_java_home: '/usr/lib/jvm/jre'
 wildfly_migration_jdk_package_name: 'java-21-openjdk-devel'
-wildfly_migration_jdk_package_skip_install: False
+wildfly_migration_jdk_package_skip_install: false
 wildfly_migration_server_tool_home: "{{ target_wildfly_home }}"
 wildfly_migration_tool_bin_folder: 'bin'
 wildfly_migration_tool_bin_script_name: 'jboss-server-migration.sh'
-wildfly_migration_server_tool_path_to_script: "{{ wildfly_migration_server_tool_home }}/{% if wildfly_migration_tool_bin_folder is defined and wildfly_migration_tool_bin_folder is not none and wildfly_migration_tool_bin_folder | length > 0 %}{{ wildfly_migration_tool_bin_folder }}/{% endif %}{{ wildfly_migration_tool_bin_script_name }}"
+wildfly_migration_server_tool_path_to_script: >-
+  {{ wildfly_migration_server_tool_home }}/{% if
+  wildfly_migration_tool_bin_folder is defined and
+  wildfly_migration_tool_bin_folder is not none and
+  wildfly_migration_tool_bin_folder | length > 0
+  %}{{ wildfly_migration_tool_bin_folder }}/{%
+  endif %}{{ wildfly_migration_tool_bin_script_name }}
 wildfly_migration_server_tool_subfolder_to_configuration: '/migration'
 wildfly_migration_server_tool_env_properties_file: 'configuration/environment.properties'
-wildfly_migration_path_to_env_properties: "{{ wildfly_migration_server_tool_home }}{{ wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
+wildfly_migration_path_to_env_properties: >-
+  {{ wildfly_migration_server_tool_home }}{{
+  wildfly_migration_server_tool_subfolder_to_configuration }}/{{
+  wildfly_migration_server_tool_env_properties_file }}
 wildfly_migration_config_files: 'standalone.xml,standalone-full.xml'
 wildfly_migration_tool_configuration_template: 'templates/environment.properties.j2'
-wildfly_migration_require_privileges_escalation: True
+wildfly_migration_require_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
+wildfly_migration_jdk_package_install_requires_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
 
 # EAP / redhat.eap.eap_migration: keep only keys not covered by argument_specs main (avoids templating
 # eap_version before validate_argument_spec). Paths like eap_migration_server_tool_home live in meta/argument_specs.yml.
 eap_migration_server_tool_install_dir: '/opt'
 eap_migration_server_tool_download_dir: '/opt'
 eap_migration_server_tool_product_id: 106310
-eap_migration_server_tool_path_to_archive: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_version | default('8.0.0') }}-server-migration.zip"
+eap_migration_enable: false
+eap_migration_version: '8.0.0'
+eap_migration_server_tool_path_to_archive: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_migration_version }}-server-migration.zip"

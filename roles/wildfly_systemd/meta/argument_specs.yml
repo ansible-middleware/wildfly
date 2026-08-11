@@ -172,10 +172,6 @@ argument_specs:
                 default: "/opt/jboss_eap/"
                 description: "Root directory for installation"
                 type: "str"
-            eap_systemd_home:
-                default: "{{ eap_systemd_install_workdir }}jboss-eap-{{ (eap_systemd_version.split('.'))[0:2] | join('.') }}/"
-                description: "Red Hat EAP installation path"
-                type: "str"
             eap_systemd_offline_install:
                 default: false
                 description: "Whether to install from local archive"

@@ -18,7 +18,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_app_deploy_deployment_file`| Path to the application artifact (.war, .ear, .jar) on the Ansible controller | `/path/to/your/application.war` |
 |`wildfly_app_deploy_name`| The name to use for the deployment in WildFly (e.g., app-v1.war) | `application.war` |
-|`wildfly_app_deploy_home`| WildFly installation directory | Inherited |
+|`wildfly_app_deploy_home`| WildFly home directory | `{{ wildfly_utils_home }}` |
 |`wildfly_app_deploy_jboss_cli_controller_host`| Hostname for connecting to CLI | `localhost` |
 |`wildfly_app_deploy_jboss_cli_controller_port`| Port for connecting to CLI | `9990` |
 |`wildfly_app_deploy_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `0` |
@@ -48,7 +48,7 @@ Deploy a WAR file to a standalone WildFly instance.
   vars:
     wildfly_app_deploy_deployment_file: "/path/to/myapp.war"
     wildfly_app_deploy_name: "myapp.war"
-    wildfly_app_deploy_home: "{{ wildfly_install_home }}"
+    wildfly_app_deploy_home: "{{ wildfly_utils_home }}"
     wildfly_app_deploy_jboss_cli_controller_host: "localhost"
     wildfly_app_deploy_jboss_cli_controller_port: "9990"
 ```

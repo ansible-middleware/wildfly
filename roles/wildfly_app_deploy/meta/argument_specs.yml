@@ -10,8 +10,8 @@ argument_specs:
                 description: "The name to use for the deployment in WildFly (e.g., app-v1.war)"
                 type: "str"
             wildfly_app_deploy_home:
-                required: false
-                description: "WildFly installation directory (inherits from wildfly_install role)"
+                default: "{{ wildfly_utils_home }}"
+                description: "WildFly home directory"
                 type: "str"
             wildfly_app_deploy_jboss_cli_controller_host:
                 default: "localhost"
@@ -42,10 +42,6 @@ argument_specs:
             eap_app_deploy_name:
                 default: "application.war"
                 description: "The name to use for the deployment in EAP (e.g., app-v1.war)"
-                type: "str"
-            eap_app_deploy_home:
-                required: false
-                description: "EAP installation directory (inherits from eap_install role)"
                 type: "str"
             eap_app_deploy_port_range_offset:
                 default: 0

@@ -3,7 +3,7 @@ wildfly_systemd_user: "{{ wildfly_user | default('wildfly') }}"
 wildfly_systemd_group: "{{ wildfly_group | default(wildfly_systemd_user) }}"
 wildfly_systemd_version: "{{ wildfly_version | default('40.0.0.Final') }}"
 wildfly_systemd_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
-wildfly_systemd_home: "{{ wildfly_systemd_install_workdir }}wildfly-{{ wildfly_systemd_version }}/"
+wildfly_systemd_home: "{{ wildfly_utils_home }}"
 wildfly_systemd_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
 wildfly_systemd_config_custom_file: ''
 

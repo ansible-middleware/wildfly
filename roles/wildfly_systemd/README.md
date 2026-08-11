@@ -18,9 +18,7 @@ Role Defaults
 |:---------|:------------|:--------|
 |`wildfly_systemd_user`| POSIX user account for WildFly service | `wildfly` |
 |`wildfly_systemd_group`| POSIX group for WildFly service | `{{ wildfly_systemd_user }}` |
-|`wildfly_systemd_version`| WildFly version to install | `40.0.0.Final` |
-|`wildfly_systemd_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
-|`wildfly_systemd_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_systemd_install_workdir }}wildfly-{{ wildfly_systemd_version }}/` |
+|`wildfly_systemd_home`| WildFly home directory | `{{ wildfly_utils_home }}` |
 |`wildfly_systemd_config_base`| Base standalone.xml config for instance | `standalone.xml` unless `wildfly_systemd_config_custom_file` is used |
 |`wildfly_systemd_config_custom_file`| Custom standalone.xml config to be copied to target instance and used as base | `''` |
 |`wildfly_systemd_port_range_offset`| Increment for `jboss.socket.binding.port-offset` | `0` |
@@ -77,8 +75,7 @@ Example Playbook
         wildfly_systemd_instance_name: "wildfly-{{ item }}"
         wildfly_systemd_service_name: "wildfly-{{ item }}-service"
         wildfly_systemd_config_base: standalone-ha.xml
-        wildfly_systemd_install_workdir: "/opt/wildfly-{{ item }}"
-        wildfly_systemd_home: "{{ wildfly_systemd_install_workdir }}/wildfly-{{ wildfly_systemd_version }}/"
+        wildfly_systemd_home: "{{ wildfly_utils_home }}"
         wildfly_systemd_port_range_offset: "{{ item * 100 }}"
       loop: "{{ range(0,3) | list }}"
 ```

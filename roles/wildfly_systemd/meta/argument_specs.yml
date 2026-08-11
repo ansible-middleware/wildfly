@@ -17,13 +17,9 @@ argument_specs:
                 default: "{{ wildfly_systemd_user }}"
                 description: "POSIX group for WildFly service"
                 type: "str"
-            wildfly_systemd_version:
-                default: '40.0.0.Final'
-                description: "WildFly version to install"
-                type: "str"
             wildfly_systemd_home:
-                default: '/opt/wildfly/wildfly-40.0.0.Final'
-                description: "WildFly installation directory"
+                default: "{{ wildfly_utils_home }}"
+                description: "WildFly home directory"
                 type: "str"
             wildfly_systemd_config_base:
                 default: 'standalone.xml'

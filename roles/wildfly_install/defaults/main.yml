@@ -19,6 +19,7 @@ wildfly_install_java_package_name: >-
   else 'java-' + wildfly_install_java_version | string + '-openjdk-headless' }}
 wildfly_install_force_reinstall_config_base: false
 
+wildfly_install_download_controller_download_dir: "{{ lookup('env', 'PWD') }}"
 wildfly_install_offline_install: false
 wildfly_install_prereqs_packages:
   - unzip

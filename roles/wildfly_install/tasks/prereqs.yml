@@ -23,15 +23,13 @@
       - wildfly_install_version is defined
       - >-
         wildfly_archive_filename_local |
-        default((wildfly_install_download_controller_download_dir |
-        default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename)
+        default(wildfly_install_download_controller_download_dir + '/' + wildfly_install_archive_filename)
         is exists
     quiet: true
     fail_msg: >-
       An offline install was requested, but files are not present on the controller:
       {{ wildfly_archive_filename_local |
-      default((wildfly_install_download_controller_download_dir |
-      default(lookup('env', 'PWD'))) + '/' + wildfly_install_archive_filename) }}
+      default(wildfly_install_download_controller_download_dir + '/' + wildfly_install_archive_filename) }}
   when:
     - wildfly_install_offline_install and wildfly_install_archive_filename_on_controller
 
@@ -51,20 +49,18 @@
     that:
       - >-
         not eap_install_apply_cp or (eap_install_patch_version is defined and
-        ((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD')))
+        (wildfly_install_download_controller_download_dir
         + '/' + eap_install_patch_archive_filename) is exists)
       - >-
         not eap_install_elytron_adapter or
-        (((wildfly_install_download_controller_download_dir | default(lookup('env', 'PWD')))
+        ((wildfly_install_download_controller_download_dir
         + '/' + eap_install_elytron_adapter_archive_filename) is exists)
     quiet: true
     fail_msg: >-
       An offline install was requested, but files are not present on the controller:
-      {{ ((wildfly_install_download_controller_download_dir |
-      default(lookup('env', 'PWD'))) + '/' +
+      {{ (wildfly_install_download_controller_download_dir + '/' +
       eap_install_patch_archive_filename) if eap_install_apply_cp else '' }}
-      {{ ((wildfly_install_download_controller_download_dir |
-      default(lookup('env', 'PWD'))) + '/' +
+      {{ (wildfly_install_download_controller_download_dir + '/' +
       eap_install_elytron_adapter_archive_filename)
       if eap_install_elytron_adapter else '' }}
   when:

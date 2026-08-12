@@ -157,7 +157,7 @@ argument_specs:
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
             eap_systemd_version:
-                default: "8.1.0"
+                default: "{{ eap_version | default('8.1.0') }}"
                 description: "Red Hat EAP version to install"
                 type: "str"
             eap_systemd_patch_version:

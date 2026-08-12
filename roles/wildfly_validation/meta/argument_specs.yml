@@ -89,7 +89,7 @@ argument_specs:
                 description: "Red Hat EAP archive name"
                 type: "str"
             eap_validation_install_workdir:
-                default: "/opt/jboss_eap/"
+                default: "{{ eap_install_workdir | default('/opt/jboss_eap/') }}"
                 description: "Root directory for installation"
                 type: "str"
             eap_validation_home:

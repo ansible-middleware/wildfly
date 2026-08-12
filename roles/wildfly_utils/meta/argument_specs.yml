@@ -72,7 +72,7 @@ argument_specs:
                 description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_utils_apply_cp is True"
                 type: "str"
             eap_utils_install_workdir:
-                default: "/opt/jboss_eap/"
+                default: "{{ eap_install_workdir | default('/opt/jboss_eap/') }}"
                 description: "Root directory for installation"
                 type: "str"
             eap_utils_home:

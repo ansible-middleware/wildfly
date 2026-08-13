@@ -130,11 +130,11 @@ the server modules directory tree. It comes with a template for the main.xml
 <tbody>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_module_dir</span></code></p></td>
 <td class="text-left"><p>Path for module installation</p></td>
-<td class="text-left"><p>`{{ wildfly_home }}/modules/{{ wildfly_driver.module_name</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_driver_home</span> <span class="pre">}}/modules/{{</span> <span class="pre">wildfly_driver_config.module_name</span> <span class="pre">|</span> <span class="pre">replace('.',</span> <span class="pre">'/')</span> <span class="pre">}}/main</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_jar_installation_path</span></code></p></td>
 <td class="text-left"><p>Path for JDBC driver installation</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_driver.jar_filename</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_driver_module_dir</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_driver_jar_filename</span> <span class="pre">}}</span></code></p></td>
 </tr>
 <tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_download_dir</span></code></p></td>
 <td class="text-left"><p>Temporary directory for the driver download</p></td>
@@ -144,21 +144,21 @@ the server modules directory tree. It comes with a template for the main.xml
 <td class="text-left"><p>Enable offline install mode (download to control node, then copy to target)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">false</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_version</span></code></p></td>
 <td class="text-left"><p>WildFly version to install</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">40.0.0.Final</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_home</span></code></p></td>
 <td class="text-left"><p>WildFly installation directory</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/wildfly-{{</span> <span class="pre">wildfly_driver_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_user</span></code></p></td>
 <td class="text-left"><p>POSIX user account for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_driver_group</span></code></p></td>
 <td class="text-left"><p>POSIX group for WildFly</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_driver_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
 </tbody>
 </table>

@@ -136,15 +136,15 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_version</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_version</span></code></p></td>
 <td class="text-left"><p>WildFly version to install</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">40.0.0.Final</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_archive_filename</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_archive_filename</span></code></p></td>
 <td class="text-left"><p>WildFly download archive name</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}.zip</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly-{{</span> <span class="pre">wildfly_install_version</span> <span class="pre">}}.zip</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_download_baseurl</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_download_baseurl</span></code></p></td>
 <td class="text-left"><p>Base URL for wildfly download</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://github.com/wildfly/wildfly/releases/download</span></code></p></td>
 </tr>
@@ -152,39 +152,39 @@
 <td class="text-left"><p>WildFly installation directory (where the server files are unzipped)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_home</span></code></p></td>
 <td class="text-left"><p>WildFly installation directory (WILDFLY_HOME)</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_install_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
 <tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_download_url</span></code></p></td>
 <td class="text-left"><p>WildFly download URL</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_download_baseurl</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_archive_filename</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_download_baseurl</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_install_version</span> <span class="pre">}}/{{</span> <span class="pre">wildfly_install_archive_filename</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_archive_dir</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_archive_dir</span></code></p></td>
 <td class="text-left"><p>Target download directory</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_config_base</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_config_base</span></code></p></td>
 <td class="text-left"><p>Base standalone.xml config for instance</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">standalone.xml</span></code> unless <code class="docutils literal notranslate"><span class="pre">wildfly_config_custom_file</span></code> is used</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">standalone.xml</span></code> unless <code class="docutils literal notranslate"><span class="pre">wildfly_install_config_custom_file</span></code> is used</p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_config_custom_file</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_config_custom_file</span></code></p></td>
 <td class="text-left"><p>Custom standalone.xml config to be copied to target instance and used as base</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_user</span></code></p></td>
 <td class="text-left"><p>POSIX user account for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_group</span></code></p></td>
 <td class="text-left"><p>POSIX group for WildFly</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_java_package_name</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_java_package_name</span></code></p></td>
 <td class="text-left"><p>RHEL/Fedora Java RPM package</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">java-21-openjdk-headless</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_offline_install</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_offline_install</span></code></p></td>
 <td class="text-left"><p>Whether to install from local archive</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
@@ -220,8 +220,8 @@
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Installation</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">configuration&quot;</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">hosts_group_name</span><span class="nv"> </span><span class="s">|</span><span class="nv"> </span><span class="s">default(&#39;localhost&#39;)</span><span class="nv"> </span><span class="s">}}&quot;</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">wildfly_version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;40.0.0.Final&#39;</span>
-<span class="w">    </span><span class="nt">wildfly_download_baseurl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://github.com/wildfly/wildfly/releases/download&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_install_version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;40.0.0.Final&#39;</span>
+<span class="w">    </span><span class="nt">wildfly_install_download_baseurl</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;https://github.com/wildfly/wildfly/releases/download&quot;</span>
 <span class="w">  </span><span class="nt">collections</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly</span>
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>

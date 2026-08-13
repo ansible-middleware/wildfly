@@ -136,59 +136,51 @@ feature (such as apply cumulative patches).</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_controller_host</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_jboss_cli_controller_host</span></code></p></td>
 <td class="text-left"><p>Hostname for connecting to CLI</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_controller_port</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_jboss_cli_controller_port</span></code></p></td>
 <td class="text-left"><p>Port for connecting to CLI</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9990</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_no_restart_after_patch</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_no_restart_after_patch</span></code></p></td>
 <td class="text-left"><p>When true, skip restarting after applying a cumulative patch</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_install_workdir</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_install_workdir</span></code></p></td>
 <td class="text-left"><p>WildFly installation directory (where the server files are unzipped)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/wildfly/</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_home</span></code></p></td>
 <td class="text-left"><p>WildFly installation directory (WILDFLY_HOME)</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_version</span> <span class="pre">}}/</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_utils_install_workdir</span> <span class="pre">}}wildfly-{{</span> <span class="pre">wildfly_utils_version</span> <span class="pre">}}/</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_version</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_version</span></code></p></td>
 <td class="text-left"><p>Version of Prospero to use</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">1.3.0.Beta1</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">''</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_name</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_name</span></code></p></td>
 <td class="text-left"><p>Constant for the name of the prospero tool</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">prospero</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_install_dir</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_install_dir</span></code></p></td>
 <td class="text-left"><p>Path to the installation dir for Prospero</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/opt/prospero</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_profile_name</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_profile_name</span></code></p></td>
 <td class="text-left"><p>Name of the WildFly profile for the server to install</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_scenario_enable</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_scenario_enable</span></code></p></td>
 <td class="text-left"><p>Specificy to Molecule if it should run the Prospero scenario</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">True</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_archive_name</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_archive_name</span></code></p></td>
 <td class="text-left"><p>Name of the Prospero archive</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_prospero_name</span> <span class="pre">}}-{{</span> <span class="pre">wildfly_prospero_version</span> <span class="pre">}}.zip</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_utils_prospero_name</span> <span class="pre">}}-{{</span> <span class="pre">wildfly_utils_prospero_version</span> <span class="pre">}}.zip</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_install_manifest_dir</span></code></p></td>
-<td class="text-left"><p>Path on target to the Prospero manifest</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_install_workdir</span> <span class="pre">}}/manifest</span></code></p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_download_url</span></code></p></td>
-<td class="text-left"><p>URL to download Prospero</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">https://github.com/wildfly-extras/prospero/releases/download/{{</span> <span class="pre">wildfly_prospero_version</span> <span class="pre">}}/prospero-{{</span> <span class="pre">wildfly_prospero_version</span> <span class="pre">}}.zip</span></code></p></td>
-</tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_prospero_download_check_ssl</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_prospero_download_check_ssl</span></code></p></td>
 <td class="text-left"><p>Should Ansible check SSL when downloading Prospero</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
@@ -206,15 +198,15 @@ feature (such as apply cumulative patches).</p>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_query</span></code></p></td>
-<td class="text-left"><p>The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively</p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_jboss_cli_query</span></code></p></td>
+<td class="text-left"><p>The command to execute via jboss-cli; one of wildfly_utils_jboss_cli_query or wildfly_utils_jboss_cli_file is required exclusively</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_file</span></code></p></td>
-<td class="text-left"><p>The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively</p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_jboss_cli_file</span></code></p></td>
+<td class="text-left"><p>The file to execute via jboss-cli; one of wildfly_utils_jboss_cli_query or wildfly_utils_jboss_cli_file is required exclusively</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_timeout</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_utils_jboss_cli_timeout</span></code></p></td>
 <td class="text-left"><p>Seconds to wait for jboss-cli connection to server</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">False</span></code></p></td>
 </tr>

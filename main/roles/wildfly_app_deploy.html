@@ -141,7 +141,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deployment_file</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_deployment_file</span></code></p></td>
 <td class="text-left"><p>Path to the application artifact (.war, .ear, .jar) on the Ansible controller</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">/path/to/your/application.war</span></code></p></td>
 </tr>
@@ -149,33 +149,29 @@
 <td class="text-left"><p>The name to use for the deployment in WildFly (e.g., app-v1.war)</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">application.war</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_home</span></code></p></td>
-<td class="text-left"><p>WildFly installation directory (inherits from wildfly_install role)</p></td>
-<td class="text-left"><p>Inherited</p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_home</span></code></p></td>
+<td class="text-left"><p>WildFly home directory</p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_utils_home</span> <span class="pre">}}</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_home</span></code></p></td>
-<td class="text-left"><p>WildFly installation directory, for backwards compatibility (inherits from wildfly_utils role)</p></td>
-<td class="text-left"><p>Inherited</p></td>
-</tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_controller_host</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_jboss_cli_controller_host</span></code></p></td>
 <td class="text-left"><p>Hostname for connecting to CLI</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">localhost</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">jboss_cli_controller_port</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_jboss_cli_controller_port</span></code></p></td>
 <td class="text-left"><p>Port for connecting to CLI</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">9990</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_port_range_offset</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_port_range_offset</span></code></p></td>
 <td class="text-left"><p>Increment for <code class="docutils literal notranslate"><span class="pre">jboss.socket.binding.port-offset</span></code></p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
 </tr>
-<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_user</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_user</span></code></p></td>
 <td class="text-left"><p>POSIX user account for WildFly</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly</span></code></p></td>
 </tr>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_group</span></code></p></td>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_group</span></code></p></td>
 <td class="text-left"><p>POSIX group for WildFly</p></td>
-<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_user</span> <span class="pre">}}</span></code></p></td>
+<td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">{{</span> <span class="pre">wildfly_app_deploy_user</span> <span class="pre">}}</span></code></p></td>
 </tr>
 </tbody>
 </table>
@@ -190,7 +186,7 @@
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deployment_file</span></code></p></td>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">wildfly_app_deploy_deployment_file</span></code></p></td>
 <td class="text-left"><p>Path to the application artifact on the Ansible controller</p></td>
 <td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">Yes</span></code></p></td>
 </tr>
@@ -209,11 +205,11 @@
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_app_deploy</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">wildfly_app_deployment_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/myapp.war&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_deployment_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/myapp.war&quot;</span>
 <span class="w">    </span><span class="nt">wildfly_app_deploy_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myapp.war&quot;</span>
-<span class="w">    </span><span class="nt">wildfly_home</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/opt/wildfly/wildfly-40.0.0.Final/&quot;</span>
-<span class="w">    </span><span class="nt">jboss_cli_controller_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;localhost&quot;</span>
-<span class="w">    </span><span class="nt">jboss_cli_controller_port</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;9990&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_home</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">wildfly_utils_home</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_jboss_cli_controller_host</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;localhost&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_jboss_cli_controller_port</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;9990&quot;</span>
 </pre></div>
 </div>
 </section>
@@ -226,10 +222,10 @@
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">role</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_app_deploy</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">wildfly_app_deployment_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/myapp.war&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_deployment_file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;/path/to/myapp.war&quot;</span>
 <span class="w">    </span><span class="nt">wildfly_app_deploy_name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;myapp.war&quot;</span>
-<span class="w">    </span><span class="nt">wildfly_port_range_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
-<span class="w">    </span><span class="nt">jboss_cli_controller_port</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;9990&quot;</span><span class="w">  </span><span class="c1"># Port will be 9990 + 100 = 10090. See https://docs.wildfly.org/39/ for port offset documentation</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_port_range_offset</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">    </span><span class="nt">wildfly_app_deploy_jboss_cli_controller_port</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;9990&quot;</span><span class="w">  </span><span class="c1"># Port will be 9990 + 100 = 10090</span>
 </pre></div>
 </div>
 </section>

@@ -101,8 +101,8 @@
   ansible.builtin.unarchive:
     src: "{{ wildfly_utils_full_path_to_prospero_archive }}"
     dest: "{{ wildfly_utils_prospero_install_dir }}"
-    owner: "{{ wildfly_utils_user | default(omit) }}"
-    group: "{{ wildfly_utils_group | default(omit) }}"
+    owner: "{{ wildfly_utils_user }}"
+    group: "{{ wildfly_utils_group }}"
     remote_src: true
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   when:

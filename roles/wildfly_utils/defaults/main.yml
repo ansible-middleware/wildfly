@@ -40,8 +40,6 @@ wildfly_utils_jboss_cli_path_to_script: "{{ wildfly_utils_jboss_home }}/bin/jbos
 wildfly_utils_jboss_cli_extra_param: ''
 wildfly_utils_jboss_cli_extra_param_value: ''
 wildfly_utils_jboss_cli_output_dmr: false
-wildfly_utils_jboss_cli_become_user: "{{ omit }}"
-wildfly_utils_jboss_cli_notify: "{{ omit }}"
 wildfly_utils_zipfile_dest: ''
 wildfly_utils_archive_filename: ''
 wildfly_utils_product_category: ''

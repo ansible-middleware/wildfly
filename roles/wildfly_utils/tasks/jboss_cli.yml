@@ -24,7 +24,7 @@
     delay: 1
     sleep: 2
 
-- name: "Execute CLI query {{ wildfly_utils_jboss_cli_query | default(wildfly_utils_jboss_cli_file) }}"
+- name: "Execute CLI query {{ wildfly_utils_jboss_cli_query | default(wildfly_utils_jboss_cli_file) }}"  # noqa: jinja[invalid]
   ansible.builtin.command: >
     {{ wildfly_utils_jboss_cli_path_to_script | default(wildfly_utils_jboss_home + '/bin/jboss-cli.sh') }}
     {{ '-c' if wildfly_utils_jboss_cli_connect | default(true) else '' }}

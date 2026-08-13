@@ -10,6 +10,6 @@
   ansible.builtin.systemd:
     name: "{{ wildfly_systemd_service_name }}"
     state: "{{ instance_state }}"
-    enabled: "{{ wildfly_systemd_config.enabled | default(omit) }}"
+    enabled: "{{ wildfly_systemd_config.enabled }}"
     daemon_reload: true
   become: "{{ wildfly_systemd_require_privilege_escalation | default(true) }}"

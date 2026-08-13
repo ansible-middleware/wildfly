@@ -174,7 +174,7 @@
   notify:
     - exec_restorecon
 
-- name: "Apply latest cumulative patch"
+- name: "Apply latest cumulative patch"  # noqa: jinja[invalid]
   when:
     - eap_install_apply_cp is defined and (eap_install_apply_cp | bool )
     - eap_install_enable is defined and (eap_install_enable | bool )

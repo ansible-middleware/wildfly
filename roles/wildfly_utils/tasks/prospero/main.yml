@@ -18,8 +18,8 @@
   ansible.builtin.file:
     path: "{{ wildfly_utils_prospero_install_dir }}"
     state: directory
-    owner: "{{ wildfly_utils_user | default(omit) }}"
-    group: "{{ wildfly_utils_group | default(omit) }}"
+    owner: "{{ wildfly_utils_user }}"
+    group: "{{ wildfly_utils_group }}"
     mode: '0750'
   become: "{{ wildfly_utils_requires_become | default(true) }}"
 

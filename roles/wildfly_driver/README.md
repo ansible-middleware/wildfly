@@ -11,14 +11,14 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_driver_module_dir`| Path for module installation | `{{ wildfly_home }}/modules/{{ wildfly_driver.module_name | replace('.', '/') }}/main` |
-|`wildfly_driver_jar_installation_path`| Path for JDBC driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver.jar_filename }}` |
+|`wildfly_driver_module_dir`| Path for module installation | `{{ wildfly_driver_home }}/modules/{{ wildfly_driver_config.module_name \| replace('.', '/') }}/main` |
+|`wildfly_driver_jar_installation_path`| Path for JDBC driver installation | `{{ wildfly_driver_module_dir }}/{{ wildfly_driver_jar_filename }}` |
 |`wildfly_driver_download_dir`| Temporary directory for the driver download | `/tmp` |
 |`wildfly_driver_offline_install`| Enable offline install mode (download to control node, then copy to target) | `false` |
-|`wildfly_version`| WildFly version to install | `40.0.0.Final` |
-|`wildfly_home`| WildFly installation directory | `/opt/wildfly/wildfly-{{ wildfly_version }}/` |
-|`wildfly_user`| POSIX user account for WildFly | `wildfly` |
-|`wildfly_group`| POSIX group for WildFly | `{{ wildfly_user }}` |
+|`wildfly_driver_version`| WildFly version to install | `40.0.0.Final` |
+|`wildfly_driver_home`| WildFly installation directory | `/opt/wildfly/wildfly-{{ wildfly_driver_version }}/` |
+|`wildfly_driver_user`| POSIX user account for WildFly | `wildfly` |
+|`wildfly_driver_group`| POSIX group for WildFly | `{{ wildfly_driver_user }}` |
 <!--end argument_specs-->
 
 

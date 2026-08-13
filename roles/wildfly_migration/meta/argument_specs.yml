@@ -2,23 +2,27 @@ argument_specs:
     main:
         options:
             target_wildfly_home:
-                required: True
+                required: true
                 description: "Path on the target to the server's home to migrate to"
                 type: "str"
             previous_wildfly_home:
-                required: True
+                required: true
                 description: "Path on the target to the server's home to migrate from"
                 type: "str"
-            eap_version:
+            eap_migration_version:
                 default: "8.0.0"
-                description: "EAP product version (x.y.z) for EAP migration tooling and RHN. Always defined for arg validation; override for non-8.x targets. Unused for pure WildFly when EAP install is off."
+                description: >-
+                  EAP product version (x.y.z) for EAP migration tooling
+                  and RHN. Always defined for arg validation; override
+                  for non-8.x targets. Unused for pure WildFly when
+                  EAP install is off.
                 type: "str"
             wildfly_migration_environment_props:
                 default: "templates/environment.properties.j2"
                 description: "Template to configure the migration tool"
                 type: "str"
             wildfy_migration_require_privileges_escalation:
-                default: True
+                default: true
                 description: "Indicate if the server migration tool requires privileges escalation"
                 type: "str"
             wildfly_migration_server_tool_home:
@@ -34,7 +38,13 @@ argument_specs:
                 description: "Name of the script lauching the server migration tool"
                 type: "str"
             wildfly_migration_server_tool_path_to_script:
-                default: "{{ wildfly_migration_server_tool_home }}/{% if wildfly_migration_tool_bin_folder is defined and wildfly_migration_tool_bin_folder is not none and wildfly_migration_tool_bin_folder | length > 0 %}{{ wildfly_migration_tool_bin_folder }}/{% endif %}{{ wildfly_migration_tool_bin_script_name }}"
+                default: >-
+                  {{ wildfly_migration_server_tool_home }}/{% if
+                  wildfly_migration_tool_bin_folder is defined and
+                  wildfly_migration_tool_bin_folder is not none and
+                  wildfly_migration_tool_bin_folder | length > 0
+                  %}{{ wildfly_migration_tool_bin_folder }}/{%
+                  endif %}{{ wildfly_migration_tool_bin_script_name }}
                 description: "Path to the script launching the server migration tool"
                 type: "str"
             wildfly_migration_server_tool_subfolder_to_configuration:
@@ -47,7 +57,10 @@ argument_specs:
                 type: "str"
             wildfly_migration_path_to_env_properties:
                 description: "Absolute path to the main configuration"
-                default: "{{ wildfly_migration_server_tool_home }}{{ wildfly_migration_server_tool_subfolder_to_configuration }}/{{ wildfly_migration_server_tool_env_properties_file }}"
+                default: >-
+                  {{ wildfly_migration_server_tool_home }}{{
+                  wildfly_migration_server_tool_subfolder_to_configuration }}/{{
+                  wildfly_migration_server_tool_env_properties_file }}
                 type: "str"
             wildfly_migration_config_files:
                 default: 'standalone.xml,standalone-full.xml'
@@ -58,7 +71,7 @@ argument_specs:
                 description: "Relative path to the jinja template for the server tool migration main configuration file"
                 type: "str"
             wildfly_migration_require_privileges_escalation:
-                default: True
+                default: true
                 description: "Indicates whether or the migration server tool requires root privileges to run"
                 type: "str"
             wildfly_migration_java_home:
@@ -70,21 +83,21 @@ argument_specs:
                 description: "Name of the RPM package to install for the JVM used by the server migration tool"
                 type: "str"
             wildfly_migration_jdk_package_skip_install:
-                default: False
+                default: false
                 description: "Indicates if the install check of the RPM package for the JVM of the migration server tool can be skipped"
                 type: "bool"
             wildfly_migration_jdk_package_install_requires_privileges_escalation:
-                default: True
+                default: true
                 description: "Indicates if the install of the RPM for the JVM on the target executing the migration server tool can be skipped"
                 type: "bool"
     downstream:
         options:
-            eap_enable:
-                default: True
+            eap_migration_enable:
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
             eap_migration_server_tool_path_to_archive:
-                default: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_version | default('8.0.0') }}-server-migration.zip"
+                default: "{{ eap_migration_server_tool_download_dir }}/jboss-eap-{{ eap_migration_version }}-server-migration.zip"
                 description: "Path to the Red Hat provided archive for the server migration tool"
                 type: "str"
             eap_migration_server_tool_product_id:
@@ -96,7 +109,11 @@ argument_specs:
                 description: "Path to the folder where the server migration archive is downloaded"
                 type: "str"
             eap_migration_server_tool_controller_download_dir:
-                description: "Directory on the Ansible controller where the migration tool zip is staged before copy to targets (defaults to the playbook working directory, same pattern as Prospero/JBoss Installation Manager)"
+                description: >-
+                  Directory on the Ansible controller where the migration
+                  tool zip is staged before copy to targets (defaults to
+                  the playbook working directory, same pattern as
+                  Prospero/JBoss Installation Manager)
                 type: "str"
             eap_migration_server_tool_install_dir:
                 default: "/opt"

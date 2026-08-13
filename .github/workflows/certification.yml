@@ -23,3 +23,9 @@ concurrency:
 jobs:
   call:
     uses: ansible-collections/partner-certification-checker/.github/workflows/certification-reusable.yml@6a7d1fe5159620648295b44222c48789008a9660 # v3.0.0
+    with:
+      # Default ansible-core 2.16 installs ansible-lint 24.12.2, which then
+      # upgrades ansible-core to >=2.19 via pip and crashes with:
+      # ModuleNotFoundError: ansible.parsing.yaml.constructor
+      # Using ansible-core >=2.19 selects ansible-lint 25.2.0, which is compatible.
+      ansible-core-version: "2.19.0"

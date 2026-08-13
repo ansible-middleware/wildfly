@@ -24,3 +24,6 @@ galaxy_info:
     - cli
     - server
     - systemd
+
+dependencies:
+  - role: wildfly_utils

@@ -2,161 +2,171 @@
 - name: Check local download archive path
   ansible.builtin.stat:
     path: "{{ lookup('env', 'PWD') }}"
-  register: local_path
+  register: wildfly_utils_local_path
   delegate_to: localhost
 
 - name: Fetch latest Prospero release information from GitHub API
   ansible.builtin.uri:
-    url: "{{ wildfly_propsero_release_url }}"
+    url: "{{ wildfly_utils_propsero_release_url }}"
     method: GET
     return_content: true
-  register: prospero_release_info
+  register: wildfly_utils_prospero_release_info
   delegate_to: localhost
   run_once: true
   when:
-    - not eap_enable is defined or not (eap_enable | bool)
+    - not eap_utils_enable is defined or not (eap_utils_enable | bool)
 
 - name: Set fact for the latest Prospero version and download URL
   ansible.builtin.set_fact:
-    wildfly_prospero_version: "{{ prospero_release_info.json.tag_name }}"
-    wildfly_prospero_download_url: "{{ (prospero_release_info.json.assets | selectattr('name', 'match', 'prospero-build-.*\\.zip') | first).browser_download_url }}"
+    wildfly_utils_prospero_version_final: "{{ wildfly_utils_prospero_release_info.json.tag_name }}"
+    wildfly_utils_prospero_download_url: >-
+      {{ (wildfly_utils_prospero_release_info.json.assets |
+      selectattr('name', 'match', 'prospero-build-.*\.zip') |
+      first).browser_download_url }}
   delegate_to: localhost
   run_once: true
   when:
-    - not eap_enable is defined or not (eap_enable | bool)
+    - not eap_utils_enable is defined or not (eap_utils_enable | bool)
 
 - name: Set download paths for GitHub
   ansible.builtin.set_fact:
-    full_path_to_prospero_archive: "{{ wildfly_prospero_install_dir }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
-    local_path_to_archive: "{{ local_path.stat.path }}/{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
+    wildfly_utils_full_path_to_prospero_archive: >-
+      {{ wildfly_utils_prospero_install_dir }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip
+    wildfly_utils_local_path_to_archive: >-
+      {{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version_final }}.zip
   when:
-    - not eap_enable is defined or not (eap_enable | bool)
+    - not eap_utils_enable is defined or not (eap_utils_enable | bool)
 
 - name: Set download paths for EAP
   ansible.builtin.set_fact:
-    full_path_to_prospero_archive: "{{ eap_prospero_install_dir }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
-    local_path_to_archive: "{{ local_path.stat.path }}/jboss-eap-{{ eap_version }}-installation-manager.zip"
+    wildfly_utils_full_path_to_prospero_archive: "{{ eap_utils_prospero_install_dir }}/jboss-eap-{{ eap_utils_version }}-installation-manager.zip"
+    wildfly_utils_local_path_to_archive: "{{ wildfly_utils_local_path.stat.path }}/jboss-eap-{{ eap_utils_version }}-installation-manager.zip"
   when:
-    - eap_enable is defined and (eap_enable | bool)
+    - eap_utils_enable is defined and (eap_utils_enable | bool)
 
-- name: "Check target archive: {{ full_path_to_prospero_archive }}"
+- name: "Check target archive: {{ wildfly_utils_full_path_to_prospero_archive }}"
   ansible.builtin.stat:
-    path: "{{ full_path_to_prospero_archive }}"
-  register: archive_path
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+    path: "{{ wildfly_utils_full_path_to_prospero_archive }}"
+  register: wildfly_utils_archive_path
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
 
-- name: "Download Prospero to {{ local_path_to_archive }}"
+- name: "Download Prospero to {{ wildfly_utils_local_path_to_archive }}"
   ansible.builtin.get_url:
-    url: "{{ wildfly_prospero_download_url }}"
-    dest: "{{ local_path_to_archive }}"
+    url: "{{ wildfly_utils_prospero_download_url }}"
+    dest: "{{ wildfly_utils_local_path_to_archive }}"
     mode: '0640'
-    validate_certs: "{{ wildfly_prospero_download_check_ssl }}"
+    validate_certs: "{{ wildfly_utils_prospero_download_check_ssl }}"
   delegate_to: localhost
-  register: downloaded_archive
+  register: wildfly_utils_downloaded_archive
   when:
-    - not eap_enable is defined or not (eap_enable | bool)
+    - not eap_utils_enable is defined or not (eap_utils_enable | bool)
 
-- name: "Download JBoss Installation Manager from RHN to {{ local_path_to_archive }}."
+- name: "Download JBoss Installation Manager from RHN to {{ wildfly_utils_local_path_to_archive }}." # noqa var-naming[no-role-prefix]
   ansible.builtin.include_role:
     name: eap_install
     tasks_from: install/rhn.yml
   vars:
-    eap_archive_filename: jboss-eap-{{ eap_version }}-installation-manager.zip
+    eap_install_archive_filename: jboss-eap-{{ eap_utils_version }}-installation-manager.zip
+    eap_install_local_path_to_archive: "{{ wildfly_utils_local_path_to_archive }}"
   when:
-    - eap_enable is defined and (eap_enable | bool)
+    - eap_utils_enable is defined and (eap_utils_enable | bool)
 
 - name: Check downloaded archive
   ansible.builtin.stat:
-    path: "{{ local_path_to_archive }}"
-  register: local_archive_path
+    path: "{{ wildfly_utils_local_path_to_archive }}"
+  register: wildfly_utils_local_archive_path
   delegate_to: localhost
 
 - name: Copy archive to target nodes
   ansible.builtin.copy:
-    src: "{{ local_path_to_archive }}"
-    dest: "{{ full_path_to_prospero_archive }}"
-    owner: "{{ wildfly_install.user }}"
-    group: "{{ wildfly_install.group }}"
+    src: "{{ wildfly_utils_local_path_to_archive }}"
+    dest: "{{ wildfly_utils_full_path_to_prospero_archive }}"
+    owner: "{{ wildfly_utils_user }}"
+    group: "{{ wildfly_utils_group }}"
     mode: '0640'
-  register: new_version_downloaded
+  register: wildfly_utils_new_version_downloaded
   when:
-    - not archive_path.stat.exists
-    - local_archive_path.stat is defined
-    - local_archive_path.stat.exists
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+    - not wildfly_utils_archive_path.stat.exists
+    - wildfly_utils_local_archive_path.stat is defined
+    - wildfly_utils_local_archive_path.stat.exists
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
 
-- name: "Read target directory information: {{ wildfly_prospero_install_dir }}"
+- name: "Read target directory information: {{ wildfly_utils_prospero_install_dir }}"
   ansible.builtin.stat:
-    path: "{{ wildfly_prospero_install_dir }}/bin"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  register: path_to_prospero_installation
+    path: "{{ wildfly_utils_prospero_install_dir }}/bin"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  register: wildfly_utils_path_to_prospero_installation
 
 - name: "Ensure Prospero is installed on target."
   ansible.builtin.unarchive:
-    src: "{{ full_path_to_prospero_archive }}"
-    dest: "{{ wildfly_prospero_install_dir }}"
-    owner: "{{ wildfly_install_user | default(omit) }}"
-    group: "{{ wildfly_install_group | default(omit) }}"
-    remote_src: True
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+    src: "{{ wildfly_utils_full_path_to_prospero_archive }}"
+    dest: "{{ wildfly_utils_prospero_install_dir }}"
+    owner: "{{ wildfly_utils_user }}"
+    group: "{{ wildfly_utils_group }}"
+    remote_src: true
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
   when:
-    - new_version_downloaded.changed or not path_to_prospero_installation.stat.exists
-  register: prospero_extraction
+    - wildfly_utils_new_version_downloaded.changed or not wildfly_utils_path_to_prospero_installation.stat.exists
+  register: wildfly_utils_prospero_extraction
 
 - name: "Update mtime of extracted directory to ensure proper selection"
   ansible.builtin.command:
-    cmd: "find {{ wildfly_prospero_install_dir }} -maxdepth 1 -type d -name '{{ wildfly_prospero_name }}*' -exec touch {} \\;"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+    cmd: "find {{ wildfly_utils_prospero_install_dir }} -maxdepth 1 -type d -name '{{ wildfly_utils_prospero_name }}*' -exec touch {} \\;"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
   when:
-    - new_version_downloaded.changed or prospero_extraction.changed
+    - wildfly_utils_new_version_downloaded.changed or wildfly_utils_prospero_extraction.changed
   changed_when: false
 
 - name: "Find actual Prospero installation directory after extraction"
   ansible.builtin.find:
-    paths: "{{ wildfly_prospero_install_dir }}"
-    patterns: "{{ wildfly_prospero_name }}*"
+    paths: "{{ wildfly_utils_prospero_install_dir }}"
+    patterns: "{{ wildfly_utils_prospero_name }}*"
     file_type: directory
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  register: prospero_dirs
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  register: wildfly_utils_prospero_dirs
   when:
-    - (eap_enable is defined and (eap_enable | bool)) or (new_version_downloaded.changed or prospero_extraction.changed or not path_to_prospero_installation.stat.exists)
+    - >-
+      (eap_utils_enable is defined and (eap_utils_enable | bool)) or
+      (wildfly_utils_new_version_downloaded.changed or
+      wildfly_utils_prospero_extraction.changed or
+      not wildfly_utils_path_to_prospero_installation.stat.exists)
 
 - name: "Sort prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:
-    sorted_prospero_dirs: "{{ prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
+    wildfly_utils_sorted_prospero_dirs: "{{ wildfly_utils_prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
   when:
-    - prospero_dirs.files is defined
-    - prospero_dirs.files | length > 0
+    - wildfly_utils_prospero_dirs.files is defined
+    - wildfly_utils_prospero_dirs.files | length > 0
 
-- name: "Set wildfly_prospero_home based on most recently modified directory"
+- name: "Set wildfly_utils_prospero_home based on most recently modified directory"
   ansible.builtin.set_fact:
-    wildfly_prospero_home: "{{ sorted_prospero_dirs[0].path }}"
+    wildfly_utils_prospero_home: "{{ wildfly_utils_sorted_prospero_dirs[0].path }}"
   when:
-    - sorted_prospero_dirs is defined
-    - sorted_prospero_dirs | length > 0
+    - wildfly_utils_sorted_prospero_dirs is defined
+    - wildfly_utils_sorted_prospero_dirs | length > 0
 
 - name: "Find Prospero installation directory if not already set"
   ansible.builtin.find:
-    paths: "{{ wildfly_prospero_install_dir }}"
-    patterns: "{{ wildfly_prospero_name }}*"
+    paths: "{{ wildfly_utils_prospero_install_dir }}"
+    patterns: "{{ wildfly_utils_prospero_name }}*"
     file_type: directory
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  register: existing_prospero_dirs
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  register: wildfly_utils_existing_prospero_dirs
   when:
-    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
+    - wildfly_utils_prospero_home is not defined or wildfly_utils_prospero_home == ''
 
 - name: "Sort existing prospero directories by modification time (newest first)"
   ansible.builtin.set_fact:
-    sorted_existing_prospero_dirs: "{{ existing_prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
+    wildfly_utils_sorted_existing_prospero_dirs: "{{ wildfly_utils_existing_prospero_dirs.files | sort(attribute='mtime', reverse=True) }}"
   when:
-    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
-    - existing_prospero_dirs.files is defined
-    - existing_prospero_dirs.files | length > 0
+    - wildfly_utils_prospero_home is not defined or wildfly_utils_prospero_home == ''
+    - wildfly_utils_existing_prospero_dirs.files is defined
+    - wildfly_utils_existing_prospero_dirs.files | length > 0
 
-- name: "Set wildfly_prospero_home from most recently modified existing installation"
+- name: "Set wildfly_utils_prospero_home from most recently modified existing installation"
   ansible.builtin.set_fact:
-    wildfly_prospero_home: "{{ sorted_existing_prospero_dirs[0].path }}"
+    wildfly_utils_prospero_home: "{{ wildfly_utils_sorted_existing_prospero_dirs[0].path }}"
   when:
-    - wildfly_prospero_home is not defined or wildfly_prospero_home == ''
-    - sorted_existing_prospero_dirs is defined
-    - sorted_existing_prospero_dirs | length > 0
+    - wildfly_utils_prospero_home is not defined or wildfly_utils_prospero_home == ''
+    - wildfly_utils_sorted_existing_prospero_dirs is defined
+    - wildfly_utils_sorted_existing_prospero_dirs | length > 0

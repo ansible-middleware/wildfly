@@ -1,219 +1,221 @@
 argument_specs:
     main:
         options:
-            jboss_cli_controller_host:
+            wildfly_utils_jboss_cli_controller_host:
                 # line 2 of jboss_eap/defaults/main.yml
                 default: "localhost"
                 description: "Hostname for connecting to CLI"
                 type: "str"
-            jboss_cli_controller_port:
+            wildfly_utils_jboss_cli_controller_port:
                 # line 3 of jboss_eap/defaults/main.yml
                 default: "9990"
                 description: "Port for connecting to CLI"
                 type: "str"
-            jboss_cli_apply_cp_default_conflict_default:
+            wildfly_utils_jboss_cli_apply_cp_default_conflict_default:
                 default: '--override-all'
                 description: "Apply CP strategy for conflicts handling"
                 type: "str"
-            wildfly_user:
+            wildfly_utils_user:
                 # line 10 of wildfly_install/defaults/main.yml
                 default: "wildfly"
                 description: "POSIX user account for WildFly"
                 type: "str"
-            wildfly_group:
+            wildfly_utils_group:
                 # line 11 of wildfly_install/defaults/main.yml
-                default: "{{ wildfly_user }}"
+                default: "{{ wildfly_utils_user }}"
                 description: "POSIX group for WildFly"
                 type: "str"
-            wildfly_version:
+            wildfly_utils_version:
                 default: "40.0.0.Final"
                 description: "WildFly version to install"
                 type: "str"
-            wildfly_install_workdir:
+            wildfly_utils_install_workdir:
                 default: "/opt/wildfly/"
                 description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
-            wildfly_home:
-                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
+            wildfly_utils_home:
+                default: "/opt/wildfly/wildfly-40.0.0.Final/"
                 description: "WildFly installation directory"
                 type: "str"
-            jboss_home:
-                default: "{{ wildfly_home }}"
+            wildfly_utils_jboss_home:
+                default: "{{ wildfly_utils_home }}"
                 description: "WildFly installation directory, for backwards compatibility"
                 type: "str"
-            wildfly_no_restart_after_patch:
-                default: False
+            wildfly_utils_no_restart_after_patch:
+                default: false
                 description: "When true, skip restarting after applying a cumulative patch"
                 type: "bool"
-            wildfly_selinux_enabled:
-                default: False
+            wildfly_utils_selinux_enabled:
+                default: false
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
-            wildfly_port_range_offset:
+            wildfly_utils_port_range_offset:
                 default: 0
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
     downstream:
         options:
-            eap_enable:
-                default: True
+            eap_utils_enable:
+                default: true
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
-            eap_apply_cp:
-                default: True
+            eap_utils_apply_cp:
+                default: true
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
-            eap_version:
-                default: "7.4.0"
+            eap_utils_version:
+                default: "{{ eap_version | default('8.1.0') }}"
                 description: "Red Hat EAP version to install"
                 type: "str"
-            eap_patch_version:
-                required: False
-                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_apply_cp is True"
+            eap_utils_patch_version:
+                required: false
+                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_utils_apply_cp is True"
                 type: "str"
-            eap_install_workdir:
-                default: "/opt/jboss_eap/"
+            eap_utils_install_workdir:
+                default: "{{ eap_install_workdir | default('/opt/jboss_eap/') }}"
                 description: "Root directory for installation"
                 type: "str"
-            eap_home:
-                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
+            eap_utils_home:
+                default: "{{ eap_utils_install_workdir }}jboss-eap-{{ (eap_utils_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"
-            eap_offline_install:
-                default: False
+            eap_utils_offline_install:
+                default: false
                 description: "Whether to install from local archive"
                 type: "bool"
-            eap_apply_cp_verbose:
-                default: False
+            eap_utils_apply_cp_verbose:
+                default: false
                 description: "Whether to output verbose patch output"
                 type: "bool"
-            eap_elytron_adapter:
-                default: False
+            eap_utils_elytron_adapter:
+                default: false
                 description: "Install SSO (keycloak) elytron adapter"
                 type: "bool"
-            eap_elytron_adapter_version:
+            eap_utils_elytron_adapter_version:
                 default: "7.6.0"
                 description: "Version of SSO (keycloak) adapter to install"
                 type: "str"
-            eap_elytron_adapter_archive_filename:
-                default: "rh-sso-{{ eap_elytron_adapter_version }}-eap7-adapter-dist.zip"
+            eap_utils_elytron_adapter_archive_filename:
+                default: "rh-sso-{{ eap_utils_elytron_adapter_version }}-eap7-adapter-dist.zip"
                 description: "SSO (keycloak) adapter install filename"
                 type: "str"
-            eap_selinux_enabled:
-                default: True
+            eap_utils_selinux_enabled:
+                default: true
                 description: "Whether to deploy on a selinux enforcing target host"
                 type: "bool"
-            eap_prospero_version:
+            eap_utils_prospero_version:
                 default: "1.1.6.Final-redhat-00001"
                 description: "Version of Prospero to use"
                 type: "str"
-            eap_prospero_name:
+            eap_utils_prospero_name:
                 default: "jboss-eap-installation-manager"
                 description: "Constant for the name of the prospero tool"
                 type: "str"
-            eap_prospero_profile_name:
-                default: "eap-{{ (eap_version.split('.'))[0:2] | join('.') }}" 
+            eap_utils_prospero_profile_name:
+                default: "eap-{{ (eap_utils_version.split('.'))[0:2] | join('.') }}"
                 description: "Name of the WildFly profile for the server to install"
                 type: "str"
-            eap_prospero_override_repos:
+            eap_utils_prospero_override_repos:
                 required: false
                 description: "Override default repositories for JBoss Installation Manager (e.g., 'file:/path/to/repo' or 'https://repo.example.com')"
                 type: "str"
     jboss_cli:
         options:
-            jboss_cli_controller_host:
+            wildfly_utils_jboss_cli_controller_host:
                 # line 2 of jboss_eap/defaults/main.yml
                 default: "localhost"
                 description: "Hostname for connecting to CLI"
                 type: "str"
-            jboss_cli_controller_port:
+            wildfly_utils_jboss_cli_controller_port:
                 # line 3 of jboss_eap/defaults/main.yml
                 default: "9990"
                 description: "Port for connecting to CLI"
                 type: "str"
-            jboss_cli_query:
-                required: False
+            wildfly_utils_jboss_cli_query:
+                required: false
                 description: "The command to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
                 type: "str"
-            jboss_cli_file:
-                required: False
+            wildfly_utils_jboss_cli_file:
+                required: false
                 description: "The file to execute via jboss-cli; one of jboss_cli_query or jboss_cli_file is required exclusively"
                 type: "str"
-            jboss_cli_timeout:
-                required: False
+            wildfly_utils_jboss_cli_timeout:
+                required: false
                 description: "Seconds to wait for jboss-cli connection to server"
                 type: "int"
-            jboss_cli_connect:
-                required: False
+            wildfly_utils_jboss_cli_connect:
+                required: false
                 description: "Whether to pass -c to jboss-cli.sh"
                 type: 'bool'
-            jboss_cli_extra_param:
-                required: False
+            wildfly_utils_jboss_cli_extra_param:
+                required: false
                 description: "An extra parameter name passed with -D to jboss-cli.sh"
                 type: 'str'
-            jboss_cli_extra_param_value:
-                required: False
+            wildfly_utils_jboss_cli_extra_param_value:
+                required: false
                 description: "The value for the extra parameter specified in jboss_cli_extra_param"
                 type: 'str'
-            jboss_cli_notify:
-                required: False
+            wildfly_utils_jboss_cli_notify:
+                required: false
                 description: "The handler to notify if the cli operation returns changes"
                 type: 'str'
-            jboss_cli_changed_when:
-                required: False
+            wildfly_utils_jboss_cli_changed_when:
+                required: false
                 description: "Whether to always return changed (or not) on changed_when"
                 type: 'bool'
-            jboss_cli_become_user:
-                required: False
+            wildfly_utils_jboss_cli_become_user:
+                required: false
                 description: "The user account to execute jboss-cli with"
                 type: 'str'
-            jboss_cli_force:
-                required: False
+            wildfly_utils_jboss_cli_force:
+                required: false
                 description: "Whether to add --force flag to jboss-cli command"
                 type: 'bool'
     prospero/main:
         options:
-            wildfly_prospero_version:
+            wildfly_utils_prospero_version:
                 default: "1.3.1.Final"
                 description: "Version of Prospero to use"
                 type: "str"
-            wildfly_prospero_name:
+            wildfly_utils_prospero_name:
                 default: "prospero"
                 description: "Constant for the name of the prospero tool"
                 type: "str"
-            wildfly_prospero_install_dir:
+            wildfly_utils_prospero_install_dir:
                 default: "/opt/prospero"
                 description: "Path to the installation dir for Prospero"
                 type: "str"
-            wildfly_prospero_profile_name:
+            wildfly_utils_prospero_profile_name:
                 default: "wildfly"
                 description: "Name of the WildFly profile for the server to install"
                 type: "str"
-            wildfly_prospero_scenario_enable:
+            wildfly_utils_prospero_scenario_enable:
                 default: true
                 description: "Specificy to Molecule if it should run the Prospero scenario"
                 type: "bool"
-            wildfly_prospero_archive_name:
+            wildfly_utils_prospero_archive_name:
                 default: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"
                 description: "Name of the Prospero archive"
                 type: "str"
-            wildfly_prospero_install_manifest_dir:
+            wildfly_utils_prospero_install_manifest_dir:
                 default: "{{ wildfly_install_workdir }}/manifest"
                 description: "Path on target to the Prospero manifest"
                 type: "str"
-            wildfly_prospero_download_url:
-                default: "https://github.com/wildfly-extras/prospero/releases/download/{{ wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip"
+            wildfly_utils_prospero_download_url:
+                default: >-
+                  https://github.com/wildfly-extras/prospero/releases/download/{{
+                  wildfly_prospero_version }}/prospero-{{ wildfly_prospero_version }}.zip
                 description: "URL to download Prospero"
                 type: "str"
-            wildfly_prospero_download_check_ssl:
+            wildfly_utils_prospero_download_check_ssl:
                 default: false
                 description: "Should Ansible check SSL when downloading Prospero"
                 type: "bool"
-            wildfly_prospero_override_repos:
+            wildfly_utils_prospero_override_repos:
                 required: false
                 description: "Override default repositories for Prospero installation (e.g., 'file:/path/to/repo' or 'https://repo.example.com')"
                 type: "str"
-            wildfly_prospero_override_manifest:
+            wildfly_utils_prospero_override_manifest:
                 required: false
                 description: "Override default provisioning manifest for Prospero installation (e.g., 'org.wildfly.channels:wildfly:33.0.0.Final')"
                 type: "str"

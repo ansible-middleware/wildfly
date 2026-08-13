@@ -2,19 +2,19 @@
 - name: "Ensure all required parameters are provided."
   ansible.builtin.assert:
     that:
-      - wildfly_prospero_home is defined and wildfly_prospero_home | length > 0
-      - wildfly_prospero_run_args is defined and wildfly_prospero_run_args | length > 0
+      - wildfly_utils_prospero_home is defined and wildfly_utils_prospero_home | length > 0
+      - wildfly_utils_prospero_run_args is defined and wildfly_utils_prospero_run_args | length > 0
 
-- name: "Run tool to install server in {{ wildfly_home }}."
+- name: "Run tool to install server in {{ wildfly_utils_home }}."
   ansible.builtin.command: >
-    {{ wildfly_prospero_home }}/bin/{{ wildfly_prospero_name }}.sh {{ wildfly_prospero_run_args }}
-  register: prospero_run_results
-  become: "{{ wildfly_install_requires_become | default(true) }}"
-  changed_when: False # TODO: fix idempotency by parsing tool output
+    {{ wildfly_utils_prospero_home }}/bin/{{ wildfly_utils_prospero_name }}.sh {{ wildfly_utils_prospero_run_args }}
+  register: wildfly_utils_prospero_run_results
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  changed_when: false # TODO: fix idempotency by parsing tool output
 
 - name: "Verify that tool stdout is available"
   ansible.builtin.assert:
     that:
-      - prospero_run_results is defined
-      - prospero_run_results.stdout is defined
-    quiet: True
+      - wildfly_utils_prospero_run_results is defined
+      - wildfly_utils_prospero_run_results.stdout is defined
+    quiet: true

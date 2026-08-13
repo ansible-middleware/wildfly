@@ -10,13 +10,13 @@ Role Defaults
 
 | Variable | Description | Default |
 |:---------|:------------|:--------|
-|`wildfly_user`| POSIX user account for WildFly | `wildfly` |
-|`wildfly_group`| POSIX group for WildFly | `{{ wildfly_user }}` |
-|`wildfly_service_name`| Systemd service name for WildFly | `wildfly` |
-|`wildfly_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
-|`wildfly_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/` |
-|`wildfly_http_port`| Port to verify the WildFly server is listening to requests | 8080 |
-|`wildfly_controller_port`| Port to use to verify CLI connection to the WildFly server | 9990 |
+|`wildfly_validation_user`| POSIX user account for WildFly | `wildfly` |
+|`wildfly_validation_group`| POSIX group for WildFly | `{{ wildfly_validation_user }}` |
+|`wildfly_validation_service_name`| Systemd service name for WildFly | `wildfly` |
+|`wildfly_validation_install_workdir`| WildFly installation directory (where the server files are unzipped) | `/opt/wildfly/` |
+|`wildfly_validation_home`| WildFly installation directory (WILDFLY_HOME) | `{{ wildfly_validation_install_workdir }}wildfly-{{ wildfly_validation_version }}/` |
+|`wildfly_validation_http_port`| Port to verify the WildFly server is listening to requests | 8080 |
+|`wildfly_validation_controller_port`| Port to use to verify CLI connection to the WildFly server | 9990 |
 
 
 Role Variables

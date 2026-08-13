@@ -28,14 +28,14 @@
         - name: "Download asset (if required)."
           ansible.builtin.include_tasks: resources/download_pre_ga_bits.yml
 
-    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 8 (if user is root)."
+    - name: "Ensure sudo is installed on RHEL 8 (if user is root): {{ sudo_pkg_name }}"
       ansible.builtin.command: "dnf install -y {{ sudo_pkg_name }}"
       changed_when: false # dnf install is idempotent
       when:
         - ansible_facts['user_id'] == 'root'
         - ansible_facts['distribution_major_version'] == '8'
 
-    - name: "Ensure {{ sudo_pkg_name }} is installed on RHEL 9+ (if user is root)."
+    - name: "Ensure sudo is installed on RHEL 9+ (if user is root): {{ sudo_pkg_name }}"
       ansible.builtin.dnf:
         name: "{{ sudo_pkg_name }}"
       when:
@@ -47,7 +47,7 @@
         manager: auto
       when: ansible_facts['distribution_major_version'] != '8'
 
-    - name: "Check if {{ sudo_pkg_name }} is installed (skipping on RHEL 8)"
+    - name: "Check if sudo is installed (skipping on RHEL 8): {{ sudo_pkg_name }}"
       ansible.builtin.assert:
         that:
           - sudo_pkg_name in ansible_facts.packages
@@ -67,7 +67,7 @@
           enabled=1
           gpgcheck=1
           gpgkey=https://packages.adoptium.net/artifactory/api/gpg/key/public
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       when:
         - ansible_facts['os_family'] == 'RedHat'
         - ansible_facts['distribution_major_version'] | default('0') | int == 8
@@ -80,12 +80,12 @@
         enabled: true
         gpgcheck: true
         gpgkey: https://packages.adoptium.net/artifactory/api/gpg/key/public
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       when:
         - not (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] | default('0') | int == 8)
 
     - name: "Ensure required packages are installed (RHEL 9+)"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.dnf:
         name:
           - >-
@@ -98,7 +98,7 @@
       when: ansible_facts['distribution_major_version'] != '8'
 
     - name: "Ensure required packages are installed (RHEL 8)"
-      become: "{{ wildfly_install_requires_become | default(true) }}"
+      become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.command:
         cmd: >-
           dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')

@@ -1,24 +1,27 @@
 ---
-wildfly_version: '40.0.0.Final'
-wildfly_archive_filename: "wildfly-{{ wildfly_version }}.zip"
-wildfly_archive_filename_on_controller: true
-wildfly_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
+wildfly_install_version: "{{ wildfly_version | default('40.0.0.Final') }}"
+wildfly_install_archive_filename: "wildfly-{{ wildfly_install_version }}.zip"
+wildfly_install_archive_filename_on_controller: true
+wildfly_install_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'
 wildfly_install_workdir: '/opt/wildfly/'
-wildfly_install_require_privileges_escalation: true
-wildfly_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
-wildfly_install_download_url: "{{ wildfly_download_baseurl }}/{{ wildfly_version }}/{{ wildfly_archive_filename }}"
-wildfly_archive_dir: "{{ wildfly_install_workdir }}"
-wildfly_config_base: 'standalone.xml'
-wildfly_config_custom_file: ''
-wildfly_user: 'wildfly'
-wildfly_group: "{{ wildfly_user }}"
-wildfly_java_version: 21
-wildfly_java_package_name: "{{ 'java-1.8.0-openjdk' if wildfly_java_version | string == '1.8' else 'java-' + wildfly_java_version | string + '-openjdk-headless' }}"
+wildfly_install_require_privileges_escalation: "{{ wildfly_requires_become | default(true) }}"
+wildfly_install_requires_become: "{{ wildfly_requires_become | default(true) }}"
+wildfly_install_home: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_install_version }}/"
+wildfly_install_download_url: "{{ wildfly_install_download_baseurl }}/{{ wildfly_install_version }}/{{ wildfly_install_archive_filename }}"
+wildfly_install_archive_dir: "{{ wildfly_install_workdir }}"
+wildfly_install_config_base: "{{ wildfly_config_base | default('standalone.xml') }}"
+wildfly_install_config_custom_file: ''
+wildfly_install_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_install_group: "{{ wildfly_group | default(wildfly_install_user) }}"
+wildfly_install_java_version: "{{ wildfly_java_version | default(21) }}"
+wildfly_install_java_package_name: >-
+  {{ 'java-1.8.0-openjdk' if wildfly_install_java_version | string == '1.8'
+  else 'java-' + wildfly_install_java_version | string + '-openjdk-headless' }}
 wildfly_install_force_reinstall_config_base: false
 
-# whether to install from local archive
-wildfly_offline_install: False
-wildfly_prereqs_packages:
+wildfly_install_download_controller_download_dir: "{{ lookup('env', 'PWD') }}"
+wildfly_install_offline_install: false
+wildfly_install_prereqs_packages:
   - unzip
   - tar
   - iproute
@@ -26,6 +29,7 @@ wildfly_prereqs_packages:
   - sudo
   - tzdata-java
 
-wildfly_instance_name: wildfly
-wildfly_selinux_enabled: False
-wildfly_cluster_enabled: False
+wildfly_install_node_id: "{{ inventory_hostname_short }}"
+wildfly_install_instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
+wildfly_install_selinux_enabled: false
+wildfly_install_cluster_enabled: false

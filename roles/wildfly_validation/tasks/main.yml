@@ -2,49 +2,49 @@
 - name: "Ensure required parameters are provided."
   ansible.builtin.assert:
     that:
-      - wildfly_user is defined
-      - wildfly_group is defined
+      - wildfly_validation_user is defined
+      - wildfly_validation_group is defined
     quiet: true
 
-- name: "Ensure user {{ wildfly_user }} were created."
+- name: "Ensure user was created: {{ wildfly_validation_user }}"
   ansible.builtin.user:
-    name: "{{ wildfly_user }}"
+    name: "{{ wildfly_validation_user }}"
     state: present
-  register: wildfly_user_status
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  register: wildfly_validation_user_status
+  become: "{{ wildfly_validation_requires_become | default(true) }}"
 
-- name: "Validate state of user: {{ wildfly_user }}"
+- name: "Validate state of user: {{ wildfly_validation_user }}"
   ansible.builtin.assert:
     that:
-      - wildfly_user_status is defined
-      - wildfly_user_status.changed is defined
-      - not wildfly_user_status.changed
-      - wildfly_user_status.failed is defined
-      - not wildfly_user_status.failed
-      - wildfly_user_status.state is defined
-      - wildfly_user_status.state == 'present'
+      - wildfly_validation_user_status is defined
+      - wildfly_validation_user_status.changed is defined
+      - not wildfly_validation_user_status.changed
+      - wildfly_validation_user_status.failed is defined
+      - not wildfly_validation_user_status.failed
+      - wildfly_validation_user_status.state is defined
+      - wildfly_validation_user_status.state == 'present'
     quiet: true
-    fail_msg: "User {{ wildfly_user }} was NOT created."
+    fail_msg: "User {{ wildfly_validation_user }} was NOT created."
 
-- name: "Ensure group {{ wildfly_group }} were created."
+- name: "Ensure group was created: {{ wildfly_validation_group }}"
   ansible.builtin.group:
-    name: "{{ wildfly_group }}"
+    name: "{{ wildfly_validation_group }}"
     state: present
-  register: wildfly_group_status
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  register: wildfly_validation_group_status
+  become: "{{ wildfly_validation_requires_become | default(true) }}"
 
-- name: "Validate state of group: {{ wildfly_group }}."
+- name: "Validate state of group: {{ wildfly_validation_group }}."
   ansible.builtin.assert:
     that:
-      - wildfly_group_status is defined
-      - wildfly_group_status.changed is defined
-      - not wildfly_group_status.changed
-      - wildfly_group_status.failed is defined
-      - not wildfly_group_status.failed
-      - wildfly_group_status.state is defined
-      - wildfly_group_status.state == 'present'
+      - wildfly_validation_group_status is defined
+      - wildfly_validation_group_status.changed is defined
+      - not wildfly_validation_group_status.changed
+      - wildfly_validation_group_status.failed is defined
+      - not wildfly_validation_group_status.failed
+      - wildfly_validation_group_status.state is defined
+      - wildfly_validation_group_status.state == 'present'
     quiet: true
-    fail_msg: "User {{ wildfly_group }} was NOT created."
+    fail_msg: "User {{ wildfly_validation_group }} was NOT created."
 
 - name: "Verify server's installation directory"
   ansible.builtin.include_tasks: verify_owner_and_group.yml
@@ -57,30 +57,30 @@
     search_pattern: "{{ wildfly_validation_logfile_server_start_pattern }}"
     path_to_logfile: "{{  wildfly_validation_logfile_path_to_logfile }}"
 
-- name: "Wait for HTTP port {{ wildfly_http_port }} to become available."
+- name: "Wait for HTTP port to become available: {{ wildfly_validation_http_port }}"
   ansible.builtin.wait_for:
-    port: "{{ wildfly_http_port }}"
+    port: "{{ wildfly_validation_http_port }}"
     host: "{{ ansible_facts['nodename'] | default('localhost') }}"
   when:
     - not wildfly_validation_skip_http_port_wait is defined
 
-- name: "Wait for HTTPS port {{ wildfly_https_port }} to become available."
+- name: "Wait for HTTPS port to become available: {{ wildfly_validation_https_port }}"
   ansible.builtin.wait_for:
-    port: "{{ wildfly_https_port }}"
+    port: "{{ wildfly_validation_https_port }}"
     host: "{{ ansible_facts['nodename'] | default('localhost') }}"
   when:
     - not wildfly_validation_skip_https_port_wait is defined
 
 - name: "Check if HTTP web connector is accessible"
   ansible.builtin.uri:
-    url: "http://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_http_port }}/"
+    url: "http://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_validation_http_port }}/"
     status_code: 200
   when:
     - not wildfly_validation_skip_http_web_connector_check is defined
 
 - name: "Check if HTTPS web connector is accessible"
   ansible.builtin.uri:
-    url: "https://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_https_port }}/"
+    url: "https://{{ ansible_facts['nodename'] | default('localhost') }}:{{ wildfly_validation_https_port }}/"
     status_code: 200
     validate_certs: false
   when:
@@ -95,7 +95,7 @@
   ansible.builtin.include_tasks: systemd.yml
   when:
     - wildfly_systemd_unit_enabled is defined and wildfly_systemd_unit_enabled
-    - wildfly_service_name
+    - wildfly_validation_service_name
     - not wildfly_validation_skip_systemd_check is defined
 
 - name: "Verify server's internal configuration"

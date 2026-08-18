@@ -2,16 +2,11 @@
 - name: "Ensure required parameter(s) are provided."
   ansible.builtin.assert:
     that:
-      - wildfly_install_config.home is defined
-      - wildfly_install_config.user is defined
+      - wildfly_install.home is defined
+      - wildfly_install.user is defined
     quiet: true
 
 - name: "Install server using Prospero."
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: prospero/main.yml
-  vars:
-    wildfly_utils_home: "{{ wildfly_install_home }}"
-    wildfly_utils_version: "{{ wildfly_install_version }}"
-    wildfly_utils_user: "{{ wildfly_install_user }}"
-    wildfly_utils_group: "{{ wildfly_install_group }}"

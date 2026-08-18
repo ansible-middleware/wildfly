@@ -10,4 +10,4 @@
     name: wildfly_utils
     tasks_from: apps.yml
   vars:
-    wildfly_utils_basedir: "{{ wildfly_systemd_basedir_prefix | default(wildfly_systemd_config.home) }}/standalone"
+    wildfly_basedir: "{{ wildfly_basedir_prefix | default(wildfly_systemd.home) }}/standalone"

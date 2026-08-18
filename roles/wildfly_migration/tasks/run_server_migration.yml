@@ -4,26 +4,21 @@
 
 - name: "Lookup value of PATH on target"
   ansible.builtin.set_fact:
-    wildfly_migration_target_path: "{{ lookup('env', 'PATH') }}"
+    target_path: "{{ lookup('env', 'PATH') }}"
 
 - name: "Run migration tool"
-  become: "{{ wildfly_migration_require_privileges_escalation }}"
-  become_user: "{{ wildfly_migration_user }}"
-  ansible.builtin.command: >-
-    {{ wildfly_migration_server_tool_path_to_script }}
-    --non-interactive
-    --source {{ previous_wildfly_home }}
-    --environment {{ wildfly_migration_path_to_env_properties }}
-    --target {{ target_wildfly_home }}
-  register: wildfly_migration_migration_results
-  changed_when: false
-  failed_when: false
+  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become_user: wildfly
+  ansible.builtin.command: "{{ wildfly_migration_server_tool_path_to_script }} --non-interactive --source {{ previous_wildfly_home }} --environment {{ wildfly_migration_path_to_env_properties }} --target {{ target_wildfly_home }}"
+  register: migration_results
+  changed_when: False
+  failed_when: False
   environment:
     JAVA_HOME: "{{ wildfly_migration_java_home }}"
-    PATH: "{{ wildfly_migration_java_home }}{{ wildfly_migration_target_path }}"
+    PATH: "{{ wildfly_migration_java_home }}{{ target_path }}"
 
 - name: "Fails if command did not produced any result"
   ansible.builtin.fail:
     var: "{{ ansible_failed_task | default('Migration command failed to produce any results') }}"
   when:
-    - not wildfly_migration_migration_results is defined
+    - not migration_results is defined

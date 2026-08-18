@@ -7,14 +7,14 @@
     that:
       - ansible_facts is defined
       - ansible_facts.services is defined
-      - ansible_facts.services["{{ wildfly_validation_service_name }}.service"] is defined
-      - ansible_facts.services["{{ wildfly_validation_service_name }}.service"]['state'] is defined
-      - ansible_facts.services["{{ wildfly_validation_service_name }}.service"]['state'] == 'running'
-      - ansible_facts.services["{{ wildfly_validation_service_name }}.service"]['status'] == 'enabled'
+      - ansible_facts.services["{{ wildfly_service_name }}.service"] is defined
+      - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] is defined
+      - ansible_facts.services["{{ wildfly_service_name }}.service"]['state'] == 'running'
+      - ansible_facts.services["{{ wildfly_service_name }}.service"]['status'] == 'enabled'
     quiet: true
-    fail_msg: "Systemd service {{ wildfly_validation_service_name }} is not the expected state."
+    fail_msg: "Systemd service {{ wildfly_service_name }} is not the expected state."
   when:
-    - wildfly_validation_service_name is defined
+    - wildfly_service_name is defined
 
 - name: "Verify that PID file has been created."
   become: "{{ wildfly_validation_systemd_pidfile_require_privilege_escalation }}"
@@ -24,14 +24,11 @@
     - name: "Load metadata on PIDFile: {{ wildfly_validation_systemd_pidfile }}"
       ansible.builtin.stat:
         path: "{{ wildfly_validation_systemd_pidfile }}"
-      register: wildfly_validation_pidfile
+      register: pidfile
 
     - name: "Verify metadatas"
       ansible.builtin.assert:
         that:
-          - wildfly_validation_pidfile is defined
-          - wildfly_validation_pidfile.stat is defined
-          - wildfly_validation_pidfile.stat.exists is defined
-          - wildfly_validation_pidfile.stat.exists
+          - pidfile is defined and pidfile.stat is defined and pidfile.stat.exists is defined and pidfile.stat.exists
         quiet: true
         fail_msg: "PID file {{ wildfly_validation_systemd_pidfile }} has not been created."

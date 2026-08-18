@@ -1,98 +1,93 @@
 argument_specs:
     main:
         options:
-            wildfly_validation_user:
+            wildfly_user:
                 default: "wildfly"
                 description: "POSIX user account for WildFly"
                 type: "str"
-            wildfly_validation_group:
-                default: "{{ wildfly_validation_user }}"
+            wildfly_group:
+                default: "{{ wildfly_user }}"
                 description: "POSIX group for WildFly"
                 type: "str"
-            wildfly_validation_service_name:
+            wildfly_service_name:
                 default: "wildfly"
                 description: "Systemd service name for WildFly"
                 type: "str"
-            wildfly_validation_http_port:
+            wildfly_http_port:
                 default: "8080"
                 description: "Server HTTP port"
                 type: "str"
-            wildfly_validation_https_port:
+            wildfly_https_port:
                 default: "8443"
                 description: "Server HTTPS port"
                 type: "str"
-            wildfly_validation_version:
+            wildfly_version:
                 default: "40.0.0.Final"
                 description: "WildFly version to install"
                 type: "str"
-            wildfly_validation_install_workdir:
+            wildfly_install_workdir:
                 default: "/opt/wildfly/"
                 description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
-            wildfly_validation_home:
-                default: "{{ wildfly_validation_install_workdir }}wildfly-{{ wildfly_validation_version }}/"
+            wildfly_home:
+                default: "{{ wildfly_install_workdir }}wildfly-{{ wildfly_version }}/"
                 description: "WildFly installation directory"
                 type: "str"
-            wildfly_validation_standard_sockets_validation_query:
+            wildfly_standard_sockets_validation_query:
                 default: "/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=mail-smtp:read-attribute(name=host)"
                 type: "str"
                 description: "CLI query used to validation standard sockets configuration"
-            wildfly_validation_ejb_validation_query:
+            wildfly_ejb_validation_query:
                 default: "/subsystem=ejb3:read-attribute(name=default-resource-adapter-name)"
                 type: "str"
                 description: "CLI query used to validate the ejb config"
-            wildfly_validation_ee_validation_query:
+            wildfly_ee_validation_query:
                 default: "/subsystem=ee/service=default-bindings:read-attribute(name=jms-connection-factory)"
                 type: "str"
                 description: "CLI query used to validate the JMS connection factory"
             wildfly_validation_queries:
                 default: []
                 type: "list"
-                description: >-
-                  CLI queries used to validate configuration. List of dicts
-                  [{query => <jboss cli command>, expected_result =>
-                  <expected string result of the cli op>,
-                  expected_result_undefined => <if defined, then check
-                  if the result is 'undefined'> }]
-            wildfly_validation_pidfile_homedir:
+                description: "CLI queries used to validate configuration. List of dicts [{query => <jboss cli command>, expected_result => <expected string result of the cli op>, expected_result_undefined => <if defined, then check if the result is 'undefined'> }]"
+            wildfly_pidfile_homedir:
                 description: "Directory that will contain the PID file"
                 default: "/run/wildfly"
                 type: "str"
             wildfly_validation_systemd_pidfile_require_privilege_escalation:
-                default: true
+                default: True
                 description: "Whether or not accessing the pidfile created by Systemd will require root privileges"
                 type: "bool"
-            wildfly_validation_basedir_prefix:
-                default: "{{ wildfly_validation_home }}"
+            wildfly_basedir_prefix:
+                default: "{{ wildfly_home }}"
                 description: "Install base directory for instance, ie. for colocated installations"
                 type: "str"
     downstream:
         options:
-            eap_validation_enable:
-                default: true
+            eap_enable:
+                default: True
                 description: "Enable install of Red Hat JBoss EAP"
                 type: "bool"
-            eap_validation_apply_cp:
-                default: true
+            eap_apply_cp:
+                default: True
                 description: "Whether to apply the latest cumulative patch on top of baseline version"
                 type: "bool"
-            eap_validation_version:
-                default: "{{ eap_version | default('8.1.0') }}"
+            eap_version:
+                default: "7.4.0"
                 description: "Red Hat EAP version to install"
                 type: "str"
-            eap_validation_patch_version:
-                required: false
-                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_validation_apply_cp is True"
+            eap_patch_version:
+                required: False
+                description: "Red Hat EAP cumulative patch version to install (format: x.y.z); defaults to latest version when eap_apply_cp is True"
                 type: "str"
-            eap_validation_archive_filename:
-                default: "jboss-eap-{{ eap_validation_version }}.zip"
+            eap_archive_filename:
+                default: "jboss-eap-{{ eap_version }}.zip"
                 description: "Red Hat EAP archive name"
                 type: "str"
-            eap_validation_install_workdir:
-                default: "{{ eap_install_workdir | default('/opt/jboss_eap/') }}"
+            eap_install_workdir:
+                default: "/opt/jboss_eap/"
                 description: "Root directory for installation"
                 type: "str"
-            eap_validation_home:
-                default: "{{ eap_validation_install_workdir }}jboss-eap-{{ (eap_validation_version.split('.'))[0:2] | join('.') }}/"
+            eap_home:
+                default: "{{ eap_install_workdir }}jboss-eap-{{ (eap_version.split('.'))[0:2] | join('.') }}/"
                 description: "Red Hat EAP installation path"
                 type: "str"

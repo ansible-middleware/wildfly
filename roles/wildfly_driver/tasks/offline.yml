@@ -1,5 +1,5 @@
 ---
-- name: "Download driver to localhost: {{ wildfly_driver_config.module_name }}"
+- name: "Download {{ wildfly_driver.module_name }} driver to localhost"
   delegate_to: localhost
   become: false
   run_once: true
@@ -7,38 +7,38 @@
     - name: "Check local download driver path"
       ansible.builtin.stat:
         path: "{{ wildfly_driver_download_dir }}"
-      register: wildfly_driver_local_path
+      register: local_path
 
     - name: "Set download path"
       ansible.builtin.set_fact:
-        wildfly_driver_local_path_to_driver: "{{ wildfly_driver_local_path.stat.path }}/{{ wildfly_driver_config.jar_filename }}"
+        local_path_to_driver: "{{ local_path.stat.path }}/{{ wildfly_driver.jar_filename }}"
 
-    - name: "Retrieve JDBC Driver from {{ wildfly_driver_config.jar_url }}"
+    - name: "Retrieve JDBC Driver from {{ wildfly_driver.jar_url }}"
       ansible.builtin.uri:
-        url: "{{ wildfly_driver_config.jar_url }}"
-        dest: "{{ wildfly_driver_local_path_to_driver }}"
+        url: "{{ wildfly_driver.jar_url }}"
+        dest: "{{ local_path_to_driver }}"
         mode: '0640'
-        creates: "{{ wildfly_driver_local_path_to_driver }}"
+        creates: "{{ local_path_to_driver }}"
         selevel: s0
         serole: object_r
         setype: usr_t
         seuser: system_u
       when:
-        - wildfly_driver_config.jar_url is defined
+        - wildfly_driver.jar_url is defined
 
     - name: "Check downloaded driver"
       ansible.builtin.stat:
-        path: "{{ wildfly_driver_local_path_to_driver }}"
-      register: wildfly_driver_local_driver_path
+        path: "{{ local_path_to_driver }}"
+      register: local_driver_path
 
 - name: "Copy driver from localhost to target"
   ansible.builtin.copy:
-    src: "{{ wildfly_driver_local_path_to_driver }}"
+    src: "{{ local_path_to_driver }}"
     dest: "{{ wildfly_driver_jar_installation_path }}"
-    owner: "{{ wildfly_driver_user }}"
-    group: "{{ wildfly_driver_group }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
     mode: '0640'
   when:
-    - wildfly_driver_local_driver_path.stat is defined
-    - wildfly_driver_local_driver_path.stat.exists
+    - local_driver_path.stat is defined
+    - local_driver_path.stat.exists
   become: "{{ wildfly_driver_become | default('yes') }}"

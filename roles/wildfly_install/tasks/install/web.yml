@@ -2,20 +2,20 @@
 - name: Check arguments
   ansible.builtin.assert:
     that:
-      - wildfly_install_config.download_url is defined
-      - wildfly_install_config.home is defined
-      - wildfly_install_config.archive_name is defined
-      - wildfly_install_config.user is defined
-      - wildfly_install_config.group is defined
-      - wildfly_install_full_path_to_archive is defined
+      - wildfly_install.download_url is defined
+      - wildfly_install.home is defined
+      - wildfly_install.archive_name is defined
+      - wildfly_install.user is defined
+      - wildfly_install.group is defined
+      - full_path_to_archive is defined
     quiet: true
 
-- name: "Download zipfile to {{ wildfly_install_local_path_to_archive }}"
+- name: "Download zipfile from {{ wildfly_install.download_url }} into {{ local_path_to_archive }}"
   delegate_to: localhost
   run_once: true
   ansible.builtin.get_url:
-    url: "{{ wildfly_install_config.download_url }}"
-    dest: "{{ wildfly_install_local_path_to_archive }}" # noqa risky-file-permissions delegated, uses controller host user
+    url: "{{ wildfly_install.download_url }}"
+    dest: "{{ local_path_to_archive }}" # noqa risky-file-permissions delegated, uses controller host user
     mode: '0644'
     selevel: s0
     serole: object_r

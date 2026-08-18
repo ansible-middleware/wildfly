@@ -6,7 +6,7 @@ argument_specs:
                 default: "firewalld"
                 description: "Package name for firewalld"
                 type: "str"
-            wildfly_firewalld_cluster_enabled:
+            wildfly_cluster_enabled:
                 default: false
                 description: "Specify whether or not server's cluster is enabled."
                 type: "bool"

@@ -20,17 +20,15 @@
 
 - name: Check wildfly install directory state
   ansible.builtin.stat:
-    path: "{{ wildfly_install_config.home }}"
-  register: wildfly_install_is_wildfly_home
+    path: "{{ wildfly_install.home }}"
+  register: is_wildfly_home
   become: "{{ wildfly_install_require_privileges_escalation }}"
 
 - name: Validate conditions
   ansible.builtin.assert:
     that:
-      - wildfly_install_is_wildfly_home is defined
-      - wildfly_install_is_wildfly_home.stat is defined
-      - wildfly_install_is_wildfly_home.stat.exists is defined
-      - wildfly_install_is_wildfly_home.stat.exists
+      - is_wildfly_home is defined and is_wildfly_home.stat is defined and is_wildfly_home.stat.exists is defined
+      - is_wildfly_home.stat.exists
     quiet: true
 
 - name: "Ensure firewalld configuration allows server port (if enabled)."

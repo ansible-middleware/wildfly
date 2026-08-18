@@ -9,13 +9,13 @@
   become: "{{ wildfly_validation_folders_exists_requires_privileges_escalation | default(true) }}"
   ansible.builtin.stat:
     path: "{{ folder }}"
-  register: wildfly_validation_folder_metadata
+  register: folder_metadata
 
-- name: "Verify that folder exists on target: {{ folder }}"
+- name: "Verify that folder {{ folder }} exists on target."
   ansible.builtin.assert:
     that:
-      - wildfly_validation_folder_metadata is defined
-      - wildfly_validation_folder_metadata.stat is defined
-      - wildfly_validation_folder_metadata.stat.exists is defined
-      - wildfly_validation_folder_metadata.stat.exists
+      - folder_metadata is defined
+      - folder_metadata.stat is defined
+      - folder_metadata.stat.exists is defined
+      - folder_metadata.stat.exists
     quiet: true

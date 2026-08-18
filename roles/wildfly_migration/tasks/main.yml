@@ -4,13 +4,13 @@
     that:
       - target_wildfly_home is defined
       - previous_wildfly_home is defined
-    quiet: true
+    quiet: True
     fail_msg: "Missing required parameters."
 
 - name: Apply EAP 7.x migration tool layout (tool inside server installation directory)
   when:
-    - eap_migration_enable is defined and eap_migration_enable
-    - (eap_migration_version) is version('8.0.0', '<')
+    - eap_enable is defined and eap_enable
+    - (eap_version | default('8.0.0')) is version('8.0.0', '<')
   ansible.builtin.set_fact:
     wildfly_migration_server_tool_home: "{{ target_wildfly_home }}"
     wildfly_migration_tool_bin_folder: "bin"
@@ -20,7 +20,7 @@
 
 # RHEL 8: dnf Python bindings are not available for python3.9; platform-python is 3.6 and
 # cannot run ansible-core 2.18+ modules. Use the dnf CLI (same pattern as wildfly_install prereqs).
-- name: "Ensure required JVM is installed on target (RHEL 8): {{ wildfly_migration_jdk_package_name }}"
+- name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }} (RHEL 8)"
   become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
   become_user: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation_user | default('root') }}"
   ansible.builtin.command:
@@ -46,16 +46,16 @@
 - name: "Ensure Server Migration Tool is installed on target if EAP8+ is the target"
   ansible.builtin.include_tasks: install/rhn.yml
   when:
-    - eap_migration_enable is defined and eap_migration_enable
+    - eap_enable is defined and eap_enable
     # Match EAP 7.x layout condition: use default so include_tasks runs when callers omit
-    # eap_migration_version (some playbooks only pass eap_migration_enable + homes). Otherwise both RHN and
+    # eap_version (some playbooks only pass eap_enable + homes). Otherwise both RHN and
     # web installs skip and prerun_checks fails on missing jboss-server-migration.sh.
-    - (eap_migration_version) is version('8.0.0', '>=')
+    - (eap_version | default('8.0.0')) is version('8.0.0', '>=')
 
 - name: "Ensure Server Migration Tool is installed from web if WildFly is the target"
   ansible.builtin.include_tasks: install/web.yml
   when:
-    - not eap_migration_enable is defined or not eap_migration_enable
+    - not eap_enable is defined or not eap_enable
 
 - name: "Escalate privileges if required"
   become: "{{ wildfly_migration_require_privileges_escalation }}"
@@ -65,8 +65,8 @@
       ansible.builtin.file:
         path: "{{ wildfly_migration_path_to_env_properties | dirname }}"
         state: directory
-        owner: "{{ wildfly_migration_user }}"
-        group: "{{ wildfly_migration_group }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
         mode: "0755"
 
     - name: "Ensure that the Migration Toolkit configuration have been updated to include: {{ wildfly_migration_config_files }}"

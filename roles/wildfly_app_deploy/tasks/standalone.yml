@@ -6,36 +6,34 @@
         name: wildfly_utils
         tasks_from: jboss_cli.yml
       vars:
-        wildfly_utils_jboss_home: "{{ wildfly_app_deploy_home }}"
-        wildfly_utils_jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-resource'"
-        wildfly_utils_jboss_cli_timeout: 30
-        wildfly_utils_jboss_cli_changed_when: false
-      register: wildfly_app_deploy_deployment_check
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-resource'"
+        jboss_cli_timeout: 30
+        jboss_cli_changed_when: false
+      register: deployment_check
   rescue:
     - name: Deployment does not exist
       ansible.builtin.set_fact:
-        wildfly_app_deploy_deployment_exists: false
+        deployment_exists: false
   always:
     - name: Set deployment exists flag based on check result
       ansible.builtin.set_fact:
-        wildfly_app_deploy_deployment_exists: "{{ not (wildfly_app_deploy_deployment_check.failed | default(false)) }}"
-      when: wildfly_app_deploy_deployment_exists is not defined
+        deployment_exists: "{{ not (deployment_check.failed | default(false)) }}"
+      when: deployment_exists is not defined
 
 - name: Deploy application
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    wildfly_utils_jboss_home: "{{ wildfly_app_deploy_home }}"
-    wildfly_utils_jboss_cli_query: >-
-      'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }}
-      /tmp/{{ wildfly_app_deploy_name }}'
-    wildfly_utils_jboss_cli_timeout: 300
-    wildfly_utils_jboss_cli_changed_when: false
+    jboss_home: "{{ wildfly_home }}"
+    jboss_cli_query: "'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }} /tmp/{{ wildfly_app_deploy_name }}'"
+    jboss_cli_timeout: 300
+    jboss_cli_changed_when: false
   when: >
-    not (wildfly_app_deploy_deployment_exists | default(false)) or
+    not (deployment_exists | default(false)) or
     (wildfly_apps_jboss_cli_deploy_force | default(false))
-  register: wildfly_app_deploy_result
+  register: deploy_result
 
 - name: Enable application (if disabled)
   block:
@@ -44,27 +42,27 @@
         name: wildfly_utils
         tasks_from: jboss_cli.yml
       vars:
-        wildfly_utils_jboss_home: "{{ wildfly_app_deploy_home }}"
-        wildfly_utils_jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-attribute(name=enabled)'"
-        wildfly_utils_jboss_cli_timeout: 30
-        wildfly_utils_jboss_cli_changed_when: false
-      register: wildfly_app_deploy_deployment_status
-      when: wildfly_app_deploy_deployment_exists | default(false)
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:read-attribute(name=enabled)'"
+        jboss_cli_timeout: 30
+        jboss_cli_changed_when: false
+      register: deployment_status
+      when: deployment_exists | default(false)
   rescue:
     - name: Skip enable check - deployment doesn't exist or check failed
       ansible.builtin.set_fact:
-        wildfly_app_deploy_deployment_needs_enable: false
+        deployment_needs_enable: false
   always:
     - name: Enable deployment if it's disabled
       ansible.builtin.include_role:
         name: wildfly_utils
         tasks_from: jboss_cli.yml
       vars:
-        wildfly_utils_jboss_home: "{{ wildfly_app_deploy_home }}"
-        wildfly_utils_jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:write-attribute(name=enabled,value=true)'"
-        wildfly_utils_jboss_cli_timeout: 30
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'/deployment={{ wildfly_app_deploy_name }}:write-attribute(name=enabled,value=true)'"
+        jboss_cli_timeout: 30
       when: >
-        wildfly_app_deploy_deployment_exists | default(false) and
-        wildfly_app_deploy_deployment_status.failed is not defined and
-        wildfly_app_deploy_deployment_status.changed is defined and
-        'false' in (wildfly_app_deploy_deployment_status.stdout | default(''))
+        deployment_exists | default(false) and
+        deployment_status.failed is not defined and
+        deployment_status.changed is defined and
+        'false' in (deployment_status.stdout | default(''))

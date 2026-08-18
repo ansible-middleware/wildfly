@@ -17,8 +17,7 @@ Role Defaults
 |`wildfly_firewalld_full_ha_listen_ports`|Default port set used by the standalone-full-ha.xml"|N/A|
 |`wildfly_firewalld_multicast_addr`|Multicast address used by JGroups for server clustering|230.0.0.4|
 |`wildfly_firewalld_multicast_rules`|Firewalld rules added to allow multicast|N/A|
-|`wildfly_firewalld_config_base`|Base standalone.xml config for instance|`standalone.xml`|
-|`wildfly_firewalld_cluster_enabled`|Specify whether or not the server's cluster is enabled|`false`|
+|`wildfly_cluster_enabled`|Specify whether or not the server's cluster is enabled|`false`|
 
 Author Information
 ------------------

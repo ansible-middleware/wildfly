@@ -2,8 +2,8 @@
 - name: "Ensure required parameters are provided"
   ansible.builtin.assert:
     that:
-      - wildfly_validation_version is defined and wildfly_validation_version | length > 0
-      - wildfly_validation_home is defined and wildfly_validation_home | length > 0
+      - wildfly_version is defined and wildfly_version | length > 0
+      - wildfly_home is defined  and wildfly_home | length > 0
     quiet: true
 
 - name: "Verify that server has been installed using Prospero"
@@ -22,10 +22,10 @@
       vars:
         folder: "{{ wildfly_prospero_install_dir }}"
 
-    - name: "Verify that Prospero hidden folders exists in {{ wildfly_validation_home }}"
+    - name: "Verify that Prospero hidden folders exists in {{ wildfly_home }}"
       ansible.builtin.include_tasks: verify_folder_exists.yml
       loop:
-        - "{{ wildfly_validation_home }}/.galleon"
-        - "{{ wildfly_validation_home }}/.installation"
+        - "{{ wildfly_home }}/.galleon"
+        - "{{ wildfly_home }}/.installation"
       loop_control:
         loop_var: folder

@@ -1,49 +1,57 @@
 argument_specs:
     main:
         options:
-            wildfly_app_deploy_deployment_file:
-                required: true
+            wildfly_app_deployment_file:
+                required: True
                 description: "Path to the application artifact (.war, .ear, .jar) on the Ansible controller"
                 type: "str"
             wildfly_app_deploy_name:
                 default: "application.war"
                 description: "The name to use for the deployment in WildFly (e.g., app-v1.war)"
                 type: "str"
-            wildfly_app_deploy_home:
-                default: "{{ wildfly_utils_home }}"
-                description: "WildFly home directory"
+            wildfly_home:
+                required: False
+                description: "WildFly installation directory (inherits from wildfly_install role)"
                 type: "str"
-            wildfly_app_deploy_jboss_cli_controller_host:
+            jboss_home:
+                required: False
+                description: "WildFly installation directory, for backwards compatibility (inherits from wildfly_utils role)"
+                type: "str"
+            jboss_cli_controller_host:
                 default: "localhost"
                 description: "Hostname for connecting to CLI"
                 type: "str"
-            wildfly_app_deploy_jboss_cli_controller_port:
+            jboss_cli_controller_port:
                 default: "9990"
                 description: "Port for connecting to CLI"
                 type: "str"
-            wildfly_app_deploy_port_range_offset:
+            wildfly_port_range_offset:
                 default: 0
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"
-            wildfly_app_deploy_user:
+            wildfly_user:
                 default: "wildfly"
                 description: "POSIX user account for WildFly"
                 type: "str"
-            wildfly_app_deploy_group:
-                default: "{{ wildfly_app_deploy_user }}"
+            wildfly_group:
+                default: "{{ wildfly_user }}"
                 description: "POSIX group for WildFly service"
                 type: "str"
     downstream:
         options:
-            eap_app_deploy_deployment_file:
-                required: true
+            eap_app_deployment_file:
+                required: True
                 description: "Path to the application artifact (.war, .ear, .jar) on the Ansible controller"
                 type: "str"
             eap_app_deploy_name:
                 default: "application.war"
                 description: "The name to use for the deployment in EAP (e.g., app-v1.war)"
                 type: "str"
-            eap_app_deploy_port_range_offset:
+            eap_home:
+                required: False
+                description: "EAP installation directory (inherits from eap_install role)"
+                type: "str"
+            eap_port_range_offset:
                 default: 0
                 description: "Increment for `jboss.socket.binding.port-offset`"
                 type: "int"

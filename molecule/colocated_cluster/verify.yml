@@ -9,12 +9,12 @@
       ansible.builtin.include_role:
         name: wildfly_validation
       vars:
-        wildfly_validation_node_id: "wildfly-{{ item }}"
-        wildfly_validation_instance_name: "wildfly-{{ item }}"
-        wildfly_validation_service_name: "wildfly-{{ item }}"
-        wildfly_validation_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
-        wildfly_validation_controller_port: "{{ 9990 + (100 * (item) | int) }}"
-        wildfly_validation_http_port: "{{ 8080 + (100 * (item) | int) }}"
+        wildfly_node_id: "wildfly-{{ item }}"
+        wildfly_instance_name: "wildfly-{{ item }}"
+        wildfly_service_name: "wildfly-{{ item }}"
+        wildfly_basedir_prefix: "{{ wildfly_instances_home }}/wildfly-{{ item }}/"
+        wildfly_controller_port: "{{ 9990 + (100 * (item) | int) }}"
+        wildfly_http_port: "{{ 8080 + (100 * (item) | int) }}"
       loop: "{{ range(0, 3) | list }}"
 
     - name: "Wait for 30s to let apps finish their deployment"
@@ -31,7 +31,7 @@
         loop_var: app_port
 
     - name: "Get eap-0 log"
-      become: "{{ wildfly_requires_become | default(true) }}"
+      become: "{{ wildfly_install_requires_become | default(true) }}"
       ansible.builtin.command:
         argv:
           - cat
@@ -41,9 +41,7 @@
 
     - name: "Fetch joined string for first instance"
       ansible.builtin.set_fact:
-        eap_1_joined: >-
-          {{ command_output.stdout | regex_search('^.*INFO  \[org.infinispan.CLUSTER\].*ISPN100000:
-          Node wildfly-1 joined the cluster.*$', multiline=true) }}
+        eap_1_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-1 joined the cluster.*$', multiline=true) }}"
 
     - name: "Check that string matches"
       ansible.builtin.assert:
@@ -53,9 +51,7 @@
 
     - name: "Fetch joined string for second instance"
       ansible.builtin.set_fact:
-        eap_2_joined: >-
-          {{ command_output.stdout | regex_search('^.*INFO  \[org.infinispan.CLUSTER\].*ISPN100000:
-          Node wildfly-2 joined the cluster.*$', multiline=true) }}
+        eap_2_joined: "{{ command_output.stdout | regex_search('^.*INFO  \\[org.infinispan.CLUSTER\\].*ISPN100000: Node wildfly-2 joined the cluster.*$', multiline=true) }}"
 
     - name: "Check that string has been found"
       ansible.builtin.assert:

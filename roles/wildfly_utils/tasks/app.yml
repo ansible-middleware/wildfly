@@ -8,33 +8,29 @@
 
 - name: "Reset unmanaged option for deployments"
   ansible.builtin.set_fact:
-    wildfly_utils_unmanaged_option: ""
+    unmanaged_option: ""
   when:
-    - not wildfly_utils_unmanaged_option is defined or wildfly_utils_unmanaged_option | length > 0
+    - not unmanaged_option is defined or unmanaged_option | length > 0
 
 - name: "Adapt deploy command if app is unmanaged ({{ app_to_deploy.unmanaged | default(false) }})"
   when:
     - app_to_deploy.unmanaged is defined and app_to_deploy.unmanaged
   ansible.builtin.set_fact:
-    wildfly_utils_unmanaged_option: "--unmanaged"
+    unmanaged_option: "--unmanaged"
 
-- name: "Load metadata on deployment file: {{ app_to_deploy.path }}"
-  become: "{{ wildfly_utils_apps_requires_privilege_escalation }}"
+- name: "Load metadata on deployment file {{ app_to_deploy.path }} in {{ wildfly_home }}/standalone/deployments/."
+  become: "{{ wildfly_apps_requires_privilege_escalation }}"
   ansible.builtin.stat:
     path: "{{ wildfly_basedir }}/tmp/{{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
-  register: wildfly_utils_app_marker
+  register: app_marker
 
-- name: "Ensure app is deployed: {{ app_to_deploy.name | default(app_to_deploy.path | basename) }}"
+- name: "Ensure that app {{ app_to_deploy.name | default(app_to_deploy.path | basename) }} is available"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-    wildfly_utils_jboss_cli_query: >-
-      'deploy {{ ('--force' if wildfly_utils_apps_jboss_cli_deploy_force | default(false) else '') }}
-      {{ wildfly_utils_unmanaged_option }} {{ app_to_deploy.path }}'
+    jboss_home: "{{ wildfly_home }}"
+    # Use app_to_deploy instead of app
+    jboss_cli_query: "'deploy {{ ('--force' if wildfly_apps_jboss_cli_deploy_force | default(false) else '') }} {{ unmanaged_option }} {{ app_to_deploy.path }}'"
   when:
-    - wildfly_utils_app_marker is defined
-    - wildfly_utils_app_marker.stat is defined
-    - wildfly_utils_app_marker.stat.exists is defined
-    - not wildfly_utils_app_marker.stat.exists
+    - app_marker is defined and app_marker.stat is defined and app_marker.stat.exists is defined and not app_marker.stat.exists

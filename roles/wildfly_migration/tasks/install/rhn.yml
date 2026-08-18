@@ -1,7 +1,7 @@
 ---
 - name: "Normalize eap_version for RHN migration tool lookup"
   ansible.builtin.set_fact:
-    eap_migration_version: "{{ eap_version | default('8.0.0') }}"
+    eap_version: "{{ eap_version | default('8.0.0') }}"
 
 - name: "Ensure required parameters are provided."
   ansible.builtin.assert:
@@ -9,46 +9,38 @@
       - eap_migration_server_tool_path_to_archive is defined and eap_migration_server_tool_path_to_archive | length > 0
       - rhn_username is defined
       - rhn_password is defined
-    quiet: true
+    quiet: True
     fail_msg: "Missing required parameters."
 
 - name: "Esclade privileges if needed"
   block:
-    - name: "Query RHN to find migration tool for EAP {{ eap_migration_version }}"
+    - name: "Query RHN to find migration tool for EAP {{ eap_version }}"
       redhat.runtimes_common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_type: DISTRIBUTION
-        product_version: "{{ eap_migration_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
+        product_version: "{{ eap_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
         product_category: "appplatform"
-      register: wildfly_migration_rhn_migration_search
+      register: rhn_migration_search
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
 
     - name: "Determine major.minor version for fallback"
       ansible.builtin.set_fact:
-        eap_migration_major_minor: "{{ (eap_migration_version.split('.'))[0:2] | join('.') }}"
+        eap_major_minor: "{{ (eap_version.split('.'))[0:2] | join('.') }}"
       delegate_to: localhost
       run_once: true
 
     - name: "Try to find exact version migration tool first"
       ansible.builtin.set_fact:
-        eap_migration_tool_found: >-
-          {{ wildfly_migration_rhn_migration_search.results
-          | selectattr('file_name', 'match',
-          '.*jboss-eap-' + eap_migration_version + '-server-migration.zip$')
-          | list }}
+        eap_migration_tool_found: "{{ rhn_migration_search.results | selectattr('file_name', 'match', '.*jboss-eap-' + eap_version + '-server-migration.zip$') | list }}"
       delegate_to: localhost
       run_once: true
 
     - name: "If exact version not found, use base version (X.Y.0) migration tool"
       ansible.builtin.set_fact:
-        eap_migration_tool_found: >-
-          {{ wildfly_migration_rhn_migration_search.results
-          | selectattr('file_name', 'match',
-          '.*jboss-eap-' + eap_migration_major_minor + '.0-server-migration.zip$')
-          | list }}
+        eap_migration_tool_found: "{{ rhn_migration_search.results | selectattr('file_name', 'match', '.*jboss-eap-' + eap_major_minor + '.0-server-migration.zip$') | list }}"
       when:
         - eap_migration_tool_found | length == 0
       delegate_to: localhost
@@ -63,7 +55,7 @@
 
     - name: Expose RHN migration tool discovery to all targets
       ansible.builtin.set_fact:
-        eap_migration_major_minor: "{{ hostvars[ansible_play_hosts[0]].eap_migration_major_minor }}"
+        eap_major_minor: "{{ hostvars[ansible_play_hosts[0]].eap_major_minor }}"
         eap_migration_tool_found: "{{ hostvars[ansible_play_hosts[0]].eap_migration_tool_found }}"
         eap_migration_server_tool_product_id: "{{ hostvars[ansible_play_hosts[0]].eap_migration_server_tool_product_id }}"
         eap_migration_tool_actual_file: "{{ hostvars[ansible_play_hosts[0]].eap_migration_tool_actual_file }}"
@@ -73,28 +65,17 @@
         that:
           - eap_migration_tool_found | length > 0
           - (eap_migration_tool_found | first).id is defined
-        quiet: true
-        fail_msg: >-
-          Migration tool for EAP {{ eap_migration_version }}
-          (or base {{ eap_migration_major_minor }}.0) not found in RHN.
-          Available migration tools:
-          {{ wildfly_migration_rhn_migration_search.results
-          | selectattr('file_name', 'match', '.*server-migration.zip$')
-          | map(attribute='file_name') | list }}
+        quiet: True
+        fail_msg: "Migration tool for EAP {{ eap_version }} (or base {{ eap_major_minor }}.0) not found in RHN. Available migration tools: {{ rhn_migration_search.results | selectattr('file_name', 'match', '.*server-migration.zip$') | map(attribute='file_name') | list }}"
 
     - name: "Display discovered migration tool"
       ansible.builtin.debug:
         msg:
           - "Discovered migration tool from RHN:"
-          - "  Target Version: {{ eap_migration_version }}"
+          - "  Target Version: {{ eap_version }}"
           - "  Migration Tool: {{ eap_migration_tool_actual_file }}"
           - "  Product ID: {{ eap_migration_server_tool_product_id }}"
-          - >-
-            Note: {{ 'Using base ' + eap_migration_major_minor +
-            '.0 tool (compatible with all ' + eap_migration_major_minor +
-            '.x versions)' if
-            (eap_migration_tool_actual_file.find(eap_migration_version) == -1)
-            else 'Exact version match' }}
+          - "  Note: {{ 'Using base ' + eap_major_minor + '.0 tool (compatible with all ' + eap_major_minor + '.x versions)' if (eap_migration_tool_actual_file.find(eap_version) == -1) else 'Exact version match' }}"
 
     - name: Check local path to stage migration tool archive on controller
       ansible.builtin.stat:
@@ -143,8 +124,8 @@
       ansible.builtin.copy:
         src: "{{ eap_migration_server_tool_local_archive }}"
         dest: "{{ eap_migration_server_tool_path_to_archive }}"
-        owner: "{{ wildfly_migration_user }}"
-        group: "{{ wildfly_migration_group }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
         mode: '0640'
         selevel: s0
         serole: object_r
@@ -173,8 +154,8 @@
         src: "{{ eap_migration_server_tool_path_to_archive }}"
         dest: "{{ eap_migration_server_tool_install_dir }}"
         remote_src: "{{ eap_migration_remote_src | default('yes') }}"
-        owner: "{{ wildfly_migration_user }}"
-        group: "{{ wildfly_migration_group }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
       when:
         - not eap_migration_script_stat.stat.exists
 
@@ -183,8 +164,8 @@
         path: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/logs"
         state: directory
         mode: "0755"
-        owner: "{{ wildfly_migration_user }}"
-        group: "{{ wildfly_migration_group }}"
+        owner: "{{ wildfly_user | default(omit) }}"
+        group: "{{ wildfly_group | default(omit) }}"
 
     - name: "Set EAP migration tool paths for EAP 8.0+"
       ansible.builtin.set_fact:
@@ -192,6 +173,4 @@
         wildfly_migration_tool_bin_folder: ""
         wildfly_migration_server_tool_subfolder_to_configuration: ""
         wildfly_migration_server_tool_path_to_script: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/jboss-server-migration.sh"
-        wildfly_migration_path_to_env_properties: >-
-          {{ eap_migration_server_tool_install_dir }}/jboss-server-migration/{{
-          wildfly_migration_server_tool_env_properties_file }}
+        wildfly_migration_path_to_env_properties: "{{ eap_migration_server_tool_install_dir }}/jboss-server-migration/{{ wildfly_migration_server_tool_env_properties_file }}"

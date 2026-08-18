@@ -3,8 +3,8 @@
   ansible.builtin.assert:
     that:
       - validation_query is defined
-      - wildfly_validation_home is defined
-      - wildfly_validation_controller_port is defined
+      - wildfly_home is defined
+      - wildfly_controller_port is defined
     quiet: true
     fail_msg: "Missing required parameters"
 
@@ -13,45 +13,44 @@
     name: wildfly_utils
     tasks_from: jboss_cli.yml
   vars:
-    wildfly_utils_jboss_cli_query: "'{{ validation_query }}'"
-    wildfly_utils_jboss_home: "{{ wildfly_validation_home }}"
-    wildfly_utils_jboss_cli_controller_host: "localhost"
-    wildfly_utils_jboss_cli_controller_port: "{{ wildfly_validation_controller_port }}"
+    jboss_cli_query: "'{{ validation_query }}'"
+    jboss_home: "{{ wildfly_home }}"
+    jboss_cli_controller_port: "{{ wildfly_controller_port }}"
 
 - name: "Validate CLI query was successful"
   ansible.builtin.assert:
     that:
-      - wildfly_utils_cli_result is defined
-      - wildfly_utils_cli_result.rc is defined
-      - wildfly_utils_cli_result.rc == 0
-      - wildfly_utils_cli_result.stdout_lines is defined
+      - cli_result is defined
+      - cli_result.rc is defined
+      - cli_result.rc == 0
+      - cli_result.stdout_lines is defined
     quiet: true
     fail_msg: "Fail to validate state of server using CLI query: {{ validation_query }}. Server may not be functional!"
 
 - name: "Transform output to JSON"
   ansible.builtin.set_fact:
-    wildfly_validation_query_result: "{{ wildfly_utils_cli_result.stdout_lines | join('\n') | from_json }}"
+    query_result: "{{ cli_result.stdout_lines | join('\n') | from_json }}"
 
 - name: "Display transformed result"
   ansible.builtin.debug:
-    var: wildfly_validation_query_result
+    var: query_result
   when:
     - wildfly_validation_debug is defined
 
 - name: "Check that query was successfully performed."
   ansible.builtin.assert:
     that:
-      - wildfly_validation_query_result is defined
-      - wildfly_validation_query_result.result is defined
-      - wildfly_validation_query_result.outcome is defined
-      - wildfly_validation_query_result.outcome == "success"
+      - query_result is defined
+      - query_result.result is defined
+      - query_result.outcome is defined
+      - query_result.outcome == "success"
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
 
 - name: "Check that query result is not undefined."
   ansible.builtin.assert:
     that:
-      - wildfly_validation_query_result.result | type_debug | string != "NoneType"
+      - query_result.result | type_debug | string != "NoneType"
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
   when:
@@ -60,7 +59,7 @@
 - name: "Check that query result is same as expected value."
   ansible.builtin.assert:
     that:
-      - wildfly_validation_query_result.result == expected_result
+      - query_result.result == expected_result
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
   when:
@@ -69,7 +68,7 @@
 - name: "Check that query result is undefined."
   ansible.builtin.assert:
     that:
-      - wildfly_validation_query_result.result | type_debug | string == "NoneType"
+      - query_result.result | type_debug | string == "NoneType"
     quiet: true
     fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
   when:

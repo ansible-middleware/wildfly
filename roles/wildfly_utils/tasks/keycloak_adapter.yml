@@ -2,122 +2,119 @@
 - name: Check installation
   ansible.builtin.assert:
     that:
-      - eap_utils_enable is defined and eap_utils_enable
+      - eap_enable is defined and eap_enable
     quiet: true
     fail_msg: "SSO (keycloak) adapter is only available on Red Hat EAP installations."
 
 - name: Set adapter directory
   ansible.builtin.set_fact:
-    wildfly_utils_patches_repository: "{{ override_patches_repository | default('/opt') }}"
+    patches_repository: "{{ override_patches_repository | default('/opt') }}"
 
 - name: Set adapter filename
   ansible.builtin.set_fact:
-    wildfly_utils_patch_filename: "{{ override_adapter_filename | default(eap_utils_elytron_adapter_archive_filename) }}"
+    patch_filename: "{{ override_adapter_filename | default(eap_elytron_adapter_archive_filename) }}"
 
 - name: Set adapter destination directory
   ansible.builtin.set_fact:
-    wildfly_utils_path_to_patch: "{{ wildfly_utils_patches_repository }}/{{ wildfly_utils_patch_filename }}"
+    path_to_patch: "{{ patches_repository }}/{{ patch_filename }}"
 
 - name: Check download adapter archive path
   ansible.builtin.stat:
-    path: "{{ wildfly_utils_path_to_patch }}"
-  register: wildfly_utils_patch_archive_path
+    path: "{{ path_to_patch }}"
+  register: patch_archive_path
 
 - name: Check local download archive path
   ansible.builtin.stat:
     path: "{{ lookup('env', 'PWD') }}"
-  register: wildfly_utils_local_path
+  register: local_path
   delegate_to: localhost
 
-- name: "Check downloaded archive: {{ wildfly_utils_patch_filename }}."
+- name: "Check downloaded archive: {{ patch_filename }}."
   ansible.builtin.stat:
-    path: "{{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_patch_filename }}"
-  register: wildfly_utils_local_archive_path
+    path: "{{ local_path.stat.path }}/{{ patch_filename }}"
+  register: local_archive_path
   delegate_to: localhost
 
 - name: "Check if Unified Downloads API access is needed."
   when:
-    - wildfly_utils_local_archive_path is defined and wildfly_utils_local_archive_path.stat is defined
-    - wildfly_utils_local_archive_path.stat.exists is defined and not wildfly_utils_local_archive_path.stat.exists
+    - local_archive_path is defined and local_archive_path.stat is defined
+    - local_archive_path.stat.exists is defined and not local_archive_path.stat.exists
   block:
     - name: Retrieve product download using Unified Downloads API
       middleware_automation.common.product_search:
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
         product_type: DISTRIBUTION
-        product_version: "{{ eap_utils_elytron_adapter_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
+        product_version: "{{ eap_elytron_adapter_version | regex_replace('([0-9]+)[.]([0-9]+)[.][0-9]+[.]?([A-Za-z]+)?', '\\1.\\2 \\3') }}"
         product_category: "core.service.rhsso"
-      register: wildfly_utils_rhn_products
+      register: rhn_products
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
 
     - name: Determine install zipfile from search results
       ansible.builtin.set_fact:
-        wildfly_utils_rhn_filtered_products: >-
-          {{ wildfly_utils_rhn_products.results |
-          selectattr('file_name', 'match',
-          '[^/]*/' + wildfly_utils_patch_filename + '$') }}
+        rhn_filtered_products: "{{ rhn_products.results | selectattr('file_name', 'match', '[^/]*/' + patch_filename + '$') }}"
       delegate_to: localhost
       run_once: true
 
-    - name: "Check remote downloaded archive: {{ wildfly_utils_path_to_patch }}"
+    - name: "Check remote downloaded archive: {{ path_to_patch }}"
       ansible.builtin.stat:
-        path: "{{ wildfly_utils_path_to_patch }}"
-      register: wildfly_utils_remote_archive_path
-      become: "{{ wildfly_utils_requires_become | default(true) }}"
+        path: "{{ path_to_patch }}"
+      register: remote_archive_path
+      become: "{{ wildfly_install_requires_become | default(true) }}"
 
     - name: Download Red Hat Single Sign-On Adapter
       middleware_automation.common.product_download: # noqa risky-file-permissions delegated, uses controller host user
         client_id: "{{ rhn_username }}"
         client_secret: "{{ rhn_password }}"
-        product_id: "{{ (wildfly_utils_rhn_filtered_products | first).id }}"
-        dest: "{{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_patch_filename }}"
+        product_id: "{{ (rhn_filtered_products | first).id }}"
+        dest: "{{ local_path.stat.path }}/{{ patch_filename }}"
       no_log: "{{ omit_rhn_output | default(true) }}"
       delegate_to: localhost
       run_once: true
       when:
-        - wildfly_utils_remote_archive_path is defined
-        - not wildfly_utils_remote_archive_path.stat.exists
+        - remote_archive_path is defined
+        - not remote_archive_path.stat.exists
 
-- name: "Check downloaded archive: {{ wildfly_utils_patch_filename }}."
+- name: "Check downloaded archive: {{ patch_filename }}."
   ansible.builtin.stat:
-    path: "{{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_patch_filename }}"
-  register: wildfly_utils_local_archive_path
+    path: "{{ local_path.stat.path }}/{{ patch_filename }}"
+  register: local_archive_path
   delegate_to: localhost
 
 - name: Copy adapter archive to target nodes
   ansible.builtin.copy:
-    src: "{{ wildfly_utils_local_path.stat.path }}/{{ wildfly_utils_patch_filename }}"
-    dest: "{{ wildfly_utils_path_to_patch }}"
-    owner: "{{ wildfly_utils_user }}"
-    group: "{{ wildfly_utils_group }}"
+    src: "{{ local_path.stat.path }}/{{ patch_filename }}"
+    dest: "{{ path_to_patch }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
     mode: '0640'
     selevel: s0
     serole: object_r
     setype: usr_t
     seuser: system_u
-  register: wildfly_utils_new_version_downloaded
+  register: new_version_downloaded
   when:
-    - not wildfly_utils_patch_archive_path.stat.exists
-    - wildfly_utils_local_archive_path.stat is defined
-    - wildfly_utils_local_archive_path.stat.exists
-  become: "{{ wildfly_utils_requires_become | default(true) }}"
+    - not patch_archive_path.stat.exists
+    - local_archive_path.stat is defined
+    - local_archive_path.stat.exists
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   notify: exec_restorecon
 
 - name: Extract Adapter zipfile
   ansible.builtin.unarchive:
-    src: "{{ wildfly_utils_path_to_patch }}"
-    dest: "{{ wildfly_utils_home }}"
-    owner: "{{ wildfly_utils_user }}"
-    group: "{{ wildfly_utils_group }}"
+    src: "{{ path_to_patch }}"
+    dest: "{{ wildfly_home }}"
+    owner: "{{ wildfly_user }}"
+    group: "{{ wildfly_group }}"
     remote_src: true
-    creates: "{{ wildfly_utils_home }}/modules/system/add-ons/keycloak"
+    creates: "{{ wildfly_home }}/modules/system/add-ons/keycloak"
     selevel: s0
     serole: object_r
     setype: usr_t
     seuser: system_u
-  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  become: "{{ wildfly_install_requires_become | default(true) }}"
   notify: exec_restorecon
 
 - name: Perform installation
@@ -126,39 +123,39 @@
       block:
         - name: "Check if management interface is reachable"
           ansible.builtin.wait_for:
-            host: "{{ wildfly_utils_jboss_cli_controller_host }}"
-            port: "{{ wildfly_utils_jboss_cli_controller_port }}"
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
             timeout: 1
       rescue:
         - name: "Deploy configuration"
           ansible.builtin.copy:
-            src: "{{ wildfly_utils_home }}/standalone/configuration/{{ wildfly_utils_config_base }}"
-            dest: "{{ wildfly_utils_home }}/standalone/configuration/{{ wildfly_utils_instance_name }}.xml"
-            group: "{{ wildfly_utils_group }}"
-            owner: "{{ wildfly_utils_user }}"
+            src: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_config_base }}"
+            dest: "{{ wildfly_home }}/standalone/configuration/{{ wildfly_instance_name }}.xml"
+            group: "{{ wildfly_group }}"
+            owner: "{{ wildfly_user }}"
             mode: '0640'
             remote_src: true
             force: false
-          become: "{{ wildfly_utils_requires_become | default(true) }}"
+          become: "{{ wildfly_install_requires_become | default(true) }}"
         - name: "Start wildfly for adapter installation"
           ansible.builtin.shell: |
             set -o pipefail
-            {{ wildfly_utils_home }}/bin/standalone.sh -c {{ wildfly_utils_instance_name }}.xml \
-                -Djboss.server.config.dir={{ wildfly_utils_home }}/standalone/configuration/ \
-                -Djboss.server.base.dir={{ wildfly_utils_home }}/standalone \
-                -Djboss.socket.binding.port-offset={{ wildfly_utils_port_range_offset }}
+            {{ wildfly_home }}/bin/standalone.sh -c {{ wildfly_instance_name }}.xml \
+                -Djboss.server.config.dir={{ wildfly_home }}/standalone/configuration/ \
+                -Djboss.server.base.dir={{ wildfly_home }}/standalone \
+                -Djboss.socket.binding.port-offset={{ wildfly_port_range_offset }}
           environment:
-            JAVA_HOME: "/etc/alternatives/jre_{{ wildfly_utils_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
-          changed_when: true
+            JAVA_HOME: "/etc/alternatives/jre_{{ wildfly_java_package_name | regex_search('(?<=java-)[0-9.]+') }}"
+          changed_when: True
           async: 180
           poll: 0
-          become: "{{ wildfly_utils_requires_become | default(true) }}"
-          become_user: "{{ wildfly_utils_user }}"
-          register: wildfly_utils_adapter_install_process
+          become: "{{ wildfly_install_requires_become | default(true) }}"
+          become_user: "{{ wildfly_user }}"
+          register: adapter_install_process
         - name: "Wait for management interface is reachable"
           ansible.builtin.wait_for:
-            host: "{{ wildfly_utils_jboss_cli_controller_host }}"
-            port: "{{ wildfly_utils_jboss_cli_controller_port }}"
+            host: "{{ jboss_cli_controller_host }}"
+            port: "{{ jboss_cli_controller_port }}"
             timeout: 60
             delay: 10
             sleep: 5
@@ -169,33 +166,33 @@
         - name: "Check if Keycloak extension is already installed"
           ansible.builtin.include_tasks: jboss_cli.yml
           vars:
-            wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-            wildfly_utils_jboss_cli_query: "'/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'"
-            wildfly_utils_jboss_cli_timeout: 10
+            jboss_home: "{{ wildfly_home }}"
+            jboss_cli_query: "'/extension=org.keycloak.keycloak-adapter-subsystem:read-resource'"
+            jboss_cli_timeout: 10
       rescue:
         - name: Install Keycloak Adapter and Reload
           block:
             - name: Install Keycloak Adapter
               ansible.builtin.include_tasks: jboss_cli.yml
               vars:
-                wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-                wildfly_utils_jboss_cli_file: "{{ wildfly_utils_home }}/bin/adapter-elytron-install.cli"
-                wildfly_utils_jboss_cli_timeout: 10
+                jboss_home: "{{ wildfly_home }}"
+                jboss_cli_file: "{{ wildfly_home }}/bin/adapter-elytron-install.cli"
+                jboss_cli_timeout: 10
             - name: Reload After Keycloak Adapter Install
               ansible.builtin.include_tasks: jboss_cli.yml
               vars:
-                wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-                wildfly_utils_jboss_cli_query: ":reload"
-                wildfly_utils_jboss_cli_timeout: 60
-              when: "'process-state: reload-required' in wildfly_utils_cli_result.stdout"
+                jboss_home: "{{ wildfly_home }}"
+                jboss_cli_query: ":reload"
+                jboss_cli_timeout: 60
+              when: "'process-state: reload-required' in cli_result.stdout"
 
     - name: "Stop service if it was started for adapter install"
       ansible.builtin.include_tasks: jboss_cli.yml
       vars:
-        wildfly_utils_jboss_home: "{{ wildfly_utils_home }}"
-        wildfly_utils_jboss_cli_query: "'shutdown'"
-        wildfly_utils_jboss_cli_timeout: 60
+        jboss_home: "{{ wildfly_home }}"
+        jboss_cli_query: "'shutdown'"
+        jboss_cli_timeout: 60
       when:
-        - wildfly_utils_adapter_install_process is defined
-        - not eap_utils_no_restart_after_patch
-        - wildfly_utils_cli_result.rc == 0
+        - adapter_install_process is defined
+        - not eap_no_restart_after_patch
+        - cli_result.rc == 0

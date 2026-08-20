@@ -124,10 +124,10 @@ argument_specs:
                 description: "Path to the server migration tool home (EAP 8+ default; EAP 7.x overridden in tasks)"
                 type: "str"
             eap_migration_tool_bin_folder:
-                default: ""
+                default: "''"
                 description: "Subfolder under server tool home containing the script (empty for EAP 8+)"
                 type: "str"
             eap_migration_server_tool_subfolder_to_configuration:
-                default: ""
+                default: "''"
                 description: "Subfolder for configuration (empty for EAP 8+)"
                 type: "str"

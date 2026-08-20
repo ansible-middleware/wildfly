@@ -6,7 +6,7 @@
     quiet: true
 
 - name: "Ensure firewalld is available."
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_firewalld_requires_become }}"
   ansible.builtin.package:
     name: "{{ wildfly_firewalld_package_name }}"
     state: present
@@ -15,14 +15,14 @@
 - name: "Ensure firewalld is available on RHEL 8 (workaround for DNF module)"
   ansible.builtin.command:
     cmd: "dnf install -y {{ wildfly_firewalld_package_name }}"
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_firewalld_requires_become }}"
   register: wildfly_firewalld_dnf_install_result
   changed_when:
     - "'Installing:' in wildfly_firewalld_dnf_install_result.stdout or 'Upgrading:' in wildfly_firewalld_dnf_install_result.stdout"
   when: ansible_distribution_major_version == '8'
 
 - name: "Ensure firewalld is running."
-  become: "{{ wildfly_install_requires_become | default(true) }}"
+  become: "{{ wildfly_firewalld_requires_become }}"
   ansible.builtin.service:
     name: "{{ wildfly_firewalld_service_name | default('firewalld') }}"
     state: started

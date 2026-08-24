@@ -180,12 +180,12 @@
 <section id="example-playbooks">
 <h2>Example Playbooks<a class="headerlink" href="#example-playbooks" title="Link to this heading"></a></h2>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nn">---</span>
-<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Uninstall</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">target&quot;</span>
+<span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Uninstall</span><span class="nv"> </span><span class="s">server</span><span class="nv"> </span><span class="s">from</span><span class="nv"> </span><span class="s">target"</span>
 <span class="w">  </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
 <span class="w">  </span><span class="nt">gather_facts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
 <span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
 <span class="w">    </span><span class="nt">wildfly_uninstall_service_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly</span>
-<span class="w">    </span><span class="nt">wildfly_uninstall_home</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;{{</span><span class="nv"> </span><span class="s">wildfly_utils_home</span><span class="nv"> </span><span class="s">}}&quot;</span>
+<span class="w">    </span><span class="nt">wildfly_uninstall_home</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_utils_home</span><span class="nv"> </span><span class="s">}}"</span>
 <span class="w">    </span><span class="nt">wildfly_uninstall_path_to_archive</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-40.0.0.Final.zip</span>
 <span class="w">  </span><span class="nt">roles</span><span class="p">:</span>
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_uninstall</span>

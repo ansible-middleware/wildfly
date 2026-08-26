@@ -5,7 +5,7 @@ wildfly_utils_jboss_cli_apply_cp_default_conflict_default: '--override-all'
 wildfly_utils_no_restart_after_patch: false
 wildfly_utils_user: "{{ wildfly_user | default('wildfly') }}"
 wildfly_utils_group: "{{ wildfly_group | default(wildfly_utils_user) }}"
-wildfly_utils_version: "{{ wildfly_version | default('40.0.0.Final') }}"
+wildfly_utils_version: "{{ wildfly_version | default('41.0.0.Final') }}"
 wildfly_utils_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
 wildfly_utils_home: "{{ wildfly_utils_install_workdir }}wildfly-{{ wildfly_utils_version }}/"
 wildfly_utils_selinux_enabled: false

@@ -1,5 +1,5 @@
 ---
-wildfly_install_version: "{{ wildfly_version | default('40.0.0.Final') }}"
+wildfly_install_version: "{{ wildfly_version | default('41.0.0.Final') }}"
 wildfly_install_archive_filename: "wildfly-{{ wildfly_install_version }}.zip"
 wildfly_install_archive_filename_on_controller: true
 wildfly_install_download_baseurl: 'https://github.com/wildfly/wildfly/releases/download'

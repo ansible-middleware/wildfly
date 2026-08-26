@@ -2,7 +2,7 @@
 # Collection-level shared variables
 wildfly_user: 'wildfly'
 wildfly_group: "{{ wildfly_user }}"
-wildfly_version: '40.0.0.Final'
+wildfly_version: '41.0.0.Final'
 wildfly_config_base: 'standalone.xml'
 wildfly_instance_name: 'wildfly'
 

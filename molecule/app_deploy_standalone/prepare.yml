@@ -5,25 +5,14 @@
 - name: Prepare
   hosts: all
   gather_facts: true
-  vars_files:
-    - ../group_vars/all/vars.yml
   tasks:
-    - name: "Set wildfly_java_version default based on RHEL version if not defined"
-      ansible.builtin.set_fact:
-        wildfly_java_version: "{{ wildfly_java_version | default(21 if ansible_facts.distribution_major_version == '10' else 17) }}"
-      when: wildfly_java_version is not defined
-
     - name: "Ensure required packages are installed using wildfly_java_version variable (RHEL 9+)"
       become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.dnf:
         name:
           - >-
-            {{ 'java-1.8.0-openjdk' if (wildfly_java_version
-            | default(21 if ansible_facts.distribution_major_version == '10' else 17)
-            | string == '1.8')
-            else ('java-' + (wildfly_java_version
-            | default(21 if ansible_facts.distribution_major_version == '10' else 17)
-            | string) + '-openjdk-headless') }}
+            {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')
+            else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
           - procps-ng
           - tzdata-java
         state: present
@@ -33,8 +22,8 @@
       become: "{{ wildfly_requires_become | default(true) }}"
       ansible.builtin.command:
         cmd: >-
-          dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | default(17) | string == '1.8')
-          else ('java-' + (wildfly_java_version | default(17) | string) + '-openjdk-headless') }}
+          dnf install -y {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')
+          else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
           procps-ng tzdata-java
       changed_when: false
       when: ansible_facts.distribution_major_version == '8'
@@ -48,12 +37,8 @@
         name: wildfly_systemd
       vars:
         wildfly_systemd_java_package_name: >-
-          {{ 'java-1.8.0-openjdk' if (wildfly_java_version
-          | default(21 if ansible_facts.distribution_major_version == '10' else 17)
-          | string == '1.8')
-          else ('java-' + (wildfly_java_version
-          | default(21 if ansible_facts.distribution_major_version == '10' else 17)
-          | string) + '-openjdk-headless') }}
+          {{ 'java-1.8.0-openjdk' if (wildfly_java_version | string == '1.8')
+          else ('java-' + (wildfly_java_version | string) + '-openjdk-headless') }}
 
     - name: "Wait for WildFly to be ready"
       ansible.builtin.wait_for:

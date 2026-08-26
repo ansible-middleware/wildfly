@@ -26,7 +26,7 @@ argument_specs:
                 description: "POSIX group for WildFly"
                 type: "str"
             wildfly_utils_version:
-                default: "40.0.0.Final"
+                default: "41.0.0.Final"
                 description: "WildFly version to install"
                 type: "str"
             wildfly_utils_install_workdir:
@@ -34,7 +34,7 @@ argument_specs:
                 description: "Root directory for installation, path where the install zipfile is extracted"
                 type: "str"
             wildfly_utils_home:
-                default: "/opt/wildfly/wildfly-40.0.0.Final/"
+                default: "/opt/wildfly/wildfly-41.0.0.Final/"
                 description: "WildFly installation directory"
                 type: "str"
             wildfly_utils_jboss_home:

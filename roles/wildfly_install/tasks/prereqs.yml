@@ -17,6 +17,18 @@
     quiet: true
     fail_msg: "The provided version for the Java server does not follows the required scheme: {{ wildfly_install_version }}"
 
+- name: "Warn if Java version is below minimum required for WildFly {{ wildfly_install_version }}"
+  ansible.builtin.debug:
+    msg: >-
+      WARNING: WildFly {{ wildfly_install_version }} requires Java 17 or later to run.
+      The configured Java version is {{ wildfly_install_java_version }}, which may cause startup failures.
+      Please set wildfly_java_version to 17 or higher.
+  when:
+    - not eap_install_enable is defined or not eap_install_enable
+    - wildfly_install_version.split('.')[0] | int >= 33
+    - wildfly_install_java_version | string is not match('^1\\..*')
+    - wildfly_install_java_version | int < 17
+
 - name: "Validate archive exists on controller for offline install: {{ wildfly_install_archive_filename }}"
   ansible.builtin.assert:
     that:

@@ -41,7 +41,7 @@ Role Variables
   vars:
     wildfly_uninstall_service_name: wildfly
     wildfly_uninstall_home: "{{ wildfly_utils_home }}"
-    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-40.0.0.Final.zip
+    wildfly_uninstall_path_to_archive: /opt/wildfly/wildfly-41.0.0.Final.zip
   roles:
     - name: wildfly_uninstall
 ```

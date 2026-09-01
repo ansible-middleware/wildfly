@@ -9,6 +9,18 @@ on:
     - cron: '0 6 * * *'
 
 jobs:
+  spellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v7
+
+      - name: Run cspell
+        uses: streetsidesoftware/cspell-action@v9
+        with:
+          incremental_files_only: false
+          use_cspell_files: true
+
   galaxy-importer:
     runs-on: ubuntu-latest
     steps:

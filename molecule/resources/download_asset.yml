@@ -2,7 +2,7 @@
 - name: "Load metadata on target asset file"
   ansible.builtin.stat:
     path: "{{ assets_server }}/{{ asset }}"
-  register: assest_state
+  register: asset_state
 
 - name: "Download assets."
   ansible.builtin.get_url:
@@ -12,8 +12,8 @@
     validate_certs: false
   delegate_to: localhost
   when:
-    - assest_state.stat is defined and assest_state.stat.exists is defined
-    - not assest_state.stat.exists
+    - asset_state.stat is defined and asset_state.stat.exists is defined
+    - not asset_state.stat.exists
 
 
 - name: "Download assets"

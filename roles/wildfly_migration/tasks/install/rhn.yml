@@ -12,7 +12,7 @@
     quiet: true
     fail_msg: "Missing required parameters."
 
-- name: "Esclade privileges if needed"
+- name: "Escalate privileges if needed"
   block:
     - name: "Query RHN to find migration tool for EAP {{ eap_migration_version }}"
       redhat.runtimes_common.product_search:

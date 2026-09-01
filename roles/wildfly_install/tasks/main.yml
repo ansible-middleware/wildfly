@@ -1,5 +1,5 @@
 ---
-- name: "Ensure prerequirements are fullfilled."
+- name: "Ensure prerequisites are fulfilled."
   ansible.builtin.include_tasks: prereqs.yml
 
 - name: "Ensure required local user exists."

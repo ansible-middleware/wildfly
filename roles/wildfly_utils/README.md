@@ -28,7 +28,7 @@ Role Defaults
 |`wildfly_utils_prospero_name`| Constant for the name of the prospero tool | `prospero` |
 |`wildfly_utils_prospero_install_dir`| Path to the installation dir for Prospero | `/opt/prospero` |
 |`wildfly_utils_prospero_profile_name`| Name of the WildFly profile for the server to install | `wildfly` |
-|`wildfly_utils_prospero_scenario_enable`| Specificy to Molecule if it should run the Prospero scenario | `True` |
+|`wildfly_utils_prospero_scenario_enable`| Specify to Molecule if it should run the Prospero scenario | `True` |
 |`wildfly_utils_prospero_archive_name`| Name of the Prospero archive | `{{ wildfly_utils_prospero_name }}-{{ wildfly_utils_prospero_version }}.zip` |
 |`wildfly_utils_prospero_download_check_ssl`| Should Ansible check SSL when downloading Prospero | `False` |
 <!--end argument_specs-->

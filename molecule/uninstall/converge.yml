@@ -1,5 +1,5 @@
 ---
-- name: "Uninstall Wildlfy from target"
+- name: "Uninstall WildFly from target"
   hosts: all
   gather_facts: false
   vars_files:

@@ -4,7 +4,7 @@ argument_specs:
             # line 2 of defaults/main.yml
             wildfly_uninstall_require_privileges_escalation:
                 default: true
-                description: "Specifiy if the uninstallation process requires privileges escalation"
+                description: "Specify if the uninstallation process requires privileges escalation"
                 type: "bool"
 
             # line 3 of defaults/main.yml

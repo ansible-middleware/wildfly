@@ -142,11 +142,11 @@ argument_specs:
                 type: "bool"
             eap_install_skip_supported_os_check:
                 default: false
-                description: "Specifiy if Ansible should skip the check that the target's RHEL version is supported for the EAP server used."
+                description: "Specify if Ansible should skip the check that the target's RHEL version is supported for the EAP server used."
                 type: bool
             eap_install_skip_supported_openjdk_check:
                 default: false
-                description: "Specifiy if Ansible should skip the check that the provided OpenJDK version is supported for the EAP server used."
+                description: "Specify if Ansible should skip the check that the provided OpenJDK version is supported for the EAP server used."
                 type: bool
             eap_install_supported_configuration:
                 type: json

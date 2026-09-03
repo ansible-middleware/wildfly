@@ -1,0 +1,100 @@
+# Ansible / WildFly / JBoss domain-specific words
+# Only terms NOT covered by built-in dictionaries (java, bash, shellscript,
+# fullstack, softwareTerms, software-tools, cpp-compound-words, python)
+
+# Product names and projects
+wildfly
+WILDFLY
+infinispan
+Infinispan
+ISPN
+Adoptium
+Temurin
+
+# Red Hat / JBoss EAP
+EAP
+eap
+selevel
+serole
+setype
+seuser
+firewalld
+
+# Ansible terms
+FQCN
+fqcn
+blockinfile
+lineinfile
+
+# Java / JEE terms
+JNDI
+JDK
+javaee
+jaxrs
+jberet
+passivation
+passivating
+sfsb
+slsb
+hornetq
+jacorb
+jacc
+jaspi
+jaspitest
+MTOM
+smallrye
+jdbcx
+networknt
+jaegertracing
+
+# WildFly-specific terms
+restorecon
+Djboss
+Dwildfly
+bmanagement
+rhsso
+jcliff
+prepdirs
+propsero
+mecanism
+tgz
+
+# Collection-specific identifiers
+sangonzal
+belaran
+ggraziol
+hcheruku
+rchakrab
+
+# Molecule testing
+temurinjdk
+testinfra
+testyml
+valueyml
+addressbookpass
+amqbrokerpass
+
+# RST / Sphinx directives
+toctree
+
+# WildFly internal identifiers
+wfly
+WFCORE
+WFLYSRV
+jgroup
+jgroups
+tcpping
+TCPPING
+MPING
+NAKACK
+PGXA
+modcluster
+
+# System / Linux terms
+procps
+gpgcheck
+gpgkey
+
+# Miscellaneous
+overrideable
+rootperm

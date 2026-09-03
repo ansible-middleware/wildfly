@@ -26,7 +26,7 @@
         path: "{{ wildfly_validation_systemd_pidfile }}"
       register: wildfly_validation_pidfile
 
-    - name: "Verify metadatas"
+    - name: "Verify metadata"
       ansible.builtin.assert:
         that:
           - wildfly_validation_pidfile is defined

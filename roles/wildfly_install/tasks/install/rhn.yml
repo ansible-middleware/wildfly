@@ -7,7 +7,7 @@
       - wildfly_install_local_path_to_archive is defined
     quiet: true
 
-- name: "Download JBoss EAP from Unified Donwloads"
+- name: "Download JBoss EAP from Unified Downloads"
   ansible.builtin.include_role:
     name: wildfly_utils
     tasks_from: download_from_rhn.yml

@@ -25,14 +25,14 @@
         method: GET
         timeout: 30
         return_content: false
-      register: assests_server_http_get_results
+      register: assets_server_http_get_results
 
     - name: "Verify that assets server is accessible."
       ansible.builtin.assert:
         that:
-          - assests_server_http_get_results is defined
-          - assests_server_http_get_results.status is defined
-          - assests_server_http_get_results.status == 200
+          - assets_server_http_get_results is defined
+          - assets_server_http_get_results.status is defined
+          - assets_server_http_get_results.status == 200
         quiet: true
 
     - name: "Download assets."

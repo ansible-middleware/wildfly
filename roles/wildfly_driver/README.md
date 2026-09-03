@@ -3,7 +3,7 @@ wildfly driver role
 
 This role provides a playbook to easily install a JDBC driver within
 the server modules directory tree. It comes with a template for the main.xml
-(that can be overriden).
+(that can be overridden).
 
 <!--start argument_specs-->
 Role Defaults

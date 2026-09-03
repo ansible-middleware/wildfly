@@ -191,7 +191,7 @@ argument_specs:
                 type: "str"
             wildfly_utils_prospero_scenario_enable:
                 default: true
-                description: "Specificy to Molecule if it should run the Prospero scenario"
+                description: "Specify to Molecule if it should run the Prospero scenario"
                 type: "bool"
             wildfly_utils_prospero_archive_name:
                 default: "{{ wildfly_prospero_name }}-{{ wildfly_prospero_version }}.zip"

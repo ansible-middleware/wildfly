@@ -46,14 +46,14 @@
       - wildfly_validation_query_result.outcome is defined
       - wildfly_validation_query_result.outcome == "success"
     quiet: true
-    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functional!"
 
 - name: "Check that query result is not undefined."
   ansible.builtin.assert:
     that:
       - wildfly_validation_query_result.result | type_debug | string != "NoneType"
     quiet: true
-    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functional!"
   when:
     - expected_result_undefined is defined and not expected_result_undefined
 
@@ -62,7 +62,7 @@
     that:
       - wildfly_validation_query_result.result == expected_result
     quiet: true
-    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functional!"
   when:
     - expected_result is defined
 
@@ -71,6 +71,6 @@
     that:
       - wildfly_validation_query_result.result | type_debug | string == "NoneType"
     quiet: true
-    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functionnal!"
+    fail_msg: "CLI query was not successful: {{ validation_query }}, server may not be functional!"
   when:
     - expected_result_undefined is defined and expected_result_undefined

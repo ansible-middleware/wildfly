@@ -21,10 +21,6 @@ argument_specs:
                 default: "templates/environment.properties.j2"
                 description: "Template to configure the migration tool"
                 type: "str"
-            wildfy_migration_require_privileges_escalation:
-                default: true
-                description: "Indicate if the server migration tool requires privileges escalation"
-                type: "str"
             wildfly_migration_server_tool_home:
                 default: "{{ target_wildfly_home }}"
                 description: "Path to the server migration tool"
@@ -35,7 +31,7 @@ argument_specs:
                 type: "str"
             wildfly_migration_tool_bin_script_name:
                 default: "jboss-server-migration.sh"
-                description: "Name of the script lauching the server migration tool"
+                description: "Name of the script launching the server migration tool"
                 type: "str"
             wildfly_migration_server_tool_path_to_script:
                 default: >-
@@ -49,7 +45,7 @@ argument_specs:
                 type: "str"
             wildfly_migration_server_tool_subfolder_to_configuration:
                 default: "/migration"
-                description: "Subfolder, relatrives to server migration"
+                description: "Subfolder, relatives to server migration"
                 type: "str"
             wildfly_migration_server_tool_env_properties_file:
                 default: "configuration/environment.properties"

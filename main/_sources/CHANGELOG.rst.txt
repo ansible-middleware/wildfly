@@ -12,6 +12,7 @@ v1.5.15-devel
 Minor Changes
 -------------
 
+- AMW-590 Collection spelling and grammar checking for PRs `#402 <https://github.com/ansible-middleware/wildfly/pull/402>`_
 - AMW-599 Update WildFly 41.0.0.Final version in wildfly collection `#399 <https://github.com/ansible-middleware/wildfly/pull/399>`_
 - AMW-614 Add galaxy-importer job in CI to reproduce sab Hub linting issue. `#400 <https://github.com/ansible-middleware/wildfly/pull/400>`_
 

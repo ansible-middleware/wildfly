@@ -30,8 +30,8 @@
     - "'Installing:' in wildfly_migration_dnf_install_jdk.stdout or 'Upgrading:' in wildfly_migration_dnf_install_jdk.stdout"
   when:
     - not wildfly_migration_jdk_package_skip_install
-    - ansible_os_family == 'RedHat'
-    - ansible_distribution_major_version | default('0') | int == 8
+    - ansible_facts['os_family'] == 'RedHat'
+    - ansible_facts['distribution_major_version'] | default('0') | int == 8
 
 - name: "Ensure that the required JVM has been installed on target: {{ wildfly_migration_jdk_package_name }}"
   become: "{{ wildfly_migration_jdk_package_install_requires_privileges_escalation | default('yes') }}"
@@ -41,7 +41,7 @@
     state: present
   when:
     - not wildfly_migration_jdk_package_skip_install
-    - not (ansible_os_family == 'RedHat' and ansible_distribution_major_version | default('0') | int == 8)
+    - not (ansible_facts['os_family'] == 'RedHat' and ansible_facts['distribution_major_version'] | default('0') | int == 8)
 
 - name: "Ensure Server Migration Tool is installed on target if EAP8+ is the target"
   ansible.builtin.include_tasks: install/rhn.yml

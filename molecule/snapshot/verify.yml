@@ -1,0 +1,83 @@
+---
+- name: Verify snapshot and rollback mechanisms
+  hosts: all
+  gather_facts: false
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+    wildfly_version: '41.0.0.Final'
+    wildfly_instance_name: 'wildfly'
+  tasks:
+    # Verify service health
+    - name: "Check WildFly service is running"
+      become: "{{ wildfly_requires_become | default(true) }}"
+      ansible.builtin.systemd:
+        name: "{{ wildfly_instance_name }}"
+        state: started
+      register: wildfly_verify_service
+      check_mode: true
+
+    - name: "Assert service is running after all snapshot and rollback operations"
+      ansible.builtin.assert:
+        that:
+          - not wildfly_verify_service.changed
+        fail_msg: "WildFly service should be running after snapshot and rollback operations"
+        quiet: true
+
+    # Verify snapshot mechanism
+    - name: "List snapshots"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: list_snapshots.yml
+
+    - name: "Assert snapshots were created during converge"
+      ansible.builtin.assert:
+        that:
+          - wildfly_snapshot_list is defined
+          - wildfly_snapshot_list.names | length > 0
+          - wildfly_snapshot_list.directory | length > 0
+        fail_msg: "No snapshots found; snapshot mechanism did not work"
+        quiet: true
+
+    - name: "Assert named snapshot was deleted during converge"
+      ansible.builtin.assert:
+        that:
+          - "'test-snapshotwildfly.xml' not in wildfly_snapshot_list.names"
+        fail_msg: "Named snapshot test-snapshotwildfly.xml should have been deleted during converge"
+        quiet: true
+
+    # Verify automatic rollback restored the original value
+    - name: "Read baseline property to verify rollback restored it"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_cli_query: "/system-property=rollback.baseline:read-attribute(name=value)"
+
+    - name: "Assert rollback restored the original value"
+      ansible.builtin.assert:
+        that:
+          - "'original-value' in wildfly_utils_cli_result.stdout"
+          - "'changed-value' not in wildfly_utils_cli_result.stdout"
+        fail_msg: >-
+          Automatic rollback did not restore the original config value.
+          Expected 'original-value' but got: {{ wildfly_utils_cli_result.stdout }}
+        quiet: true
+
+    # Verify manual restore removed the post-snapshot property
+    - name: "Verify post-snapshot property is absent after manual restore"
+      block:
+        - name: "Query property that manual restore should have removed"
+          ansible.builtin.include_role:
+            name: wildfly_utils
+            tasks_from: jboss_cli.yml
+          vars:
+            wildfly_utils_jboss_cli_query: "/system-property=post.snapshot.prop:read-resource"
+
+        - name: "Fail if property exists"
+          ansible.builtin.fail:
+            msg: "Property post.snapshot.prop should not exist after manual restore"
+      rescue:
+        - name: "Confirmed property is absent"
+          ansible.builtin.debug:
+            msg: "Manual restore correctly removed the post-snapshot property"

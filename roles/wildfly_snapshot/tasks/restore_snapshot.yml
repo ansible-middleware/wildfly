@@ -1,0 +1,54 @@
+---
+- name: "Ensure required parameters for restore are provided"
+  ansible.builtin.assert:
+    that:
+      - wildfly_snapshot_restore_file is defined
+      - wildfly_snapshot_restore_file | length > 0
+      - wildfly_snapshot_service_name is defined
+      - wildfly_snapshot_config_dir is defined
+      - wildfly_snapshot_config_file is defined
+    fail_msg: >-
+      Missing required parameters: wildfly_snapshot_restore_file,
+      wildfly_snapshot_service_name, wildfly_snapshot_config_dir,
+      and wildfly_snapshot_config_file must be set.
+    quiet: true
+
+- name: "Verify snapshot file exists: {{ wildfly_snapshot_restore_file }}"
+  become: "{{ wildfly_snapshot_require_privilege_escalation | default(true) }}"
+  ansible.builtin.stat:
+    path: "{{ wildfly_snapshot_restore_file }}"
+  register: wildfly_snapshot_restore_stat
+
+- name: "Fail if snapshot file does not exist"
+  ansible.builtin.assert:
+    that:
+      - wildfly_snapshot_restore_stat.stat.exists
+    fail_msg: "Snapshot file not found: {{ wildfly_snapshot_restore_file }}"
+    quiet: true
+
+- name: "Stop WildFly service: {{ wildfly_snapshot_service_name }}"
+  become: "{{ wildfly_snapshot_require_privilege_escalation | default(true) }}"
+  ansible.builtin.systemd:
+    name: "{{ wildfly_snapshot_service_name }}"
+    state: stopped
+  register: wildfly_snapshot_service_stop
+
+- name: "Restore configuration from snapshot"
+  become: "{{ wildfly_snapshot_require_privilege_escalation | default(true) }}"
+  ansible.builtin.copy:
+    src: "{{ wildfly_snapshot_restore_file }}"
+    dest: "{{ wildfly_snapshot_config_dir }}/{{ wildfly_snapshot_config_file }}"
+    remote_src: true
+    owner: "{{ wildfly_snapshot_user }}"
+    group: "{{ wildfly_snapshot_group }}"
+    mode: '0640'
+
+- name: "Start WildFly service: {{ wildfly_snapshot_service_name }}"
+  become: "{{ wildfly_snapshot_require_privilege_escalation | default(true) }}"
+  ansible.builtin.systemd:
+    name: "{{ wildfly_snapshot_service_name }}"
+    state: started
+
+- name: "Report restore result"
+  ansible.builtin.debug:
+    msg: "Configuration restored from {{ wildfly_snapshot_restore_file }} and service {{ wildfly_snapshot_service_name }} restarted."

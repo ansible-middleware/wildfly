@@ -1,0 +1,29 @@
+---
+- name: "Ensure required parameters for listing snapshots are provided"
+  ansible.builtin.assert:
+    that:
+      - wildfly_snapshot_jboss_home is defined
+      - wildfly_snapshot_jboss_cli_controller_host is defined
+      - wildfly_snapshot_jboss_cli_controller_port is defined
+    fail_msg: "Missing required parameters to list configuration snapshots."
+    quiet: true
+
+- name: "List configuration snapshots"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    wildfly_utils_jboss_home: "{{ wildfly_snapshot_jboss_home }}"
+    wildfly_utils_jboss_cli_query: ":list-snapshots"
+    wildfly_utils_jboss_cli_controller_host: "{{ wildfly_snapshot_jboss_cli_controller_host }}"
+    wildfly_utils_jboss_cli_controller_port: "{{ wildfly_snapshot_jboss_cli_controller_port }}"
+    wildfly_utils_port_range_offset: "{{ wildfly_snapshot_port_range_offset }}"
+    wildfly_utils_jboss_cli_timeout: "{{ wildfly_snapshot_jboss_cli_timeout }}"
+
+- name: "Extract snapshot list from CLI result"
+  ansible.builtin.set_fact:
+    wildfly_snapshot_list: "{{ (wildfly_utils_cli_result.stdout | from_json).result }}"
+
+- name: "Report available snapshots"
+  ansible.builtin.debug:
+    msg: "Available snapshots in {{ wildfly_snapshot_list.directory }}: {{ wildfly_snapshot_list.names }}"

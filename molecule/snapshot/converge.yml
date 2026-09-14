@@ -1,0 +1,241 @@
+---
+- name: Install and start WildFly
+  ansible.builtin.import_playbook: ../../playbooks/playbook.yml
+  vars:
+    wildfly_systemd_wait_for_port: true
+
+- name: Test snapshot operations
+  hosts: all
+  gather_facts: false
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+    wildfly_version: '41.0.0.Final'
+    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+    wildfly_instance_name: 'wildfly'
+  tasks:
+    - name: "Take a configuration snapshot (auto-named)"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+
+    - name: "Store auto-named snapshot path"
+      ansible.builtin.set_fact:
+        first_snapshot_path: "{{ wildfly_snapshot_file_path }}"
+
+    - name: "Verify auto-named snapshot file exists on disk"
+      become: "{{ wildfly_requires_become | default(true) }}"
+      ansible.builtin.stat:
+        path: "{{ first_snapshot_path }}"
+      register: first_snapshot_stat
+
+    - name: "Assert auto-named snapshot was created"
+      ansible.builtin.assert:
+        that:
+          - first_snapshot_stat.stat.exists
+          - first_snapshot_stat.stat.size > 0
+        fail_msg: "Snapshot file was not created at {{ first_snapshot_path }}"
+        quiet: true
+
+    - name: "Take a named configuration snapshot"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: take_snapshot.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+        wildfly_snapshot_name: "test-snapshot"
+
+    - name: "Store named snapshot path"
+      ansible.builtin.set_fact:
+        named_snapshot_path: "{{ wildfly_snapshot_file_path }}"
+
+    - name: "List all snapshots"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: list_snapshots.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+
+    - name: "Assert both snapshots appear in the list"
+      ansible.builtin.assert:
+        that:
+          - wildfly_snapshot_list is defined
+          - wildfly_snapshot_list.names | length >= 2
+          - "'test-snapshotwildfly.xml' in wildfly_snapshot_list.names"
+        fail_msg: "Expected at least 2 snapshots including test-snapshotwildfly.xml, got: {{ wildfly_snapshot_list.names }}"
+        quiet: true
+
+    - name: "Delete the named snapshot"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: delete_snapshot.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+        wildfly_snapshot_delete_name: "test-snapshotwildfly.xml"
+
+    - name: "List snapshots after deletion"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: list_snapshots.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+
+    - name: "Assert named snapshot was deleted"
+      ansible.builtin.assert:
+        that:
+          - "'test-snapshotwildfly.xml' not in wildfly_snapshot_list.names"
+        fail_msg: "Named snapshot test-snapshotwildfly.xml should have been deleted"
+        quiet: true
+
+- name: Test rollback mechanism
+  hosts: all
+  gather_facts: false
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+    wildfly_version: '41.0.0.Final'
+    wildfly_home: "/opt/wildfly/wildfly-{{ wildfly_version }}/"
+    wildfly_instance_name: 'wildfly'
+  tasks:
+    - name: "Apply a valid CLI command with rollback protection"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: apply_with_rollback.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+        wildfly_snapshot_apply_cli_commands:
+          - "/system-property=rollback.baseline:add(value=original-value)"
+
+    - name: "Verify the system property was applied"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_home }}"
+        wildfly_utils_jboss_cli_query: "/system-property=rollback.baseline:read-attribute(name=value)"
+
+    - name: "Assert property value is original-value"
+      ansible.builtin.assert:
+        that:
+          - "'original-value' in wildfly_utils_cli_result.stdout"
+        fail_msg: "System property rollback.baseline should be 'original-value'"
+        quiet: true
+
+    # Automatic rollback on failure
+    - name: "Trigger rollback by applying a valid change followed by an invalid one"
+      block:
+        - name: "Apply CLI commands where second command fails"
+          ansible.builtin.include_role:
+            name: wildfly_snapshot
+            tasks_from: apply_with_rollback.yml
+          vars:
+            wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+            wildfly_snapshot_apply_cli_commands:
+              - "/system-property=rollback.baseline:write-attribute(name=value,value=changed-value)"
+              - "/subsystem=nonexistent-subsystem:add()"
+      rescue:
+        - name: "Rollback occurred as expected"
+          ansible.builtin.set_fact:
+            rollback_triggered: true
+
+    - name: "Assert rollback was triggered"
+      ansible.builtin.assert:
+        that:
+          - rollback_triggered | default(false)
+        fail_msg: "Rollback should have been triggered by the invalid CLI command"
+        quiet: true
+
+    - name: "Read the baseline property value after rollback"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_home }}"
+        wildfly_utils_jboss_cli_query: "/system-property=rollback.baseline:read-attribute(name=value)"
+
+    - name: "Assert rollback restored the original value"
+      ansible.builtin.assert:
+        that:
+          - "'original-value' in wildfly_utils_cli_result.stdout"
+          - "'changed-value' not in wildfly_utils_cli_result.stdout"
+        fail_msg: >-
+          Rollback failed to restore original config.
+          Expected 'original-value' but got: {{ wildfly_utils_cli_result.stdout }}
+        quiet: true
+
+    # Manual rollback
+    - name: "Take a snapshot of the current known-good state"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: take_snapshot.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+
+    - name: "Store snapshot path for manual restore test"
+      ansible.builtin.set_fact:
+        manual_restore_snapshot: "{{ wildfly_snapshot_file_path }}"
+
+    - name: "Add a new system property after the snapshot"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_home }}"
+        wildfly_utils_jboss_cli_query: "/system-property=post.snapshot.prop:add(value=should-disappear)"
+
+    - name: "Confirm the new property exists before restore"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_home }}"
+        wildfly_utils_jboss_cli_query: "/system-property=post.snapshot.prop:read-resource"
+
+    - name: "Manually restore from the pre-change snapshot"
+      ansible.builtin.include_role:
+        name: wildfly_snapshot
+        tasks_from: restore_snapshot.yml
+      vars:
+        wildfly_snapshot_jboss_home: "{{ wildfly_home }}"
+        wildfly_snapshot_restore_file: "{{ manual_restore_snapshot }}"
+
+    - name: "Verify the post-snapshot property no longer exists"
+      block:
+        - name: "Query the property that should have been removed by restore"
+          ansible.builtin.include_role:
+            name: wildfly_utils
+            tasks_from: jboss_cli.yml
+          vars:
+            wildfly_utils_jboss_home: "{{ wildfly_home }}"
+            wildfly_utils_jboss_cli_query: "/system-property=post.snapshot.prop:read-resource"
+
+        - name: "Fail if property still exists"
+          ansible.builtin.fail:
+            msg: "Property post.snapshot.prop should not exist after restoring snapshot"
+      rescue:
+        - name: "Property correctly absent after manual restore"
+          ansible.builtin.set_fact:
+            manual_restore_verified: true
+
+    - name: "Assert manual restore removed the post-snapshot property"
+      ansible.builtin.assert:
+        that:
+          - manual_restore_verified | default(false)
+        fail_msg: "Manual restore should have removed the post-snapshot property"
+        quiet: true
+
+    - name: "Verify baseline property still exists after manual restore"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_home }}"
+        wildfly_utils_jboss_cli_query: "/system-property=rollback.baseline:read-attribute(name=value)"
+
+    - name: "Assert baseline property preserved by manual restore"
+      ansible.builtin.assert:
+        that:
+          - "'original-value' in wildfly_utils_cli_result.stdout"
+        fail_msg: "Baseline property should still have 'original-value' after restore"
+        quiet: true

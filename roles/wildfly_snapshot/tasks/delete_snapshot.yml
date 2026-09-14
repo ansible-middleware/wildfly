@@ -1,0 +1,27 @@
+---
+- name: "Ensure required parameters for snapshot deletion are provided"
+  ansible.builtin.assert:
+    that:
+      - wildfly_snapshot_jboss_home is defined
+      - wildfly_snapshot_delete_name is defined
+      - wildfly_snapshot_delete_name | length > 0
+      - wildfly_snapshot_jboss_cli_controller_host is defined
+      - wildfly_snapshot_jboss_cli_controller_port is defined
+    fail_msg: "Missing required parameters: wildfly_snapshot_delete_name must be set to the snapshot filename."
+    quiet: true
+
+- name: "Delete configuration snapshot: {{ wildfly_snapshot_delete_name }}"
+  ansible.builtin.include_role:
+    name: wildfly_utils
+    tasks_from: jboss_cli.yml
+  vars:
+    wildfly_utils_jboss_home: "{{ wildfly_snapshot_jboss_home }}"
+    wildfly_utils_jboss_cli_query: ':delete-snapshot(name="{{ wildfly_snapshot_delete_name }}")'
+    wildfly_utils_jboss_cli_controller_host: "{{ wildfly_snapshot_jboss_cli_controller_host }}"
+    wildfly_utils_jboss_cli_controller_port: "{{ wildfly_snapshot_jboss_cli_controller_port }}"
+    wildfly_utils_port_range_offset: "{{ wildfly_snapshot_port_range_offset }}"
+    wildfly_utils_jboss_cli_timeout: "{{ wildfly_snapshot_jboss_cli_timeout }}"
+
+- name: "Report snapshot deletion"
+  ansible.builtin.debug:
+    msg: "Snapshot deleted: {{ wildfly_snapshot_delete_name }}"

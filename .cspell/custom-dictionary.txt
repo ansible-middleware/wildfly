@@ -67,6 +67,7 @@ hcheruku
 rchakrab
 
 # Molecule testing
+snapshotwildfly
 temurinjdk
 testinfra
 testyml

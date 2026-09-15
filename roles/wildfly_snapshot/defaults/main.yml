@@ -1,0 +1,28 @@
+---
+wildfly_snapshot_user: "{{ wildfly_user | default('wildfly') }}"
+wildfly_snapshot_group: "{{ wildfly_group | default(wildfly_snapshot_user) }}"
+wildfly_snapshot_version: "{{ wildfly_version | default('41.0.0.Final') }}"
+wildfly_snapshot_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
+wildfly_snapshot_home: "{{ wildfly_snapshot_install_workdir }}wildfly-{{ wildfly_snapshot_version }}/"
+wildfly_snapshot_jboss_home: "{{ wildfly_snapshot_home }}"
+wildfly_snapshot_instance_name: "{{ wildfly_instance_name | default('wildfly') }}"
+wildfly_snapshot_service_name: "{{ wildfly_snapshot_instance_name }}"
+wildfly_snapshot_basedir_prefix: "{{ wildfly_snapshot_home }}"
+wildfly_snapshot_basedir: "{{ wildfly_snapshot_basedir_prefix }}/standalone"
+wildfly_snapshot_config_dir: "{{ wildfly_snapshot_basedir }}/configuration"
+wildfly_snapshot_config_file: "{{ wildfly_snapshot_instance_name }}.xml"
+
+wildfly_snapshot_jboss_cli_controller_host: 'localhost'
+wildfly_snapshot_jboss_cli_controller_port: '9990'
+wildfly_snapshot_port_range_offset: 0
+wildfly_snapshot_jboss_cli_timeout: 5
+
+wildfly_snapshot_name: ''
+wildfly_snapshot_delete_name: ''
+wildfly_snapshot_restore_file: ''
+
+wildfly_snapshot_apply_cli_commands: []
+wildfly_snapshot_apply_tasks_file: ''
+
+wildfly_snapshot_require_privilege_escalation: "{{ wildfly_requires_become | default(true) }}"
+wildfly_snapshot_selinux_enabled: false

@@ -1,0 +1,59 @@
+---
+- name: "Ensure rollback parameters are provided"
+  ansible.builtin.assert:
+    that:
+      - wildfly_snapshot_apply_cli_commands | default([]) | length > 0 or wildfly_snapshot_apply_tasks_file | default('') | length > 0
+    fail_msg: "Either wildfly_snapshot_apply_cli_commands (list of CLI commands) or wildfly_snapshot_apply_tasks_file (path to tasks file) must be provided."
+    quiet: true
+
+- name: "Apply configuration changes with automatic rollback on failure"
+  block:
+    - name: "Take pre-change configuration snapshot"
+      ansible.builtin.include_tasks: take_snapshot.yml
+
+    - name: "Store snapshot path for potential rollback"
+      ansible.builtin.set_fact:
+        wildfly_snapshot_rollback_file: "{{ wildfly_snapshot_file_path }}"
+
+    - name: "Apply CLI configuration commands"
+      ansible.builtin.include_role:
+        name: wildfly_utils
+        tasks_from: jboss_cli.yml
+      vars:
+        wildfly_utils_jboss_home: "{{ wildfly_snapshot_jboss_home }}"
+        wildfly_utils_jboss_cli_query: "{{ cli_command }}"
+        wildfly_utils_jboss_cli_controller_host: "{{ wildfly_snapshot_jboss_cli_controller_host }}"
+        wildfly_utils_jboss_cli_controller_port: "{{ wildfly_snapshot_jboss_cli_controller_port }}"
+        wildfly_utils_port_range_offset: "{{ wildfly_snapshot_port_range_offset }}"
+        wildfly_utils_jboss_cli_timeout: "{{ wildfly_snapshot_jboss_cli_timeout }}"
+        wildfly_utils_jboss_cli_changed_when: true
+      loop: "{{ wildfly_snapshot_apply_cli_commands }}"
+      loop_control:
+        loop_var: cli_command
+      when: wildfly_snapshot_apply_cli_commands | default([]) | length > 0
+
+    - name: "Apply configuration tasks from file"
+      ansible.builtin.include_tasks:
+        file: "{{ wildfly_snapshot_apply_tasks_file }}"
+      when: wildfly_snapshot_apply_tasks_file | default('') | length > 0
+
+    - name: "Report successful configuration change"
+      ansible.builtin.debug:
+        msg: "Configuration changes applied successfully. Rollback snapshot available at: {{ wildfly_snapshot_rollback_file }}"
+
+  rescue:
+    - name: "Report configuration failure"
+      ansible.builtin.debug:
+        msg: "Configuration change failed. Rolling back to snapshot: {{ wildfly_snapshot_rollback_file }}"
+
+    - name: "Restore configuration from pre-change snapshot"
+      ansible.builtin.include_tasks: restore_snapshot.yml
+      vars:
+        wildfly_snapshot_restore_file: "{{ wildfly_snapshot_rollback_file }}"
+
+    - name: "Fail after rollback to signal the error to the caller"
+      ansible.builtin.fail:
+        msg: >-
+          Configuration change failed and was rolled back to the snapshot taken before the change.
+          Snapshot used for restore: {{ wildfly_snapshot_rollback_file }}.
+          Review the failed command output above to diagnose the issue.

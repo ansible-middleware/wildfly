@@ -1,0 +1,167 @@
+argument_specs:
+    main:
+        options:
+            wildfly_snapshot_home:
+                default: "/opt/wildfly/wildfly-41.0.0.Final/"
+                description: "WildFly installation directory"
+                type: "str"
+            wildfly_snapshot_jboss_home:
+                default: "{{ wildfly_snapshot_home }}"
+                description: "WildFly installation directory used for CLI execution"
+                type: "str"
+            wildfly_snapshot_user:
+                default: "wildfly"
+                description: "POSIX user account for WildFly"
+                type: "str"
+            wildfly_snapshot_group:
+                default: "{{ wildfly_snapshot_user }}"
+                description: "POSIX group for WildFly"
+                type: "str"
+            wildfly_snapshot_instance_name:
+                default: "wildfly"
+                description: "WildFly instance name"
+                type: "str"
+            wildfly_snapshot_service_name:
+                default: "{{ wildfly_snapshot_instance_name }}"
+                description: "WildFly systemd service name"
+                type: "str"
+            wildfly_snapshot_basedir_prefix:
+                default: "{{ wildfly_snapshot_home }}"
+                description: "Base directory prefix for standalone server"
+                type: "str"
+            wildfly_snapshot_config_file:
+                default: "{{ wildfly_snapshot_instance_name }}.xml"
+                description: "Active configuration file name"
+                type: "str"
+            wildfly_snapshot_jboss_cli_controller_host:
+                default: "localhost"
+                description: "Hostname for connecting to JBoss CLI"
+                type: "str"
+            wildfly_snapshot_jboss_cli_controller_port:
+                default: "9990"
+                description: "Port for connecting to JBoss CLI"
+                type: "str"
+            wildfly_snapshot_port_range_offset:
+                default: 0
+                description: "Increment for jboss.socket.binding.port-offset"
+                type: "int"
+            wildfly_snapshot_jboss_cli_timeout:
+                default: 5
+                description: "Seconds to wait for JBoss CLI connection"
+                type: "int"
+            wildfly_snapshot_name:
+                default: ""
+                description: "Optional name for the snapshot; if empty, an auto-generated timestamped name is used"
+                type: "str"
+            wildfly_snapshot_require_privilege_escalation:
+                default: true
+                description: "Whether privilege escalation is required"
+                type: "bool"
+            wildfly_snapshot_selinux_enabled:
+                default: false
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"
+    take_snapshot:
+        options:
+            wildfly_snapshot_name:
+                default: ""
+                description: "Optional name for the snapshot"
+                type: "str"
+    list_snapshots:
+        options: {}
+    delete_snapshot:
+        options:
+            wildfly_snapshot_delete_name:
+                default: ""
+                description: "Name of the snapshot file to delete (required)"
+                type: "str"
+    restore_snapshot:
+        options:
+            wildfly_snapshot_restore_file:
+                default: ""
+                description: "Full path to the snapshot file to restore (required)"
+                type: "str"
+            wildfly_snapshot_service_name:
+                default: "{{ wildfly_snapshot_instance_name }}"
+                description: "WildFly systemd service name to stop/start during restore"
+                type: "str"
+    apply_with_rollback:
+        options:
+            wildfly_snapshot_apply_cli_commands:
+                default: []
+                description: "List of JBoss CLI commands to execute with automatic rollback on failure"
+                type: "list"
+            wildfly_snapshot_apply_tasks_file:
+                default: ""
+                description: "Path to an Ansible tasks file to include with automatic rollback on failure; mutually exclusive with wildfly_snapshot_apply_cli_commands"
+                type: "str"
+    downstream:
+        options:
+            eap_snapshot_version:
+                default: "{{ eap_version | default('8.1.0') }}"
+                description: "Red Hat EAP version"
+                type: "str"
+            eap_snapshot_install_workdir:
+                default: "{{ eap_install_workdir | default('/opt/jboss_eap/') }}"
+                description: "Root directory for EAP installation"
+                type: "str"
+            eap_snapshot_home:
+                default: "{{ eap_snapshot_install_workdir }}jboss-eap-{{ (eap_snapshot_version.split('.'))[0:2] | join('.') }}/"
+                description: "Red Hat EAP installation path"
+                type: "str"
+            eap_snapshot_jboss_home:
+                default: "{{ eap_snapshot_home }}"
+                description: "Red Hat EAP installation directory used for CLI execution"
+                type: "str"
+            eap_snapshot_user:
+                default: "{{ eap_user | default('eap') }}"
+                description: "POSIX user account for EAP"
+                type: "str"
+            eap_snapshot_group:
+                default: "{{ eap_snapshot_user }}"
+                description: "POSIX group for EAP"
+                type: "str"
+            eap_snapshot_instance_name:
+                default: "{{ eap_instance_name | default('eap') }}"
+                description: "EAP instance name"
+                type: "str"
+            eap_snapshot_service_name:
+                default: "{{ eap_snapshot_instance_name }}"
+                description: "EAP systemd service name"
+                type: "str"
+            eap_snapshot_basedir_prefix:
+                default: "{{ eap_snapshot_home }}"
+                description: "Base directory prefix for EAP standalone server"
+                type: "str"
+            eap_snapshot_config_file:
+                default: "{{ eap_snapshot_instance_name }}.xml"
+                description: "Active configuration file name"
+                type: "str"
+            eap_snapshot_jboss_cli_controller_host:
+                default: "localhost"
+                description: "Hostname for connecting to JBoss CLI"
+                type: "str"
+            eap_snapshot_jboss_cli_controller_port:
+                default: "9990"
+                description: "Port for connecting to JBoss CLI"
+                type: "str"
+            eap_snapshot_port_range_offset:
+                default: 0
+                description: "Increment for jboss.socket.binding.port-offset"
+                type: "int"
+            eap_snapshot_jboss_cli_timeout:
+                default: 5
+                description: "Seconds to wait for JBoss CLI connection"
+                type: "int"
+            eap_snapshot_name:
+                default: ""
+                description: "Optional name for the snapshot; if empty, an auto-generated timestamped name is used"
+                type: "str"
+            eap_snapshot_require_privilege_escalation:
+                default: true
+                description: "Whether privilege escalation is required"
+                type: "bool"
+            eap_snapshot_selinux_enabled:
+                default: true
+                description: "Whether to deploy on a selinux enforcing target host"
+                type: "bool"

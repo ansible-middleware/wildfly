@@ -1,0 +1,38 @@
+---
+- name: Verify Prospero rollback functionality
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Retrieve revision history"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/history.yml
+
+    - name: "Assert revision history contains at least one entry"
+      ansible.builtin.assert:
+        that:
+          - wildfly_utils_prospero_revision_ids | length > 0
+        fail_msg: "No revisions found in Prospero history"
+        quiet: true
+
+    - name: "Assert the initial install revision is present"
+      ansible.builtin.assert:
+        that:
+          - "'install' in wildfly_utils_prospero_history"
+        fail_msg: "Prospero history should contain an install revision"
+        quiet: true
+
+    - name: "Check WildFly service is running"
+      become: "{{ wildfly_requires_become | default(true) }}"
+      ansible.builtin.systemd:
+        name: "{{ wildfly_instance_name | default('wildfly') }}"
+        state: started
+      register: wildfly_verify_service
+      check_mode: true
+
+    - name: "Assert service is still running after all tests"
+      ansible.builtin.assert:
+        that:
+          - not wildfly_verify_service.changed
+        fail_msg: "WildFly service should be running after rollback tests"
+        quiet: true

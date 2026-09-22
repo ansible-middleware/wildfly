@@ -5,7 +5,7 @@ collections:
 galaxy_info:
   role_name: wildfly_utils
   namespace: middleware_automation
-  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli
+  author: Romain Pelisse, Andrew Block, Harsha Cherukuri, Guido Grazioli, Ranabir Chakraborty
   description: JBoss Enterprise Application (EAP) specific tasks
   company: Red Hat, Inc.
 
@@ -18,7 +18,6 @@ galaxy_info:
       versions:
         - "8"
         - "9"
-        - "10"
 
   galaxy_tags:
     - java

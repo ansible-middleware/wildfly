@@ -1,0 +1,54 @@
+---
+- name: "Ensure required parameter(s) are provided."
+  ansible.builtin.assert:
+    that:
+      - wildfly_utils_home is defined and wildfly_utils_home | length > 0
+      - wildfly_utils_prospero_revert_revision is defined and wildfly_utils_prospero_revert_revision | length > 0
+    fail_msg: >-
+      A target revision ID is required. Set wildfly_utils_prospero_revert_revision
+      to a revision hash from the output of prospero history.
+    quiet: true
+
+- name: "Ensure Prospero is installed."
+  ansible.builtin.include_tasks: prospero/install.yml
+
+- name: "Stop service {{ wildfly_utils_instance_name }} before revert"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  ansible.builtin.systemd:
+    name: "{{ wildfly_utils_instance_name }}"
+    state: stopped
+
+- name: "Revert server to revision {{ wildfly_utils_prospero_revert_revision }}"
+  ansible.builtin.command: >
+    {{ wildfly_utils_prospero_home }}/bin/{{ wildfly_utils_prospero_name }}.sh
+    revert perform --dir {{ wildfly_utils_home }}
+    --revision {{ wildfly_utils_prospero_revert_revision }} -y
+  register: wildfly_utils_prospero_run_results
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  changed_when: false
+
+- name: "Store revert result"
+  ansible.builtin.set_fact:
+    wildfly_utils_prospero_revert_result: "{{ wildfly_utils_prospero_run_results.stdout }}"
+
+- name: "Ensure server home ownership after revert"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  ansible.builtin.file:
+    path: "{{ wildfly_utils_home }}"
+    state: directory
+    owner: "{{ wildfly_utils_user }}"
+    group: "{{ wildfly_utils_group }}"
+    recurse: true
+
+- name: "Start service {{ wildfly_utils_instance_name }} after revert"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  ansible.builtin.systemd:
+    name: "{{ wildfly_utils_instance_name }}"
+    state: started
+
+- name: "Report revert outcome"
+  ansible.builtin.debug:
+    msg: >-
+      Server at {{ wildfly_utils_home }} reverted to revision
+      {{ wildfly_utils_prospero_revert_revision }}.
+      Service {{ wildfly_utils_instance_name }} restarted.

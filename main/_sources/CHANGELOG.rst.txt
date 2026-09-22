@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.5.15-devel
 =============
 
+Major Changes
+-------------
+
+- AMW-633 Add support for WildFly configuration snapshots and rollback mechanism `#405 <https://github.com/ansible-middleware/wildfly/pull/405>`_
+
 Minor Changes
 -------------
 

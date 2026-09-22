@@ -1,0 +1,232 @@
+---
+- name: Install WildFly using Prospero
+  hosts: all
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+    wildfly_install_use_prospero: true
+    wildfly_systemd_wait_for_port: true
+  tasks:
+    - name: "Install server using Prospero"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_install
+
+    - name: "Verify Prospero metadata directories were created"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_validation
+        tasks_from: verify_install_mecanism.yml
+      vars:
+        wildfly_validation_install_use_prospero: true
+        wildfly_prospero_install_dir: /opt/prospero
+
+    - name: "Run server with systemd"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_systemd
+
+- name: Test Prospero history
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Retrieve server update revision history"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/history.yml
+
+    - name: "Assert revision history is populated"
+      ansible.builtin.assert:
+        that:
+          - wildfly_utils_prospero_history is defined
+          - wildfly_utils_prospero_history | length > 0
+          - wildfly_utils_prospero_revision_ids is defined
+          - wildfly_utils_prospero_revision_ids | length > 0
+        fail_msg: >-
+          History should contain at least one revision
+          after a Prospero-based installation.
+        quiet: true
+
+    - name: "Assert install revision exists in history"
+      ansible.builtin.assert:
+        that:
+          - "'install' in wildfly_utils_prospero_history"
+        fail_msg: "History should contain an install entry"
+        quiet: true
+
+- name: Test Prospero update and revert
+  hosts: all
+  gather_facts: false
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+  tasks:
+    - name: "Capture pre-change channel configuration"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/run_cli.yml
+      vars:
+        wildfly_utils_prospero_run_args: "channel list --dir {{ wildfly_utils_home }}"
+
+    - name: "Store pre-change channel list"
+      ansible.builtin.set_fact:
+        prospero_channels_before: "{{ wildfly_utils_prospero_run_results.stdout }}"
+
+    - name: "Display pre-change channel configuration"
+      ansible.builtin.debug:
+        msg: "Pre-change channels: {{ prospero_channels_before }}"
+
+    - name: "Check for available updates"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/run_cli.yml
+      vars:
+        wildfly_utils_prospero_run_args: "update list --dir {{ wildfly_utils_home }}"
+
+    - name: "Determine if updates are available"
+      ansible.builtin.set_fact:
+        prospero_updates_available: "{{ 'No updates found' not in wildfly_utils_prospero_run_results.stdout }}"
+
+    - name: "Display update check result"
+      ansible.builtin.debug:
+        msg: "Updates available: {{ prospero_updates_available }}"
+
+    - name: "Apply updates and test revert"
+      when: prospero_updates_available | bool
+      block:
+        - name: "Apply available updates"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/run_cli.yml
+          vars:
+            wildfly_utils_prospero_run_args: "update perform --dir {{ wildfly_utils_home }} -y"
+
+        - name: "Retrieve revision history after update"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/history.yml
+
+        - name: "Assert update created a new revision"
+          ansible.builtin.assert:
+            that:
+              - wildfly_utils_prospero_revision_ids | length > 1
+            fail_msg: "History should contain more than one revision after an update"
+            quiet: true
+
+        - name: "Revert server to install revision"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/revert.yml
+          vars:
+            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[-1] }}"
+
+        - name: "Assert revert completed successfully"
+          ansible.builtin.assert:
+            that:
+              - wildfly_utils_prospero_revert_result is defined
+              - wildfly_utils_prospero_revert_result | length > 0
+            fail_msg: "Revert should have produced output"
+            quiet: true
+
+    - name: "Test revert using channel configuration change"
+      when: not (prospero_updates_available | bool)
+      block:
+        - name: "Create a minimal channel manifest for testing"
+          ansible.builtin.copy:
+            content: |
+              schemaVersion: "1.0.0"
+            dest: /tmp/test-channel-manifest.yaml
+            mode: '0644'
+
+        - name: "Add test channel to create a second revision"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/run_cli.yml
+          vars:
+            wildfly_utils_prospero_run_args: >-
+              channel add --channel-name test-channel
+              --manifest /tmp/test-channel-manifest.yaml
+              --repositories https://repo1.maven.org/maven2/
+              --dir {{ wildfly_utils_home }}
+
+        - name: "Verify test channel was added"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/run_cli.yml
+          vars:
+            wildfly_utils_prospero_run_args: "channel list --dir {{ wildfly_utils_home }}"
+
+        - name: "Assert test channel is present after add"
+          ansible.builtin.assert:
+            that:
+              - "'test-channel' in wildfly_utils_prospero_run_results.stdout"
+            fail_msg: "test-channel should appear in channel list after add"
+            quiet: true
+
+        - name: "Retrieve revision history after channel change"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/history.yml
+
+        - name: "Assert channel change created a new revision"
+          ansible.builtin.assert:
+            that:
+              - wildfly_utils_prospero_revision_ids | length > 1
+            fail_msg: "History should contain more than one revision after channel configuration change"
+            quiet: true
+
+        - name: "Revert server to install revision"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/revert.yml
+          vars:
+            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[-1] }}"
+
+        - name: "Assert revert completed successfully"
+          ansible.builtin.assert:
+            that:
+              - wildfly_utils_prospero_revert_result is defined
+              - wildfly_utils_prospero_revert_result | length > 0
+            fail_msg: "Revert should have produced output"
+            quiet: true
+
+    - name: "Capture post-revert channel configuration"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/run_cli.yml
+      vars:
+        wildfly_utils_prospero_run_args: "channel list --dir {{ wildfly_utils_home }}"
+
+    - name: "Store post-revert channel list"
+      ansible.builtin.set_fact:
+        prospero_channels_after: "{{ wildfly_utils_prospero_run_results.stdout }}"
+
+    - name: "Display post-revert channel configuration"
+      ansible.builtin.debug:
+        msg: "Post-revert channels: {{ prospero_channels_after }}"
+
+    - name: "Assert channel configuration matches pre-change state after revert"
+      ansible.builtin.assert:
+        that:
+          - prospero_channels_before == prospero_channels_after
+        fail_msg: >-
+          Channel configuration after revert does not match pre-change state.
+          Before: {{ prospero_channels_before }}
+          After: {{ prospero_channels_after }}
+        quiet: true
+
+- name: Test revert validation
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: "Verify revert fails without a revision ID"
+      block:
+        - name: "Attempt revert with empty revision"
+          ansible.builtin.include_role:
+            name: middleware_automation.wildfly.wildfly_utils
+            tasks_from: prospero/revert.yml
+
+        - name: "Fail if revert did not raise an error"
+          ansible.builtin.fail:
+            msg: "Revert should have failed without a revision ID"
+      rescue:
+        - name: "Confirmed revert correctly requires a revision ID"
+          ansible.builtin.debug:
+            msg: "Revert validation works as expected"

@@ -1,0 +1,42 @@
+---
+- name: "Ensure required parameter(s) are provided."
+  ansible.builtin.assert:
+    that:
+      - wildfly_utils_home is defined and wildfly_utils_home | length > 0
+    quiet: true
+
+- name: "Ensure Prospero is installed."
+  ansible.builtin.include_tasks: prospero/install.yml
+
+- name: "Verify Prospero metadata exists in {{ wildfly_utils_home }}"
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  ansible.builtin.stat:
+    path: "{{ wildfly_utils_home }}.installation/provisioning_record.xml"
+  register: wildfly_utils_prospero_metadata_file
+
+- name: "Ensure server was installed using Prospero"
+  ansible.builtin.assert:
+    that:
+      - wildfly_utils_prospero_metadata_file.stat.exists
+    fail_msg: >-
+      Prospero metadata not found at {{ wildfly_utils_home }}.installation/provisioning_record.xml.
+      The server at {{ wildfly_utils_home }} may not have been installed using Prospero.
+    quiet: true
+
+- name: "Retrieve server update history for {{ wildfly_utils_home }}"
+  ansible.builtin.command: >
+    {{ wildfly_utils_prospero_home }}/bin/{{ wildfly_utils_prospero_name }}.sh history --dir {{ wildfly_utils_home }}
+  register: wildfly_utils_prospero_run_results
+  become: "{{ wildfly_utils_requires_become | default(true) }}"
+  changed_when: false
+
+- name: "Parse revision history"
+  ansible.builtin.set_fact:
+    wildfly_utils_prospero_history: "{{ wildfly_utils_prospero_run_results.stdout }}"
+    wildfly_utils_prospero_revision_ids: "{{ wildfly_utils_prospero_run_results.stdout | regex_findall('\\[([a-f0-9]+)\\]') }}"
+
+- name: "Display revision history"
+  ansible.builtin.debug:
+    msg: >-
+      Found {{ wildfly_utils_prospero_revision_ids | length }} revision(s)
+      for {{ wildfly_utils_home }}

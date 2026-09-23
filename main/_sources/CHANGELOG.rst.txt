@@ -13,6 +13,7 @@ Major Changes
 -------------
 
 - AMW-633 Add support for WildFly configuration snapshots and rollback mechanism `#405 <https://github.com/ansible-middleware/wildfly/pull/405>`_
+- AMW-636 Implement server update rollback using prospero `#408 <https://github.com/ansible-middleware/wildfly/pull/408>`_
 
 Minor Changes
 -------------

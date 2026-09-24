@@ -58,6 +58,13 @@
 <li class="toctree-l2"><a class="reference internal" href="wildfly_uninstall.html">wildfly uninstall role</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">wildfly utils role</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#entrypoints">Entrypoints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prospero-server-rollback">Prospero Server Rollback</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#view-revision-history">View revision history</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#revert-to-a-previous-revision">Revert to a previous revision</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bulk-rollback-across-multiple-servers">Bulk rollback across multiple servers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#revision-index-reference">Revision index reference</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#role-defaults">Role Defaults</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#role-variables">Role Variables</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#author-information">Author Information</a></li>
@@ -124,8 +131,105 @@ feature (such as apply cumulative patches).</p>
 <li><p>apply_cp: download and patch EAP</p></li>
 <li><p>keycloak_adapter: download and install the keycloak adapter module</p></li>
 <li><p>jboss_cli: execute arbitrary cli commands of command files</p></li>
+<li><p>prospero/history: retrieve the Prospero revision history for a server installation</p></li>
+<li><p>prospero/revert: revert a Prospero-managed server to a previous revision</p></li>
+<li><p>prospero/run_cli: run an arbitrary Prospero CLI command</p></li>
 </ul>
+</section>
+<section id="prospero-server-rollback">
+<h2>Prospero Server Rollback<a class="headerlink" href="#prospero-server-rollback" title="Link to this heading"></a></h2>
+<p>For servers installed using Prospero (WildFly 32+ / EAP 8.1+), the collection provides tasks to view revision history and revert the server to a previous state. Every Prospero operation (install, update, channel change) automatically creates a revision entry. You can revert to any previous revision.</p>
+<section id="view-revision-history">
+<h3>View revision history<a class="headerlink" href="#view-revision-history" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Get</span><span class="nv"> </span><span class="s">revision</span><span class="nv"> </span><span class="s">history"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_utils</span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prospero/history.yml</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Show</span><span class="nv"> </span><span class="s">revisions"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.debug</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">msg</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_utils_prospero_history</span><span class="nv"> </span><span class="s">}}"</span>
+</pre></div>
+</div>
+<p>Output looks like:</p>
+<div class="highlight-YAML+Jinja notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">[</span><span class="nv">a1b2c3d4</span><span class="p p-Indicator">]</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2026-09-24T10:00:00Z - update</span>
+<span class="l l-Scalar l-Scalar-Plain">[e5f6g7h8] 2026-09-20T09:00:00Z - update</span>
+<span class="l l-Scalar l-Scalar-Plain">[i9j0k1l2] 2026-09-01T06:00:00Z - install</span>
+</pre></div>
+</div>
+</section>
+<section id="revert-to-a-previous-revision">
+<h3>Revert to a previous revision<a class="headerlink" href="#revert-to-a-previous-revision" title="Link to this heading"></a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">prospero/revert.yml</span></code> task stops the service, reverts the server, fixes file ownership, and restarts the service.</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">wildfly_user</span><span class="p">:</span><span class="w"> </span><span class="s">'wildfly'</span>
+<span class="w">    </span><span class="nt">wildfly_group</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_user</span><span class="nv"> </span><span class="s">}}"</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Get</span><span class="nv"> </span><span class="s">revision</span><span class="nv"> </span><span class="s">history"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_utils</span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prospero/history.yml</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Revert</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">previous</span><span class="nv"> </span><span class="s">revision</span><span class="nv"> </span><span class="s">(undo</span><span class="nv"> </span><span class="s">last</span><span class="nv"> </span><span class="s">update)"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_utils</span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prospero/revert.yml</span>
+<span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">wildfly_utils_prospero_revert_revision</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_utils_prospero_revision_ids[1]</span><span class="nv"> </span><span class="s">}}"</span>
+</pre></div>
+</div>
+</section>
+<section id="bulk-rollback-across-multiple-servers">
+<h3>Bulk rollback across multiple servers<a class="headerlink" href="#bulk-rollback-across-multiple-servers" title="Link to this heading"></a></h3>
+<p>Revision IDs are unique per server, but you do not need to know them in advance. Ansible retrieves each server’s history individually, so a single playbook works for all servers:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">hosts</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">all_wildfly_servers</span>
+<span class="w">  </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">wildfly_user</span><span class="p">:</span><span class="w"> </span><span class="s">'wildfly'</span>
+<span class="w">    </span><span class="nt">wildfly_group</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_user</span><span class="nv"> </span><span class="s">}}"</span>
+<span class="w">  </span><span class="nt">tasks</span><span class="p">:</span>
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Get</span><span class="nv"> </span><span class="s">each</span><span class="nv"> </span><span class="s">server's</span><span class="nv"> </span><span class="s">revision</span><span class="nv"> </span><span class="s">history"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_utils</span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prospero/history.yml</span>
+
+<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Revert</span><span class="nv"> </span><span class="s">all</span><span class="nv"> </span><span class="s">servers</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">previous</span><span class="nv"> </span><span class="s">revision"</span>
+<span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">middleware_automation.wildfly.wildfly_utils</span>
+<span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">prospero/revert.yml</span>
+<span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">wildfly_utils_prospero_revert_revision</span><span class="p">:</span><span class="w"> </span><span class="s">"{{</span><span class="nv"> </span><span class="s">wildfly_utils_prospero_revision_ids[1]</span><span class="nv"> </span><span class="s">}}"</span>
+</pre></div>
+</div>
+</section>
+<section id="revision-index-reference">
+<h3>Revision index reference<a class="headerlink" href="#revision-index-reference" title="Link to this heading"></a></h3>
+<p>Prospero lists revisions most recent first. The parsed list follows the same order:</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head text-left"><p>Index</p></th>
+<th class="head text-left"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[0]</span></code></p></td>
+<td class="text-left"><p>Most recent revision (current state)</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[1]</span></code></p></td>
+<td class="text-left"><p>Previous revision (undo last change)</p></td>
+</tr>
+<tr class="row-even"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[2]</span></code></p></td>
+<td class="text-left"><p>Two changes ago</p></td>
+</tr>
+<tr class="row-odd"><td class="text-left"><p><code class="docutils literal notranslate"><span class="pre">[3]</span></code></p></td>
+<td class="text-left"><p>Three changes ago</p></td>
+</tr>
+</tbody>
+</table>
 <!--start argument_specs-->
+</section>
 </section>
 <section id="role-defaults">
 <h2>Role Defaults<a class="headerlink" href="#role-defaults" title="Link to this heading"></a></h2>

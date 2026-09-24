@@ -12,6 +12,94 @@ Entrypoints
 * apply_cp: download and patch EAP
 * keycloak_adapter: download and install the keycloak adapter module
 * jboss_cli: execute arbitrary cli commands of command files
+* prospero/history: retrieve the Prospero revision history for a server installation
+* prospero/revert: revert a Prospero-managed server to a previous revision
+* prospero/run_cli: run an arbitrary Prospero CLI command
+
+Prospero Server Rollback
+------------------------
+
+For servers installed using Prospero (WildFly 32+ / EAP 8.1+), the collection provides tasks to view revision history and revert the server to a previous state. Every Prospero operation (install, update, channel change) automatically creates a revision entry. You can revert to any previous revision.
+
+### View revision history
+
+```yaml
+- hosts: all
+  tasks:
+    - name: "Get revision history"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/history.yml
+
+    - name: "Show revisions"
+      ansible.builtin.debug:
+        msg: "{{ wildfly_utils_prospero_history }}"
+```
+
+Output looks like:
+
+```
+[a1b2c3d4] 2026-09-24T10:00:00Z - update
+[e5f6g7h8] 2026-09-20T09:00:00Z - update
+[i9j0k1l2] 2026-09-01T06:00:00Z - install
+```
+
+### Revert to a previous revision
+
+The `prospero/revert.yml` task stops the service, reverts the server, fixes file ownership, and restarts the service.
+
+```yaml
+- hosts: all
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+  tasks:
+    - name: "Get revision history"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/history.yml
+
+    - name: "Revert to the previous revision (undo last update)"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/revert.yml
+      vars:
+        wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[1] }}"
+```
+
+### Bulk rollback across multiple servers
+
+Revision IDs are unique per server, but you do not need to know them in advance. Ansible retrieves each server's history individually, so a single playbook works for all servers:
+
+```yaml
+- hosts: all_wildfly_servers
+  vars:
+    wildfly_user: 'wildfly'
+    wildfly_group: "{{ wildfly_user }}"
+  tasks:
+    - name: "Get each server's revision history"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/history.yml
+
+    - name: "Revert all servers to the previous revision"
+      ansible.builtin.include_role:
+        name: middleware_automation.wildfly.wildfly_utils
+        tasks_from: prospero/revert.yml
+      vars:
+        wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[1] }}"
+```
+
+### Revision index reference
+
+Prospero lists revisions most recent first. The parsed list follows the same order:
+
+| Index | Meaning |
+|:------|:--------|
+| `[0]` | Most recent revision (current state) |
+| `[1]` | Previous revision (undo last change) |
+| `[2]` | Two changes ago |
+| `[3]` | Three changes ago |
 
 <!--start argument_specs-->
 Role Defaults

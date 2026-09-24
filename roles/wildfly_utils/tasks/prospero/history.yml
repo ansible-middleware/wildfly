@@ -39,4 +39,5 @@
   ansible.builtin.debug:
     msg: >-
       Found {{ wildfly_utils_prospero_revision_ids | length }} revision(s)
-      for {{ wildfly_utils_home }}
+      for {{ wildfly_utils_home }}:
+      {{ wildfly_utils_prospero_history }}

@@ -115,7 +115,7 @@
             name: middleware_automation.wildfly.wildfly_utils
             tasks_from: prospero/revert.yml
           vars:
-            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[-1] }}"
+            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[1] }}"
 
         - name: "Assert revert completed successfully"
           ansible.builtin.assert:
@@ -177,7 +177,7 @@
             name: middleware_automation.wildfly.wildfly_utils
             tasks_from: prospero/revert.yml
           vars:
-            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[-1] }}"
+            wildfly_utils_prospero_revert_revision: "{{ wildfly_utils_prospero_revision_ids[1] }}"
 
         - name: "Assert revert completed successfully"
           ansible.builtin.assert:

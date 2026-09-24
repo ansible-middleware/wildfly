@@ -12,7 +12,7 @@
 - name: "Ensure Prospero is installed."
   ansible.builtin.include_tasks: prospero/install.yml
 
-- name: "Stop service {{ wildfly_utils_instance_name }} before revert"
+- name: "Stop service before revert - {{ wildfly_utils_instance_name }}"
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   ansible.builtin.systemd:
     name: "{{ wildfly_utils_instance_name }}"
@@ -40,7 +40,7 @@
     group: "{{ wildfly_utils_group }}"
     recurse: true
 
-- name: "Start service {{ wildfly_utils_instance_name }} after revert"
+- name: "Start service after revert - {{ wildfly_utils_instance_name }}"
   become: "{{ wildfly_utils_requires_become | default(true) }}"
   ansible.builtin.systemd:
     name: "{{ wildfly_utils_instance_name }}"

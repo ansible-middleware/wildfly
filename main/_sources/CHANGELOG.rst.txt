@@ -22,6 +22,7 @@ Minor Changes
 - AMW-599 Update WildFly 41.0.0.Final version in wildfly collection `#399 <https://github.com/ansible-middleware/wildfly/pull/399>`_
 - AMW-614 Add galaxy-importer job in CI to reproduce sab Hub linting issue. `#400 <https://github.com/ansible-middleware/wildfly/pull/400>`_
 - AMW-636 Adding the revert history showcase capability `#409 <https://github.com/ansible-middleware/wildfly/pull/409>`_
+- Fix galaxy-importer lint warnings `#410 <https://github.com/ansible-middleware/wildfly/pull/410>`_
 - Replace deprecated ANSIBLE_COLLECTIONS_PATHS with singular form `#404 <https://github.com/ansible-middleware/wildfly/pull/404>`_
 
 v1.5.14

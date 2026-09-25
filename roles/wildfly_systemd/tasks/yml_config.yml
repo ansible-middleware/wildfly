@@ -24,6 +24,7 @@
         owner: "{{ wildfly_systemd_config.user }}"
         group: "{{ wildfly_systemd_config.group }}"
         mode: '0644'
+        force: false
       notify: restart_wildfly
 
 - name: Enable extension in EAP

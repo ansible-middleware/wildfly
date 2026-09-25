@@ -53,13 +53,18 @@ wildfly-configuration:
             background-validation-millis: 10000
             flush-strategy: FailingConnectionOnly
             transaction-isolation: TRANSACTION_READ_COMMITTED
+    undertow:
+      server:
+        default-server:
+          ajp-listener:
+            ajp: !remove
     modcluster:
       proxy:
         default:
           proxies:
             - site1-loadbalancer
           advertise: false
-          listener: ajp
+          listener: default
     messaging-activemq:
       server:
         default: !remove

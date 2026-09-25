@@ -700,6 +700,52 @@ releases:
     - 381.yaml
     - 382.yaml
     release_date: '2026-07-28'
+  1.5.15:
+    changes:
+      bugfixes:
+      - 'AMW-640 Fix molecule test failures in EAP collection after refactoring and
+        EAP 8.1 compatibility `#411 <https://github.com/ansible-middleware/wildfly/pull/411>`_
+
+        '
+      major_changes:
+      - 'AMW-633 Add support for WildFly configuration snapshots and rollback mechanism
+        `#405 <https://github.com/ansible-middleware/wildfly/pull/405>`_
+
+        '
+      - 'AMW-636 Implement server update rollback using prospero `#408 <https://github.com/ansible-middleware/wildfly/pull/408>`_
+
+        '
+      minor_changes:
+      - 'AMW-590 Collection spelling and grammar checking for PRs `#402 <https://github.com/ansible-middleware/wildfly/pull/402>`_
+
+        '
+      - 'AMW-599 Update WildFly 41.0.0.Final version in wildfly collection `#399 <https://github.com/ansible-middleware/wildfly/pull/399>`_
+
+        '
+      - 'AMW-614 Add galaxy-importer job in CI to reproduce sab Hub linting issue.
+        `#400 <https://github.com/ansible-middleware/wildfly/pull/400>`_
+
+        '
+      - 'AMW-636 Adding the revert history showcase capability `#409 <https://github.com/ansible-middleware/wildfly/pull/409>`_
+
+        '
+      - 'Fix galaxy-importer lint warnings `#410 <https://github.com/ansible-middleware/wildfly/pull/410>`_
+
+        '
+      - 'Replace deprecated ANSIBLE_COLLECTIONS_PATHS with singular form `#404 <https://github.com/ansible-middleware/wildfly/pull/404>`_
+
+        '
+    fragments:
+    - 399.yaml
+    - 400.yaml
+    - 402.yaml
+    - 404.yaml
+    - 405.yaml
+    - 408.yaml
+    - 409.yaml
+    - 410.yaml
+    - 411.yaml
+    release_date: '2026-09-25'
   1.5.2:
     changes:
       bugfixes:

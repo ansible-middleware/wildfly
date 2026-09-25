@@ -25,6 +25,11 @@ Minor Changes
 - Fix galaxy-importer lint warnings `#410 <https://github.com/ansible-middleware/wildfly/pull/410>`_
 - Replace deprecated ANSIBLE_COLLECTIONS_PATHS with singular form `#404 <https://github.com/ansible-middleware/wildfly/pull/404>`_
 
+Bugfixes
+--------
+
+- AMW-640 Fix molecule test failures in EAP collection after refactoring and EAP 8.1 compatibility `#411 <https://github.com/ansible-middleware/wildfly/pull/411>`_
+
 v1.5.14
 =======
 

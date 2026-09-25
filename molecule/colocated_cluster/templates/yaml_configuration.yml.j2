@@ -2,3 +2,13 @@ wildfly-configuration:
   system-property:
     JBOSS_ID:
       value: {{ wildfly_systemd_instance_name }}
+  subsystem:
+    undertow:
+      server:
+        default-server:
+          ajp-listener:
+            ajp: !remove
+    modcluster:
+      proxy:
+        default:
+          listener: default

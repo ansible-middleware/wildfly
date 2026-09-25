@@ -15,3 +15,4 @@
     wildfly_utils_version: "{{ wildfly_install_version }}"
     wildfly_utils_user: "{{ wildfly_install_user }}"
     wildfly_utils_group: "{{ wildfly_install_group }}"
+    wildfly_utils_prospero_install_dir: "{{ wildfly_install_prospero_install_dir | default('/opt/prospero') }}"

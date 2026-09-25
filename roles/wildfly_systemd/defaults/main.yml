@@ -29,9 +29,9 @@ wildfly_systemd_service_systemd_env_file: >-
 wildfly_systemd_service_systemd_file: >-
   {{ wildfly_systemd_service_config_location }}/{{
   wildfly_systemd_service_name }}{{ wildfly_systemd_service_config_file_suffix }}
-wildfly_systemd_enable_yml_config: false
-wildfly_systemd_yml_configs: []
-wildfly_systemd_yml_configs_repository: ''
+wildfly_systemd_enable_yml_config: "{{ wildfly_enable_yml_config | default(false) }}"
+wildfly_systemd_yml_configs: "{{ wildfly_yml_configs | default([]) }}"
+wildfly_systemd_yml_configs_repository: "{{ wildfly_yml_configs_repository | default('') }}"
 wildfly_systemd_jboss_cli_path: "{{ wildfly_systemd_home }}//bin/jboss-cli.sh"
 wildfly_systemd_jboss_cli_controller_host: "{{ wildfly_systemd_bind_addr_management }}"
 wildfly_systemd_jboss_cli_deploy_force: '--force'
@@ -54,7 +54,7 @@ wildfly_systemd_basedir_prefix: "{{ wildfly_systemd_home }}"
 wildfly_systemd_pidfile_homedir: "/run/{{ wildfly_systemd_instance_name }}"
 wildfly_systemd_selinux_enabled: false
 
-wildfly_systemd_wait_port: 9990
+wildfly_systemd_wait_port: "{{ 9990 + (wildfly_systemd_port_range_offset | int) }}"
 wildfly_systemd_startup_message_id: 'WFLYSRV0025'
 wildfly_systemd_wait_for_timeout: 60
 wildfly_systemd_wait_for_delay: 10

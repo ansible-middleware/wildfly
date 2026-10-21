@@ -100,6 +100,13 @@
     quiet: true
     fail_msg: "Required packages list was not defined"
 
+- name: "Replace iproute with iproute2 on Debian-based systems"
+  ansible.builtin.set_fact:
+    wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages | map('regex_replace', '^iproute$', 'iproute2') | list }}"
+  when:
+    - ansible_facts['os_family'] is defined
+    - ansible_facts['os_family'] == 'Debian'
+
 - name: "Add JDK package to prerequisites list: {{ wildfly_install_config.java.package_name }}"
   ansible.builtin.set_fact:
     wildfly_install_prereqs_packages: "{{ wildfly_install_prereqs_packages + [wildfly_install_config.java.package_name] }}"

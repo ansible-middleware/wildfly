@@ -1,0 +1,24 @@
+---
+- name: Install Java on Debian
+  hosts: all
+  become: true
+  vars:
+    java_version: 17
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: "Install OpenJDK {{ java_version }}"
+      ansible.builtin.apt:
+        name: "openjdk-{{ java_version }}-jdk-headless"
+        state: present
+
+    - name: Show Java alternatives
+      ansible.builtin.command: update-alternatives --query java
+      changed_when: false
+      register: java_alternatives
+
+    - name: Display Java alternatives output
+      ansible.builtin.debug:
+        var: java_alternatives.stdout_lines

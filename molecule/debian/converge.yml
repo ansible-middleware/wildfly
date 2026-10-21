@@ -2,19 +2,24 @@
 - name: Test Debian-specific fixes
   hosts: all
   tasks:
-    - name: "Verify iproute package does not exist on Debian"
-      ansible.builtin.apt:
-        name: iproute
-        state: present
-      register: iproute_result
-      ignore_errors: true
-      become: true
+    - name: Include wildfly_systemd role vars
+      ansible.builtin.include_vars:
+        file: ../../roles/wildfly_systemd/vars/main.yml
 
-    - name: Display iproute result
+    - name: "Run JAVA_HOME detection command for {{ ansible_facts['os_family'] }}"
+      ansible.builtin.shell: |
+        set -o pipefail
+        {{ wildfly_systemd_config.jvm_version_command[ansible_facts['os_family']] }}
+      args:
+        executable: /bin/bash
+      changed_when: false
+      register: java_home_result
+
+    - name: Display detected JAVA_HOME
       ansible.builtin.debug:
-        msg: "iproute package {{ 'EXISTS' if iproute_result is succeeded else 'DOES NOT EXIST' }} on Debian (expected: does not exist)"
+        msg: "Detected JAVA_HOME: {{ java_home_result.stdout }}"
 
-    - name: "Verify iproute2 package can be installed on Debian"
+    - name: Install iproute2
       ansible.builtin.apt:
         name: iproute2
         state: present

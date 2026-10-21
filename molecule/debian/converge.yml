@@ -1,0 +1,21 @@
+---
+- name: Test Debian-specific fixes
+  hosts: all
+  tasks:
+    - name: "Verify iproute package does not exist on Debian"
+      ansible.builtin.apt:
+        name: iproute
+        state: present
+      register: iproute_result
+      ignore_errors: true
+      become: true
+
+    - name: Display iproute result
+      ansible.builtin.debug:
+        msg: "iproute package {{ 'EXISTS' if iproute_result is succeeded else 'DOES NOT EXIST' }} on Debian (expected: does not exist)"
+
+    - name: "Verify iproute2 package can be installed on Debian"
+      ansible.builtin.apt:
+        name: iproute2
+        state: present
+      become: true

@@ -1,0 +1,11 @@
+---
+- name: Verify Debian-specific fixes
+  hosts: all
+  tasks:
+    - name: Verify iproute2 is installed
+      ansible.builtin.command: dpkg -s iproute2
+      changed_when: false
+
+    - name: Success
+      ansible.builtin.debug:
+        msg: "iproute2 is installed on Debian"

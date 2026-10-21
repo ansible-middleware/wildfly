@@ -2,10 +2,46 @@
 - name: Verify Debian-specific fixes
   hosts: all
   tasks:
+    - name: Include wildfly_systemd role vars
+      ansible.builtin.include_vars:
+        file: ../../roles/wildfly_systemd/vars/main.yml
+
+    - name: "Run JAVA_HOME detection command for {{ ansible_facts['os_family'] }}"
+      ansible.builtin.shell: |
+        set -o pipefail
+        {{ wildfly_systemd_config.jvm_version_command[ansible_facts['os_family']] }}
+      args:
+        executable: /bin/bash
+      changed_when: false
+      register: java_home_result
+
+    - name: Verify JAVA_HOME is a valid directory
+      ansible.builtin.stat:
+        path: "{{ java_home_result.stdout }}"
+      register: java_home_stat
+
+    - name: Assert JAVA_HOME exists and is a directory
+      ansible.builtin.assert:
+        that:
+          - java_home_stat.stat.exists
+          - java_home_stat.stat.isdir
+        fail_msg: "JAVA_HOME '{{ java_home_result.stdout }}' is not a valid directory"
+
+    - name: Verify bin/java exists under JAVA_HOME
+      ansible.builtin.stat:
+        path: "{{ java_home_result.stdout }}/bin/java"
+      register: java_bin_stat
+
+    - name: Assert bin/java exists
+      ansible.builtin.assert:
+        that:
+          - java_bin_stat.stat.exists
+        fail_msg: "{{ java_home_result.stdout }}/bin/java does not exist"
+
     - name: Verify iproute2 is installed
       ansible.builtin.command: dpkg -s iproute2
       changed_when: false
 
     - name: Success
       ansible.builtin.debug:
-        msg: "iproute2 is installed on Debian"
+        msg: "JAVA_HOME correctly detected as: {{ java_home_result.stdout }}, iproute2 is installed"

@@ -14,6 +14,6 @@ wildfly_systemd_config:
     file: org.jboss.as.controller.persistence.ConfigurationExtension
   jvm_version_command:
     RedHat: "rpm -ql {{ wildfly_systemd_java_package_name }} | grep -Po '/usr/lib/jvm/.*(?=/bin/java$)'"
-    Debian: "update-alternatives --query java | grep 'Value: ' | grep -o '/.*/jre'"
+    Debian: "readlink -f /usr/bin/java | sed 's|/bin/java$||'"
   selinux:
     pid_path: "{{ wildfly_systemd_pidfile_homedir }}"

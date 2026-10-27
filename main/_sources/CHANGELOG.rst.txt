@@ -9,6 +9,12 @@ This changelog describes changes after version 0.0.7.
 v1.6.1-devel
 ============
 
+Bugfixes
+--------
+
+- Fix JAVA_HOME detection on Debian 12 `#417 <https://github.com/ansible-middleware/wildfly/pull/417>`_
+- Fix iproute package name on Debian-based systems `#416 <https://github.com/ansible-middleware/wildfly/pull/416>`_
+
 v1.6.0
 ======
 

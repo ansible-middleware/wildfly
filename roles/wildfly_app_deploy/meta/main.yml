@@ -14,6 +14,10 @@ galaxy_info:
   min_ansible_version: "2.15"
 
   platforms:
+    - name: Fedora
+      versions:
+        - "44"
+        - "45"
     - name: EL
       versions:
         - "all"

@@ -1,7 +1,7 @@
 ---
 wildfly_snapshot_user: "{{ wildfly_user | default('wildfly') }}"
 wildfly_snapshot_group: "{{ wildfly_group | default(wildfly_snapshot_user) }}"
-wildfly_snapshot_version: "{{ wildfly_version | default('41.0.0.Final') }}"
+wildfly_snapshot_version: "{{ wildfly_version | default('42.0.0.Final') }}"
 wildfly_snapshot_install_workdir: "{{ wildfly_install_workdir | default('/opt/wildfly/') }}"
 wildfly_snapshot_home: "{{ wildfly_snapshot_install_workdir }}wildfly-{{ wildfly_snapshot_version }}/"
 wildfly_snapshot_jboss_home: "{{ wildfly_snapshot_home }}"

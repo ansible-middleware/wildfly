@@ -2,7 +2,7 @@ argument_specs:
     main:
         options:
             wildfly_snapshot_home:
-                default: "/opt/wildfly/wildfly-41.0.0.Final/"
+                default: "/opt/wildfly/wildfly-42.0.0.Final/"
                 description: "WildFly installation directory"
                 type: "str"
             wildfly_snapshot_jboss_home:

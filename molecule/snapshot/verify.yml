@@ -5,7 +5,7 @@
   vars:
     wildfly_user: 'wildfly'
     wildfly_group: "{{ wildfly_user }}"
-    wildfly_version: '41.0.0.Final'
+    wildfly_version: '42.0.0.Final'
     wildfly_instance_name: 'wildfly'
   tasks:
     # Verify service health

@@ -71,7 +71,7 @@ Takes a timestamped configuration snapshot of a running WildFly instance.
       ansible.builtin.include_role:
         name: wildfly_snapshot
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
     # snapshot path is available in wildfly_snapshot_file_path
 ```
 
@@ -88,7 +88,7 @@ Takes a timestamped configuration snapshot of a running WildFly instance.
         name: wildfly_snapshot
         tasks_from: take_snapshot.yml
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
         wildfly_snapshot_name: "pre-maintenance"
 ```
 
@@ -107,7 +107,7 @@ Applies a list of CLI commands with automatic rollback to the previous state if 
         name: wildfly_snapshot
         tasks_from: apply_with_rollback.yml
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
         wildfly_snapshot_apply_cli_commands:
           - "/subsystem=datasources/data-source=ExampleDS:write-attribute(name=max-pool-size,value=50)"
           - "/subsystem=logging/root-logger=ROOT:write-attribute(name=level,value=DEBUG)"
@@ -128,8 +128,8 @@ Stops the WildFly service, replaces the active configuration with the snapshot, 
         name: wildfly_snapshot
         tasks_from: restore_snapshot.yml
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
-        wildfly_snapshot_restore_file: /opt/wildfly/wildfly-41.0.0.Final/standalone/configuration/standalone_xml_history/snapshot/20240101-120000000standalone.xml
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
+        wildfly_snapshot_restore_file: /opt/wildfly/wildfly-42.0.0.Final/standalone/configuration/standalone_xml_history/snapshot/20240101-120000000standalone.xml
 ```
 
 ### List and Delete Snapshots
@@ -145,7 +145,7 @@ Stops the WildFly service, replaces the active configuration with the snapshot, 
         name: wildfly_snapshot
         tasks_from: list_snapshots.yml
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
     # available in wildfly_snapshot_list.names and wildfly_snapshot_list.directory
 
     - name: "Delete a snapshot"
@@ -153,7 +153,7 @@ Stops the WildFly service, replaces the active configuration with the snapshot, 
         name: wildfly_snapshot
         tasks_from: delete_snapshot.yml
       vars:
-        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-41.0.0.Final/
+        wildfly_snapshot_jboss_home: /opt/wildfly/wildfly-42.0.0.Final/
         wildfly_snapshot_delete_name: "my-old-snapshot.xml"
 ```
 

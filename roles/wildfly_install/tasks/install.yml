@@ -26,7 +26,7 @@
   register: wildfly_install_archive_path
   become: "{{ wildfly_install_requires_become | default(true) }}"
 
-- name: "Retrieve archive from website: {{ wildfly_download_baseurl }}"
+- name: "Retrieve archive from website: {{ wildfly_install_download_baseurl }}"
   ansible.builtin.include_tasks: install/web.yml
   when:
     - eap_install_enable is not defined or not eap_install_enable

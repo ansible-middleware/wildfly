@@ -12,6 +12,7 @@ v1.6.1-devel
 Bugfixes
 --------
 
+- AMW-670 WildFly download base URL is reading wrong `#421 <https://github.com/ansible-middleware/wildfly/pull/421>`_
 - Fix JAVA_HOME detection on Debian 12 `#417 <https://github.com/ansible-middleware/wildfly/pull/417>`_
 - Fix iproute package name on Debian-based systems `#416 <https://github.com/ansible-middleware/wildfly/pull/416>`_
 

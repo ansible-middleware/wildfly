@@ -1,0 +1,39 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: fedora-44
+    image: fedora:44
+    pre_build_image: false
+    privileged: true
+    command: /sbin/init
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      interpreter_python: auto_silent
+  playbooks:
+    prepare: ../prepare.yml
+    converge: converge.yml
+    verify: verify.yml
+  inventory:
+    links:
+      group_vars: ../group_vars
+      host_vars: ../host_vars
+  env:
+    ANSIBLE_FORCE_COLOR: "true"
+    ANSIBLE_COLLECTIONS_PATH: "~/.ansible/collections/"
+    ANSIBLE_ROLES_PATH: "../../roles"
+
+verifier:
+  name: ansible
+
+scenario:
+  test_sequence:
+    - destroy
+    - create
+    - prepare
+    - converge
+    - verify

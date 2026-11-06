@@ -9,6 +9,11 @@ This changelog describes changes after version 0.0.7.
 v1.6.1-devel
 ============
 
+Minor Changes
+-------------
+
+- AMW-669 Update WildFly version to 42.0.0.Final in the collection `#420 <https://github.com/ansible-middleware/wildfly/pull/420>`_
+
 Bugfixes
 --------
 

@@ -267,7 +267,7 @@
 <span class="w">      </span><span class="nt">ansible.builtin.include_role</span><span class="p">:</span>
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
 <span class="w">    </span><span class="c1"># snapshot path is available in wildfly_snapshot_file_path</span>
 </pre></div>
 </div>
@@ -284,7 +284,7 @@
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">take_snapshot.yml</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
 <span class="w">        </span><span class="nt">wildfly_snapshot_name</span><span class="p">:</span><span class="w"> </span><span class="s">"pre-maintenance"</span>
 </pre></div>
 </div>
@@ -302,7 +302,7 @@
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apply_with_rollback.yml</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
 <span class="w">        </span><span class="nt">wildfly_snapshot_apply_cli_commands</span><span class="p">:</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"/subsystem=datasources/data-source=ExampleDS:write-attribute(name=max-pool-size,value=50)"</span>
 <span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">"/subsystem=logging/root-logger=ROOT:write-attribute(name=level,value=DEBUG)"</span>
@@ -322,8 +322,8 @@
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">restore_snapshot.yml</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_restore_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/standalone/configuration/standalone_xml_history/snapshot/20240101-120000000standalone.xml</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_restore_file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/standalone/configuration/standalone_xml_history/snapshot/20240101-120000000standalone.xml</span>
 </pre></div>
 </div>
 </section>
@@ -339,7 +339,7 @@
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">list_snapshots.yml</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
 <span class="w">    </span><span class="c1"># available in wildfly_snapshot_list.names and wildfly_snapshot_list.directory</span>
 
 <span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">"Delete</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">snapshot"</span>
@@ -347,7 +347,7 @@
 <span class="w">        </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wildfly_snapshot</span>
 <span class="w">        </span><span class="nt">tasks_from</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">delete_snapshot.yml</span>
 <span class="w">      </span><span class="nt">vars</span><span class="p">:</span>
-<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-41.0.0.Final/</span>
+<span class="w">        </span><span class="nt">wildfly_snapshot_jboss_home</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/opt/wildfly/wildfly-42.0.0.Final/</span>
 <span class="w">        </span><span class="nt">wildfly_snapshot_delete_name</span><span class="p">:</span><span class="w"> </span><span class="s">"my-old-snapshot.xml"</span>
 </pre></div>
 </div>
